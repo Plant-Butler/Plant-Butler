@@ -3,12 +3,12 @@ package com.plant.service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.plant.dao.TestMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.plant.dao.TestDao;
 import com.plant.vo.TestVo;
 
 
@@ -16,7 +16,7 @@ import com.plant.vo.TestVo;
 public class TestService {
 	
 	@Autowired 
-	private TestDao testDao;
+	private TestMapper testMapper;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/* 전체 게시물 목록 */
@@ -24,7 +24,7 @@ public class TestService {
 		ArrayList<TestVo> boardList = null;
 		
 		try {
-			boardList = (ArrayList<TestVo>) testDao.findAll();
+			boardList = (ArrayList<TestVo>) testMapper.selectBoardList();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -35,7 +35,11 @@ public class TestService {
 	/* 게시글 작성 */
 	public void write(TestVo vo) {
 		logger.info("write 테스트 서비스 호출");
-		testDao.write(vo);
+		try {
+			testMapper.write(vo);
+		} catch (SQLException e) {
+		e.printStackTrace();
+	}
 	}
 
 }
