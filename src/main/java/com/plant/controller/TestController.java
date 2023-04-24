@@ -20,6 +20,7 @@ import com.plant.vo.TestVo;
 
 @RestController
 @RequestMapping("/test")
+// 테스트용
 public class TestController {
 	
 	@Autowired
