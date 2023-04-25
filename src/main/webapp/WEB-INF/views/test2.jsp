@@ -5,32 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>test2</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-		    $('#submit').click(function(){
-		    	let title = $('#title').val();
-		        let content = $('#content').val();
-		        let writer = $('#writer').val();
-		        let json = {'title':title, 'content':content, 'writer':writer};
-		        $.ajax({
-		            type:'POST',
-		            url:'/test',
-		            contentType: 'application/json',
-		            data: JSON.stringify(json),
-		            success:function(data){
-		                alert('Data inserted successfully.');
-		            },
-		            error:function(){
-		                alert('Error occurred while inserting data.');
-		            }
-		        });
-		    });
-		});
-	</script>
+
 </head>
 <body>
         <h2>게시판 등록</h2>
+        <form method="post" action="/test">
             <table>
                 <tr>
                     <td>제목</td>
@@ -47,7 +26,7 @@
                 </tr>
             </table>
             <input type="submit" id="submit" value="저장">
-        
+        </form>
 
 </body>
 </html>
