@@ -12,17 +12,18 @@
 <div id="header">
     <%
     //UserVo userVo = (UserVo) session.getAttribute("user");
-    boolean isLoggedIn = false;
+    boolean isLoggedIn = true;
 
     // 테스트용
     UserVo userVo = new UserVo();
     userVo.setManager(0);
+    //
 
     //if (userVo != null) {
     //	isLoggedIn = true;
     //}
     %>
-    사이트명
+    <a href="/home">사이트명</a>
 
     <!-- 로그인 후 디스플레이 -->
     <%if (isLoggedIn) {

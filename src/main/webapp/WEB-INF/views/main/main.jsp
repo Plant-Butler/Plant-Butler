@@ -9,17 +9,38 @@
 <%@ include file="../main/header.jsp" %>
 </head>
 <body>
-<!-- 나에게 맞는 식물 찾기 -->
-<%if (isLoggedIn) { %>
-     <a href="/suggestions">
-        사진<img class="" src=""/>
-     </a>
-<% } else { %>
-     <a href="/loginPage">관리자페이지</a>
-<%  }; %>
+<div id="sugNdMy" data-isLoggedIn="<%= isLoggedIn %>" >
+    <!-- 나에게 맞는 식물 찾기 -->
+    <a onclick="serviceSug()" >
+        나에게 맞는 식물 찾기<img class="" src=""/>
+    </a>
 
-<a href="/suggestions">
-    사진<img class="" src=""/>
-</a>
+    <!-- 내 식물 -->
+    <a onclick="serviceMy()" >
+        내 식물<img class="" src=""/>
+    </a>
+
+</div>
+
+<script>
+    let isLoggedIn = document.getElementById("sugNdMy").getAttribute("data-isLoggedIn");
+    function serviceSug() {
+        if (isLoggedIn == "true") {
+            location.href = "/suggestions"
+        } else {
+            alert('로그인 후 이용해주세요')
+            location.href = "/loginPage"
+        }
+    }
+
+    function serviceMy() {
+        if (isLoggedIn == "true") {
+            location.href = "/myplants"
+        } else {
+            alert('로그인 후 이용해주세요')
+            location.href = "/loginPage"
+        }
+    }
+</script>
 </body>
 </html>
