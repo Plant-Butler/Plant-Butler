@@ -31,6 +31,14 @@ public class TestController {
 		return "test";
 	}
 	
+	/* 로그인 */
+	@GetMapping(value="/login")
+	public ModelAndView loginForm() {
+		ModelAndView mv = new ModelAndView("test2");
+		
+		return mv;
+	}
+	
 	/* 전체 게시물 목록 */
 	@GetMapping(value="/all")
 	public ModelAndView readAll() {
