@@ -9,4 +9,7 @@ import java.util.ArrayList;
 public interface MyPlantMapper {
 	ArrayList<MyplantVo> selectMyPlants(String UserId) throws SQLException;
 
+	void insertMyplant(MyplantVo myplantVo) throws SQLException;
+
+	void deleleMyplant(int myplantId);
 }

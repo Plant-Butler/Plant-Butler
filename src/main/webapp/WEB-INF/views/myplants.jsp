@@ -11,6 +11,23 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <html>
 <head>
+    <script>
+        function deleteMyPlant(myplantId) {
+            const url = '/myplants/form/' + myplantId; // your_base_url을 실제 URL로 교체하세요.
+
+            fetch(url, {
+                method: 'DELETE',
+            }).then(response => {
+                if (response.ok) {
+                    location.reload();
+                } else {
+                    alert('Error: ' + response.statusText);
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
     <title>myplants</title>
 </head>
 <body>
@@ -21,8 +38,19 @@
     <tbody>
     <c:forEach var="list" items="${plantList}">
         <tr>
-            <td>${list.myplantNick}</td>
             <td>${list.myplantId}</td>
+            <td>${list.plantId}</td>
+            <td>${list.userId}</td>
+            <td>${list.myplantNick}</td>
+            <td>${list.myplantImage}</td>
+            <td>${list.myplantWeight}</td>
+            <td>${list.myplantLength}</td>
+            <td>${list.myplantDepth}</td>
+            <td>${list.myplantRadius1}</td>
+            <td>${list.firstDate}</td>
+            <td><button class="deleteBtn" onclick="deleteMyPlant(${list.myplantId})">삭제하기</button></td>
+
+
         </tr>
     </c:forEach>
     </tbody>

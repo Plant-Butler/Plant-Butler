@@ -32,4 +32,15 @@ public class MyPlantService {
     }
 
 
+    public void registMyPlant(MyplantVo myplantVo) {
+        try {
+            myPlantMapper.insertMyplant(myplantVo);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void deleteMyPlant(int myplantId) {
+        myPlantMapper.deleleMyplant(myplantId);
+    }
 }
