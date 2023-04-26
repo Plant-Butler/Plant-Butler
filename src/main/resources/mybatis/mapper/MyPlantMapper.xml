@@ -25,4 +25,22 @@
       ]]>
 	</select>
 
+    <insert id="insertMyplant" parameterType="com.plant.vo.MyplantVo">
+        INSERT INTO myplant(plant_id, user_id, myplant_nick, myplant_image, myplant_weight, myplant_length,myplant_depth, myplant_radius1, myplant_radius2)
+        VALUES (
+                   #{plantId},
+                   #{userId},
+                   #{myplantNick},
+                   #{myplantImage},
+                   #{myplantWeight},
+                   #{myplantLength},
+                   #{myplantDepth},
+                   #{myplantRadius1},
+                   #{myplantRadius2}
+               )
+    </insert>
+    <delete id="deleleMyplant" parameterType="com.plant.vo.MyplantVo">
+    DELETE from myplant where myplant_id = (#{myplantId})
+    </delete>
+
  </mapper>
