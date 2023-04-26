@@ -5,6 +5,9 @@ import java.sql.Timestamp;
 public class DiaryVo {
 
     private int diaryId;
+
+    private String userId;
+
     private String diaryTitle;
     private String diaryImage;
     private String diaryPraiseRegret;
@@ -15,9 +18,9 @@ public class DiaryVo {
 
     public DiaryVo() {}
 
-    public DiaryVo(int diaryId, String diaryTitle, String diaryImage, String diaryPraiseRegret,
-                   String diaryEmotion, String diaryGrowth, String diaryContent, Timestamp diaryDate) {
+    public DiaryVo(int diaryId, String userId, String diaryTitle, String diaryImage, String diaryPraiseRegret, String diaryEmotion, String diaryGrowth, String diaryContent, Timestamp diaryDate) {
         this.diaryId = diaryId;
+        this.userId = userId;
         this.diaryTitle = diaryTitle;
         this.diaryImage = diaryImage;
         this.diaryPraiseRegret = diaryPraiseRegret;
@@ -37,6 +40,14 @@ public class DiaryVo {
 
     public String getDiaryTitle() {
         return diaryTitle;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setDiaryTitle(String diaryTitle) {

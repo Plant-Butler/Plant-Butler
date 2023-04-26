@@ -5,6 +5,10 @@ import java.sql.Timestamp;
 public class MyplantVo {
 
     private int myplantId;
+
+    private int plantId;
+
+    private String userId;
     private String myplantNick;
     private String myplantImage;
     private int myplantWeight; // 화분 가로
@@ -14,11 +18,15 @@ public class MyplantVo {
     private int myplantRadius2; // 화분 반지름2
     private Timestamp firstDate;
 
-    public MyplantVo() {}
 
-    public MyplantVo(int myplantId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength,
-                     int myplantDepth, int myplantRadius1, int myplantRadius2, Timestamp firstDate) {
+    public MyplantVo() {
+
+    }
+
+    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantDepth, int myplantRadius1, int myplantRadius2, Timestamp firstDate) {
         this.myplantId = myplantId;
+        this.plantId = plantId;
+        this.userId = userId;
         this.myplantNick = myplantNick;
         this.myplantImage = myplantImage;
         this.myplantWeight = myplantWeight;
@@ -35,6 +43,22 @@ public class MyplantVo {
 
     public void setMyplantId(int myplantId) {
         this.myplantId = myplantId;
+    }
+
+    public int getPlantId() {
+        return plantId;
+    }
+
+    public void setPlantId(int plantId) {
+        this.plantId = plantId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getMyplantNick() {

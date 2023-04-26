@@ -8,7 +8,7 @@
 <title>test</title>
 </head>
 <body>
-<a href="/test">글 쓰기</a>
+<a href="/test">글 쓰기 커밋 테스트</a>
 	<h1>Test Data:</h1>
 	<table>
 			<tbody>
