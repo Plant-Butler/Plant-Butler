@@ -43,13 +43,6 @@ public class MainController {
         return mv;
     }
 
-    /* 관리자페이지 이동 (로그인 후) */
-    @GetMapping(value="/manager")
-    public ModelAndView openManager() {
-        ModelAndView mv = new ModelAndView("/mypage/managerPage");
-        return mv;
-    }
-
     /* 우수회원 광고 */
     public void bestUser() {
 

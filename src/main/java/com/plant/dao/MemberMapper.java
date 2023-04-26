@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.plant.vo.TestVo;
 import com.plant.vo.UserVo;
 
 @Mapper

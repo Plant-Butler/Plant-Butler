@@ -16,14 +16,13 @@
 
     // 테스트용
     UserVo userVo = new UserVo();
-    userVo.setManager(0);
-    //
+    userVo.setManager(1);
 
     //if (userVo != null) {
-    //	isLoggedIn = true;
+    //	isLoggedIn = false;
     //}
     %>
-    <a href="/home">사이트명</a>
+    사이트명
 
     <!-- 로그인 후 디스플레이 -->
     <%if (isLoggedIn) {

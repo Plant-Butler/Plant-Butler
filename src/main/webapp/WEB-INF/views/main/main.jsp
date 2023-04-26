@@ -19,8 +19,11 @@
     <a onclick="serviceMy()" >
         내 식물<img class="" src=""/>
     </a>
-
 </div>
+
+<h1> 이번달 우수회원 </h1>
+
+
 
 <script>
     let isLoggedIn = document.getElementById("sugNdMy").getAttribute("data-isLoggedIn");
