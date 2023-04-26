@@ -5,6 +5,10 @@ import java.sql.Timestamp;
 public class ScheduleVo {
 
     private int scheduleId;
+
+    private int myplantId;
+
+    private String userId;
     private Timestamp scheduleDate;
     private int watering;   // 물
     private int nutri;      // 영양제
@@ -14,9 +18,10 @@ public class ScheduleVo {
 
     public ScheduleVo() {}
 
-    public ScheduleVo(int scheduleId, Timestamp scheduleDate,
-                      int watering, int nutri, int prun, int soil, int ventilation) {
+    public ScheduleVo(int scheduleId, int myplantId, String userId, Timestamp scheduleDate, int watering, int nutri, int prun, int soil, int ventilation) {
         this.scheduleId = scheduleId;
+        this.myplantId = myplantId;
+        this.userId = userId;
         this.scheduleDate = scheduleDate;
         this.watering = watering;
         this.nutri = nutri;
@@ -39,6 +44,22 @@ public class ScheduleVo {
 
     public void setScheduleDate(Timestamp scheduleDate) {
         this.scheduleDate = scheduleDate;
+    }
+
+    public int getMyplantId() {
+        return myplantId;
+    }
+
+    public void setMyplantId(int myplantId) {
+        this.myplantId = myplantId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public int getWatering() {
