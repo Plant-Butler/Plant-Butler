@@ -11,16 +11,17 @@
 <body>
 <div id="header">
     <%
-    //UserVo userVo = (UserVo) session.getAttribute("user");
-    boolean isLoggedIn = true;
+    UserVo userVo = (UserVo) session.getAttribute("user");
+    System.out.println("user session = " + userVo);
+    boolean isLoggedIn = false;
 
     // 테스트용
-    UserVo userVo = new UserVo();
-    userVo.setManager(1);
+    //UserVo userVo = new UserVo();
+    //userVo.setManager(1);
 
-    //if (userVo != null) {
-    //	isLoggedIn = false;
-    //}
+    if (userVo != null) {
+    	isLoggedIn = true;
+    }
     %>
     사이트명
 
@@ -39,7 +40,7 @@
 
     <!-- 로그인/로그아웃 -->
     <%if (isLoggedIn) {%>
-        <a href="/loginPage/logout">로그아웃</a>
+        <a href="/logout">로그아웃</a>
     <%} else {%>
         <a href="/loginPage">로그인</a>
     <%};%>

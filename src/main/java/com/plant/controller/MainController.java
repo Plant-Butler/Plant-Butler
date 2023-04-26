@@ -43,12 +43,5 @@ public class MainController {
         return mv;
     }
 
-    /* 우수회원 광고 */
-    public void bestUser() {
-
-    }
-
-
-
 
 }

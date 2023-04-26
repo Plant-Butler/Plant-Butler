@@ -1,5 +1,6 @@
 package com.plant.dao;
 
+import com.plant.vo.BestUserVo;
 import com.plant.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -11,6 +12,7 @@ public interface ManagerMapper {
 
     ArrayList<UserVo> getUserList() throws SQLException;
 
-    int selectBestUser(String userId);
+    int insertBestUser(String userId) throws SQLException;
 
+    ArrayList<BestUserVo> getBestUser() throws SQLException;
 }

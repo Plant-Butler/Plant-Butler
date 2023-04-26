@@ -1,6 +1,7 @@
 package com.plant.controller;
 
 import com.plant.service.ManagerService;
+import com.plant.vo.BestUserVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,10 +36,10 @@ public class ManagerController {
 
     /* 우수회원 추가 */
     @PostMapping(value="/best-user/{userId}")
-    public ResponseEntity<?> selectBestUser(@RequestParam("userId") String userId) {
-        boolean flag = service.selectBestUser(userId);
+    public ResponseEntity<?> insertBestUser(@RequestParam("userId") String userId) {
+        boolean flag = service.insertBestUser(userId);
 
-        logger.info("[Manager Controller] selectBestUser()");
+        logger.info("[Manager Controller] insertBestUser()");
         HttpHeaders headers = new HttpHeaders();
 
         if(flag) {
@@ -50,7 +51,7 @@ public class ManagerController {
     }
 
     /* 우수회원 삭제 */
-    @DeleteMapping(value="{userId}")
+    @DeleteMapping(value="/best-user/{userId}")
     public ResponseEntity<?> deleteBestUser(@RequestParam("userId") String userId) {
         // service.
 
@@ -60,5 +61,24 @@ public class ManagerController {
         return new ResponseEntity<>(headers, HttpStatus.OK);
     }
 
+    /* 우수회원 초기화 */
+    @DeleteMapping(value="/best-user/all")
+    public ResponseEntity<?> deleteAllBestUser() {
+        // service.
+
+        logger.info("[Manager Controller] deleteAllBestUser()");
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(URI.create("/manager"));
+        return new ResponseEntity<>(headers, HttpStatus.OK);
+    }
+
+    /* 우수회원 광고 */
+    @GetMapping(value="/best-list")
+    public ResponseEntity<?> selectBestUser() {
+        ArrayList<BestUserVo> bestList = service.getBestUser();
+        logger.info(bestList.toString());
+        logger.info("[Manager Controller] selectBestUser()");
+        return new ResponseEntity<>(bestList, HttpStatus.OK);
+    }
 
 }

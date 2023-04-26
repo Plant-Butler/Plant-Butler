@@ -12,6 +12,12 @@
         <result column="point" property="point"/>
         <result column="manager" property="manager"/>
     </resultMap>
+    <resultMap id="BestUserMap" type="com.plant.vo.BestUserVo">
+        <result column="nickname" property="nickname"/>
+        <result column="myplant_image" property="myplantImage"/>
+        <result column="distbNm" property="distbNm"/>
+        <result column="myplant_nick" property="myplantNick"/>
+    </resultMap>
 
     <select id="getUserList" resultMap="UserResultMap">
         <![CDATA[
@@ -19,11 +25,20 @@
         ]]>
     </select>
 
-    <insert id="selectBestUser" parameterType="String">
+    <insert id="insertBestUser" parameterType="String">
         <![CDATA[
          insert into bestuser (user_id)
          values (#{userId})
       ]]>
     </insert>
+
+    <select id="getBestUser" resultMap="BestUserMap">
+        <![CDATA[
+            select nickname, myplant_image, distbNm, myplant_nick from bestuser b
+            inner join user u on b.user_id = u.user_id
+            inner join myplant mp on mp.user_id = b.user_id
+            inner join plant p on p.plant_id = mp.plant_id
+        ]]>
+    </select>
 
 </mapper>

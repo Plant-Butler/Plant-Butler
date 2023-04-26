@@ -1,6 +1,7 @@
 package com.plant.service;
 
 import com.plant.dao.ManagerMapper;
+import com.plant.vo.BestUserVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,13 +33,30 @@ public class ManagerService {
     }
 
     /* 우수회원 추가 */
-    public boolean selectBestUser(String userId) {
+    public boolean insertBestUser(String userId) {
         boolean flag = false;
 
-        int affectedCnt = mapper.selectBestUser(userId);
+        int affectedCnt = 0;
+        try {
+            affectedCnt = mapper.insertBestUser(userId);
+        } catch (SQLException e) {
+        }
         if(affectedCnt > 0) {
             flag = true;
         }
         return flag;
+    }
+
+    /* 우수회원 광고 */
+    public ArrayList<BestUserVo> getBestUser() {
+        ArrayList<BestUserVo> bestList = null;
+
+        try {
+            bestList = mapper.getBestUser();
+        } catch (SQLException e) {
+        }
+        logger.info(bestList.toString());
+        logger.info("[Manager Service] getBestUser()");
+        return bestList;
     }
 }

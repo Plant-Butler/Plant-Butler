@@ -21,29 +21,68 @@
     </a>
 </div>
 
-<h1> 이번달 우수회원 </h1>
+<h2> 이번달 우수회원 </h2>
+    <table id="best-user-table">
+        <tbody></tbody>
+    </table>
 
 
-
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-    let isLoggedIn = document.getElementById("sugNdMy").getAttribute("data-isLoggedIn");
-    function serviceSug() {
-        if (isLoggedIn == "true") {
-            location.href = "/suggestions"
-        } else {
-            alert('로그인 후 이용해주세요')
-            location.href = "/loginPage"
-        }
-    }
+    $(document).ready(function() {
+        $.ajax({
+            url: "/manager/best-list",
+            type: "GET",
+            success: function(response) {
+                var users = response;
+                var tableBody = $("#best-user-table tbody");
+                var row = "<tr>";
+                                for(var i = 0; i < 3; i++) {
+                                    var user = users[i];
+                                    row += "<td>" + user.myplantImage + "</td>";
+                                }
+                                row += "</tr><tr>";
+                                for(var i = 0; i < 3; i++) {
+                                    var user = users[i];
+                                    row += "<td>" + user.nickname + "</td>";
+                                }
+                                row += "</tr><tr>";
+                                for(var i = 0; i < 3; i++) {
+                                     var user = users[i];
+                                     row += "<td>" + user.distbNm + "</td>";
+                                 }
+                                 row += "</tr><tr>";
+                                for(var i = 0; i < 3; i++) {
+                                    var user = users[i];
+                                    row += "<td>" + user.myplantNick + "</td>";
+                                }
+                                tableBody.append(row);
+                                console.log(row);
+            },
+            error: function(xhr, status, error) {
+                alert('오류가 발생했습니다.');
+            }
+        });
+    });
 
-    function serviceMy() {
-        if (isLoggedIn == "true") {
-            location.href = "/myplants"
-        } else {
-            alert('로그인 후 이용해주세요')
-            location.href = "/loginPage"
+        let isLoggedIn = document.getElementById("sugNdMy").getAttribute("data-isLoggedIn");
+        function serviceSug() {
+            if (isLoggedIn == "true") {
+                location.href = "/suggestions"
+            } else {
+                alert('로그인 후 이용해주세요')
+                location.href = "/loginPage"
+            }
         }
-    }
+
+        function serviceMy() {
+            if (isLoggedIn == "true") {
+                location.href = "/myplants"
+            } else {
+                alert('로그인 후 이용해주세요')
+                location.href = "/loginPage"
+            }
+        }
 </script>
 </body>
 </html>
