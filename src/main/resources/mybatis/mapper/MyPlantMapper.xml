@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.plant.dao.MyPlantMapper">
+    <resultMap id="MyplantResultMap" type="com.plant.vo.MyplantVo">
+        <result column="myplant_id" property="myplantId"/>
+        <result column="plant_id" property="plantId"/>
+        <result column="user_id" property="userId"/>
+        <result column="myplant_nick" property="myplantNick"/>
+        <result column="myplant_image" property="myplantImage"/>
+        <result column="myplant_weight" property="myplantWeight"/>
+        <result column="myplant_length" property="myplantLength"/>
+        <result column="myplant_depth" property="myplantDepth"/>
+        <result column="myplant_radius1" property="myplantRadius1"/>
+        <result column="myplant_radius2" property="myplantRadius2"/>
+        <result column="first_date" property="firstDate"/>
+    </resultMap>
+
+    <select id="selectMyPlants" resultMap="MyplantResultMap">
+
+      <![CDATA[
+         select * from myplant where user_id = #{userId}
+      ]]>
+	</select>
+
+    <insert id="insertMyplant" parameterType="com.plant.vo.MyplantVo">
+        INSERT INTO myplant(plant_id, user_id, myplant_nick, myplant_image, myplant_weight, myplant_length,myplant_depth, myplant_radius1, myplant_radius2)
+        VALUES (
+                   #{plantId},
+                   #{userId},
+                   #{myplantNick},
+                   #{myplantImage},
+                   #{myplantWeight},
+                   #{myplantLength},
+                   #{myplantDepth},
+                   #{myplantRadius1},
+                   #{myplantRadius2}
+               )
+    </insert>
+    <delete id="deleleMyplant" parameterType="com.plant.vo.MyplantVo">
+    DELETE from myplant where myplant_id = (#{myplantId})
+    </delete>
+
+ </mapper>
