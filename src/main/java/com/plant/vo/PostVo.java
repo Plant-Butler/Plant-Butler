@@ -5,6 +5,8 @@ import java.sql.Timestamp;
 public class PostVo {
 
     private int postId;
+
+    private String userId;
     private String postTitle;
     private String postContent;
     private String postTag;
@@ -16,9 +18,9 @@ public class PostVo {
 
     public PostVo() {}
 
-    public PostVo(int postId, String postTitle, String postContent, String postTag,
-                  String postImage, String postFile, Timestamp postDate, int readCount, int flag) {
+    public PostVo(int postId, String userId, String postTitle, String postContent, String postTag, String postImage, String postFile, Timestamp postDate, int readCount, int flag) {
         this.postId = postId;
+        this.userId = userId;
         this.postTitle = postTitle;
         this.postContent = postContent;
         this.postTag = postTag;
@@ -35,6 +37,14 @@ public class PostVo {
 
     public void setPostId(int postId) {
         this.postId = postId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getPostTitle() {
