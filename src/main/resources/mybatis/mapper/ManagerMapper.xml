@@ -21,7 +21,7 @@
 
     <select id="getUserList" resultMap="UserResultMap">
         <![CDATA[
-         select * from user order by point desc
+         select * from user where manager = 0 order by point desc
         ]]>
     </select>
 
@@ -40,5 +40,19 @@
             inner join plant p on p.plant_id = mp.plant_id
         ]]>
     </select>
+
+    <delete id="deleteBestUser" parameterType="String">
+        <![CDATA[
+            delete from bestuser where user_id = #{userId}
+        ]]>
+    </delete>
+
+    <delete id="deleteAllBestUser">
+        <![CDATA[
+            truncate table bestuser
+        ]]>
+    </delete>
+
+
 
 </mapper>

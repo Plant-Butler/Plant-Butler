@@ -15,4 +15,8 @@ public interface ManagerMapper {
     int insertBestUser(String userId) throws SQLException;
 
     ArrayList<BestUserVo> getBestUser() throws SQLException;
+
+    int deleteBestUser(String userId) throws SQLException;
+
+    int deleteAllBestUser() throws SQLException;
 }

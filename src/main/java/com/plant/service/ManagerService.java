@@ -59,4 +59,35 @@ public class ManagerService {
         logger.info("[Manager Service] getBestUser()");
         return bestList;
     }
+
+    /* 우수회원에서 삭제 */
+    public boolean deleteBestUser(String userId) {
+        boolean flag = false;
+
+        int affectedCnt = 0;
+        try {
+            affectedCnt = mapper.deleteBestUser(userId);
+        } catch (SQLException e) {
+        }
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+        return flag;
+    }
+
+    /* 우수회원 초기화 */
+    public boolean deleteAllBestUser() {
+        boolean flag = false;
+
+        int affectedCnt = 0;
+        try {
+            affectedCnt = mapper.deleteAllBestUser();
+        } catch (SQLException e) {
+        }
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+        return flag;
+    }
+
 }

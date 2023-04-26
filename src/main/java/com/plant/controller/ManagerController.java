@@ -44,32 +44,40 @@ public class ManagerController {
 
         if(flag) {
             headers.setLocation(URI.create("/manager"));
-            return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
+            return new ResponseEntity<>(headers, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
     }
 
-    /* 우수회원 삭제 */
+    /* 우수회원에서 삭제 */
     @DeleteMapping(value="/best-user/{userId}")
     public ResponseEntity<?> deleteBestUser(@RequestParam("userId") String userId) {
-        // service.
+        boolean flag = service.deleteBestUser(userId);
 
         logger.info("[Manager Controller] deleteBestUser()");
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/manager"));
-        return new ResponseEntity<>(headers, HttpStatus.OK);
+        if(flag) {
+            headers.setLocation(URI.create("/manager"));
+            return new ResponseEntity<>(headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /* 우수회원 초기화 */
     @DeleteMapping(value="/best-user/all")
     public ResponseEntity<?> deleteAllBestUser() {
-        // service.
+        boolean flag = service.deleteAllBestUser();
 
         logger.info("[Manager Controller] deleteAllBestUser()");
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/manager"));
-        return new ResponseEntity<>(headers, HttpStatus.OK);
+        if(flag) {
+            headers.setLocation(URI.create("/manager"));
+            return new ResponseEntity<>(headers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
+        }
     }
 
     /* 우수회원 광고 */
