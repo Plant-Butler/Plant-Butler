@@ -8,25 +8,25 @@
 <link href="./resources/css/style.css" rel="stylesheet">
 </head>
 <body style="text-align: center">
-</div> -->
+</div> 
 <br>
-	<form action="./login" method="post" class = "right">
+	<form action="./home" method="get" class = "right">
 		<div class="wrap">
         <div class="login">
-        	<h3>BodyBuddy</h3>
+        	<h3>Plant</h3>
         	<br>
             <h2>Log-in</h2>
             <br>
             <div class="login_id">
                 <h4>ID</h4>
-                <input type="text" name="id" id="" placeholder="ID">
+                <input type="text" name="userId" id="userId" placeholder="ID">
             </div>
             <div class="login_pw">
                 <h4>Password</h4>
-                <input type="password" name="pwd" id="" placeholder="Password">
+                <input type="password" name="password" id="password" placeholder="Password">
             </div>
             <div class="login_etc">
-                 <p style="text-align:right;"><a type="submit" href='./viewRegistForm;'>회원가입</a><p>
+                 <p style="text-align:middle;"><a type="submit" href='./registPage'>Register</a><p>
             </div>
             <div class="submit">
                 <input type="submit" value="begin">

@@ -19,6 +19,7 @@ public class TestService {
 	private TestMapper testMapper;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+	
 	/* 전체 게시물 목록 */
 	public ArrayList<TestVo> boardList() {
 		ArrayList<TestVo> boardList = null;
@@ -41,5 +42,6 @@ public class TestService {
 		e.printStackTrace();
 	}
 	}
+
 
 }

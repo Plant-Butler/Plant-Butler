@@ -10,6 +10,11 @@
          select * from board_table	
       ]]>
 	</select>
+	<select id="isMember" resultType="com.plant.vo.TestVo">
+      <![CDATA[
+         select * from member where member_id=? and member_pwd=?
+      ]]>
+	</select>
 	
 	<insert id="write" parameterType="com.plant.vo.TestVo">
       <![CDATA[
