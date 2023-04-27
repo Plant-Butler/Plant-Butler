@@ -22,11 +22,7 @@
         </tr>
     </c:forEach>
 </table>
-<form action="/manager/best-user/all" method="POST">
-    <input type="hidden" name="_method" value="DELETE"/>
-    <input type="submit" value="우수회원 초기화">
-</form>
-
+<button type="button" onclick="deleteAllBest()">우수회원 초기화</button>
 
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
@@ -66,6 +62,20 @@
                 }
             });
         }
+
+            function deleteAllBest() {
+                $.ajax({
+                    url: "/manager/best-user/all",
+                    type: "DELETE",
+                    success: function(response) {
+                        alert('초기화되었습니다');
+                        $(".select-best").text("우수회원 선택");
+                    },
+                    error: function(xhr, status, error) {
+                        alert('오류가 발생했습니다.');
+                    }
+                });
+            }
 </script>
 </body>
 </html>

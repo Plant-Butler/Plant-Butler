@@ -68,16 +68,11 @@ public class ManagerController {
     /* 우수회원 초기화 */
     @DeleteMapping(value="/best-user/all")
     public ResponseEntity<?> deleteAllBestUser() {
-        boolean flag = service.deleteAllBestUser();
-
+        service.deleteAllBestUser();
         logger.info("[Manager Controller] deleteAllBestUser()");
         HttpHeaders headers = new HttpHeaders();
-        if(flag) {
-            headers.setLocation(URI.create("/manager"));
-            return new ResponseEntity<>(headers, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
-        }
+        headers.setLocation(URI.create("/manager"));
+        return new ResponseEntity<>(headers, HttpStatus.OK);
     }
 
     /* 우수회원 광고 */

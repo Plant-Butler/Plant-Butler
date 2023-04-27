@@ -72,22 +72,17 @@ public class ManagerService {
         if(affectedCnt > 0) {
             flag = true;
         }
+
+        logger.info("[Manager Service] deleteBestUser(userId)");
         return flag;
     }
 
     /* 우수회원 초기화 */
-    public boolean deleteAllBestUser() {
-        boolean flag = false;
-
-        int affectedCnt = 0;
+    public void deleteAllBestUser() {
         try {
-            affectedCnt = mapper.deleteAllBestUser();
-        } catch (SQLException e) {
-        }
-        if(affectedCnt > 0) {
-            flag = true;
-        }
-        return flag;
+            mapper.deleteAllBestUser();
+        } catch (SQLException e) {}
+        logger.info("[Manager Service] deleteAllBestUser()");
     }
 
 }
