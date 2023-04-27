@@ -1,5 +1,5 @@
 package com.plant.vo;
-public class plantVo {
+public class PlantVo {
     private int plant_id;
     private String plntbneNm;
     private String plntzrNm;
@@ -7,25 +7,25 @@ public class plantVo {
     private String fmlNm;
     private String fmlCodeNm;
     private String orgplceInfo;
-    private String  adviseInfo;
-    private String   image;
+    private String adviseInfo;
+    private String image;
     private String  growthHgInfo;
     private String  growthAraInfo;
     private String lefStleInfo;
-    private String  smellCode;
+    private String smellCode;
     private String smellCodeNm;
-    private String  toxctyInfo;
+    private String toxctyInfo;
     private String prpgtEraInfo;
     private String etcEraInfo;
-    private String  managelevelCode;
+    private String managelevelCode;
     private String managelevelCodeNm;
-    private String  grwtveCode;
+    private String grwtveCode;
     private String grwtveCodeNm;
-    private String  grwhTpCode;
-    private String  grwhTpCodeNm;
+    private String grwhTpCode;
+    private String grwhTpCodeNm;
     private String winterLwetTpCode;
-    private String  winterLwetTpCodeNm;
-    private String  hdCode;
+    private String winterLwetTpCodeNm;
+    private String hdCode;
     private String  hdCodeNm;
     private String frtlzrInfo;
     private String soilInfo;
@@ -72,10 +72,10 @@ public class plantVo {
     private String  dlthtsCodeNm;
 
 
-    public plantVo() {
+    public PlantVo() {
     }
 
-    public plantVo(int plant_id, String plntbneNm, String plntzrNm, String distbNm, String fmlNm, String fmlCodeNm, String orgplceInfo, String adviseInfo, String image, String growthHgInfo, String growthAraInfo, String lefStleInfo, String smellCode, String smellCodeNm, String toxctyInfo, String prpgtEraInfo, String etcEraInfo, String managelevelCode, String managelevelCodeNm, String grwtveCode, String grwtveCodeNm, String grwhTpCode, String grwhTpCodeNm, String winterLwetTpCode, String winterLwetTpCodeNm, String hdCode, String hdCodeNm, String frtlzrInfo, String soilInfo, String watercycleSprngCode, String watercycleSprngCodeNm, String watercycleSummerCode, String watercycleSummerCodeNm, String watercycleAutumnCode, String watercycleAutumnCodeNm, String watercycleWinterCode, String watercycleWinterCodeNm, String dlthtsManageInfo, String speclmanageInfo, String fncltyInfo, String managedemanddoCode, String managedemanddoCodeNm, String clCode, String clCodeNm, String grwhstleCode, String grwhstleCodeNm, String indoorpsncpacompositionCode, String indoorpsncpacompositionCodeNm, String eclgyCode, String eclgyCodeNm, String lefmrkCode, String lefmrkCodeNm, String lefcolrCode, String lefcolrCodeNm, String ignSeasonCode, String ignSeasonCodeNm, String flclrCode, String flclrCodeNm, String fmldeSeasonCode, String fmldeSeasonCodeNm, String fmldecolrCode, String fmldecolrCodeNm, String prpgtmthCode, String prpgtmthCodeNm, String lighttdemanddoCode, String lighttdemanddoCodeNm, String postngplaceCode, String postngplaceCodeNm, String dlthtsCode, String dlthtsCodeNm) {
+    public PlantVo(int plant_id, String plntbneNm, String plntzrNm, String distbNm, String fmlNm, String fmlCodeNm, String orgplceInfo, String adviseInfo, String image, String growthHgInfo, String growthAraInfo, String lefStleInfo, String smellCode, String smellCodeNm, String toxctyInfo, String prpgtEraInfo, String etcEraInfo, String managelevelCode, String managelevelCodeNm, String grwtveCode, String grwtveCodeNm, String grwhTpCode, String grwhTpCodeNm, String winterLwetTpCode, String winterLwetTpCodeNm, String hdCode, String hdCodeNm, String frtlzrInfo, String soilInfo, String watercycleSprngCode, String watercycleSprngCodeNm, String watercycleSummerCode, String watercycleSummerCodeNm, String watercycleAutumnCode, String watercycleAutumnCodeNm, String watercycleWinterCode, String watercycleWinterCodeNm, String dlthtsManageInfo, String speclmanageInfo, String fncltyInfo, String managedemanddoCode, String managedemanddoCodeNm, String clCode, String clCodeNm, String grwhstleCode, String grwhstleCodeNm, String indoorpsncpacompositionCode, String indoorpsncpacompositionCodeNm, String eclgyCode, String eclgyCodeNm, String lefmrkCode, String lefmrkCodeNm, String lefcolrCode, String lefcolrCodeNm, String ignSeasonCode, String ignSeasonCodeNm, String flclrCode, String flclrCodeNm, String fmldeSeasonCode, String fmldeSeasonCodeNm, String fmldecolrCode, String fmldecolrCodeNm, String prpgtmthCode, String prpgtmthCodeNm, String lighttdemanddoCode, String lighttdemanddoCodeNm, String postngplaceCode, String postngplaceCodeNm, String dlthtsCode, String dlthtsCodeNm) {
         this.plant_id = plant_id;
         this.plntbneNm = plntbneNm;
         this.plntzrNm = plntzrNm;

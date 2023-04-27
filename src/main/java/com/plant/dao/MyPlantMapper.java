@@ -1,5 +1,6 @@
 package com.plant.dao;
 import com.plant.vo.MyplantVo;
+import com.plant.vo.PlantVo;
 import org.apache.ibatis.annotations.Mapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -12,4 +13,8 @@ public interface MyPlantMapper {
 	void insertMyplant(MyplantVo myplantVo) throws SQLException;
 
 	void deleleMyplant(int myplantId);
+
+	MyplantVo searchPlant(int myplantId);
+
+	ArrayList<PlantVo> selectPlantInfo(String plantId);
 }

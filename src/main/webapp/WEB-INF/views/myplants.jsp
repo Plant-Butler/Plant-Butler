@@ -38,7 +38,7 @@
     <tbody>
     <c:forEach var="list" items="${plantList}">
         <tr>
-            <td>${list.myplantId}</td>
+            <td><a href="/myplants/${list.myplantId}">${list.myplantId}</a> </td>
             <td>${list.plantId}</td>
             <td>${list.userId}</td>
             <td>${list.myplantNick}</td>
@@ -48,6 +48,7 @@
             <td>${list.myplantDepth}</td>
             <td>${list.myplantRadius1}</td>
             <td>${list.firstDate}</td>
+            <td><a href="/myplants/${list.myplantId}/schedule">${list.myplantNick}의 관리페이지</a></td>
             <td><button class="deleteBtn" onclick="deleteMyPlant(${list.myplantId})">삭제하기</button></td>
 
 
