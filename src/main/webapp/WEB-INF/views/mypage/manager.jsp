@@ -8,8 +8,13 @@
 <title>관리자페이지</title>
 </head>
 <body>
-<h1></h1>
+<h1>게시물 관리</h1>
+<table>
+      <div id="post-list"></div>
+</table>
 
+
+<div id="user-list">
 <h1> 회원관리 </h1> (3인 선택)
 <table>
     <tr><th>아이디</th><th>포인트</th><th>우수회원 선택</th><th>회원삭제</th></tr>
@@ -23,7 +28,7 @@
     </c:forEach>
 </table>
 <button type="button" onclick="deleteAllBest()">우수회원 초기화</button>
-
+</div>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -76,6 +81,27 @@
                     }
                 });
             }
+
+
+        $.ajax({
+            url: "/manager/post-list",
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                var html = "";
+                for (var i = 0; i < data.length; i++) {
+                    var post = data[i];
+                    html += "<tr><td><a href= ''>" + post.postTitle +
+                            "</a></td><td>" + post.userId +
+                            "</td><td> 신고 " + post.flag +
+                            "회 </td><td><button type='button'>삭제</button></td></tr>";
+                }
+                $("#post-list").html(html);
+            },
+            error: function(xhr, status, error) {
+                alert('게시물 목록을 가져오는 도중 오류가 발생했습니다.');
+            }
+        });
 </script>
 </body>
 </html>

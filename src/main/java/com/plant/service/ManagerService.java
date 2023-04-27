@@ -2,6 +2,7 @@ package com.plant.service;
 
 import com.plant.dao.ManagerMapper;
 import com.plant.vo.BestUserVo;
+import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,4 +86,17 @@ public class ManagerService {
         logger.info("[Manager Service] deleteAllBestUser()");
     }
 
+    /* 전체 게시물 신고 수 정렬 */
+    public ArrayList<PostVo> mgmtPostList() {
+        ArrayList<PostVo> postList = null;
+
+        try {
+            postList = (ArrayList<PostVo>) mapper.mgmtPostList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        logger.info("[Manager Service] getPostList()");
+        return postList;
+    }
 }

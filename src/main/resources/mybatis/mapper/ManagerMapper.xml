@@ -18,17 +18,22 @@
         <result column="distbNm" property="distbNm"/>
         <result column="myplant_nick" property="myplantNick"/>
     </resultMap>
+    <resultMap id="ManagePostMap" type="com.plant.vo.PostVo">
+        <result column="post_title" property="postTitle"/>
+        <result column="user_id" property="userId"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
 
     <select id="getUserList" resultMap="UserResultMap">
         <![CDATA[
-         select * from user where manager = 0 order by point desc
+            select * from user where manager = 0 order by point desc
         ]]>
     </select>
 
     <insert id="insertBestUser" parameterType="String">
         <![CDATA[
-         insert into bestuser (user_id)
-         values (#{userId})
+            insert into bestuser (user_id)
+            values (#{userId})
       ]]>
     </insert>
 
@@ -53,6 +58,10 @@
         ]]>
     </delete>
 
-
+    <select id="mgmtPostList" resultMap="ManagePostMap">
+        <![CDATA[
+            select post_title, user_id, flag from post order by flag desc
+        ]]>
+    </select>
 
 </mapper>

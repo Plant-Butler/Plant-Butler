@@ -1,6 +1,7 @@
 package com.plant.dao;
 
 import com.plant.vo.BestUserVo;
+import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -19,4 +20,6 @@ public interface ManagerMapper {
     int deleteBestUser(String userId) throws SQLException;
 
     int deleteAllBestUser() throws SQLException;
+
+    ArrayList<PostVo> mgmtPostList() throws SQLException;
 }

@@ -2,6 +2,7 @@ package com.plant.controller;
 
 import com.plant.service.ManagerService;
 import com.plant.vo.BestUserVo;
+import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/manager")
@@ -23,15 +25,21 @@ public class ManagerController {
     private ManagerService service;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /* 전체 회원 목록 */
+    /* 전체 회원, 전체 게시물 */
     @GetMapping(value=" ")
-    public ModelAndView getUserList() {
+    public ModelAndView mgmtList() {
         ModelAndView mv = new ModelAndView("/mypage/manager");
         ArrayList<UserVo> userList = service.getUserList();
         mv.addObject("userList", userList);
 
-        logger.info("[Manager Controller] getUserList()");
+        logger.info("[Manager Controller] mgmtList()");
         return mv;
+    }
+
+    @GetMapping("/post-list")
+    public ResponseEntity<List<PostVo>> getPostList() {
+        List<PostVo> postList = service.mgmtPostList();
+        return new ResponseEntity<>(postList, HttpStatus.OK);
     }
 
     /* 우수회원 추가 */
@@ -83,5 +91,6 @@ public class ManagerController {
         logger.info("[Manager Controller] selectBestUser()");
         return new ResponseEntity<>(bestList, HttpStatus.OK);
     }
+
 
 }
