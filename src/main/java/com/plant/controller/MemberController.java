@@ -123,12 +123,6 @@ public class MemberController {
 		redirectAttributes.addFlashAttribute("errorMessage", "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.");
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.");
 	}
-    /* 메인페이지 */
-    @GetMapping(value="/home")
-    public ModelAndView main() {
-        ModelAndView mv = new ModelAndView("/home");
-        return mv;
-    }
 
 
 	/* 로그아웃 */
