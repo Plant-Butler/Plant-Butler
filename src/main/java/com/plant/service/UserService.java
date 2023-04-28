@@ -4,39 +4,45 @@ import java.sql.SQLException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.plant.dao.MemberMapper;
+import com.plant.dao.UserMapper;
 import com.plant.vo.UserVo;
 
 @Service
-public class MemberService {
-    private final MemberMapper memberMapper;
+public class UserService {
+    private final UserMapper userMapper;
 
     @Autowired
-    public MemberService(MemberMapper memberMapper) {
-        this.memberMapper = memberMapper;
+    public UserService(UserMapper memberMapper) {
+        this.userMapper = memberMapper;
     }
 	
 	/* Register */
 	public boolean regist(UserVo user) {
 		boolean flag = false;
 		try {
-			flag = memberMapper.insert(user);
+			flag = userMapper.insert(user);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return flag;
 	}
 	
-	public UserVo isMember(String userId, String password) throws SQLException {
+	public UserVo validMember(UserVo user) throws SQLException {
 		boolean flag = false;
-		UserVo user = null;
-		user = memberMapper.selectMember(userId, password);
-		return user;
+		UserVo vo = userMapper.checkMember(user);
+		System.out.println("I'm in service");
+//		if (vo == null) {
+//			vo = 0;
+//		}
+		return vo;
 	}
 	
 	public int duplicateId(String userId) {
-		int cnt = memberMapper.duplicateId(userId);
+		int cnt = userMapper.duplicateId(userId);
 		return cnt;
 	}
+	
 }
+
+	
 	
