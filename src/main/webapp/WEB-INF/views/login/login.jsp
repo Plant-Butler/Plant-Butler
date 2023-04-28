@@ -10,7 +10,7 @@
 <body style="text-align: center">
 </div> 
 <br>
-	<form action="./home" method="get" class = "right">
+	<form action="./login" method="post" class = "right">
 		<div class="wrap">
         <div class="login">
         	<h3>Plant</h3>
@@ -19,11 +19,11 @@
             <br>
             <div class="login_id">
                 <h4>ID</h4>
-                <input type="text" name="userId" id="userId" placeholder="ID">
+                <input type="text" name="userId" id="id" placeholder="ID">
             </div>
             <div class="login_pw">
                 <h4>Password</h4>
-                <input type="password" name="password" id="password" placeholder="Password">
+                <input type="password" name="password" id="pwd" placeholder="Password">
             </div>
             <div class="login_etc">
                  <p style="text-align:middle;"><a type="submit" href='./registPage'>Register</a><p>

@@ -228,65 +228,28 @@ a {
 
 <body style="text-align: center">
 	<div class="about-section">
-  <h1>Register</h1>
+  <h1>쿠키 수집 동의서</h1>
 	</div>
-<!-- 	<hr> -->
 <br>
-	<form action="./regist" method="post" name="joinform">
-		<table>
-			<div>
-			<tr>
-				<td class = "title">아이디 :</td>
-				<td><input class = "regist_id" type="text" name="userId" id="userId" readonly="readonly"></td>
-				<td><input class = "submit" type="button" value="중복확인" onclick="IdCheck()" required="required"></td>
-			</tr>
-			</div>
-			<div>
-			<tr>
-				<td class = "title">닉네임 :</td>
-				<td><input class = "regist_id" type="text" name="nickname" id="nickname"></td>
-			</tr>
-			</div>
-			<tr>
-				<td class = "title">비밀번호 :</td>
-				<td><input  class = "regist_pw" type="password" name="password" id="password" required="required"></td>
-				<td></td>
-			</tr>
-			</div>
-			<div>
-			<tr>
-				<td class = "title">비밀번호 확인 :</td>
-				<td><input  class = "regist_pw" type="password" name="checkPwd" id="checkPwd" onkeyup="checkerPwd()" required="required"></td>
-				<td><div id="checkerPwd">  동일한 암호를 입력하세요.</div></td>
-			</tr>
-			</div>
-			<div>
-			<tr>
-				<td class = "title">이메일 :</td>
-				<td><input class = "regist_id" type="text" name="email" id="email"></td>
-			</tr>
-			</div>
-			<div>
-				<td>
-				  <a href="./cookie" target="_self">쿠키 수집 동의 약관</a>
-				  <input type="checkbox" name="cookie" value="cookie" id="cookie" required>
-				</td>
-				<tr>
-				  <td>
-				    <a href="./webpush" target="_self">웹푸시 동의 약관</a>
-				    <input type="checkbox" name="webpush" value="webpush" id="webpush" required>
-				  </td>
-				</tr>
-			</div>
-			<div>
-			<tr>
+<h2>
+쿠키란?
+쿠키는 웹사이트가 사용자의 컴퓨터나 모바일 기기에 저장하는 작은 텍스트 파일입니다. 쿠키는 사용자가 웹사이트를 방문할 때마다 웹사이트에서 읽고 쓸 수 있는 정보를 제공합니다.
 
-                <td colspan="1"><input class="submit" type="submit" value="가입하기"
-					onclick="finalCheck()"></td>
+쿠키의 사용 목적
+저희 웹사이트에서는 다음과 같은 목적으로 쿠키를 사용합니다.
 
-			</tr>
-			</div>
-		</table>
-	</form>
+사용자의 개인화된 경험 제공
+웹사이트 이용 통계 및 분석
+광고 게재 및 효과 측정
+쿠키의 수집 및 이용 동의
+저희 웹사이트에서는 쿠키를 사용합니다. 사용자가 본 동의서에 동의하지 않을 경우, 일부 기능이 제한될 수 있습니다.
+
+쿠키의 관리 및 삭제
+쿠키는 사용자의 웹브라우저에서 관리할 수 있습니다. 대부분의 웹브라우저에서는 쿠키를 허용하거나 차단하도록 설정할 수 있습니다. 사용자가 쿠키를 차단하는 경우, 일부 기능이 제한될 수 있습니다.
+
+개인정보 처리방침
+저희 웹사이트는 개인정보 처리방침을 통해 사용자의 개인정보 보호에 최선을 다하고 있습니다. 개인정보 처리방침에 대한 자세한 내용은 웹사이트 내 개인정보 처리방침 페이지를 참조해주세요.
+
+위 내용을 확인하였으며, 쿠키의 수집 및 이용에 동의합니다.
 </body>
 </html>

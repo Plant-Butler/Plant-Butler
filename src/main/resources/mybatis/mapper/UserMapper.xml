@@ -3,7 +3,7 @@
       PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.plant.dao.MemberMapper">
+<mapper namespace="com.plant.dao.UserMapper">
     <resultMap id="UserResultMap" type="com.plant.vo.UserVo">
         <result column="user_id" property="userId"/>
         <result column="nickname" property="nickname"/>
@@ -13,10 +13,10 @@
         <result column="manager" property="manager"/>
     </resultMap>
 
-	<select id="selectMember" resultMap="UserResultMap">
+	<select id="checkMember" resultType="com.plant.vo.UserVo">
       <![CDATA[
-         select * from user where user_id=#{userId} and password=#{password}
-      ]]>
+         SELECT * FROM user WHERE user_id = #{userId} AND password = #{password}
+     ]]>
 	</select>
 	<select id="duplicateId" resultType="int">
       <![CDATA[
@@ -26,7 +26,7 @@
 	<insert id="insert" parameterType="com.plant.vo.UserVo">
       <![CDATA[
          insert into user (user_Id, nickname, password, email)
-         values (#{userId}, "luna", #{password}, "a@a.com")
+         values (#{userId}, #{nickname}, #{password}, #{email})
       ]]>
 	</insert>
 

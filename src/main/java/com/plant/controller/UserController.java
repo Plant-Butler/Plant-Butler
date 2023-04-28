@@ -22,15 +22,15 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.plant.service.MemberService;
+import com.plant.service.UserService;
 import com.plant.vo.UserVo;
 
 @RestController
 @RequestMapping("")
-public class MemberController {
+public class UserController {
 	
 	@Autowired
-	private MemberService memberService;
+	private UserService userService;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	/* 회원가입 폼 */	
@@ -46,10 +46,10 @@ public class MemberController {
 	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, HttpServletResponse response) throws IOException {
 		System.out.println(user.getUserId());
 		System.out.println(user.getPassword());
-		boolean flag = memberService.regist(user);
+		boolean flag = userService.regist(user);
 		logger.info("회원가입");
 	    if (flag) {
-	        URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/login").build().toUri();
+	        URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/loginPage").build().toUri();
 	        response.sendRedirect(location.toString());
 	        return ResponseEntity.ok().build();
 		} else {
@@ -65,52 +65,17 @@ public class MemberController {
 		logger.info("로그인 페이지 호출");
 		return mv;
 	}
-
-//	/* 로그인 */
-//	@PostMapping("/loginPage")
-//	public ResponseEntity<String> login(@RequestParam("userId") String userId, @RequestParam("password") String password, 
-//		HttpSession session,
-//		RedirectAttributes redirectAttributes) throws SQLException {
-//		UserVo user = memberService.isMember(userId, password);
-//		logger.info("로그인");
-//		if (user != null) {
-//			session.setAttribute("userId", user);
-//			redirectAttributes.addFlashAttribute("successMessage", "로그인에 성공했습니다.");
-//			return ResponseEntity.status(HttpStatus.OK).body("로그인에 성공했습니다.");
-//		} 
-//
-//		redirectAttributes.addFlashAttribute("errorMessage", "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.");
-//		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.");
-//
-//	}
-//	@PostMapping("/loginPage")
-//	public ResponseEntity<String> login(@RequestParam("userId") String userId, @RequestParam("password") String password, 
-//		HttpSession session,
-//		RedirectAttributes redirectAttributes) throws SQLException {
-//		UserVo user = memberService.isMember(userId, password);
-//		logger.info("로그인");
-//		if (user != null) {
-//			session.setAttribute("userId", user);
-//			redirectAttributes.addFlashAttribute("successMessage", "로그인에 성공했습니다.");
-//			URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-//				.path("/home.jsp")
-//				.build()
-//				.toUri();
-//			return ResponseEntity.status(HttpStatus.FOUND)
-//				.location(location)
-//				.build();
-//		} 
-//		redirectAttributes.addFlashAttribute("errorMessage", "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.");
-//		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.");
-//	}
-	@PostMapping("/loginPage")
-	public ResponseEntity<String> login(@RequestParam("userId") String userId, @RequestParam("password") String password, 
+	/* 로그인 */
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@ModelAttribute("user") UserVo user,
 		HttpSession session,
 		RedirectAttributes redirectAttributes) throws SQLException {
-		UserVo user = memberService.isMember(userId, password);
+		UserVo user1 = userService.validMember(user);
 		logger.info("로그인");
-		if (user != null) {
-			session.setAttribute("userId", user);
+		System.out.println(user1);
+		if (user1 != null) {
+			logger.info("널 아님");
+			session.setAttribute("user", user1);
 			redirectAttributes.addFlashAttribute("successMessage", "로그인에 성공했습니다.");
 			URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
 				.path("/home")
@@ -119,22 +84,20 @@ public class MemberController {
 			return ResponseEntity.status(HttpStatus.FOUND)
 				.location(location)
 				.build();
-		} 
-		redirectAttributes.addFlashAttribute("errorMessage", "로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.");
-		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.");
+		} else {
+			session.setAttribute("user", null);
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("Location", "/loginPage?errorMessage=로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.").build();
+
+		}
+	
+
 	}
-    /* 메인페이지 */
-    @GetMapping(value="/home")
-    public ModelAndView main() {
-        ModelAndView mv = new ModelAndView("/home");
-        return mv;
-    }
 
 
 	/* 로그아웃 */
 	@GetMapping("/logout")
 	public ModelAndView logout(HttpSession session) {
-		ModelAndView mv = new ModelAndView("/home");
+		ModelAndView mv = new ModelAndView("redirect:/home");
 		session.invalidate();
 		return mv;
 	}
@@ -148,13 +111,23 @@ public class MemberController {
 	@PostMapping("/idCheckProc")
 	public ModelAndView idCheckProc(@RequestParam("id") String id) {
 	    ModelAndView mv = new ModelAndView("/login/idCheckProc");
-	    int cnt = memberService.duplicateId(id);
+	    int cnt = userService.duplicateId(id);
 	    mv.addObject("cnt", cnt);
 	    mv.addObject("id", id);
 	    return mv;
 	}
 
-	
+    @GetMapping("/cookie")
+    public ModelAndView cookie(HttpSession session) {
+        ModelAndView mv = new ModelAndView("agreement/cookie");
+        return mv;
+    }
+    
+    @GetMapping("/webpush")
+    public ModelAndView webpush(HttpSession session) {
+        ModelAndView mv = new ModelAndView("agreement/webpush");
+        return mv;
+    }
 	
 //	/* 전체 게시물 목록 */
 //	@GetMapping(value="/all")
