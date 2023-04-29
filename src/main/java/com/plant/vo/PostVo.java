@@ -15,6 +15,7 @@ public class PostVo {
     private Timestamp postDate;
     private int readCount;
     private int flag; // 신고 수
+    private String nickname;
 
     public PostVo() {}
 
@@ -109,5 +110,13 @@ public class PostVo {
 
     public void setFlag(int flag) {
         this.flag = flag;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

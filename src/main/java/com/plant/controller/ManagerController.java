@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import utils.Criteria;
+import utils.Paging;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -25,19 +27,27 @@ public class ManagerController {
     private ManagerService service;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /* 전체 회원, 전체 게시물 */
+    /* 전체 회원 */
     @GetMapping(value=" ")
-    public ModelAndView mgmtList() {
+    public ModelAndView mgmtList(Criteria cri, @RequestParam("page") int currentPage) {
         ModelAndView mv = new ModelAndView("/mypage/manager");
-        ArrayList<UserVo> userList = service.getUserList();
+        ArrayList<UserVo> userList = service.getUserList(cri);
         mv.addObject("userList", userList);
+
+//        Paging paging = new Paging();
+//        paging.setCri(cri); // 페이지 당 게시물 개수
+//        cri.setCurrentPage(currentPage);  // 현재 페이지 번호
+
+//        paging.setTotalCount(service.countUserList()); // 총 회원 수
+//        mv.addObject("paging", paging);
 
         logger.info("[Manager Controller] mgmtList()");
         return mv;
     }
 
+    /* 전체 게시물 */
     @GetMapping("/post-list")
-    public ResponseEntity<List<PostVo>> getPostList() {
+    public ResponseEntity<List<PostVo>> getPostList(Criteria cri, @RequestParam("page") int currentPage) {
         List<PostVo> postList = service.mgmtPostList();
         return new ResponseEntity<>(postList, HttpStatus.OK);
     }
