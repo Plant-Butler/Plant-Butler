@@ -32,5 +32,11 @@
         ]]>
     </select>
 
+    <update id="upReadCount">
+        <![CDATA[
+            update post set read_count = read_count+1 where post_id = #{postId}
+      ]]>
+    </update>
+
 
 </mapper>

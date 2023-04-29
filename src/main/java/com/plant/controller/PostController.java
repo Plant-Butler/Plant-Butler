@@ -31,8 +31,6 @@ public class PostController {
 
         // 게시물
         mv.addObject("post", postVo);
-        // 조회수 상승
-
         // 댓글
 
         return mv;

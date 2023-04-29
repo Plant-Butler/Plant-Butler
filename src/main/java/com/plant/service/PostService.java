@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
+
 @Service
 public class PostService {
 
@@ -17,12 +19,16 @@ public class PostService {
 
     /* 게시물 상세조회 */
     public PostVo postDetail(int postId) {
-        PostVo postVo = postMapper.postDetail(postId);
-
+        PostVo postVo = null;
+        try {
+            postVo = postMapper.postDetail(postId);
+            // 조회수 상승
+            postMapper.upReadCount(postId);
+        } catch (SQLException e) {
+        }
+        logger.info("[Post Service] postDetail()");
         return postVo;
     }
-
-    /* 상세조회 시 조회수 상승 */
 
 
 }
