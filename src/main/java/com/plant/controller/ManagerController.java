@@ -62,9 +62,9 @@ public class ManagerController {
 
         if(flag) {
             headers.setLocation(URI.create("/manager"));
-            return new ResponseEntity<>(headers, HttpStatus.OK);
+            return new ResponseEntity<>(headers, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(headers, HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

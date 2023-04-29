@@ -28,4 +28,21 @@ public class CommentService {
         return commentList;
     }
 
+    /* 댓글 작성 + 포인트 */
+    public boolean postComment(CommentVo commentVo) {
+        boolean flag = false;
+
+        int affectedCnt = 0;
+        try {
+            affectedCnt = commentMapper.postComment(commentVo);
+            commentMapper.commentPoint(commentVo.getUserId());
+        } catch (SQLException e) {
+        }
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+
+        logger.info("[Comment Service] postComment()");
+        return flag;
+    }
 }

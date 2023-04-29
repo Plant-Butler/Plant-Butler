@@ -13,7 +13,7 @@
         <result column="manager" property="manager"/>
     </resultMap>
 
-	<select id="checkMember" resultType="com.plant.vo.UserVo">
+	<select id="checkMember" resultMap="UserResultMap">
       <![CDATA[
          SELECT * FROM user WHERE user_id = #{userId} AND password = #{password}
      ]]>
@@ -29,5 +29,7 @@
          values (#{userId}, #{nickname}, #{password}, #{email})
       ]]>
 	</insert>
+
+
 
  </mapper>

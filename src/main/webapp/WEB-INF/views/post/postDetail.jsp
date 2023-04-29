@@ -4,7 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="com.plant.vo.UserVo"%>
-<%@page import="com.plant.vo.PostVo"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,31 +40,34 @@ ${post.postContent}
 <hr>
 댓글
 
-
 <table width="800">
-        <!-- 댓글 작성 -->
-        <tr>
-            <td><input type="text" name="nickname" value="${sessionScope.user.nickname}" readonly="readonly"></td>
-            <td><input type="text" name="commentContent"></td>
-            <td></td><td></td>
-            <form action="./comment" method="post">
-                <td><input type="submit" value="작성"></td>
+    <!-- 댓글 작성 -->
+        <c:if test="${not empty sessionScope.user.userId}">
+            <form action="./comment" method="post" modelAttribute="commentVo">
+                <tr>
+                    <td><input type="text" name="nickname" value="${sessionScope.user.nickname}" readonly="readonly"></td>
+                    <td><input type="text" name="commentContent"></td>
+                    <td><input type="hidden" name="userId" value="${sessionScope.user.userId}"></td>
+                    <td><input type="hidden" name="postId" value="${post.postId}"</td>
+                        <td><input type="submit" value="작성"></td>
+                    </form>
+                </tr>
             </form>
-        </tr>
+         </c:if>
     <!-- 댓글 목록 -->
-    <c:forEach var="comment" items="${commentList}">
-        <tr>
-            <td>${comment.nickname}</td>
-            <td>${comment.commentContent}</td>
-            <td>신고 ${comment.flag}</td>
-            <td><fmt:formatDate value="${comment.commentDate}" type="date"/></td>
-            <td><button type="button" onclick="">신고하기</button></td>
-            <c:if test="${comment.userId eq sessionScope.user.userId}">
-                <button type="button" onclick="">수정</button>
-                <button type="button" onclick="deleteComm(${comment.commentId})">삭제</button>
-            </c:if>
-        </tr>
-    </c:forEach>
+        <c:forEach var="comment" items="${commentList}">
+            <tr>
+                <td>${comment.nickname}</td>
+                <td>${comment.commentContent}</td>
+                <td>신고 ${comment.flag}</td>
+                <td><fmt:formatDate value="${comment.commentDate}" type="date"/></td>
+                <td><button type="button" onclick="">신고하기</button></td>
+                <c:if test="${comment.userId eq sessionScope.user.userId}">
+                    <td><button type="button" onclick="">수정</button></td>
+                    <td><button type="button" onclick="deleteComm(${comment.commentId})">삭제</button></td>
+                </c:if>
+            </tr>
+        </c:forEach>
 </table>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>

@@ -14,7 +14,7 @@
         <result column="nickname" property="nickname"/>
     </resultMap>
 
-    <!-- 게시물 상세조회 -->
+    <!-- 댓글 목록 -->
     <select id="getCommentList" resultMap="CommentMap" parameterType="int">
         <![CDATA[
             select nickname, comment_id, p.post_id, c.user_id, comment_content, comment_date, c.flag
@@ -24,6 +24,21 @@
             where p.post_id = #{postId}
         ]]>
     </select>
+
+    <!-- 댓글 등록 -->
+    <insert id="postComment" parameterType="com.plant.vo.CommentVo">
+        <![CDATA[
+            insert into comment (post_id, user_id, comment_content, comment_date)
+            values (#{postId}, #{userId}, #{commentContent}, now())
+        ]]>
+    </insert>
+
+    <!-- 댓글 작성 시 포인트 상승 -->
+    <update id="commentPoint" parameterType="String">
+        <![CDATA[
+            update user set point = point + 5 where user_id = #{user_id}
+      ]]>
+    </update>
 
 
 

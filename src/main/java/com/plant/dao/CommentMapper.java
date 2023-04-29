@@ -11,4 +11,10 @@ public interface CommentMapper {
 
     /* 댓글 전체조회 */
     ArrayList<CommentVo> getCommentList(int postId) throws SQLException;
+
+    /* 댓글 등록 */
+    int postComment(CommentVo commentVo) throws SQLException;
+
+    /* 댓글 작성시 포인트 상승 */
+    void commentPoint(String userId) throws SQLException;
 }
