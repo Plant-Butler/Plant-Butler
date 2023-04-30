@@ -23,4 +23,7 @@ public interface CommentMapper {
 
     /* 댓글 수정 */
     int updateComment(CommentVo commentVo) throws SQLException;
+
+    /* 댓글 신고 */
+    int declareComment(int commentId) throws SQLException;
 }

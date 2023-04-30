@@ -79,4 +79,22 @@ public class CommentService {
         logger.info("[Comment Service] updateComment(commentVo)");
         return flag;
     }
+
+    /* 댓글 신고 */
+    public boolean declareComment(int commentId) {
+        boolean flag = false;
+
+        int affectedCnt = 0;
+        try {
+            affectedCnt = commentMapper.declareComment(commentId);
+        } catch (SQLException e) {
+        }
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+
+        logger.info("[Comment Service] declareComment(commentId)");
+        return flag;
+    }
+
 }

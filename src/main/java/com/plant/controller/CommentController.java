@@ -61,4 +61,17 @@ public class CommentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
+    /* 댓글 신고 */
+    @PatchMapping("/{commentId}")
+    public ResponseEntity declareComment(@PathVariable int commentId) {
+        boolean flag = commentService.declareComment(commentId);
+
+        logger.info("[Comment Controller] declareComment(commentId)");
+        if(flag) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

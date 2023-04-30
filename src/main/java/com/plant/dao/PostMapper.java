@@ -13,4 +13,7 @@ public interface PostMapper {
 
     /* 상세조회 시 조회수 상승 */
     void upReadCount(int postId) throws SQLException;
+
+    /* 게시물 신고 */
+    int declarePost(int postId) throws SQLException;
 }

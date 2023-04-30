@@ -30,5 +30,20 @@ public class PostService {
         return postVo;
     }
 
+    /* 게시물 신고 */
+    public boolean declarePost(int postId) {
+        boolean flag = false;
 
+        int affectedCnt = 0;
+        try {
+            affectedCnt = postMapper.declarePost(postId);
+        } catch (SQLException e) {
+        }
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+
+        logger.info("[Comment Service] declareComment(commentId)");
+        return flag;
+    }
 }

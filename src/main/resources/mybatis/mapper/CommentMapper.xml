@@ -55,4 +55,12 @@
         ]]>
     </update>
 
+    <!-- 댓글 신고 -->
+    <update id="declareComment" parameterType="int">
+        <![CDATA[
+            update comment set flag = flag + 1
+            where comment_id = #{commentId};
+        ]]>
+    </update>
+
 </mapper>

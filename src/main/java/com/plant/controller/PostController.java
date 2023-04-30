@@ -77,4 +77,17 @@ public class PostController {
         }
 
     }
+
+    /* 게시물 신고 */
+    @PatchMapping("/{postId}")
+    public ResponseEntity declarePost(@PathVariable int postId) {
+        boolean flag = postService.declarePost(postId);
+
+        logger.info("[Post Controller] declarePost(postId)");
+        if(flag) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

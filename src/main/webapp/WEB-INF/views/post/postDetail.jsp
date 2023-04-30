@@ -30,11 +30,13 @@ ${post.postContent}
 
 
 <br>
-<c:if test="${post.userId eq sessionScope.user.userId}">
-    <button type="button" onclick="location.href='/community/form/${post.postId}'">수정</button>
-    <button type="button" onclick="deletePost(${post.postId})">삭제</button>
+<c:if test="${not empty sessionScope.user.userId}">
+    <button type="button" onclick="declare(0, ${post.postId}, 0)">신고하기</button>
+    <c:if test="${post.userId eq sessionScope.user.userId}">
+        <button type="button" onclick="location.href='/community/form/${post.postId}'">수정</button>
+        <button type="button" onclick="deletePost(${post.postId})">삭제</button>
+    </c:if>
 </c:if>
-
 
 <hr>
 댓글
@@ -60,10 +62,12 @@ ${post.postContent}
                 <td><span id="commentContent_${comment.commentId}">${comment.commentContent}</span></td>
                 <td>신고 ${comment.flag}</td>
                 <td><fmt:formatDate value="${comment.commentDate}" type="date"/></td>
-                <td><button type="button" onclick="">신고하기</button></td>
-                <c:if test="${comment.userId eq sessionScope.user.userId}">
-                    <td><button type="button" onclick="updateBox('${comment.commentContent}', '${comment.commentId}', '${post.postId}')">수정</button></td>
-                    <td><button type="button" onclick="deleteComm(${comment.commentId}, ${post.postId})">삭제</button></td>
+                <c:if test="${not empty sessionScope.user.userId}">
+                    <td><button type="button" onclick="declare(${comment.commentId}, ${post.postId}, 1)">신고하기</button></td>
+                    <c:if test="${comment.userId eq sessionScope.user.userId}">
+                        <td><button type="button" onclick="updateBox(${comment.commentContent}, ${comment.commentId}, ${post.postId})">수정</button></td>
+                        <td><button type="button" onclick="deleteComm(${comment.commentId}, ${post.postId})">삭제</button></td>
+                    </c:if>
                 </c:if>
             </tr>
         </c:forEach>
@@ -72,6 +76,7 @@ ${post.postContent}
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
+    // 댓글 수정창 열기
     function updateBox(commentContent, commentId, postId) {
           let span = document.getElementById("commentContent_" + commentId);
 
@@ -93,6 +98,7 @@ ${post.postContent}
           span.appendChild(button);
     }
 
+    // 댓글 수정
     function updateComment(updatedComment, commentId, postId) {
         $.ajax({
             url: "/community/comment/" + commentId,
@@ -104,12 +110,16 @@ ${post.postContent}
             success: function(response) {
                 window.location.href = "/community/" + postId;
             },
-            error: function(xhr, status, error) {
+            error: function(request, status, error) {
                 alert('댓글을 수정할 수 없습니다.');
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
             }
         });
     }
 
+    // 게시물 삭제
     function deletePost(postId) {
         $.ajax({
             url: "/community/" + postId,
@@ -120,12 +130,16 @@ ${post.postContent}
             success: function(response) {
                 alert('삭제되었습니다.');
             },
-            error: function(xhr, status, error) {
+            error: function(request, status, error) {
                 alert('게시물을 삭제할 수 없습니다.');
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
             }
         });
     }
 
+    // 댓글 삭제
     function deleteComm(commentId, postId) {
         $.ajax({
             url: "/community/comment/" + commentId,
@@ -137,8 +151,61 @@ ${post.postContent}
                 alert('삭제되었습니다.');
                 window.location.href = "/community/" + postId;
             },
-            error: function(xhr, status, error) {
+            error: function(request, status, error) {
                 alert('댓글을 삭제할 수 없습니다.');
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+        });
+    }
+
+    // 게시물 & 댓글 신고
+    function declare(commentId, postId, num) {
+        let url = "";
+        let data = {};
+        if(num == 0) {
+            url = "/community/" + postId;
+            data.postId = postId;
+        } else {
+            url =  "/community/comment/" + commentId;
+            data.commentId = commentId;
+        }
+
+        $.ajax({
+            url:  url,
+            type: "PATCH",
+            data: data,
+            success: function(response) {
+                alert('신고되었습니다.');
+                window.location.href = "/community/" + postId;
+            },
+            error: function(request, status, error) {
+                alert('신고 중 오류가 발생했습니다.');
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+        });
+    }
+
+    // 댓글 신고
+    function declareComment(commentId, postId) {
+        $.ajax({
+            url: "/community/comment/" + commentId,
+            type: "PATCH",
+            data: {
+                commentId : commentId
+            },
+            success: function(response) {
+                alert('신고되었습니다.');
+                window.location.href = "/community/" + postId;
+            },
+            error: function(request, status, error) {
+                alert('신고 중 오류가 발생했습니다.');
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
             }
         });
     }
