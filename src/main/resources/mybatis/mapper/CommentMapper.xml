@@ -40,6 +40,19 @@
       ]]>
     </update>
 
+    <!-- 댓글 삭제 -->
+    <delete id="deleteComment" parameterType="int">
+        <![CDATA[
+            delete from comment where comment_id = #{commentId}
+      ]]>
+    </delete>
 
+    <!-- 댓글 수정 -->
+    <update id="updateComment" parameterType="com.plant.vo.CommentVo">
+        <![CDATA[
+            update comment set comment_content = #{commentContent} , comment_date = now()
+            where comment_id = #{commentId};
+        ]]>
+    </update>
 
 </mapper>

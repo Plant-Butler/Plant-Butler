@@ -15,6 +15,12 @@ public interface CommentMapper {
     /* 댓글 등록 */
     int postComment(CommentVo commentVo) throws SQLException;
 
-    /* 댓글 작성시 포인트 상승 */
+    /* 댓글 등록시 포인트 상승 */
     void commentPoint(String userId) throws SQLException;
+
+    /* 댓글 삭제 */
+    int deleteComment(int commentId) throws SQLException;
+
+    /* 댓글 수정 */
+    int updateComment(CommentVo commentVo) throws SQLException;
 }

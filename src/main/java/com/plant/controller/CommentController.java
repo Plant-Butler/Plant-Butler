@@ -35,4 +35,30 @@ public class CommentController {
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
         }
     }
+
+    /* 댓글 수정 */
+    @PutMapping("/{commentId}")
+    public ResponseEntity updateComment(@ModelAttribute("CommentVo") CommentVo commentVo) {
+        boolean flag = commentService.updateComment(commentVo);
+
+        logger.info("[Comment Controller] updateComment(commentVo)");
+        if(flag) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    /* 댓글 삭제 */
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity deleteComment(@PathVariable int commentId) {
+        boolean flag = commentService.deleteComment(commentId);
+
+        logger.info("[Comment Controller] deleteComment(commentId)");
+        if(flag) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 }

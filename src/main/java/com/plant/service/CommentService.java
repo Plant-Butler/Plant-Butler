@@ -45,4 +45,38 @@ public class CommentService {
         logger.info("[Comment Service] postComment()");
         return flag;
     }
+
+    /* 댓글 삭제 */
+    public boolean deleteComment(int commentId) {
+        boolean flag = false;
+
+        int affectedCnt = 0;
+        try {
+            affectedCnt = commentMapper.deleteComment(commentId);
+        } catch (SQLException e) {
+        }
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+
+        logger.info("[Comment Service] deleteComment(commentId)");
+        return flag;
+    }
+
+    /* 댓글 수정 */
+    public boolean updateComment(CommentVo commentVo) {
+        boolean flag = false;
+
+        int affectedCnt = 0;
+        try {
+            affectedCnt = commentMapper.updateComment(commentVo);
+        } catch (SQLException e) {
+        }
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+
+        logger.info("[Comment Service] updateComment(commentVo)");
+        return flag;
+    }
 }

@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@page import="java.net.URLEncoder"%>
-<%@page import="com.plant.vo.UserVo"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,13 +57,13 @@ ${post.postContent}
         <c:forEach var="comment" items="${commentList}">
             <tr>
                 <td>${comment.nickname}</td>
-                <td>${comment.commentContent}</td>
+                <td><span id="commentContent_${comment.commentId}">${comment.commentContent}</span></td>
                 <td>신고 ${comment.flag}</td>
                 <td><fmt:formatDate value="${comment.commentDate}" type="date"/></td>
                 <td><button type="button" onclick="">신고하기</button></td>
                 <c:if test="${comment.userId eq sessionScope.user.userId}">
-                    <td><button type="button" onclick="">수정</button></td>
-                    <td><button type="button" onclick="deleteComm(${comment.commentId})">삭제</button></td>
+                    <td><button type="button" onclick="updateBox('${comment.commentContent}', '${comment.commentId}', '${post.postId}')">수정</button></td>
+                    <td><button type="button" onclick="deleteComm(${comment.commentId}, ${post.postId})">삭제</button></td>
                 </c:if>
             </tr>
         </c:forEach>
@@ -72,6 +71,45 @@ ${post.postContent}
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
+
+    function updateBox(commentContent, commentId, postId) {
+          let span = document.getElementById("commentContent_" + commentId);
+
+          let input = document.createElement("input");
+          input.type = "text";
+          input.name = "updatedComment";
+          input.value = commentContent;
+
+          //let updatedComment = input.value;
+          let button = document.createElement("button");
+          button.type = "button";
+          button.onclick = function() {
+            updateComment(input.value, commentId, postId);
+          };
+          button.innerHTML = "수정완료";
+
+          span.innerHTML = "";
+          span.appendChild(input);
+          span.appendChild(button);
+    }
+
+    function updateComment(updatedComment, commentId, postId) {
+        $.ajax({
+            url: "/community/comment/" + commentId,
+            type: "PUT",
+            data: {
+                commentContent : updatedComment,
+                commentId : commentId
+            },
+            success: function(response) {
+                window.location.href = "/community/" + postId;
+            },
+            error: function(xhr, status, error) {
+                alert('댓글을 수정할 수 없습니다.');
+            }
+        });
+    }
+
     function deletePost(postId) {
         $.ajax({
             url: "/community/" + postId,
@@ -84,6 +122,23 @@ ${post.postContent}
             },
             error: function(xhr, status, error) {
                 alert('게시물을 삭제할 수 없습니다.');
+            }
+        });
+    }
+
+    function deleteComm(commentId, postId) {
+        $.ajax({
+            url: "/community/comment/" + commentId,
+            type: "DELETE",
+            data: {
+                commentId : commentId
+            },
+            success: function(response) {
+                alert('삭제되었습니다.');
+                window.location.href = "/community/" + postId;
+            },
+            error: function(xhr, status, error) {
+                alert('댓글을 삭제할 수 없습니다.');
             }
         });
     }
