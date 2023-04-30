@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.plant.dao.ManagerMapper">
+    <resultMap id="UserResultMap" type="com.plant.vo.UserVo">
+        <result column="user_id" property="userId"/>
+        <result column="nickname" property="nickname"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+        <result column="point" property="point"/>
+        <result column="manager" property="manager"/>
+    </resultMap>
+    <resultMap id="BestUserMap" type="com.plant.vo.BestUserVo">
+        <result column="nickname" property="nickname"/>
+        <result column="myplant_image" property="myplantImage"/>
+        <result column="distbNm" property="distbNm"/>
+        <result column="myplant_nick" property="myplantNick"/>
+    </resultMap>
+    <resultMap id="ManagePostMap" type="com.plant.vo.PostVo">
+        <result column="post_title" property="postTitle"/>
+        <result column="user_id" property="userId"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
+
+    <resultMap id="PostMap" type="com.plant.vo.PostVo">
+        <result column="post_id" property="postId"/>
+        <result column="user_id" property="userId"/>
+        <result column="Post_title" property="postTitle"/>
+        <result column="post_content" property="postContent"/>
+        <result column="post_tag" property="postTag"/>
+        <result column="post_image" property="postImage"/>
+        <result column="post_file" property="postFile"/>
+        <result column="post_date" property="postDate"/>
+        <result column="read_count" property="readCount"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
+
+    <select id="getUserList" resultMap="UserResultMap">
+        <![CDATA[
+            select * from user where manager = 0 order by point desc
+        ]]>
+    </select>
+
+    <insert id="insertBestUser" parameterType="String">
+        <![CDATA[
+            insert into bestuser (user_id)
+            values (#{userId})
+      ]]>
+    </insert>
+
+    <select id="getBestUser" resultMap="BestUserMap">
+        <![CDATA[
+            select nickname, myplant_image, distbNm, myplant_nick from bestuser b
+            inner join user u on b.user_id = u.user_id
+            inner join myplant mp on mp.user_id = b.user_id
+            inner join plant p on p.plant_id = mp.plant_id
+        ]]>
+    </select>
+
+    <delete id="deleteBestUser" parameterType="String">
+        <![CDATA[
+            delete from bestuser where user_id = #{userId}
+        ]]>
+    </delete>
+
+    <delete id="deleteAllBestUser">
+        <![CDATA[
+            truncate table bestuser
+        ]]>
+    </delete>
+
+    <select id="mgmtPostList" resultMap="ManagePostMap">
+        <![CDATA[
+            select post_title, user_id, flag from post order by flag desc
+        ]]>
+    </select>
+
+    <select id="getCommunityList" parameterType="java.util.Map" resultMap="PostMap">
+        SELECT *
+        FROM post
+        <where>
+            <if test="searchField != null and searchField != '' and keyword != null and keyword != ''">
+                <![CDATA[
+      AND ${searchField} LIKE CONCAT('%', #{keyword}, '%')
+      ]]>
+            </if>
+        </where>
+        ORDER BY post_date DESC
+    </select>
+</mapper>

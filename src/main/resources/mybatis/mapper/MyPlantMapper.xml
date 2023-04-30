@@ -43,16 +43,4 @@
     DELETE from myplant where myplant_id = (#{myplantId})
     </delete>
 
-    <select id="searchPlant" resultMap="MyplantResultMap">
-
-      <![CDATA[
-        select * from myplant where myplant_id = #{myplant_id}
-        ]]>
-	</select>
-
-    <select id="selectPlantInfo" resultType="com.plant.vo.PlantVo">
-   <![CDATA[
-        SELECT * FROM plant WHERE distbNm LIKE CONCAT('%', #{plantId}, '%')
-        ]]>
-</select>
  </mapper>

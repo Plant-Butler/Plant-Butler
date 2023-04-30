@@ -1,7 +1,6 @@
 package com.plant.controller;
 import com.plant.service.MyPlantService;
 import com.plant.vo.MyplantVo;
-import com.plant.vo.PlantVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.net.URI;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 @RestController
@@ -54,31 +54,5 @@ public class PlantController {
     public ResponseEntity<Void> deleteMyPlant(@PathVariable("myplantId") int myplantId) {
         MyPlantService.deleteMyPlant(myplantId);
         return ResponseEntity.noContent().build();
-    }
-    @GetMapping(value="/{myplantId}")
-    public ModelAndView myPlantDetail(@PathVariable("myplantId") int myplantId){
-        ModelAndView model = new ModelAndView();
-        MyplantVo myplantVo = MyPlantService.myPlantDetail(myplantId);
-        model.addObject("myPlant", myplantVo);
-        model.setViewName("myPlantDetail");
-        return model;
-
-    }
-
-    @GetMapping(value="/search/{plantId}")
-    public ResponseEntity <ArrayList<PlantVo>> searchPlantInfo(@PathVariable("plantId") String plantId){
-        ArrayList<PlantVo> plantVo = new ArrayList<>();
-        plantVo = MyPlantService.searchPlantInfo(plantId);
-        System.out.println("plantVo" + plantVo);
-        return new ResponseEntity<>(plantVo,HttpStatus.OK);
-
-    }
-
-    @GetMapping(value = "/{myplantId}/schedule")
-    public ModelAndView myPlantSchedule(@PathVariable Long myplantId){
-        ModelAndView model = new ModelAndView();
-        model.setViewName("myPlantSchedule");
-        return model;
-
     }
 }

@@ -8,55 +8,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-    function printDetail() {
-      var inputValue = $("#searchInput").val();
-      console.log("Input value:", inputValue);
-      $.ajax({
-        url: "/myplants/search/" + inputValue,
-        type: "GET",
-        success: function(data) {
-          $("#searchResults").html("");
-          console.log("Response data:", data);
-          var resultHtml = "";
-          if (data && data.length > 0) {
-            resultHtml = "<ul>";
-            for (var i = 0; i < data.length; i++) {
-              resultHtml += "<li>";
-              for (var key in data[i]) {
-                if (data[i].hasOwnProperty(key)) {
-                  resultHtml += key + ": " + data[i][key] + "<br>";
-                }
-              }
-              resultHtml += "</li>";
-            }
-            resultHtml += "</ul>";
-          } else {
-            resultHtml = "<p>No results found.</p>";
-          }
-          $("#searchResults").html(resultHtml);
-        },
-        error: function(xhr, status, error) {
-          console.log(status, error);
-        }
-      });
-    }
-  </script>
-  <title>Title</title>
+    <title>Title</title>
 </head>
 <body>
 <h1>regist form</h1>
 <form action="/myplants/form" method="post">
-  <table>
-    <tr>
-      <td>내식물 검색하기</td>
-      <td><input type="text" name="name" id="searchInput"></td>
-      <td><button type="button" class="detailBtn" onclick="printDetail()">검색</button></td>
-    </tr>
-  </table>
-
-  <div id="searchResults"></div>
 <table>
   <tr><td>식물아이디 :</td><td><input type="text" name = "plantId"></td><td></td></tr>
   <tr><td>유저아이디 :</td><td><input type="text" name = "userId"></td><td></td></tr>

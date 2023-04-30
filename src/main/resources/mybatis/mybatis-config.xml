@@ -3,5 +3,8 @@
 <configuration>
   <mappers>
     <mapper resource="MyPlantMapper.xml"/>
+    <mapper resource="ManagerMapper.xml"/>
+    <mapper resource="UserMapper.xml"/>
+
   </mappers>
 </configuration>
