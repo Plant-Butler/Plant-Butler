@@ -21,11 +21,11 @@ public class ManagerService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 전체 회원 조회 */
-    public ArrayList<UserVo> getUserList(Criteria cri) {
+    public ArrayList<UserVo> getUserList() {
         ArrayList<UserVo> userList = null;
 
         try {
-            userList = (ArrayList<UserVo>) mapper.getUserList(cri);
+            userList = (ArrayList<UserVo>) mapper.getUserList();
         } catch (SQLException e) {
             e.printStackTrace();
         }

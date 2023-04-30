@@ -19,6 +19,7 @@
         <result column="myplant_nick" property="myplantNick"/>
     </resultMap>
     <resultMap id="ManagePostMap" type="com.plant.vo.PostVo">
+        <result column="post_id" property="postId"/>
         <result column="post_title" property="postTitle"/>
         <result column="user_id" property="userId"/>
         <result column="flag" property="flag"/>
@@ -60,7 +61,7 @@
 
     <select id="mgmtPostList" resultMap="ManagePostMap">
         <![CDATA[
-            select post_title, user_id, flag from post order by flag desc
+            select post_id, post_title, user_id, flag from post order by flag desc
         ]]>
     </select>
 

@@ -65,7 +65,7 @@ ${post.postContent}
                 <c:if test="${not empty sessionScope.user.userId}">
                     <td><button type="button" onclick="declare(${comment.commentId}, ${post.postId}, 1)">신고하기</button></td>
                     <c:if test="${comment.userId eq sessionScope.user.userId}">
-                        <td><button type="button" onclick="updateBox(${comment.commentContent}, ${comment.commentId}, ${post.postId})">수정</button></td>
+                        <td><button type="button" onclick="updateBox('${comment.commentContent}', ${comment.commentId}, ${post.postId})">수정</button></td>
                         <td><button type="button" onclick="deleteComm(${comment.commentId}, ${post.postId})">삭제</button></td>
                     </c:if>
                 </c:if>
@@ -189,26 +189,6 @@ ${post.postContent}
         });
     }
 
-    // 댓글 신고
-    function declareComment(commentId, postId) {
-        $.ajax({
-            url: "/community/comment/" + commentId,
-            type: "PATCH",
-            data: {
-                commentId : commentId
-            },
-            success: function(response) {
-                alert('신고되었습니다.');
-                window.location.href = "/community/" + postId;
-            },
-            error: function(request, status, error) {
-                alert('신고 중 오류가 발생했습니다.');
-                console.log("code: " + request.status)
-                console.log("message: " + request.responseText)
-                console.log("error: " + error);
-            }
-        });
-    }
 </script>
 
 </body>

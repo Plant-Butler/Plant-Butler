@@ -28,17 +28,7 @@
     </c:forEach>
 </table>
 <button type="button" onclick="deleteAllBest()">우수회원 초기화</button>
-<!-- paging -->
--	<c:if test="${paging.prev}">
-		<a href='<c:url value="./list?page=${paging.startPage-1}"/>'>이전</a>
-	</c:if>
-	<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="pageNum">
-		<a href='<c:url value="/list?page=${pageNum}"/>'>${pageNum}</a>
-	</c:forEach>
-	<c:if test="${paging.next}">
-		<a href='<c:url value="/list?page=${paging.endPage+1}"/>'>다음</a>
-	</c:if>
-</div>
+
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -54,8 +44,11 @@
                 alert('추가되었습니다');
                 $(".select-best").eq(index).text("우수회원 선택완료");
             },
-            error: function(xhr, status, error) {
+            error: function(request, status, error) {
                 alert('이미 추가된 회원입니다.');
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
             }
         });
     }
@@ -72,8 +65,11 @@
                     alert('취소되었습니다');
                     $(".select-best").eq(index).text("우수회원 선택");
                 },
-                error: function(xhr, status, error) {
+                error: function(request, status, error) {
                     alert('이미 취소된 회원입니다.');
+                        console.log("code: " + request.status)
+                        console.log("message: " + request.responseText)
+                        console.log("error: " + error);
                 }
             });
         }
@@ -86,8 +82,11 @@
                         alert('초기화되었습니다');
                         $(".select-best").text("우수회원 선택");
                     },
-                    error: function(xhr, status, error) {
+                    error: function(request, status, error) {
                         alert('오류가 발생했습니다.');
+                        console.log("code: " + request.status)
+                        console.log("message: " + request.responseText)
+                        console.log("error: " + error);
                     }
                 });
             }
@@ -101,15 +100,18 @@
                 var html = "";
                 for (var i = 0; i < data.length; i++) {
                     var post = data[i];
-                    html += "<tr><td><a href= ''>" + post.postTitle +
+                    html += "<tr><td><a href= '/community/" + post.postId + "'>" + post.postTitle +
                             "</a></td><td>" + post.userId +
                             "</td><td> 신고 " + post.flag +
                             "회 </td><td><button type='button'>삭제</button></td></tr>";
                 }
                 $("#post-list").html(html);
             },
-            error: function(xhr, status, error) {
+            error: function(request, status, error) {
                 alert('게시물 목록을 가져오는 도중 오류가 발생했습니다.');
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
             }
         });
 </script>

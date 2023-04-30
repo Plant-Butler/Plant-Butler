@@ -12,7 +12,7 @@ import java.util.ArrayList;
 @Mapper
 public interface ManagerMapper {
 
-    ArrayList<UserVo> getUserList(Criteria cri) throws SQLException;
+    ArrayList<UserVo> getUserList() throws SQLException;
 
     int insertBestUser(String userId) throws SQLException;
 
