@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,5 +27,15 @@ public class MainService {
         List<PostVo> list = mapper.getCommunityList(params);
         PageInfo<PostVo> pageInfo = new PageInfo<>(list,10);
         return pageInfo;
+    }
+
+    public int getCommentCount(int postId) {
+        int postid = 0;
+        try {
+            postid = mapper.getCommentCount(postId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return postid;
     }
 }

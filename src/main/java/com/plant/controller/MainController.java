@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -49,8 +50,12 @@ public class MainController {
         params.put("searchField", searchField);
         params.put("keyword", keyword);
         PageInfo<PostVo> list = mainService.getCommunityList(pageNum , pageSize, params);
+        List<PostVo> postList = list.getList();
+        /*댓글수 조회 로직*/
+        for (PostVo post : postList) {
+            post.setCommentCount(mainService.getCommentCount(post.getPostId()));
+        }
         mv.addObject("posts", list);
-        System.out.println(list);
         mv.setViewName("community/communityList");
         return mv;
     }

@@ -5,22 +5,29 @@
   Time: 오전 11:41
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>게시물 목록</title>
 </head>
 <body>
+<%@ include file="../main/header.jsp" %>
+
 <!-- 검색 -->
 
 <!-- 리스트 테이블 -->
-<table>
+<table style="border-spacing: 40px;">
     <thead>
     <tr>
-        <th scope="col">Title</th>
-        <th scope="col">User ID</th>
-        <th scope="col">Date</th>
+        <th scope="col">제목</th>
+        <th scope="col">작성자</th>
+        <th scope="col">조회수</th>
+        <th scope="col">작성일자</th>
+        <th scope="col">댓글수</th>
     </tr>
     </thead>
     <tbody>
@@ -28,7 +35,9 @@
         <tr>
             <td>${post.postTitle}</td>
             <td>${post.userId}</td>
-            <td>${post.postDate}</td>
+            <td>${post.readCount}</td>
+            <td><fmt:formatDate value="${post.postDate}" type="date"/></td>
+            <td>${post.commentCount}</td>
         </tr>
     </c:forEach>
     </tbody>

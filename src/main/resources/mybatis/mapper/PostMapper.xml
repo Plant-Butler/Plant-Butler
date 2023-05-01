@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.plant.dao.ManagerMapper">
+<mapper namespace="com.plant.dao.PostMapper">
     <resultMap id="UserResultMap" type="com.plant.vo.UserVo">
         <result column="user_id" property="userId"/>
         <result column="nickname" property="nickname"/>
@@ -36,46 +36,6 @@
         <result column="read_count" property="readCount"/>
         <result column="flag" property="flag"/>
     </resultMap>
-
-    <select id="getUserList" resultMap="UserResultMap">
-        <![CDATA[
-            select * from user where manager = 0 order by point desc
-        ]]>
-    </select>
-
-    <insert id="insertBestUser" parameterType="String">
-        <![CDATA[
-            insert into bestuser (user_id)
-            values (#{userId})
-      ]]>
-    </insert>
-
-    <select id="getBestUser" resultMap="BestUserMap">
-        <![CDATA[
-            select nickname, myplant_image, distbNm, myplant_nick from bestuser b
-            inner join user u on b.user_id = u.user_id
-            inner join myplant mp on mp.user_id = b.user_id
-            inner join plant p on p.plant_id = mp.plant_id
-        ]]>
-    </select>
-
-    <delete id="deleteBestUser" parameterType="String">
-        <![CDATA[
-            delete from bestuser where user_id = #{userId}
-        ]]>
-    </delete>
-
-    <delete id="deleteAllBestUser">
-        <![CDATA[
-            truncate table bestuser
-        ]]>
-    </delete>
-
-    <select id="mgmtPostList" resultMap="ManagePostMap">
-        <![CDATA[
-            select post_title, user_id, flag from post order by flag desc
-        ]]>
-    </select>
 
     <select id="getCommunityList" parameterType="java.util.Map" resultMap="PostMap">
         SELECT *
