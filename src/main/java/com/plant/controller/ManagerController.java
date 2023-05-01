@@ -1,5 +1,6 @@
 package com.plant.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.plant.service.ManagerService;
 import com.plant.vo.BestUserVo;
 import com.plant.vo.CommentVo;
@@ -25,29 +26,23 @@ public class ManagerController {
     private ManagerService service;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /* 전체 회원 */
+    /* 게시물 + 댓글 + 회원 */
     @GetMapping(value=" ")
-    public ModelAndView mgmtList() {
+    public ModelAndView managerist( @RequestParam(defaultValue = "1") int postPage,
+                                    @RequestParam(defaultValue = "1") int commentPage,
+                                    @RequestParam(defaultValue = "1") int userPage) {
         ModelAndView mv = new ModelAndView("/mypage/manager");
-        ArrayList<UserVo> userList = service.getUserList();
+        //ArrayList<UserVo> userList = service.getUserList();
+
+        PageInfo<PostVo> postList = service.mgmtPostList(postPage, 10);
+        PageInfo<CommentVo> commentList = service.mgmtCommentList(commentPage, 10);
+        PageInfo<UserVo> userList = service.getUserList(userPage, 10);
+        mv.addObject("postList", postList);
+        mv.addObject("commentList", commentList);
         mv.addObject("userList", userList);
 
-        logger.info("[Manager Controller] mgmtList()");
+
         return mv;
-    }
-
-    /* 전체 게시물 */
-    @GetMapping("/post-list")
-    public ResponseEntity<List<PostVo>> getPostList() {
-        List<PostVo> postList = service.mgmtPostList();
-        return new ResponseEntity<>(postList, HttpStatus.OK);
-    }
-
-    /* 전체 댓글 */
-    @GetMapping("/comment-list")
-    public ResponseEntity<List<CommentVo>> getCommentList() {
-        List<CommentVo> commentList = service.mgmtCommentList();
-        return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
 
     /* 우수회원 추가 */
