@@ -7,8 +7,9 @@ public class MyplantVo {
     private int myplantId;
 
     private int plantId;
-
+    private int postId;
     private String userId;
+    private String distbNm;
     private String myplantNick;
     private String myplantImage;
     private int myplantWeight; // 화분 가로
@@ -123,5 +124,21 @@ public class MyplantVo {
 
     public void setFirstDate(Timestamp firstDate) {
         this.firstDate = firstDate;
+    }
+
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+
+    public String getDistbNm() {
+        return distbNm;
+    }
+
+    public void setDistbNm(String distbNm) {
+        this.distbNm = distbNm;
     }
 }

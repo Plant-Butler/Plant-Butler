@@ -16,8 +16,24 @@
 <hr>
 [분류] ${post.postTag}
 <br><br>
+<c:if test="${not empty myPlantList}">
+    [${post.nickname} 님의 반려식물] <br>
+    <table>
+        <c:forEach var="myPlant" items="${myPlantList}">
+            <tr>
+                <td><img src="/images/${myPlant.myplantImage}"</td>
+                <td>${myPlant.distbNm}</td>
+                <td>${myPlant.myplantNick}</td>
+                <td><fmt:formatDate value="${myPlant.firstDate}" type="date"/></td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+<br>
+<br>
 ${post.postContent}
 <br>
+
 <c:if test="${not empty post.postImage}">
 이미지
 	<img src="/images/${post.postImage}" />

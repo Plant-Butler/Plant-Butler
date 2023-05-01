@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.plant.service.CommentService;
 import com.plant.service.PostService;
 import com.plant.vo.CommentVo;
+import com.plant.vo.MyplantVo;
 import com.plant.vo.PostVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +37,13 @@ public class PostController {
                                    @RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize) {
         ModelAndView mv = new ModelAndView("/post/postDetail");
         PostVo postVo = postService.postDetail(postId);
+        ArrayList<MyplantVo> myPlantList = postService.postMyPlantDetail(postId);
         //ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
 
         PageInfo<CommentVo> commentList = commentService.getCommentList(postId, pageNum , pageSize);
         mv.addObject("post", postVo);
         mv.addObject("commentList", commentList);
+        mv.addObject("myPlantList", myPlantList);
 
         return mv;
     }

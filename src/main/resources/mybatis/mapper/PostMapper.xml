@@ -21,6 +21,13 @@
           <result column="nickname" property="nickname"/>
           <!--  <collection property="userNick" resultMap="userNick" />  -->
     </resultMap>
+    <resultMap id="PostMyPlantMap" type="com.plant.vo.MyplantVo">
+        <result column="post_id" property="postId"/>
+        <result column="myplant_nick" property="myplantNick"/>
+        <result column="myplant_image" property="myplantImage"/>
+        <result column="distbNm" property="distbNm"/>
+        <result column="first_date" property="firstDate"/>
+    </resultMap>
 
     <!-- 게시물 상세조회 -->
     <select id="postDetail" resultMap="PostDetailMap" parameterType="int">
@@ -29,6 +36,18 @@
             from post p
             join user u
             where post_id = #{postId} and p.user_id = u.user_id
+        ]]>
+    </select>
+
+    <!-- 내 반려식물 상세정보 -->
+    <select id="postMyPlantDetail" resultMap="PostMyPlantMap" parameterType="int">
+        <![CDATA[
+            select p.post_id, myplant_nick, myplant_image, distbNm, first_date
+            from post p
+            join postmp pmp on pmp.post_id = p.post_id
+            join myplant mp on mp.myplant_id = pmp.myplant_id
+            join plant pl on pl.plant_id = mp.plant_id
+            where p.post_id = #{postId}
         ]]>
     </select>
 
