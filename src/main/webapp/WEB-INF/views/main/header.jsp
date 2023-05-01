@@ -15,10 +15,6 @@
     System.out.println("user session = " + userVo);
     boolean isLoggedIn = false;
 
-    // 테스트용
-    //UserVo userVo = new UserVo();
-    //userVo.setManager(1);
-
     if (userVo != null) {
     	isLoggedIn = true;
     }
