@@ -23,6 +23,7 @@
 <table style="border-spacing: 40px;">
     <thead>
     <tr>
+        <th scope="col">태그</th>
         <th scope="col">제목</th>
         <th scope="col">작성자</th>
         <th scope="col">조회수</th>
@@ -33,6 +34,7 @@
     <tbody>
     <c:forEach var="post" items="${posts.list}">
         <tr>
+            <td>${post.postTag}</td>
             <td>${post.postTitle}</td>
             <td>${post.userId}</td>
             <td>${post.readCount}</td>

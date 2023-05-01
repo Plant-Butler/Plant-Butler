@@ -4,7 +4,6 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.plant.dao.PostMapper">
-<<<<<<< HEAD
     <resultMap id="UserResultMap" type="com.plant.vo.UserVo">
         <result column="user_id" property="userId"/>
         <result column="nickname" property="nickname"/>
@@ -38,6 +37,22 @@
         <result column="flag" property="flag"/>
     </resultMap>
 
+    <resultMap id="PostDetailMap" type="com.plant.vo.PostVo">
+        <result column="post_id" property="postId"/>
+        <result column="user_id" property="userId"/>
+        <result column="post_title" property="postTitle"/>
+        <result column="post_content" property="postContent"/>
+        <result column="post_tag" property="postTag"/>
+        <result column="post_image" property="postImage"/>
+        <result column="post_file" property="postFile"/>
+        <result column="post_date" property="postDate"/>
+        <result column="read_count" property="readCount"/>
+        <result column="flag" property="flag"/>
+        <result column="nickname" property="nickname"/>
+        <!--  <collection property="userNick" resultMap="userNick" />  -->
+    </resultMap>
+
+
     <select id="getCommunityList" parameterType="java.util.Map" resultMap="PostMap">
         SELECT *
         FROM post
@@ -54,24 +69,7 @@
     <select id="getCommentCount" parameterType="int" resultType="int">
         SELECT COUNT(*) FROM comment WHERE post_id = #{postId}
     </select>
-=======
-    <!--  <resultMap id="userNick" type="String">
-          <result column="nickname" property="nickname"/>
-      </resultMap> -->
-      <resultMap id="PostDetailMap" type="com.plant.vo.PostVo">
-          <result column="post_id" property="postId"/>
-          <result column="user_id" property="userId"/>
-          <result column="post_title" property="postTitle"/>
-          <result column="post_content" property="postContent"/>
-          <result column="post_tag" property="postTag"/>
-          <result column="post_image" property="postImage"/>
-          <result column="post_file" property="postFile"/>
-          <result column="post_date" property="postDate"/>
-          <result column="read_count" property="readCount"/>
-          <result column="flag" property="flag"/>
-          <result column="nickname" property="nickname"/>
-          <!--  <collection property="userNick" resultMap="userNick" />  -->
-    </resultMap>
+
 
     <!-- 게시물 상세조회 -->
     <select id="postDetail" resultMap="PostDetailMap" parameterType="int">
@@ -98,5 +96,4 @@
         ]]>
     </update>
 
->>>>>>> master
 </mapper>
