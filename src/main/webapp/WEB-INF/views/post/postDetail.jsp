@@ -17,15 +17,15 @@
 [분류] ${post.postTag}
 <br><br>
 ${post.postContent}
-
+<br>
 <c:if test="${not empty post.postImage}">
 이미지
 	<img src="/images/${post.postImage}" />
 </c:if>
-
+<br>
 <c:if test="${not empty post.postFile}">
 [첨부파일]
-     <a href='./download.do?fileName=<%=URLEncoder.encode("${post.postFile}", "UTF-8")%>'>${post.postFile}</a>
+     <a href="./download.do?fileName=${post.postFile}">${post.postFile}</a>
 </c:if>
 
 
@@ -55,8 +55,9 @@ ${post.postContent}
                 </tr>
             </form>
          </c:if>
+
     <!-- 댓글 목록 -->
-        <c:forEach var="comment" items="${commentList}">
+        <c:forEach var="comment" items="${commentList.list}">
             <tr>
                 <td>${comment.nickname}</td>
                 <td><span id="commentContent_${comment.commentId}">${comment.commentContent}</span></td>
@@ -72,6 +73,29 @@ ${post.postContent}
             </tr>
         </c:forEach>
 </table>
+
+<div>
+    <!-- 이전 페이지 -->
+    <c:if test="${commentList.navigateFirstPage > 1}">
+        <a href="/community/${post.postId}?pageNum=${commentList.navigateFirstPage - 1}">◀</a>
+    </c:if>
+
+    <c:forEach var="pageNum" begin="${commentList.navigateFirstPage}" end="${commentList.navigateLastPage}">
+        <c:choose>
+            <c:when test="${pageNum == commentList.pageNum}">
+                <span>${pageNum}</span>
+            </c:when>
+            <c:otherwise>
+                <a href="/community/${post.postId}?pageNum=${pageNum}">${pageNum}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+
+    <!-- 다음 페이지 -->
+    <c:if test="${commentList.navigateLastPage < commentList.pages}">
+        <a href="/community/${post.postId}?pageNum=${commentList.navigateLastPage + 1}">▶</a>
+    </c:if>
+</div>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>

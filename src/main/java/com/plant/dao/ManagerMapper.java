@@ -1,10 +1,10 @@
 package com.plant.dao;
 
 import com.plant.vo.BestUserVo;
+import com.plant.vo.CommentVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
-import utils.Criteria;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -23,4 +23,6 @@ public interface ManagerMapper {
     int deleteAllBestUser() throws SQLException;
 
     ArrayList<PostVo> mgmtPostList() throws SQLException;
+
+    ArrayList<CommentVo> mgmtCommentList() throws SQLException;
 }

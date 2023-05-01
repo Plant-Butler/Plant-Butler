@@ -1,5 +1,6 @@
 package com.plant.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.plant.service.CommentService;
 import com.plant.service.PostService;
 import com.plant.vo.CommentVo;
@@ -15,6 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 @RestController
@@ -29,11 +32,13 @@ public class PostController {
 
     /* 게시물 상세보기 */
     @GetMapping("/{postId}")
-    public ModelAndView postDetail(@PathVariable int postId) {
+    public ModelAndView postDetail(@PathVariable int postId,
+                                   @RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize) {
         ModelAndView mv = new ModelAndView("/post/postDetail");
         PostVo postVo = postService.postDetail(postId);
-        ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
+        //ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
 
+        PageInfo<CommentVo> commentList = commentService.getCommentList(postId, pageNum , pageSize);
         mv.addObject("post", postVo);
         mv.addObject("commentList", commentList);
 
@@ -42,10 +47,8 @@ public class PostController {
 
     /* 첨부파일 다운로드 */
     @GetMapping("/download.do")
-    public void download(@RequestParam("fileName") String fileName, HttpServletResponse resp, HttpServletRequest request) {
-        //File downloadFile = new File("D:\\23-02-bit-mini-01\\upload_files\\data\\"+fileName);
-        String filePath = request.getServletContext().getRealPath("/files/" + fileName);
-        File downloadFile = new File(filePath);
+    public void download(@RequestParam("fileName") String fileName, HttpServletResponse resp) throws IOException {
+        File downloadFile = new File("D:\\23-04-BIT-final-project\\files\\"+fileName);
 
         try {
             fileName = new String(fileName.getBytes("UTF-8"),"ISO-8859-1");

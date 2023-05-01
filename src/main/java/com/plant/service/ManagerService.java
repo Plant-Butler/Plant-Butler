@@ -2,16 +2,17 @@ package com.plant.service;
 
 import com.plant.dao.ManagerMapper;
 import com.plant.vo.BestUserVo;
+import com.plant.vo.CommentVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.Criteria;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ManagerService {
@@ -97,8 +98,22 @@ public class ManagerService {
             e.printStackTrace();
         }
 
-        logger.info("[Manager Service] getPostList()");
+        logger.info("[Manager Service] mgmtPostList()");
         return postList;
     }
 
+    /* 전체 댓글 신고 수 정렬 */
+    public List<CommentVo> mgmtCommentList() {
+
+        ArrayList<CommentVo> commentList = null;
+
+        try {
+            commentList = (ArrayList<CommentVo>) mapper.mgmtCommentList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        logger.info("[Manager Service] mgmtCommentList()");
+        return commentList;
+    }
 }

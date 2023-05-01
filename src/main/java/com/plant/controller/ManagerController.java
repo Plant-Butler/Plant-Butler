@@ -2,6 +2,7 @@ package com.plant.controller;
 
 import com.plant.service.ManagerService;
 import com.plant.vo.BestUserVo;
+import com.plant.vo.CommentVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
@@ -12,9 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import utils.Criteria;
-import utils.Paging;
-
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,13 +32,6 @@ public class ManagerController {
         ArrayList<UserVo> userList = service.getUserList();
         mv.addObject("userList", userList);
 
-//        Paging paging = new Paging();
-//        paging.setCri(cri); // 페이지 당 게시물 개수
-//        cri.setCurrentPage(currentPage);  // 현재 페이지 번호
-
-//        paging.setTotalCount(service.countUserList()); // 총 회원 수
-//        mv.addObject("paging", paging);
-
         logger.info("[Manager Controller] mgmtList()");
         return mv;
     }
@@ -50,6 +41,13 @@ public class ManagerController {
     public ResponseEntity<List<PostVo>> getPostList() {
         List<PostVo> postList = service.mgmtPostList();
         return new ResponseEntity<>(postList, HttpStatus.OK);
+    }
+
+    /* 전체 댓글 */
+    @GetMapping("/comment-list")
+    public ResponseEntity<List<CommentVo>> getCommentList() {
+        List<CommentVo> commentList = service.mgmtCommentList();
+        return new ResponseEntity<>(commentList, HttpStatus.OK);
     }
 
     /* 우수회원 추가 */
