@@ -1,6 +1,7 @@
 package com.plant.vo;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class PostVo {
 
@@ -14,7 +15,9 @@ public class PostVo {
     private String postFile;
     private Timestamp postDate;
     private int readCount;
-    private int flag; // 신고 수
+    private int flag;
+    private int myplantId;
+    private List<String> selectedPlants;
 
     public PostVo() {}
 
@@ -31,7 +34,15 @@ public class PostVo {
         this.flag = flag;
     }
 
-    public int getPostId() {
+    public List<String> getSelectedPlants() {
+		return selectedPlants;
+	}
+
+	public void setSelectedPlants(List<String> selectedPlants) {
+		this.selectedPlants = selectedPlants;
+	}
+
+	public int getPostId() {
         return postId;
     }
 
@@ -75,8 +86,8 @@ public class PostVo {
         return postImage;
     }
 
-    public void setPostImage(String postImage) {
-        this.postImage = postImage;
+    public void setPostImage(String bytes) {
+        this.postImage = bytes;
     }
 
     public String getPostFile() {
@@ -110,4 +121,14 @@ public class PostVo {
     public void setFlag(int flag) {
         this.flag = flag;
     }
+
+	public int getMyplantId() {
+		return myplantId;
+	}
+
+	public void setMyplantId(int myplantId) {
+		this.myplantId = myplantId;
+	}
+    
+    
 }

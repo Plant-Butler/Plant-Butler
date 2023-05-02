@@ -4,7 +4,8 @@ import java.sql.Timestamp;
 
 public class MyplantVo {
 
-    private int myplantId;
+
+	private int myplantId;
 
     private int plantId;
 
@@ -17,9 +18,16 @@ public class MyplantVo {
     private int myplantRadius1; // 화분 반지름1
     private int myplantRadius2; // 화분 반지름2
     private Timestamp firstDate;
+    private UserVo user;
+    public UserVo getUser() {
+		return user;
+	}
 
+	public void setUser(UserVo user) {
+		this.user = user;
+	}
 
-    public MyplantVo() {
+	public MyplantVo() {
 
     }
 
