@@ -1,13 +1,11 @@
 package com.plant.dao;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+
+import com.github.pagehelper.Page;
 import com.plant.vo.BestUserVo;
+import com.plant.vo.CommentVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
-import com.github.pagehelper.Page;
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -16,7 +14,6 @@ import java.util.Map;
 
 @Mapper
 public interface ManagerMapper {
-
 
     ArrayList<UserVo> getUserList() throws SQLException;
 
@@ -29,6 +26,13 @@ public interface ManagerMapper {
     int deleteAllBestUser() throws SQLException;
 
     ArrayList<PostVo> mgmtPostList() throws SQLException;
+
+    ArrayList<CommentVo> mgmtCommentList() throws SQLException;
+
+    void set0() throws SQLException;
+    void set1() throws SQLException;
+
+    int deleteUser(String userId) throws SQLException;
 
     public List<PostVo> getCommunityList(Map<String, Object> params);
 

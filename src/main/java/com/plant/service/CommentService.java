@@ -1,5 +1,7 @@
 package com.plant.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.plant.dao.CommentMapper;
 import com.plant.dao.PostMapper;
 import com.plant.vo.CommentVo;
@@ -19,13 +21,16 @@ public class CommentService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 댓글 전체조회 */
-    public ArrayList<CommentVo> getCommentList(int postId) {
+    public PageInfo<CommentVo>  getCommentList(int postId, Integer pageNum, Integer pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         ArrayList<CommentVo> commentList = null;
         try {
             commentList = commentMapper.getCommentList(postId);
         } catch (SQLException e) {
         }
-        return commentList;
+
+        PageInfo<CommentVo> pageInfo = new PageInfo<>(commentList,10);
+        return pageInfo;
     }
 
     /* 댓글 작성 + 포인트 */

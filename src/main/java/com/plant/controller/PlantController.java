@@ -1,4 +1,5 @@
 package com.plant.controller;
+
 import com.plant.service.MyPlantService;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PlantVo;
@@ -9,21 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("/myplants")
@@ -70,7 +70,7 @@ public class PlantController {
                     }
                     fileNames.append(fileName);
                     // 이미지 파일을 저장할 위치 지정
-                    String uploadPath = "D:/Plant-Butler/src/main/resources/static/uploads/";
+                    String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
                     try (InputStream inputStream = image.getInputStream()) {
                         Files.copy(inputStream, Paths.get(uploadPath + fileName), StandardCopyOption.REPLACE_EXISTING);
                     } catch (IOException e) {
