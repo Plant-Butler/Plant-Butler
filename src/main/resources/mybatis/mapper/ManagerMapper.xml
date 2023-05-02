@@ -100,21 +100,13 @@
     </select>
 
     <!-- 회원 삭제 -->
-    <select id="set0" resultMap="ManageCommentMap">
-        <![CDATA[
-            set foreign_key_checks = 0
-        ]]>
-    </select>
+
     <delete id="deleteUser" parameterType="String">
         <![CDATA[
-            delete from user_table where user_id = #{userId}
+            delete from user_table where user_id = #{userId};
         ]]>
     </delete>
-    <select id="set1" resultMap="ManageCommentMap">
-        <![CDATA[
-            set foreign_key_checks = 1
-        ]]>
-    </select>
+
     <select id="getCommunityList" parameterType="java.util.Map" resultMap="PostMap">
         SELECT *
         FROM post
