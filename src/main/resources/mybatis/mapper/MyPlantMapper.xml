@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.plant.dao.MyPlantMapper">
     <resultMap id="MyplantResultMap" type="com.plant.vo.MyplantVo">
@@ -21,12 +21,12 @@
     <select id="selectMyPlants" resultMap="MyplantResultMap">
 
       <![CDATA[
-         select * from myplant where user_id = #{userId}
-      ]]>
+        select * from myplant where user_id = #{userId}
+        ]]>
 	</select>
 
     <insert id="insertMyplant" parameterType="com.plant.vo.MyplantVo">
-        INSERT INTO myplant(plant_id, user_id, myplant_nick, myplant_image, myplant_weight, myplant_length,myplant_depth, myplant_radius1, myplant_radius2)
+        INSERT INTO myplant(plant_id, user_id, myplant_nick, myplant_image, myplant_weight, myplant_length,myplant_depth, myplant_radius1, myplant_radius2,first_date)
         VALUES (
                    #{plantId},
                    #{userId},
@@ -36,11 +36,43 @@
                    #{myplantLength},
                    #{myplantDepth},
                    #{myplantRadius1},
-                   #{myplantRadius2}
+                   #{myplantRadius2},
+                   #{firstDate}
                )
     </insert>
+
     <delete id="deleleMyplant" parameterType="com.plant.vo.MyplantVo">
-    DELETE from myplant where myplant_id = (#{myplantId})
+        DELETE from myplant where myplant_id = (#{myplantId})
     </delete>
 
- </mapper>
+    <select id="searchPlant" resultMap="MyplantResultMap">
+
+      <![CDATA[
+        select * from myplant where myplant_id = #{myplant_id}
+        ]]>
+	</select>
+
+    <select id="selectPlantInfo" resultType="com.plant.vo.PlantVo">
+   <![CDATA[
+        SELECT * FROM plant WHERE distbNm LIKE CONCAT('%', #{plantId}, '%')
+        ]]>
+</select>
+    <update id="editMyPlant" parameterType="com.plant.vo.MyplantVo">
+        UPDATE myplant SET myplant_nick = #{myplantNick},
+                           myplant_image = #{myplantImage},
+                           myplant_weight = #{myplantWeight},
+                           myplant_length = #{myplantLength},
+                           myplant_depth = #{myplantDepth},
+                           myplant_radius1 = #{myplantRadius1},
+                           myplant_radius2 = #{myplantRadius2}
+        WHERE myplant_id = #{myplantId}
+
+
+    </update>
+
+    <select id="searchPlantToNum" resultType="com.plant.vo.PlantVo">
+        select *
+        from plant where plant_id = #{plantId};
+    </select>
+
+</mapper>

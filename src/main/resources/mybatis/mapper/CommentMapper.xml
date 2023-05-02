@@ -20,7 +20,7 @@
             select nickname, comment_id, p.post_id, c.user_id, comment_content, comment_date, c.flag
             from comment c
             join post p on p.post_id = c.post_id
-            join user u on u.user_id = c.user_id
+            join user_table u on u.user_id = c.user_id
             where p.post_id = #{postId}
         ]]>
     </select>
@@ -36,7 +36,7 @@
     <!-- 댓글 작성 시 포인트 상승 -->
     <update id="commentPoint" parameterType="String">
         <![CDATA[
-            update user set point = point + 5 where user_id = #{user_id}
+            update user_table set point = point + 5 where user_id = #{user_id}
       ]]>
     </update>
 

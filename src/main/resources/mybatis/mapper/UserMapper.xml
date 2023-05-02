@@ -15,17 +15,17 @@
 
 	<select id="checkMember" resultMap="UserResultMap">
       <![CDATA[
-         SELECT * FROM user WHERE user_id = #{userId} AND password = #{password}
+         SELECT * FROM user_table WHERE user_id = #{userId} AND password = #{password}
      ]]>
 	</select>
 	<select id="duplicateId" resultType="int">
       <![CDATA[
-         SELECT count(user_id) as cnt FROM user WHERE user_id = #{userId}
+         SELECT count(user_id) as cnt FROM user_table WHERE user_id = #{userId}
       ]]>
 	</select>
 	<insert id="insert" parameterType="com.plant.vo.UserVo">
       <![CDATA[
-         insert into user (user_Id, nickname, password, email)
+         insert into user_table (user_Id, nickname, password, email)
          values (#{userId}, #{nickname}, #{password}, #{email})
       ]]>
 	</insert>

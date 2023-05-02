@@ -65,7 +65,7 @@ ${post.postContent}
                 <c:if test="${not empty sessionScope.user.userId}">
                     <td><button type="button" onclick="declare(${comment.commentId}, ${post.postId}, 1)">신고하기</button></td>
                     <c:if test="${comment.userId eq sessionScope.user.userId}">
-                        <td><button type="button" onclick="updateBox(${comment.commentContent}, ${comment.commentId}, ${post.postId})">수정</button></td>
+                        <td><button type="button" onclick="updateBox('${comment.commentContent}', ${comment.commentId}, ${post.postId})">수정</button></td>
                         <td><button type="button" onclick="deleteComm(${comment.commentId}, ${post.postId})">삭제</button></td>
                     </c:if>
                 </c:if>

@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import utils.Criteria;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -21,11 +20,11 @@ public class ManagerService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 전체 회원 조회 */
-    public ArrayList<UserVo> getUserList(Criteria cri) {
+    public ArrayList<UserVo> getUserList() {
         ArrayList<UserVo> userList = null;
 
         try {
-            userList = (ArrayList<UserVo>) mapper.getUserList(cri);
+            userList = (ArrayList<UserVo>) mapper.getUserList();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -100,5 +99,4 @@ public class ManagerService {
         logger.info("[Manager Service] getPostList()");
         return postList;
     }
-
 }

@@ -28,16 +28,6 @@
     </c:forEach>
 </table>
 <button type="button" onclick="deleteAllBest()">우수회원 초기화</button>
-<!-- paging -->
--	<c:if test="${paging.prev}">
-		<a href='<c:url value="./list?page=${paging.startPage-1}"/>'>이전</a>
-	</c:if>
-	<c:forEach begin="${paging.startPage}" end="${paging.endPage}" var="pageNum">
-		<a href='<c:url value="/list?page=${pageNum}"/>'>${pageNum}</a>
-	</c:forEach>
-	<c:if test="${paging.next}">
-		<a href='<c:url value="/list?page=${paging.endPage+1}"/>'>다음</a>
-	</c:if>
 </div>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>

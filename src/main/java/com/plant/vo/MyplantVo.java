@@ -1,5 +1,6 @@
 package com.plant.vo;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class MyplantVo {
@@ -16,14 +17,14 @@ public class MyplantVo {
     private int myplantDepth;  // 화분 깊이
     private int myplantRadius1; // 화분 반지름1
     private int myplantRadius2; // 화분 반지름2
-    private Timestamp firstDate;
+    private Date firstDate;
 
 
     public MyplantVo() {
 
     }
 
-    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantDepth, int myplantRadius1, int myplantRadius2, Timestamp firstDate) {
+    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantDepth, int myplantRadius1, int myplantRadius2, Date firstDate) {
         this.myplantId = myplantId;
         this.plantId = plantId;
         this.userId = userId;
@@ -36,6 +37,8 @@ public class MyplantVo {
         this.myplantRadius2 = myplantRadius2;
         this.firstDate = firstDate;
     }
+
+
 
     public int getMyplantId() {
         return myplantId;
@@ -117,11 +120,28 @@ public class MyplantVo {
         this.myplantRadius2 = myplantRadius2;
     }
 
-    public Timestamp getFirstDate() {
+    public Date getFirstDate() {
         return firstDate;
     }
 
-    public void setFirstDate(Timestamp firstDate) {
+    public void setFirstDate(Date firstDate) {
         this.firstDate = firstDate;
+    }
+
+    @Override
+    public String toString() {
+        return "MyplantVo{" +
+                "myplantId=" + myplantId +
+                ", plantId=" + plantId +
+                ", userId='" + userId + '\'' +
+                ", myplantNick='" + myplantNick + '\'' +
+                ", myplantImage='" + myplantImage + '\'' +
+                ", myplantWeight=" + myplantWeight +
+                ", myplantLength=" + myplantLength +
+                ", myplantDepth=" + myplantDepth +
+                ", myplantRadius1=" + myplantRadius1 +
+                ", myplantRadius2=" + myplantRadius2 +
+                ", firstDate=" + firstDate +
+                '}';
     }
 }

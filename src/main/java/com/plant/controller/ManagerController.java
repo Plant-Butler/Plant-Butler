@@ -12,8 +12,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import utils.Criteria;
-import utils.Paging;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -29,9 +27,9 @@ public class ManagerController {
 
     /* 전체 회원 */
     @GetMapping(value=" ")
-    public ModelAndView mgmtList(Criteria cri, @RequestParam("page") int currentPage) {
+    public ModelAndView mgmtList() {
         ModelAndView mv = new ModelAndView("/mypage/manager");
-        ArrayList<UserVo> userList = service.getUserList(cri);
+        ArrayList<UserVo> userList = service.getUserList();
         mv.addObject("userList", userList);
 
 //        Paging paging = new Paging();
@@ -47,7 +45,7 @@ public class ManagerController {
 
     /* 전체 게시물 */
     @GetMapping("/post-list")
-    public ResponseEntity<List<PostVo>> getPostList(Criteria cri, @RequestParam("page") int currentPage) {
+    public ResponseEntity<List<PostVo>> getPostList() {
         List<PostVo> postList = service.mgmtPostList();
         return new ResponseEntity<>(postList, HttpStatus.OK);
     }

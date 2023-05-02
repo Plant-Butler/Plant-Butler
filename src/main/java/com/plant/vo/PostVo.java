@@ -14,12 +14,13 @@ public class PostVo {
     private String postFile;
     private Timestamp postDate;
     private int readCount;
+    private int commentCount;
     private int flag; // 신고 수
     private String nickname;
 
     public PostVo() {}
 
-    public PostVo(int postId, String userId, String postTitle, String postContent, String postTag, String postImage, String postFile, Timestamp postDate, int readCount, int flag) {
+    public PostVo(int postId, String userId, String postTitle, String postContent, String postTag, String postImage, String postFile, Timestamp postDate, int readCount, int commentCount, int flag) {
         this.postId = postId;
         this.userId = userId;
         this.postTitle = postTitle;
@@ -29,6 +30,7 @@ public class PostVo {
         this.postFile = postFile;
         this.postDate = postDate;
         this.readCount = readCount;
+        this.commentCount = commentCount;
         this.flag = flag;
     }
 
@@ -102,6 +104,14 @@ public class PostVo {
 
     public void setReadCount(int readCount) {
         this.readCount = readCount;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 
     public int getFlag() {

@@ -24,6 +24,19 @@
         <result column="flag" property="flag"/>
     </resultMap>
 
+    <resultMap id="PostMap" type="com.plant.vo.PostVo">
+        <result column="post_id" property="postId"/>
+        <result column="user_id" property="userId"/>
+        <result column="Post_title" property="postTitle"/>
+        <result column="post_content" property="postContent"/>
+        <result column="post_tag" property="postTag"/>
+        <result column="post_image" property="postImage"/>
+        <result column="post_file" property="postFile"/>
+        <result column="post_date" property="postDate"/>
+        <result column="read_count" property="readCount"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
+
     <select id="getUserList" resultMap="UserResultMap">
         <![CDATA[
             select * from user where manager = 0 order by point desc
@@ -64,4 +77,20 @@
         ]]>
     </select>
 
+    <select id="getCommunityList" parameterType="java.util.Map" resultMap="PostMap">
+        SELECT *
+        FROM post
+        <where>
+            <if test="searchField != null and searchField != '' and keyword != null and keyword != ''">
+                <![CDATA[
+      AND ${searchField} LIKE CONCAT('%', #{keyword}, '%')
+      ]]>
+            </if>
+        </where>
+        ORDER BY post_date DESC
+    </select>
+
+    <select id="getCommentCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM comment WHERE post_id = #{postId}
+    </select>
 </mapper>
