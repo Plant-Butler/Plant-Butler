@@ -16,16 +16,32 @@
 <hr>
 [분류] ${post.postTag}
 <br><br>
+<c:if test="${not empty myPlantList}">
+    [${post.nickname} 님의 반려식물] <br>
+    <table>
+        <c:forEach var="myPlant" items="${myPlantList}">
+            <tr>
+                <td><img src="/images/${myPlant.myplantImage}"</td>
+                <td>${myPlant.distbNm}</td>
+                <td>${myPlant.myplantNick}</td>
+                <td><fmt:formatDate value="${myPlant.firstDate}" type="date"/></td>
+            </tr>
+        </c:forEach>
+    </table>
+</c:if>
+<br>
+<br>
 ${post.postContent}
+<br>
 
 <c:if test="${not empty post.postImage}">
 이미지
 	<img src="/images/${post.postImage}" />
 </c:if>
-
+<br>
 <c:if test="${not empty post.postFile}">
 [첨부파일]
-     <a href='./download.do?fileName=<%=URLEncoder.encode("${post.postFile}", "UTF-8")%>'>${post.postFile}</a>
+     <a href="./download.do?fileName=${post.postFile}">${post.postFile}</a>
 </c:if>
 
 
@@ -55,8 +71,9 @@ ${post.postContent}
                 </tr>
             </form>
          </c:if>
+
     <!-- 댓글 목록 -->
-        <c:forEach var="comment" items="${commentList}">
+        <c:forEach var="comment" items="${commentList.list}">
             <tr>
                 <td>${comment.nickname}</td>
                 <td><span id="commentContent_${comment.commentId}">${comment.commentContent}</span></td>
@@ -72,6 +89,29 @@ ${post.postContent}
             </tr>
         </c:forEach>
 </table>
+
+<div>
+    <!-- 이전 페이지 -->
+    <c:if test="${commentList.navigateFirstPage > 1}">
+        <a href="/community/${post.postId}?pageNum=${commentList.navigateFirstPage - 1}">◀</a>
+    </c:if>
+
+    <c:forEach var="pageNum" begin="${commentList.navigateFirstPage}" end="${commentList.navigateLastPage}">
+        <c:choose>
+            <c:when test="${pageNum == commentList.pageNum}">
+                <span>${pageNum}</span>
+            </c:when>
+            <c:otherwise>
+                <a href="/community/${post.postId}?pageNum=${pageNum}">${pageNum}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+
+    <!-- 다음 페이지 -->
+    <c:if test="${commentList.navigateLastPage < commentList.pages}">
+        <a href="/community/${post.postId}?pageNum=${commentList.navigateLastPage + 1}">▶</a>
+    </c:if>
+</div>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -189,26 +229,6 @@ ${post.postContent}
         });
     }
 
-    // 댓글 신고
-    function declareComment(commentId, postId) {
-        $.ajax({
-            url: "/community/comment/" + commentId,
-            type: "PATCH",
-            data: {
-                commentId : commentId
-            },
-            success: function(response) {
-                alert('신고되었습니다.');
-                window.location.href = "/community/" + postId;
-            },
-            error: function(request, status, error) {
-                alert('신고 중 오류가 발생했습니다.');
-                console.log("code: " + request.status)
-                console.log("message: " + request.responseText)
-                console.log("error: " + error);
-            }
-        });
-    }
 </script>
 
 </body>

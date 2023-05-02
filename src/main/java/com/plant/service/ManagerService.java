@@ -1,16 +1,21 @@
 package com.plant.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.plant.dao.ManagerMapper;
 import com.plant.vo.BestUserVo;
+import com.plant.vo.CommentVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ManagerService {
@@ -20,17 +25,45 @@ public class ManagerService {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 전체 회원 조회 */
-    public ArrayList<UserVo> getUserList() {
+    public PageInfo<UserVo> getUserList(Integer pageNum, Integer pageSize) {
         ArrayList<UserVo> userList = null;
-
+        PageHelper.startPage(pageNum, pageSize);
         try {
             userList = (ArrayList<UserVo>) mapper.getUserList();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        PageInfo<UserVo> pageInfo = new PageInfo<>(userList,10);
         logger.info("[Manager Service] getUserList()");
-        return userList;
+        return pageInfo;
+    }
+
+    /* 전체 게시물 신고 수 정렬 */
+    public PageInfo<PostVo> mgmtPostList(Integer pageNum, Integer pageSize) {
+        ArrayList<PostVo> postList = null;
+        PageHelper.startPage(pageNum, pageSize);
+        try {
+            postList = (ArrayList<PostVo>) mapper.mgmtPostList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        PageInfo<PostVo> pageInfo = new PageInfo<>(postList,10);
+        logger.info("[Manager Service] mgmtPostList()");
+        return pageInfo;
+    }
+
+    /* 전체 댓글 신고 수 정렬 */
+    public PageInfo<CommentVo> mgmtCommentList(Integer pageNum, Integer pageSize) {
+        ArrayList<CommentVo> commentList = null;
+        PageHelper.startPage(pageNum, pageSize);
+        try {
+            commentList = (ArrayList<CommentVo>) mapper.mgmtCommentList();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        PageInfo<CommentVo> pageInfo = new PageInfo<>(commentList,10);
+        logger.info("[Manager Service] mgmtCommentList()");
+        return pageInfo;
     }
 
     /* 우수회원 추가 */
@@ -86,17 +119,23 @@ public class ManagerService {
         logger.info("[Manager Service] deleteAllBestUser()");
     }
 
-    /* 전체 게시물 신고 수 정렬 */
-    public ArrayList<PostVo> mgmtPostList() {
-        ArrayList<PostVo> postList = null;
+    /* 회원 삭제 */
+    public boolean deleteUser(String userId) {
+        boolean flag = false;
 
+        int affectedCnt = 0;
+        this.deleteBestUser(userId);
         try {
-            postList = (ArrayList<PostVo>) mapper.mgmtPostList();
+            mapper.set0();
+            affectedCnt = mapper.deleteUser(userId);
+            mapper.set1();
         } catch (SQLException e) {
-            e.printStackTrace();
+        }
+        if(affectedCnt > 0) {
+            flag = true;
         }
 
-        logger.info("[Manager Service] getPostList()");
-        return postList;
+        logger.info("[Manager Service] deleteUser(userId)");
+        return flag;
     }
 }
