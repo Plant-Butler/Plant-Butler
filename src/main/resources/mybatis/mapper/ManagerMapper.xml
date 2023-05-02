@@ -39,7 +39,7 @@
 
     <select id="getUserList" resultMap="UserResultMap">
         <![CDATA[
-            select * from user where manager = 0 order by point desc
+            select * from user_table where manager = 0 order by point desc
         ]]>
     </select>
 
