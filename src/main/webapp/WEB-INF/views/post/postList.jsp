@@ -35,7 +35,7 @@
     <c:forEach var="post" items="${posts.list}">
         <tr>
             <td>${post.postTag}</td>
-            <td>${post.postTitle}</td>
+            <td><a href="/community/${post.postId}">${post.postTitle}</a></td>
             <td>${post.userId}</td>
             <td>${post.readCount}</td>
             <td><fmt:formatDate value="${post.postDate}" type="date"/></td>

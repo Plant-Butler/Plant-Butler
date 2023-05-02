@@ -15,7 +15,6 @@
 </head>
 <body>
 <h1>내 식물 상세보기</h1>
-
 <table>
     <tr class="nonedit">
         <td>내식물 번호 :</td>
@@ -41,10 +40,13 @@
         <td></td>
     </tr>
     <tr>
-        <td>내 식물 닉네임:</td>
+        <td>내 식물 이미지:</td>
         <td>
-            <p class="editable" name="myplantImage">${myPlant.myplantImage}</p>
-            <input type="text" class="input-editable" name="myplantImage" value="${myPlant.myplantImage}" style="display:none;">
+            <c:forEach var="image" items="${fn:split(myPlant.myplantImage, ',')}">
+                <!-- 여기에서 image 변수를 사용하여 각 이미지를 처리합니다. -->
+                <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
+            </c:forEach>
+
         </td>
         <td></td>
     </tr>

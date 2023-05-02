@@ -40,6 +40,7 @@
                    #{firstDate}
                )
     </insert>
+
     <delete id="deleleMyplant" parameterType="com.plant.vo.MyplantVo">
         DELETE from myplant where myplant_id = (#{myplantId})
     </delete>

@@ -47,7 +47,7 @@
 </head>
 <body>
 <h1>regist form</h1>
-<form action="/myplants/form" method="post">
+<form action="/myplants/form" method="post" enctype="multipart/form-data">
   <table>
     <tr>
       <td>내식물 검색하기</td>
@@ -61,7 +61,7 @@
     <tr><td>식물아이디 :</td><td><input type="text" name = "plantId"></td><td></td></tr>
     <tr><td>유저아이디 :</td><td><input type="text" name = "userId"></td><td></td></tr>
     <tr><td>식물닉네임 :</td><td><input type="text" name = "myplantNick"></td><td></td></tr>
-    <tr><td>내 식물 이미지:</td><td><input type="text" name= "myplantImage"></td><td></td></tr>
+    <tr><td>내 식물 이미지:</td><td><input type="file" name= "uploadedImages" multiple></td><td></td></tr>
     <tr><td>내 식물 무게 :</td><td><input type="text" name = "myplantWeight"></td><td></td></tr>
     <tr><td>내 식물 높이 :</td><td><input type="text" name = "myplantLength"></td><td></td></tr>
     <tr><td>내 식물 깊이 :</td><td><input type="text" name = "myplantDepth"></td><td></td></tr>

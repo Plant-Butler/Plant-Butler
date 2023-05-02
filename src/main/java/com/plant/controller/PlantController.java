@@ -9,11 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -47,7 +56,31 @@ public class PlantController {
         return model;
     }
     @PostMapping(value="/form")
-    public ResponseEntity<MyplantVo> registMyPlant(MyplantVo myplantVo){
+    public ResponseEntity<MyplantVo> registMyPlant(@ModelAttribute MyplantVo myplantVo, @RequestParam("uploadedImages") List<MultipartFile> uploadedImages){
+        List<MultipartFile> images = uploadedImages;
+        StringBuilder fileNames = new StringBuilder();
+        if (images != null && !images.isEmpty()) {
+            int imageCount = 0;
+            for (MultipartFile image : images) {
+                if (!image.isEmpty()) {
+                    String fileName = Objects.requireNonNull(image.getOriginalFilename());
+                    // 쉼표를 추가하기 전에 이미지 수를 확인
+                    if (imageCount > 0) {
+                        fileNames.append(",");
+                    }
+                    fileNames.append(fileName);
+                    // 이미지 파일을 저장할 위치 지정
+                    String uploadPath = "D:/Plant-Butler/src/main/resources/static/uploads/";
+                    try (InputStream inputStream = image.getInputStream()) {
+                        Files.copy(inputStream, Paths.get(uploadPath + fileName), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    imageCount++;
+                }
+            }
+        }
+        myplantVo.setMyplantImage(fileNames.toString());
         MyPlantService.registMyPlant(myplantVo);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/myplants"));
@@ -71,7 +104,6 @@ public class PlantController {
     }
     @PostMapping(value="/{myplantId}")
     public ResponseEntity<Void>editMyPlantInfo(@RequestBody MyplantVo myplantVo){
-        System.out.println(myplantVo.toString());
         MyPlantService.editMyPlantInfo(myplantVo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -80,7 +112,6 @@ public class PlantController {
     public ResponseEntity <ArrayList<PlantVo>> searchPlantInfo(@PathVariable("plantId") String plantId){
         ArrayList<PlantVo> plantVo = new ArrayList<>();
         plantVo = MyPlantService.searchPlantInfo(plantId);
-        System.out.println("plantVo" + plantVo);
         return new ResponseEntity<>(plantVo,HttpStatus.OK);
 
     }
