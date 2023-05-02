@@ -41,7 +41,6 @@ public class ManagerController {
         mv.addObject("commentList", commentList);
         mv.addObject("userList", userList);
 
-
         return mv;
     }
 
@@ -54,7 +53,7 @@ public class ManagerController {
         HttpHeaders headers = new HttpHeaders();
 
         if(flag) {
-            headers.setLocation(URI.create("/manager"));
+            //headers.setLocation(URI.create("/manager"));
             return new ResponseEntity<>(headers, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(headers, HttpStatus.NOT_ACCEPTABLE);
@@ -69,7 +68,7 @@ public class ManagerController {
         logger.info("[Manager Controller] deleteBestUser()");
         HttpHeaders headers = new HttpHeaders();
         if(flag) {
-            headers.setLocation(URI.create("/manager"));
+            //headers.setLocation(URI.create("/manager"));
             return new ResponseEntity<>(headers, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
@@ -82,18 +81,30 @@ public class ManagerController {
         service.deleteAllBestUser();
         logger.info("[Manager Controller] deleteAllBestUser()");
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/manager"));
+        //headers.setLocation(URI.create("/manager"));
         return new ResponseEntity<>(headers, HttpStatus.OK);
     }
 
     /* 우수회원 광고 */
     @GetMapping(value="/best-list")
-    public ResponseEntity<?> selectBestUser() {
+    public ResponseEntity<ArrayList<BestUserVo>> selectBestUser() {
         ArrayList<BestUserVo> bestList = service.getBestUser();
         logger.info(bestList.toString());
         logger.info("[Manager Controller] selectBestUser()");
         return new ResponseEntity<>(bestList, HttpStatus.OK);
     }
 
+    /* 회원 삭제 */
+    @DeleteMapping(value="/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+        boolean flag = service.deleteUser(userId);
+
+        logger.info("[Manager Controller] deleteUser(userId)");
+        if(flag) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

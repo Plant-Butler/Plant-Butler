@@ -23,7 +23,7 @@ public class CommentController {
 
     /* 댓글 작성 */
     @PostMapping("")
-    public ResponseEntity<?> postComment(@ModelAttribute("CommentVo") CommentVo commentVo) {
+    public ResponseEntity<Void> postComment(@ModelAttribute("CommentVo") CommentVo commentVo) {
         boolean flag = commentService.postComment(commentVo);
 
         logger.info("[Comment Controller] postComment()");
@@ -38,7 +38,7 @@ public class CommentController {
 
     /* 댓글 수정 */
     @PutMapping("/{commentId}")
-    public ResponseEntity updateComment(@ModelAttribute("CommentVo") CommentVo commentVo) {
+    public ResponseEntity<Void> updateComment(@ModelAttribute("CommentVo") CommentVo commentVo) {
         boolean flag = commentService.updateComment(commentVo);
 
         logger.info("[Comment Controller] updateComment(commentVo)");
@@ -51,7 +51,7 @@ public class CommentController {
 
     /* 댓글 삭제 */
     @DeleteMapping("/{commentId}")
-    public ResponseEntity deleteComment(@PathVariable int commentId) {
+    public ResponseEntity<Void> deleteComment(@PathVariable int commentId) {
         boolean flag = commentService.deleteComment(commentId);
 
         logger.info("[Comment Controller] deleteComment(commentId)");
@@ -64,7 +64,7 @@ public class CommentController {
 
     /* 댓글 신고 */
     @PatchMapping("/{commentId}")
-    public ResponseEntity declareComment(@PathVariable int commentId) {
+    public ResponseEntity<Void> declareComment(@PathVariable int commentId) {
         boolean flag = commentService.declareComment(commentId);
 
         logger.info("[Comment Controller] declareComment(commentId)");

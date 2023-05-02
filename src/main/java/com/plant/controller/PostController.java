@@ -51,7 +51,7 @@ public class PostController {
     /* 첨부파일 다운로드 */
     @GetMapping("/download.do")
     public void download(@RequestParam("fileName") String fileName, HttpServletResponse resp) throws IOException {
-        File downloadFile = new File("D:\\23-04-BIT-final-project\\files\\"+fileName);
+        File downloadFile = new File("D:\\23-04-BIT-final-project-new\\workspace\\Plant-Butler\\src\\main\\resources\\uploads\\"+fileName);
 
         try {
             fileName = new String(fileName.getBytes("UTF-8"),"ISO-8859-1");

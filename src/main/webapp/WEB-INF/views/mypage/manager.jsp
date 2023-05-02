@@ -10,7 +10,6 @@
 </head>
 <body>
 <h1>게시물 관리</h1>
-
 <table>
     <th>제목</th><th>아이디</th><th>신고</th><th>삭제</th>
        <c:forEach var="post" items="${postList.list}">
@@ -78,13 +77,14 @@
 <div id="user-list">
 <h1> 회원관리 </h1> (3인 선택)
 <table>
-    <tr><th>아이디</th><th>포인트</th><th>우수회원 선택</th><th>회원삭제</th></tr>
+    <tr><th>아이디</th><th>포인트</th><th>우수회원 선택</th><th>우수회원 취소</th><th>회원삭제</th></tr>
     <c:forEach var="user" items="${userList.list}" varStatus="status">
         <tr>
             <td><a href= "/mypage">${user.userId}</a></td>
             <td>${user.point} 점</td>
             <td><button type="button" class="select-best" onclick="selectBest('${user.userId}', ${status.index})">우수회원 선택</button></td>
             <td><button type="button" class="delete-best" onclick="deleteBest('${user.userId}', ${status.index})">우수회원 취소</button></td>
+            <td><button type="button" class="delete-best" onclick="deleteUserCheck('${user.userId}')">회원삭제</button></td>
         </tr>
     </c:forEach>
 </table>
@@ -174,9 +174,34 @@
             });
         }
 
+        // 회원 삭제 확인/취소 창
+        function deleteUserCheck(userId) {
+         if (confirm('강제로 탈퇴처리 하시겠습니까?') == true){    //확인
+             deleteUser(userId);
+         } else {
+             return false;
+         }
+        }
 
+        // 회원 삭제
+        function deleteUser(userId) {
+            $.ajax({
+               url: "/manager/" + userId,
+               type: "DELETE",
+               success: function(response) {
+                   alert('탈퇴처리 되었습니다');
+                   window.location.href = "/manager";
+               },
+               error: function(request, status, error) {
+                   alert('오류가 발생했습니다.');
+                   console.log("code: " + request.status)
+                   console.log("message: " + request.responseText)
+                   console.log("error: " + error);
+               }
+            });
+        }
 
-    // 게시물 & 댓글 삭제
+    // 게시물 or 댓글 삭제
     function deleteM(commentId, postId, num) {
         let url = "";
         let data = {};

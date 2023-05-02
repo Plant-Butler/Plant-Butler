@@ -25,4 +25,8 @@ public interface ManagerMapper {
     ArrayList<PostVo> mgmtPostList() throws SQLException;
 
     ArrayList<CommentVo> mgmtCommentList() throws SQLException;
+
+    void set0() throws SQLException;
+    void set1() throws SQLException;
+    int deleteUser(String userId) throws SQLException;
 }

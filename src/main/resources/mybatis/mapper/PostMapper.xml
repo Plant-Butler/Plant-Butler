@@ -34,7 +34,7 @@
         <![CDATA[
             select post_id, p.user_id, post_title, post_content, post_tag, post_image, post_file, post_date, read_count, flag, nickname
             from post p
-            join user u
+            join user_table u
             where post_id = #{postId} and p.user_id = u.user_id
         ]]>
     </select>

@@ -35,7 +35,7 @@
     <!--  전체 회원 포인트순 정렬 -->
     <select id="getUserList" resultMap="UserResultMap">
         <![CDATA[
-            select * from user where manager = 0 order by point desc
+            select * from user_table where manager = 0 order by point desc
         ]]>
     </select>
 
@@ -50,10 +50,12 @@
     <!-- 우수회원 광고 -->
     <select id="getBestUser" resultMap="BestUserMap">
         <![CDATA[
-            select nickname, myplant_image, distbNm, myplant_nick from bestuser b
-            inner join user u on b.user_id = u.user_id
-            inner join myplant mp on mp.user_id = b.user_id
-            inner join plant p on p.plant_id = mp.plant_id
+            select nickname, myplant_image, distbNm, myplant_nick
+            from bestuser b
+            join user_table u ON b.user_id = u.user_id
+            join myplant mp ON mp.user_id = b.user_id
+            join plant p ON p.plant_id = mp.plant_id
+            group by b.user_id;
         ]]>
     </select>
 
@@ -82,6 +84,23 @@
     <select id="mgmtCommentList" resultMap="ManageCommentMap">
         <![CDATA[
             select post_id, comment_id, user_id, flag, comment_content from comment order by flag desc
+        ]]>
+    </select>
+
+    <!-- 회원 삭제 -->
+    <select id="set0" resultMap="ManageCommentMap">
+        <![CDATA[
+            set foreign_key_checks = 0
+        ]]>
+    </select>
+    <delete id="deleteUser" parameterType="String">
+        <![CDATA[
+            delete from user_table where user_id = #{userId}
+        ]]>
+    </delete>
+    <select id="set1" resultMap="ManageCommentMap">
+        <![CDATA[
+            set foreign_key_checks = 1
         ]]>
     </select>
 

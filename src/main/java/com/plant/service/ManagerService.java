@@ -119,4 +119,23 @@ public class ManagerService {
         logger.info("[Manager Service] deleteAllBestUser()");
     }
 
+    /* 회원 삭제 */
+    public boolean deleteUser(String userId) {
+        boolean flag = false;
+
+        int affectedCnt = 0;
+        this.deleteBestUser(userId);
+        try {
+            mapper.set0();
+            affectedCnt = mapper.deleteUser(userId);
+            mapper.set1();
+        } catch (SQLException e) {
+        }
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+
+        logger.info("[Manager Service] deleteUser(userId)");
+        return flag;
+    }
 }
