@@ -3,6 +3,7 @@
 <%@page import="java.sql.Connection"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="java.util.regex.Pattern" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +21,9 @@
 <script type="text/javascript">
 	function IdCheck() {
 		window.open("./idCheckForm", "idWin", "width=400, height=350");
+	}
+	function NickCheck() {
+		window.open("./nickCheckForm", "nickWin", "width=400, height=350");
 	}
 	
 	function checkerPwd() {
@@ -42,197 +46,37 @@
 			alert('가입 완료! 로그인해주세요');	
 		} 
 	}
+	function pwdCheck() {
+		  var password = document.getElementById("password").value;
+		  var pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/; // 정규 표현식 패턴 설정
+		  var isValidPassword = true; // 초기값 true로 설정
+
+		  if (!pattern.test(password)) {
+		    isValidPassword = false; // 패턴에 맞지 않으면 false로 변경
+		  }
+
+		  var passwordMessage = document.getElementById("password-message"); // 안내 메시지를 출력할 영역
+
+		  if (!isValidPassword) {
+		    passwordMessage.innerHTML = "영문 대/소문자, 숫자, 특수문자를 모두 포함 8자 이상이어야 합니다";
+		    passwordMessage.style.color = "red";
+		    return false;
+		  } else {
+		    passwordMessage.innerHTML = "비밀번호가 유효합니다.";
+		    passwordMessage.style.color = "green";
+		    return true;
+		  }
+		}
+
 </script>
-<style type="text/css"> 
-	.about-section {
-  padding: 40px;
-  text-align: center;
-  background-color: #474e5d;
-  color: white;
-  }
-  
-  * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Noto Sans KR", sans-serif;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-.title {
-  font-family: 'Jua', sans-serif;
-  font-size: 15px;
-
-}
-
-.wrap {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.1);
-}
-
-.regist {
-  width: 600px;
-  height: 600px;
-  background: white;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-.submit_box {
-  font-family: 'Jua', sans-serif;
-  width: 150%;
-  height: 10px;
-}
-
-.login_sns {
-  padding: 20px;
-  display: flex;
-}
-
-
-.regist_id {
-	  width: 100%;
-	  height: 50px;
-	  border-radius: 30px;
-	  margin-top: 10px;
-	  padding: 0px 20px;
-	  border: 1px solid lightgray;
-	  outline: none;
-}
-
-.regist_id input {
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
-}
-
-.regist_pw {
-	  width: 100%;
-	  height: 50px;
-	  border-radius: 30px;
-	  margin-top: 10px;
-	  padding: 0px 20px;
-	  border: 1px solid lightgray;
-	  outline: none;
-}
-
-.regist_pw input {
-  width: 100%;
-  height: 50px;
-  border-radius: 30px;
-  margin-top: 10px;
-  padding: 0px 20px;
-  border: 1px solid lightgray;
-  outline: none;
-}
-
-.login_etc {
-  padding: 10px;
-  width: 80%;
-  font-size: 14px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: bold;
-}
-
-
-  	.submit {
-  font-family: 'Jua', sans-serif;
-  color: #494949;
-  text-decoration: none;
-  background: #ffffff;
-  padding: 5px;
-  border: 2px solid #494949;
-  border-radius: 40px;
-  display: inline-block;
-  transition: all 0.4s ease 0s;
-}
-
-.submit input {
-  width: 100%;
-  height: 50px;
-  border: 0;
-  outline: none;
-  border-radius: 40px;
-  background: linear-gradient(to right, #4682B4, #003458);
-  color: white;
-  font-size: 1.2em;
-  letter-spacing: 2px;
-}
-.submit:hover {
-  font-family: 'Jua', sans-serif;
-  color: #ffffff;
-  background: #003458;
-  border-color: #003458;
-  transition: all 0.4s ease 0s;
-}
-.register_box {
-  width: 150%;
-  height: 20px;
-}
-
-.register {
-  font-family: 'Open Sans';
-  color: #494949;
-  text-decoration: none;
-  background: #ffffff;
-  padding: 5px;
-  border: 4px solid #494949;
-  display: inline-block;
-  transition: all 0.4s ease 0s;
-}
-
-.register:hover {
-  color: #ffffff;
-  background: #003458;
-  border-color: #003458;
-  transition: all 0.4s ease 0s;
-}
-.submit_register {
-   margin-top: 50px;
-   width: 80%;
-    margin: auto;
-   align-items: center;
-   text-align: center;
-           font-weight: normal;
-}
-.submit_register input {
-  width: 50%;
-  height: 40px;
-  border: 0;
-  outline: none;
-  border-radius: 40px;
-  background: linear-gradient(to right, #4682B4, #003458);
-  color: white;
-  font-size: 1.2em;
-  letter-spacing: 2px;
-  font-family: 'Jua', sans-serif;
-}
-
-  </style>
 
 
 <body style="text-align: center">
 	<div class="about-section">
   <h1>Register</h1>
 	</div>
-<!-- 	<hr> -->
 <br>
-	<form action="./regist" method="post" name="joinform">
+	<form action="./registPage" method="post" name="joinform">
 		<table>
 			<div>
 			<tr>
@@ -244,13 +88,14 @@ a {
 			<div>
 			<tr>
 				<td class = "title">닉네임 :</td>
-				<td><input class = "regist_id" type="text" name="nickname" id="nickname"></td>
+				<td><input class = "regist_id" type="text" name="nickname" id="nickname" readonly="readonly"></td>
+				<td><input class = "submit" type="button" value="중복확인" onclick="NickCheck()" required="required"></td>
 			</tr>
 			</div>
 			<tr>
 				<td class = "title">비밀번호 :</td>
-				<td><input  class = "regist_pw" type="password" name="password" id="password" required="required"></td>
-				<td></td>
+				<td><input class="regist_pw" type="password" name="password" id="password" required="required" onkeyup="pwdCheck()">
+      			<td><div id="password-message"></div></td>
 			</tr>
 			</div>
 			<div>
@@ -267,15 +112,18 @@ a {
 			</tr>
 			</div>
 			<div>
-				<td>
-				  <a href="./cookie" target="_self">쿠키 수집 동의 약관</a>
-				  <input type="checkbox" name="cookie" value="cookie" id="cookie" required>
-				</td>
+			<tr>
+			  <td><a href="./cookie" target="_self">쿠키 수집 동의 약관</a></td>
+			  <td><p style="font-size: 9px; display:inline-block; margin-left: 10px;">이 사이트는 쿠키를 사용합니다.<br>이용 약관 및 개인정보 취급 방침에 따라 쿠키 사용에 동의하십니까?</p></td>
+			  <td><input type="checkbox" name="cookie" value="cookie" id="cookie" style="display:inline-block; margin-left: 10px;" required></td>
+			</tr>
+
 				<tr>
-				  <td>
-				    <a href="./webpush" target="_self">웹푸시 동의 약관</a>
-				    <input type="checkbox" name="webpush" value="webpush" id="webpush" required>
-				  </td>
+				  
+				    <td><a href="./webpush" target="_self">웹푸시 동의 약관</a></td>
+				    <td><p style="font-size: 9px; display:inline-block; margin-left: 10px;">>이 사이트에서는 웹 푸시 알림을 제공합니다.<br>이용 약관 및 개인정보 취급 방침에 따라 웹 푸시 알림 사용에 동의하십니까?</p></td>
+				   <td><input type="checkbox" name="webpush" value="webpush" id="webpush" style="display:inline-block; margin-left: 10px;" required></td>
+				
 				</tr>
 			</div>
 			<div>

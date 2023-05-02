@@ -1,0 +1,220 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 264241152 bytes for G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Zero Based Compressed Oops mode in which the Java heap is
+#     placed in the first 32GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 32GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3530), pid=25308, tid=28656
+#
+# JRE version:  (18.0.2+9) (build )
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (18.0.2+9-61, mixed mode, emulated-client, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=54038 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -XX:TieredStopAtLevel=1 -Dspring.boot.project.name=Plant-Butler -Dfile.encoding=UTF-8 -XX:+ShowCodeDetailsInExceptionMessages com.plant.PlantButlerApplication --spring.output.ansi.enabled=always
+
+Host: Intel(R) Core(TM) i5-1035G7 CPU @ 1.20GHz, 8 cores, 15G,  Windows 10 , 64 bit Build 19041 (10.0.19041.2788)
+Time: Fri Apr 28 14:39:21 2023  Windows 10 , 64 bit Build 19041 (10.0.19041.2788) elapsed time: 0.020833 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001c6155c20b0):  JavaThread "Unknown thread" [_thread_in_vm, id=28656, stack(0x000000a286c00000,0x000000a286d00000)]
+
+Stack: [0x000000a286c00000,0x000000a286d00000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6993ca]
+V  [jvm.dll+0x7f481d]
+V  [jvm.dll+0x7f612e]
+V  [jvm.dll+0x7f67e3]
+V  [jvm.dll+0x25cdaf]
+V  [jvm.dll+0x696319]
+V  [jvm.dll+0x68ae4a]
+V  [jvm.dll+0x3223eb]
+V  [jvm.dll+0x329dc6]
+V  [jvm.dll+0x37eade]
+V  [jvm.dll+0x37ed0f]
+V  [jvm.dll+0x2fa16a]
+V  [jvm.dll+0x2fb1cd]
+V  [jvm.dll+0x7c3450]
+V  [jvm.dll+0x38be61]
+V  [jvm.dll+0x7a2073]
+V  [jvm.dll+0x40dc3f]
+V  [jvm.dll+0x40f611]
+C  [jli.dll+0x526b]
+C  [ucrtbase.dll+0x21bb2]
+C  [KERNEL32.DLL+0x17604]
+C  [ntdll.dll+0x526a1]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffdfb7de550, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x000001c6156314d0 WorkerThread "GC Thread#0" [stack: 0x000000a286d00000,0x000000a286e00000] [id=38816]
+  0x000001c6156456a0 ConcurrentGCThread "G1 Main Marker" [stack: 0x000000a286e00000,0x000000a286f00000] [id=20704]
+  0x000001c615645fa0 WorkerThread "G1 Conc#0" [stack: 0x000000a286f00000,0x000000a287000000] [id=30820]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffdfb00a707]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000001c6155be2a0] Heap_lock - owner thread: 0x000001c6155c20b0
+
+Heap address: 0x0000000704200000, size: 4030 MB, Compressed Oops mode: Zero based, Oop shift amount: 3
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 0.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 4 size 8 Array Of Cards #cards 16 size 48 Howl #buckets 8 coarsen threshold 3686 Howl Bitmap #cards 512 size 80 coarsen threshold 460 Card regions per heap region 1 cards per card region 4096
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x0000000704200000, 0x0000000800000000)
+  region size 2048K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffdfb3f1859]
+
+GC Heap History (0 events):
+No events
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Events (1 events):
+Event: 0.015 Loaded shared library C:\Program Files\Java\jdk-18.0.2\bin\java.dll
+
+
+Dynamic libraries:
+0x00007ff60bed0000 - 0x00007ff60bee0000 	C:\Program Files\Java\jdk-18.0.2\bin\javaw.exe
+0x00007ffe58910000 - 0x00007ffe58b08000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffe56a30000 - 0x00007ffe56aef000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffe565e0000 - 0x00007ffe568ba000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffe564e0000 - 0x00007ffe565e0000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffe4c650000 - 0x00007ffe4c668000 	C:\Program Files\Java\jdk-18.0.2\bin\jli.dll
+0x00007ffe4dfb0000 - 0x00007ffe4dfca000 	C:\Program Files\Java\jdk-18.0.2\bin\VCRUNTIME140.dll
+0x00007ffe57a70000 - 0x00007ffe57b1e000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffe577c0000 - 0x00007ffe5785e000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffe57b20000 - 0x00007ffe57bbc000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffe58500000 - 0x00007ffe58626000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffe586b0000 - 0x00007ffe5884d000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffe56320000 - 0x00007ffe56342000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffe57d70000 - 0x00007ffe57d9b000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffe56350000 - 0x00007ffe56460000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffe56210000 - 0x00007ffe562ad000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffe3f220000 - 0x00007ffe3f4ba000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e\COMCTL32.dll
+0x00007ffe4d960000 - 0x00007ffe4d96a000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffe57c70000 - 0x00007ffe57ca0000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ffe52b50000 - 0x00007ffe52b5c000 	C:\Program Files\Java\jdk-18.0.2\bin\vcruntime140_1.dll
+0x00007ffe38c10000 - 0x00007ffe38c9d000 	C:\Program Files\Java\jdk-18.0.2\bin\msvcp140.dll
+0x00007ffdfad00000 - 0x00007ffdfb911000 	C:\Program Files\Java\jdk-18.0.2\bin\server\jvm.dll
+0x00007ffe584f0000 - 0x00007ffe584f8000 	C:\WINDOWS\System32\PSAPI.DLL
+0x00007ffe3e620000 - 0x00007ffe3e647000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffe37b90000 - 0x00007ffe37b99000 	C:\WINDOWS\SYSTEM32\WSOCK32.dll
+0x00007ffe57a00000 - 0x00007ffe57a6b000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffe54870000 - 0x00007ffe54882000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffe50f50000 - 0x00007ffe50f5a000 	C:\Program Files\Java\jdk-18.0.2\bin\jimage.dll
+0x00007ffe53dc0000 - 0x00007ffe53fa4000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffe512e0000 - 0x00007ffe51314000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffe56180000 - 0x00007ffe56202000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffe3bd60000 - 0x00007ffe3bd85000 	C:\Program Files\Java\jdk-18.0.2\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\Java\jdk-18.0.2\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.1110_none_60b5254171f9507e;C:\Program Files\Java\jdk-18.0.2\bin\server
+
+VM Arguments:
+jvm_args: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=54038 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=localhost -Dspring.jmx.enabled=true -Dspring.liveBeansView.mbeanDomain -Dspring.application.admin.enabled=true -XX:TieredStopAtLevel=1 -Dspring.boot.project.name=Plant-Butler -Dfile.encoding=UTF-8 -XX:+ShowCodeDetailsInExceptionMessages 
+java_command: com.plant.PlantButlerApplication --spring.output.ansi.enabled=always
+java_class_path (initial): D:\final\Plant-Butler\bin\main;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-configuration-processor\2.7.11\fcf32e175b048ec937da6491c1896a2d06675637\spring-boot-configuration-processor-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-data-jdbc\2.7.11\7b8bf9640f0e9636424309f653026b2717e492e6\spring-boot-starter-data-jdbc-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-web\2.7.11\c23ca827c1d5cf45d70f4b5204a9b889ec5d3b24\spring-boot-starter-web-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.mybatis.spring.boot\mybatis-spring-boot-starter\2.3.0\f4d9f73a2fb0adc56664c6febd66f98433fca7f5\mybatis-spring-boot-starter-2.3.0.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.apache.tomcat.embed\tomcat-embed-jasper\9.0.74\dff1296122ef71e0d4a71ec3051bc76763eb30c8\tomcat-embed-jasper-9.0.74.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\javax.servlet\jstl\1.2\74aca283cd4f4b4f3e425f5820cda58f44409547\jstl-1.2.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-jdbc\2.7.11\b502fe4cbdf3ec3b97d8cfd093becac0225eba48\spring-boot-starter-jdbc-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.data\spring-data-jdbc\2.4.11\d56c40f3bfceaf312ee6a00322fdad9a6edfeee4\spring-data-jdbc-2.4.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-json\2.7.11\9f47d076fd9d1b2acec8d189e6413d3c5d270d30\spring-boot-starter-json-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter\2.7.11\3b655d0b1817b5f92301d9da5eb9f8f8f37ded6a\spring-boot-starter-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-tomcat\2.7.11\d9d6f0e0aacd095bcae08bfbb72404ec114238e2\spring-boot-starter-tomcat-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-webmvc\5.3.27\8beabbb0cb64c448b39df790b62e342245ee7971\spring-webmvc-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-web\5.3.27\a51c45a8602052a2a90f7e645a47ba8df1547795\spring-web-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.mybatis.spring.boot\mybatis-spring-boot-autoconfigure\2.3.0\8b26983776e4dd7ab49d5cf272870224d5e89f94\mybatis-spring-boot-autoconfigure-2.3.0.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.mybatis\mybatis\3.5.11\980273395d508c02d6359f3b6503ffbe319e23b0\mybatis-3.5.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.mybatis\mybatis-spring\2.1.0\79810054bca442ec4c994916be82ed67efc417fb\mybatis-spring-2.1.0.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.apache.tomcat.embed\tomcat-embed-websocket\9.0.74\a38c3bf842eab8112809bbdb836441db423076bf\tomcat-embed-websocket-9.0.74.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.apache.tomcat.embed\tomcat-embed-core\9.0.74\5afe5c4cfc8e78c395207d6abcc98666b508ec0c\tomcat-embed-core-9.0.74.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.apache.tomcat.embed\tomcat-embed-el\9.0.74\f7b97a38cc7dee092fd58a8df80788284b588566\tomcat-embed-el-9.0.74.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.eclipse.jdt\ecj\3.26.0\4837be609a3368a0f7e7cf0dc1bdbc7fe94993de\ecj-3.26.0.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\com.zaxxer\HikariCP\4.0.3\107cbdf0db6780a065f895ae9d8fbf3bb0e1c21f\HikariCP-4.0.3.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-jdbc\5.3.27\c96414a7531595d9c7d2addee132b362fa5ef65f\spring-jdbc-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.data\spring-data-relational\2.4.11\f373abb198c4fca22c5194539eb07b8793e47312\spring-data-relational-2.4.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.data\spring-data-commons\2.7.11\bcc82d39f81645c2ace67ce254324819e85958a9\spring-data-commons-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-tx\5.3.27\be6e6752ad18f0944af21c3da8987b6506e13c53\spring-tx-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-autoconfigure\2.7.11\d7b1b3a4c494e240ad0a53b2d6661982d7c9ddac\spring-boot-autoconfigure-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot\2.7.11\f99d0b98ecd8de1400dc47d00194202e9be5a16e\spring-boot-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-context\5.3.27\251162aa2fe5cb374a482ae87fa6e8e8e747d72\spring-context-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-aop\5.3.27\ecae2962d53c587fd0e405cd60dc8415d1b9e12d\spring-aop-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-beans\5.3.27\46e7d917551ffcc0a104fd971d1fa207b30d7761\spring-beans-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-expression\5.3.27\6225619970e8376df5c3d777610d9d03b977063b\spring-expression-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-core\5.3.27\ff5e35f2d4f72d22c476ff9b7bce1de25c980ebd\spring-core-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-starter-logging\2.7.11\b0d3e13291ecd5014d3c5f8818f50620f7b1f1fd\spring-boot-starter-logging-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\ch.qos.logback\logback-classic\1.2.12\d4dee19148dccb177a0736eb2027bd195341da78\logback-classic-1.2.12.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-to-slf4j\2.17.2\17dd0fae2747d9a28c67bc9534108823d2376b46\log4j-to-slf4j-2.17.2.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.slf4j\jul-to-slf4j\1.7.36\ed46d81cef9c412a88caef405b58f93a678ff2ca\jul-to-slf4j-1.7.36.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.slf4j\slf4j-api\1.7.36\6c62681a2f655b49963a5983b8b0950a6120ae14\slf4j-api-1.7.36.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\jakarta.annotation\jakarta.annotation-api\1.3.5\59eb84ee0d616332ff44aba065f3888cf002cd2d\jakarta.annotation-api-1.3.5.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.yaml\snakeyaml\1.30\8fde7fe2586328ac3c68db92045e1c8759125000\snakeyaml-1.30.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.datatype\jackson-datatype-jsr310\2.13.5\8ba3b868e81d7fc6ead686bd2353859b111d9eaf\jackson-datatype-jsr310-2.13.5.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.module\jackson-module-parameter-names\2.13.5\a401a99e7a45450fd3ef76e82ba39005fd1a8c22\jackson-module-parameter-names-2.13.5.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-annotations\2.13.5\136f77ab424f302c9e27230b4482e8000e142edf\jackson-annotations-2.13.5.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.13.5\d07c97d3de9ea658caf1ff1809fd9de930a286a\jackson-core-2.13.5.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.datatype\jackson-datatype-jdk8\2.13.5\1278f38160812811c56eb77f67213662ed1c7a2e\jackson-datatype-jdk8-2.13.5.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-databind\2.13.5\aa95e46dbc32454f3983221d420e78ef19ddf844\jackson-databind-2.13.5.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.apache.tomcat\tomcat-annotations-api\9.0.74\3aca8b153f89adbe8a79355e85f13665654770b9\tomcat-annotations-api-9.0.74.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework\spring-jcl\5.3.27\9698ea7d5361b5e3a27ed08beb7770279bd2397\spring-jcl-5.3.27.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\ch.qos.logback\logback-core\1.2.12\1d8e51a698b138065d73baefb4f94531faa323cb\logback-core-1.2.12.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-api\2.17.2\f42d6afa111b4dec5d2aea0fe2197240749a4ea6\log4j-api-2.17.2.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\org.springframework.boot\spring-boot-devtools\2.7.11\64016c879c7b264460ce025c21c0029d0a005e55\spring-boot-devtools-2.7.11.jar;C:\Users\my\.gradle\caches\modules-2\files-2.1\com.mysql\mysql-connector-j\8.0.33\9e64d997873abc4318620264703d3fdb6b02dd5a\mysql-connector-j-8.0.33.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 2097152                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 264241152                                 {product} {ergonomic}
+     bool ManagementServer                         = true                                      {product} {command line}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 4225761280                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 2097152                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 0                                      {pd product} {ergonomic}
+     bool ProfileInterpreter                       = false                                  {pd product} {command line}
+    uintx ProfiledCodeHeapSize                     = 0                                      {pd product} {ergonomic}
+     bool ShowCodeDetailsInExceptionMessages       = true                                   {manageable} {command line}
+   size_t SoftMaxHeapSize                          = 4225761280                             {manageable} {ergonomic}
+     intx TieredStopAtLevel                        = 1                                         {product} {command line}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Environment Variables:
+JAVA_HOME=C:\Program Files\Java\jdk-18.0.2
+PATH=C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\NAT Service;C:\app\my\dbhomeXE\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\Tools\Binn\;C:\Program Files\Microsoft SQL Server\100\DTS\Binn\;C:\Program Files\Git\cmd;C:\Program Files\Java\jdk-18.0.2\bin;C:\ProgramData\chocolatey\bin;C:\Program Files\Bandizip\;C:\Program Files\MySQL\MySQL Server 8.0\bin;C:\Windows\System32;C:\PSB ACADEMY\Diploma\Introduction of programming\Python\Scripts\;C:\PSB ACADEMY\Diploma\Introduction of programming\Python\;C:\Python\Python38\Scripts\;C:\Python\Python38\;C:\Python38\Scripts\;C:\Python38\;C:\Users\my\AppData\Local\Microsoft\WindowsApps;C:\Users\my\AppData\Local\GitHubDesktop\bin;C:\src\flutter\flutter_windows_2.0.1-stable\flutter\bin;;C:\Program Files\JetBrains\PyCharm Community Edition 2022.3.3\bin;;C:\Users\my\AppData\Local\Programs\Microsoft VS Code\bin;C:\tools\dart-sdk\bin;C:\Users\my\AppData\Roaming\Pub\Cache\bin;
+USERNAME=my
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 126 Stepping 5, GenuineIntel
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 10 , 64 bit Build 19041 (10.0.19041.2788)
+OS uptime: 11 days 23:22 hours
+
+CPU: total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 126 stepping 5 microcode 0x78, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, avx512f, avx512dq, avx512cd, avx512bw, avx512vl, sha, fma, vzeroupper, avx512_vpopcntdq, avx512_vpclmulqdq, avx512_vaes, avx512_vnni, clflush, clflushopt, avx512_vbmi2, avx512_vbmi
+
+Memory: 4k page, system-wide physical 16118M (2784M free)
+TotalPageFile size 65270M (AvailPageFile size 185M)
+current process WorkingSet (physical memory assigned to process): 11M, peak: 11M
+current process commit charge ("private bytes"): 55M, peak: 307M
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (18.0.2+9-61) for windows-amd64 JRE (18.0.2+9-61), built on Jun  7 2022 13:09:01 by "mach5one" with MS VC++ 16.8 / 16.9 (VS2019)
+
+END.

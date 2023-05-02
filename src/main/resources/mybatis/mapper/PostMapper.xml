@@ -29,6 +29,34 @@
         <result column="first_date" property="firstDate"/>
     </resultMap>
 
+	<resultMap id="postResultMap" type="com.plant.vo.PostVo">
+		<id column="post_id" property="postId" />
+		<result column="user_id" property="userId" />
+		<result column="post_title" property="postTitle" />
+		<result column="post_content" property="postContent" />
+		<result column="post_tag" property="postTag" />
+		<result column="post_image" property="postImage" />
+		<result column="post_file" property="postFile" />
+		<result column="post_date" property="postDate" />
+		<result column="read_count" property="readCount" />
+		<result column="flag" property="flag" />
+
+	</resultMap>
+
+	<resultMap id="MyplantResultMap" type="com.plant.vo.MyplantVo">
+		<id column="myplant_id" property="myplantId"/>
+		<result column="plant_id" property="plantId"/>
+		<result column="user_id" property="userId"/>
+		<result column="myplant_nick" property="myplantNick"/>
+		<result column="myplant_image" property="myplantImage"/>
+		<result column="myplant_weight" property="myplantWeight"/>
+		<result column="myplant_length" property="myplantLength"/>
+		<result column="myplant_depth" property="myplantDepth"/>
+		<result column="myplant_radius1" property="myplantRadius1"/>
+		<result column="myplant_radius2" property="myplantRadius2"/>
+		<result column="first_date" property="firstDate"/>
+	</resultMap>
+
     <!-- 게시물 상세조회 -->
     <select id="postDetail" resultMap="PostDetailMap" parameterType="int">
         <![CDATA[
@@ -65,5 +93,50 @@
             where post_id = #{postId}
         ]]>
     </update>
+
+	<select id="all" resultMap="postResultMap">
+      <![CDATA[
+		select * from post
+		]]>
+	</select>
+
+	<select id="plantall" resultMap="MyplantResultMap">
+	    <![CDATA[
+		select * from myplant where user_id = #{userId}
+		]]>
+	</select>
+
+	<update id="updateItem" parameterType="com.plant.vo.PostVo">
+      <![CDATA[
+		update post set post_title = #{postTitle}, post_content = #{postContent},
+						post_image = #{postImage}, post_file = #{postFile} where post_id = #{postId}"
+		]]>
+	</update>
+	<update id="writepoint" parameterType="com.plant.vo.UserVo">
+      <![CDATA[
+		update user_table set point = point + 10 where user_id = #{userId}
+		]]>
+	</update>
+	<delete id="deleteItem" parameterType="com.plant.vo.PostVo">
+      <![CDATA[
+		delete from post where post_id = #{postId}
+		]]>
+	</delete>
+	<insert id="insert" parameterType="com.plant.vo.PostVo">
+
+		INSERT INTO post (user_id, post_title, post_content, post_image, post_tag, post_date, post_file)
+		VALUES (#{userId}, #{postTitle}, #{postContent}, #{postImage}, #{postTag}, now(), #{postFile})
+		<selectKey keyProperty="postId" resultType="int" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<insert id="insert2" parameterType="com.plant.vo.PostVo">
+		INSERT INTO postmp (post_id, myplant_id)
+		VALUES
+		<foreach item="myplantId" collection="selectedPlants" separator=",">
+			(#{postId}, #{myplantId})
+		</foreach>
+	</insert>
 
 </mapper>

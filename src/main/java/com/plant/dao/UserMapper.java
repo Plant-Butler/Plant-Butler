@@ -12,6 +12,6 @@ public interface UserMapper {
 	UserVo checkMember(UserVo vo);
 	boolean insert(UserVo vo) throws SQLException;
 	int duplicateId(String userId);
-
+	int duplicateNick(String nickname);
 
 }

@@ -31,14 +31,16 @@ public class UserService {
 		boolean flag = false;
 		UserVo vo = userMapper.checkMember(user);
 		System.out.println("I'm in service");
-//		if (vo == null) {
-//			vo = 0;
-//		}
 		return vo;
 	}
 	
 	public int duplicateId(String userId) {
 		int cnt = userMapper.duplicateId(userId);
+		return cnt;
+	}
+	
+	public int duplicateNick(String nickname) {
+		int cnt = userMapper.duplicateNick(nickname);
 		return cnt;
 	}
 	
