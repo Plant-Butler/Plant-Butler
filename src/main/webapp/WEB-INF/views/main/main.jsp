@@ -39,7 +39,11 @@
                 var row = "<tr>";
                                 for(var i = 0; i < 3; i++) {
                                     var user = users[i];
-                                    row += "<td>" + user.myplantImage + "</td>";
+                                    if(user.myplantImage != null) {
+                                        row += "<td>" + user.myplantImage + "</td>";
+                                    } else {
+                                        row += "<td>사진이 없습니다.</td>";
+                                    }
                                 }
                                 row += "</tr><tr>";
                                 for(var i = 0; i < 3; i++) {

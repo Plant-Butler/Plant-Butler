@@ -19,17 +19,39 @@
         <result column="myplant_nick" property="myplantNick"/>
     </resultMap>
     <resultMap id="ManagePostMap" type="com.plant.vo.PostVo">
+        <result column="post_id" property="postId"/>
         <result column="post_title" property="postTitle"/>
         <result column="user_id" property="userId"/>
         <result column="flag" property="flag"/>
     </resultMap>
+    <resultMap id="PostMap" type="com.plant.vo.PostVo">
+        <result column="post_id" property="postId"/>
+        <result column="user_id" property="userId"/>
+        <result column="Post_title" property="postTitle"/>
+        <result column="post_content" property="postContent"/>
+        <result column="post_tag" property="postTag"/>
+        <result column="post_image" property="postImage"/>
+        <result column="post_file" property="postFile"/>
+        <result column="post_date" property="postDate"/>
+        <result column="read_count" property="readCount"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
+    <resultMap id="ManageCommentMap" type="com.plant.vo.CommentVo">
+        <result column="post_id" property="postId"/>
+        <result column="comment_id" property="commentId"/>
+        <result column="comment_content" property="commentContent"/>
+        <result column="user_id" property="userId"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
 
+    <!--  전체 회원 포인트순 정렬 -->
     <select id="getUserList" resultMap="UserResultMap">
         <![CDATA[
-            select * from user where manager = 0 order by point desc
+            select * from user_table where manager = 0 order by point desc
         ]]>
     </select>
 
+    <!-- 우수회원 추가 -->
     <insert id="insertBestUser" parameterType="String">
         <![CDATA[
             insert into bestuser (user_id)
@@ -37,31 +59,76 @@
       ]]>
     </insert>
 
+    <!-- 우수회원 광고 -->
     <select id="getBestUser" resultMap="BestUserMap">
         <![CDATA[
-            select nickname, myplant_image, distbNm, myplant_nick from bestuser b
-            inner join user u on b.user_id = u.user_id
-            inner join myplant mp on mp.user_id = b.user_id
-            inner join plant p on p.plant_id = mp.plant_id
+            select nickname, myplant_image, distbNm, myplant_nick
+            from bestuser b
+            join user_table u ON b.user_id = u.user_id
+            join myplant mp ON mp.user_id = b.user_id
+            join plant p ON p.plant_id = mp.plant_id
+            group by b.user_id;
         ]]>
     </select>
 
+    <!-- 우수회원 삭제 -->
     <delete id="deleteBestUser" parameterType="String">
         <![CDATA[
             delete from bestuser where user_id = #{userId}
         ]]>
     </delete>
 
+    <!-- 우수회원 초기화 -->
     <delete id="deleteAllBestUser">
         <![CDATA[
             truncate table bestuser
         ]]>
     </delete>
 
+    <!-- 게시물 신고수 정렬 -->
     <select id="mgmtPostList" resultMap="ManagePostMap">
         <![CDATA[
-            select post_title, user_id, flag from post order by flag desc
+            select post_id, post_title, user_id, flag from post order by flag desc
         ]]>
     </select>
 
+    <!-- 댓글 신고수 정렬 -->
+    <select id="mgmtCommentList" resultMap="ManageCommentMap">
+        <![CDATA[
+            select post_id, comment_id, user_id, flag, comment_content from comment order by flag desc
+        ]]>
+    </select>
+
+    <!-- 회원 삭제 -->
+    <select id="set0" resultMap="ManageCommentMap">
+        <![CDATA[
+            set foreign_key_checks = 0
+        ]]>
+    </select>
+    <delete id="deleteUser" parameterType="String">
+        <![CDATA[
+            delete from user_table where user_id = #{userId}
+        ]]>
+    </delete>
+    <select id="set1" resultMap="ManageCommentMap">
+        <![CDATA[
+            set foreign_key_checks = 1
+        ]]>
+    </select>
+    <select id="getCommunityList" parameterType="java.util.Map" resultMap="PostMap">
+        SELECT *
+        FROM post
+        <where>
+            <if test="searchField != null and searchField != '' and keyword != null and keyword != ''">
+                <![CDATA[
+      AND ${searchField} LIKE CONCAT('%', #{keyword}, '%')
+      ]]>
+            </if>
+        </where>
+        ORDER BY post_date DESC
+    </select>
+
+    <select id="getCommentCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM comment WHERE post_id = #{postId}
+    </select>
 </mapper>

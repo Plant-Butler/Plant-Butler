@@ -18,11 +18,8 @@
 <br>
 <%
     UserVo userVo = (UserVo) session.getAttribute("user");
-    String userId = "";
-    String userNickname = "";
-    if (userVo != null) {
-        userNickname = userVo.getNickname();
-    }
+    String userId = userVo.getUserId();
+
 %>
 
 
@@ -31,12 +28,12 @@
 		 <div>
 		 <br>
                 <h4 class = "title">작성자</h4>
-                <input  class="upload_writer" type="text" name="userId" id = "userId"  value=<%=userNickname %> readonly = "readonly">
+             <input class="upload_writer" type="text" name="userId" id="userId" value="<%=userId %>" readonly>
             </div>
             <br>
             <div>
                 <h4 class = "title">제목</h4>
-                <input  class="upload_title" type="text" name="postTitle" id = "postTitle">
+                <input  class="upload_title" type="text" name="postTitle" id = "postTitle" value=<%=userId %>>
             </div>
             <br>
             <div>

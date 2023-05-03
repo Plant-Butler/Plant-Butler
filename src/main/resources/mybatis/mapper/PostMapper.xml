@@ -1,39 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.plant.dao.PostMapper">
 
+      <resultMap id="PostDetailMap" type="com.plant.vo.PostVo">
+          <result column="post_id" property="postId"/>
+          <result column="user_id" property="userId"/>
+          <result column="post_title" property="postTitle"/>
+          <result column="post_content" property="postContent"/>
+          <result column="post_tag" property="postTag"/>
+          <result column="post_image" property="postImage"/>
+          <result column="post_file" property="postFile"/>
+          <result column="post_date" property="postDate"/>
+          <result column="read_count" property="readCount"/>
+          <result column="flag" property="flag"/>
+          <result column="nickname" property="nickname"/>
+          <!--  <collection property="userNick" resultMap="userNick" />  -->
+    </resultMap>
+    <resultMap id="PostMyPlantMap" type="com.plant.vo.MyplantVo">
+        <result column="post_id" property="postId"/>
+        <result column="myplant_nick" property="myplantNick"/>
+        <result column="myplant_image" property="myplantImage"/>
+        <result column="distbNm" property="distbNm"/>
+        <result column="first_date" property="firstDate"/>
+    </resultMap>
+
 	<resultMap id="postResultMap" type="com.plant.vo.PostVo">
-	    <id column="post_id" property="postId" />
-	    <result column="user_id" property="userId" />
-	    <result column="post_title" property="postTitle" />
-	    <result column="post_content" property="postContent" />
-	    <result column="post_tag" property="postTag" />
-   	    <result column="post_image" property="postImage" />
- 	    <result column="post_file" property="postFile" />
-	    <result column="post_date" property="postDate" />
-	    <result column="read_count" property="readCount" />
-	    <result column="flag" property="flag" />
+		<id column="post_id" property="postId" />
+		<result column="user_id" property="userId" />
+		<result column="post_title" property="postTitle" />
+		<result column="post_content" property="postContent" />
+		<result column="post_tag" property="postTag" />
+		<result column="post_image" property="postImage" />
+		<result column="post_file" property="postFile" />
+		<result column="post_date" property="postDate" />
+		<result column="read_count" property="readCount" />
+		<result column="flag" property="flag" />
 
-  </resultMap>
-  
-<resultMap id="MyplantResultMap" type="com.plant.vo.MyplantVo">
-    <id column="myplant_id" property="myplantId"/>
-    <result column="plant_id" property="plantId"/>
-    <result column="user_id" property="userId"/>
-    <result column="myplant_nick" property="myplantNick"/>
-    <result column="myplant_image" property="myplantImage"/>
-    <result column="myplant_weight" property="myplantWeight"/>
-    <result column="myplant_length" property="myplantLength"/>
-    <result column="myplant_depth" property="myplantDepth"/>
-    <result column="myplant_radius1" property="myplantRadius1"/>
-    <result column="myplant_radius2" property="myplantRadius2"/>
-    <result column="first_date" property="firstDate"/>
-</resultMap>
+	</resultMap>
 
-     <select id="all" resultMap="postResultMap">
+	<resultMap id="MyplantResultMap" type="com.plant.vo.MyplantVo">
+		<id column="myplant_id" property="myplantId"/>
+		<result column="plant_id" property="plantId"/>
+		<result column="user_id" property="userId"/>
+		<result column="myplant_nick" property="myplantNick"/>
+		<result column="myplant_image" property="myplantImage"/>
+		<result column="myplant_weight" property="myplantWeight"/>
+		<result column="myplant_length" property="myplantLength"/>
+		<result column="myplant_depth" property="myplantDepth"/>
+		<result column="myplant_radius1" property="myplantRadius1"/>
+		<result column="myplant_radius2" property="myplantRadius2"/>
+		<result column="first_date" property="firstDate"/>
+	</resultMap>
+
+    <!-- 게시물 상세조회 -->
+    <select id="postDetail" resultMap="PostDetailMap" parameterType="int">
+        <![CDATA[
+            select post_id, p.user_id, post_title, post_content, post_tag, post_image, post_file, post_date, read_count, flag, nickname
+            from post p
+            join user_table u
+            where post_id = #{postId} and p.user_id = u.user_id
+        ]]>
+    </select>
+
+    <!-- 내 반려식물 상세정보 -->
+    <select id="postMyPlantDetail" resultMap="PostMyPlantMap" parameterType="int">
+        <![CDATA[
+            select p.post_id, myplant_nick, myplant_image, distbNm, first_date
+            from post p
+            join postmp pmp on pmp.post_id = p.post_id
+            join myplant mp on mp.myplant_id = pmp.myplant_id
+            join plant pl on pl.plant_id = mp.plant_id
+            where p.post_id = #{postId}
+        ]]>
+    </select>
+
+    <!-- 조회수 상승 -->
+    <update id="upReadCount">
+        <![CDATA[
+            update post set read_count = read_count+1 where post_id = #{postId}
+      ]]>
+    </update>
+
+    <!-- 댓글 신고 -->
+    <update id="declarePost" parameterType="int">
+        <![CDATA[
+            update post set flag = flag + 1
+            where post_id = #{postId}
+        ]]>
+    </update>
+
+    
+
+	<select id="all" resultMap="postResultMap">
       <![CDATA[
          select * from post
       ]]>
@@ -79,4 +140,4 @@
 	</insert>
 
 
- </mapper>
+</mapper>

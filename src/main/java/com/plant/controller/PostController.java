@@ -1,11 +1,17 @@
 package com.plant.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -25,7 +32,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.github.pagehelper.PageInfo;
+import com.plant.service.CommentService;
 import com.plant.service.PostService;
+import com.plant.vo.CommentVo;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PostVo;
 
@@ -33,33 +43,88 @@ import com.plant.vo.PostVo;
 @RestController
 @RequestMapping("/community")
 public class PostController {
-	
-	@Autowired
-	private PostService postService;
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	
-	/* 커뮤니티 메인 페이지 */	
-	@GetMapping(" ")
-	public ModelAndView main() throws SQLException {
-	    logger.info("커뮤니티 메인 페이지 호출");
-	    List<PostVo> postList = postService.getAllPosts();
-	    ModelAndView modelAndView = new ModelAndView();
-	    modelAndView.addObject("postList", postList);
-	    modelAndView.setViewName("/community/cmain");
-	    return modelAndView;
-	}
 
-	
-	/* 새로운 게시물 등록 폼 */	
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private CommentService commentService;
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /* 게시물 상세보기 */
+    @GetMapping("/{postId}")
+    public ModelAndView postDetail(@PathVariable int postId,
+                                   @RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize) {
+        ModelAndView mv = new ModelAndView("/post/postDetail");
+        PostVo postVo = postService.postDetail(postId);
+        ArrayList<MyplantVo> myPlantList = postService.postMyPlantDetail(postId);
+        //ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
+
+        PageInfo<CommentVo> commentList = commentService.getCommentList(postId, pageNum , pageSize);
+        mv.addObject("post", postVo);
+        mv.addObject("commentList", commentList);
+        mv.addObject("myPlantList", myPlantList);
+
+        return mv;
+    }
+
+    /* 첨부파일 다운로드 */
+    @GetMapping("/download.do")
+    public void download(@RequestParam("fileName") String fileName, HttpServletResponse resp) throws IOException {
+        File downloadFile = new File("D:\\23-04-BIT-final-project-new\\workspace\\Plant-Butler\\src\\main\\resources\\uploads\\"+fileName);
+
+        try {
+            fileName = new String(fileName.getBytes("UTF-8"),"ISO-8859-1");
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        resp.setContentType("text/html; charset=UTF-8");
+        resp.setHeader("Cache-Control", "no-cache");
+        resp.addHeader("Content-Disposition", "attachment;filename="+fileName);
+        try {
+            FileInputStream fis = new FileInputStream(downloadFile);
+            OutputStream os = resp.getOutputStream();
+            byte[] buffer = new byte[256];
+            int length = 0;
+            while((length=fis.read(buffer))!=-1){
+                os.write(buffer, 0, length);
+            }
+            os.close();
+            fis.close();
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+
+    /* 게시물 신고 */
+    @PatchMapping("/{postId}")
+    public ResponseEntity declarePost(@PathVariable int postId) {
+        boolean flag = postService.declarePost(postId);
+
+        logger.info("[Post Controller] declarePost(postId)");
+        if(flag) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
+
+	/* 새로운 게시물 등록 폼 */
 	@GetMapping("/form")
 	public ModelAndView newform() {
 		ModelAndView mv = new ModelAndView("/community/newPost");
 		logger.info("게시물 등록 페이지 호출");
 		return mv;
 	}
-	
-	/* 새로운 게시물 등록 */	
+
+	/* 새로운 게시물 등록 */
 	@PostMapping("/form")
 	public ResponseEntity<String> upload(
 	    @RequestParam(value="userId") String userId,
@@ -132,7 +197,7 @@ public class PostController {
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	   
+
 	    }
 
 	}
@@ -143,8 +208,8 @@ public class PostController {
 		logger.info("게시물 수정 폼 호출");
 		return mv;
 	}
-	
-	/* 게시물 수정 */	
+
+	/* 게시물 수정 */
 	@PutMapping("/{postId}")
 	public ResponseEntity<String> update(
 			@PathVariable int postId,
@@ -171,7 +236,7 @@ public class PostController {
 	        System.out.println(uploadedImage);
 	        image.transferTo(uploadedImage);
 	        System.out.println("here2");
-	        
+
 	        String fileName = file.getOriginalFilename();
 	        System.out.println(fileName);
 	        File uploadedFile = new File(uploadFile + "/" + fileName);
@@ -186,19 +251,19 @@ public class PostController {
 	        post.setPostImage(uploadedImage.getAbsolutePath());
 	        post.setPostFile(uploadedFile.getAbsolutePath());
 	        boolean flag = postService.updateItem(post);
-	        
+
 	        if (flag) {
-	            String redirectUrl = "/community"; 
+	            String redirectUrl = "/community";
 	            URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
 	                    .path(redirectUrl)
 	                    .build()
 	                    .toUri();
-	            redirectAttributes.addAttribute("success", "true"); 
+	            redirectAttributes.addAttribute("success", "true");
 	            return ResponseEntity.status(HttpStatus.FOUND)
 	                    .location(location)
 	                    .build();
 	        } else {
-	            redirectAttributes.addAttribute("success", "false"); 
+	            redirectAttributes.addAttribute("success", "false");
 	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 	        }
 
@@ -208,19 +273,20 @@ public class PostController {
 	    }
 	}
 
-	
+
 	/* 게시물 삭제 */
 	@DeleteMapping(value="/{postId}")
 	public ResponseEntity<?> remove(@RequestParam("postId") int postId) {
 	    logger.info("게시글 삭제 postId={}", postId);
-	    boolean flag = postService.removeItem(postId);
-	    if (flag) {
+		boolean flag = postService.removeItemMP(postId);
+	    boolean flag2 = postService.removeItem(postId);
+	    if (flag2) {
 	        return ResponseEntity.ok().build();
 	    } else {
 	        return ResponseEntity.badRequest().build();
 	    }
 	}
-	
+
 	/* 내 식물 리스트 보여주기 */
 	@GetMapping(value="/plantall")
 	public ResponseEntity<?> plantall(@RequestParam("userId") String userId) {

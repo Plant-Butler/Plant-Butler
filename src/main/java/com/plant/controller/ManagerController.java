@@ -1,7 +1,9 @@
 package com.plant.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.plant.service.ManagerService;
 import com.plant.vo.BestUserVo;
+import com.plant.vo.CommentVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
@@ -12,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,21 +26,22 @@ public class ManagerController {
     private ManagerService service;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /* 전체 회원, 전체 게시물 */
+    /* 게시물 + 댓글 + 회원 */
     @GetMapping(value=" ")
-    public ModelAndView mgmtList() {
+    public ModelAndView managerist( @RequestParam(defaultValue = "1") int postPage,
+                                    @RequestParam(defaultValue = "1") int commentPage,
+                                    @RequestParam(defaultValue = "1") int userPage) {
         ModelAndView mv = new ModelAndView("/mypage/manager");
-        ArrayList<UserVo> userList = service.getUserList();
+        //ArrayList<UserVo> userList = service.getUserList();
+
+        PageInfo<PostVo> postList = service.mgmtPostList(postPage, 10);
+        PageInfo<CommentVo> commentList = service.mgmtCommentList(commentPage, 10);
+        PageInfo<UserVo> userList = service.getUserList(userPage, 10);
+        mv.addObject("postList", postList);
+        mv.addObject("commentList", commentList);
         mv.addObject("userList", userList);
 
-        logger.info("[Manager Controller] mgmtList()");
         return mv;
-    }
-
-    @GetMapping("/post-list")
-    public ResponseEntity<List<PostVo>> getPostList() {
-        List<PostVo> postList = service.mgmtPostList();
-        return new ResponseEntity<>(postList, HttpStatus.OK);
     }
 
     /* 우수회원 추가 */
@@ -51,10 +53,10 @@ public class ManagerController {
         HttpHeaders headers = new HttpHeaders();
 
         if(flag) {
-            headers.setLocation(URI.create("/manager"));
-            return new ResponseEntity<>(headers, HttpStatus.OK);
+            //headers.setLocation(URI.create("/manager"));
+            return new ResponseEntity<>(headers, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(headers, HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
@@ -66,7 +68,7 @@ public class ManagerController {
         logger.info("[Manager Controller] deleteBestUser()");
         HttpHeaders headers = new HttpHeaders();
         if(flag) {
-            headers.setLocation(URI.create("/manager"));
+            //headers.setLocation(URI.create("/manager"));
             return new ResponseEntity<>(headers, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
@@ -79,18 +81,30 @@ public class ManagerController {
         service.deleteAllBestUser();
         logger.info("[Manager Controller] deleteAllBestUser()");
         HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(URI.create("/manager"));
+        //headers.setLocation(URI.create("/manager"));
         return new ResponseEntity<>(headers, HttpStatus.OK);
     }
 
     /* 우수회원 광고 */
     @GetMapping(value="/best-list")
-    public ResponseEntity<?> selectBestUser() {
+    public ResponseEntity<ArrayList<BestUserVo>> selectBestUser() {
         ArrayList<BestUserVo> bestList = service.getBestUser();
         logger.info(bestList.toString());
         logger.info("[Manager Controller] selectBestUser()");
         return new ResponseEntity<>(bestList, HttpStatus.OK);
     }
 
+    /* 회원 삭제 */
+    @DeleteMapping(value="/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+        boolean flag = service.deleteUser(userId);
+
+        logger.info("[Manager Controller] deleteUser(userId)");
+        if(flag) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
 }

@@ -13,6 +13,7 @@ public class CommentVo {
     private String commentContent;
     private Timestamp commentDate;
     private int flag; // 신고 수
+    private String nickname;
 
     public CommentVo() {}
 
@@ -71,5 +72,13 @@ public class CommentVo {
 
     public void setFlag(int flag) {
         this.flag = flag;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

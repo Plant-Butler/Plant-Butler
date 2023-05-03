@@ -15,13 +15,15 @@ public class PostVo {
     private String postFile;
     private Timestamp postDate;
     private int readCount;
-    private int flag;
+    private int commentCount;
+    private int flag; // 신고 수
+    private String nickname;
     private int myplantId;
     private List<String> selectedPlants;
 
     public PostVo() {}
 
-    public PostVo(int postId, String userId, String postTitle, String postContent, String postTag, String postImage, String postFile, Timestamp postDate, int readCount, int flag) {
+    public PostVo(int postId, String userId, String postTitle, String postContent, String postTag, String postImage, String postFile, Timestamp postDate, int readCount, int commentCount, int flag) {
         this.postId = postId;
         this.userId = userId;
         this.postTitle = postTitle;
@@ -31,6 +33,7 @@ public class PostVo {
         this.postFile = postFile;
         this.postDate = postDate;
         this.readCount = readCount;
+        this.commentCount = commentCount;
         this.flag = flag;
     }
 
@@ -86,8 +89,8 @@ public class PostVo {
         return postImage;
     }
 
-    public void setPostImage(String bytes) {
-        this.postImage = bytes;
+    public void setPostImage(String postImage) {
+        this.postImage = postImage;
     }
 
     public String getPostFile() {
@@ -114,12 +117,28 @@ public class PostVo {
         this.readCount = readCount;
     }
 
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
     public int getFlag() {
         return flag;
     }
 
     public void setFlag(int flag) {
         this.flag = flag;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
 	public int getMyplantId() {
@@ -129,6 +148,6 @@ public class PostVo {
 	public void setMyplantId(int myplantId) {
 		this.myplantId = myplantId;
 	}
-    
-    
+
+
 }
