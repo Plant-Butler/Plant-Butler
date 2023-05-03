@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page import="java.net.URLEncoder"%>
 <!DOCTYPE html>
 <html>
@@ -36,12 +37,20 @@ ${post.postContent}
 
 <c:if test="${not empty post.postImage}">
 이미지
-	<img src="D://ml/image/${post.postImage}" />
+    <td>
+        <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
+            <!-- 여기에서 image 변수를 사용하여 각 이미지를 처리합니다. -->
+            <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
+        </c:forEach>
+
+    </td>
 </c:if>
 <br>
+
+
 <c:if test="${not empty post.postFile}">
 [첨부파일]
-     <a href="./download.do?fileName=${post.postFile}">${post.postFile}</a>
+    <a href="./download.do?fileName=${URLEncoder.encode(post.postFile, 'UTF-8')}">${post.postFile}</a>
 </c:if>
 
 
@@ -49,7 +58,7 @@ ${post.postContent}
 <c:if test="${not empty sessionScope.user.userId}">
     <button type="button" onclick="declare(0, ${post.postId}, 0)">신고하기</button>
     <c:if test="${post.userId eq sessionScope.user.userId}">
-<button type="button" onclick="location.href='/community/form/${post.postId}?postTitle=${post.postTitle}&postContent=${post.postContent}'">수정</button>
+	<button type="button" onclick="location.href='/community/form/${post.postId}?postTitle=${post.postTitle}&postContent=${post.postContent}'">수정</button>
 
         <button type="button" onclick="deletePost(${post.postId})">삭제</button>
     </c:if>

@@ -125,9 +125,7 @@ public class ManagerService {
         int affectedCnt = 0;
         this.deleteBestUser(userId);
         try {
-            mapper.set0();
             affectedCnt = mapper.deleteUser(userId);
-            mapper.set1();
         } catch (SQLException e) {
         }
         if(affectedCnt > 0) {
