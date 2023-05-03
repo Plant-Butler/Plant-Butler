@@ -33,18 +33,18 @@
             <br>
             <div>
                 <h4 class = "title">제목</h4>
-                <input  class="upload_title" type="text" name="postTitle" id = "postTitle" value=<%=userId %>>
+                <input  class="upload_title" type="text" name="postTitle" id = "postTitle" value="${post.postTitle}">
             </div>
             <br>
             <div>
                 <h4 class = "title">내용</h4>
-                <textarea cols="80" rows="5" name="postContent"></textarea>
+                <textarea cols="80" rows="5" name="postContent">${post.postContent}</textarea>
             </div>
             <br>
             <br>           
 			<div>
                 <h4 class = "title">이미지첨부</h4>
-                <input class="upload_img" type="file" name=postImage>
+                <input class="upload_img" type="file" name="postImage">
             </div>
             <br>           
 			<div>

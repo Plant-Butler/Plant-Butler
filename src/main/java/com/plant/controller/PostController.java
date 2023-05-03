@@ -6,9 +6,22 @@ import com.plant.service.PostService;
 import com.plant.vo.CommentVo;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PostVo;
-import java.io.File;
-import java.io.IOException;
-import java.net.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.net.URI;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -16,37 +29,7 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.*;
-import java.util.ArrayList;
 import java.util.Objects;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import com.plant.service.PostService;
-import com.plant.vo.MyplantVo;
-import com.plant.vo.PostVo;
 
 
 @RestController
@@ -63,7 +46,7 @@ public class PostController {
     @GetMapping("/{postId}")
     public ModelAndView postDetail(@PathVariable int postId,
                                    @RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize) {
-        ModelAndView mv = new ModelAndView("/post/postDetail");
+        ModelAndView mv = new ModelAndView("/community/postDetail");
         PostVo postVo = postService.postDetail(postId);
         ArrayList<MyplantVo> myPlantList = postService.postMyPlantDetail(postId);
         //ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
@@ -80,7 +63,7 @@ public class PostController {
 	@GetMapping("/download.do")
 	public void download(@RequestParam("fileName") String encodedFileName, HttpServletResponse resp) throws IOException {
 		String fileName = URLDecoder.decode(encodedFileName, StandardCharsets.UTF_8);
-		String basePath = "D:/Plant-Butler/src/main/resources/static/uploads";
+		String basePath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads";
 		File downloadFile = new File(basePath, fileName);
 		fileName = URLEncoder.encode(fileName, "UTF-8");
 		resp.setContentType("application/octet-stream");
@@ -130,25 +113,21 @@ public class PostController {
 	/* 새로운 게시물 등록 */
 	@PostMapping("/form")
 	public ResponseEntity<String> upload(
-	    @RequestParam(value="userId") String userId,
-	    @RequestParam(value="postTitle") String postTitle,
-	    @RequestParam(value="postContent") String postContent,
-	    @RequestParam(value="postTag", required=false) String postTag,
-	    @RequestParam(value="postImage", required=false) List<MultipartFile> image,
-	    @RequestParam(value="postFile", required=false) MultipartFile file,
-	    @RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
-	    RedirectAttributes redirectAttributes) throws SQLException {
+			@ModelAttribute("post") PostVo post,
+			@RequestParam(value="postMultiImage", required=false) List<MultipartFile> image,
+			@RequestParam(value="postMultiFile", required=false) MultipartFile file,
+			@RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
+			RedirectAttributes redirectAttributes) {
 	    try {
-	        // 업로드된 파일을 저장할 디렉토리를 지정합니다.
-	        String uploadFile = "D:/Plant-Butler/src/main/resources/static/uploads/";
+	        // 파일 저장할 디렉토리를
+	        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
 	        File dir2 = new File(uploadFile);
 	        if (!dir2.exists()) {
 	            dir2.mkdir();
 	        }
 
 
-	        // 이미지 파일을 저장합니다.
-
+	        // 이미지 파일 저장
 			List<MultipartFile> images = image;
 			StringBuilder fileNames = new StringBuilder();
 	        if (images!= null && !images.isEmpty()) {
@@ -156,13 +135,13 @@ public class PostController {
 				for (MultipartFile image1 : images) {
 					if (!image1.isEmpty()) {
 						String fileName = Objects.requireNonNull(image1.getOriginalFilename());
-						// 쉼표를 추가하기 전에 이미지 수를 확인
+						// 쉼표를 추가하기 전에 이미지 수 확인
 						if (imageCount > 0) {
 							fileNames.append(",");
 						}
 						fileNames.append(fileName);
 						// 이미지 파일을 저장할 위치 지정
-						String uploadPath = "D:/Plant-Butler/src/main/resources/static/uploads/";
+						String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
 						File uploadDir = new File(uploadPath);
 						if (!uploadDir.exists()) {
 							uploadDir.mkdirs();
@@ -177,7 +156,7 @@ public class PostController {
 				}
 			}
 
-	        // 파일을 저장합니다.
+	        // 파일 저장
 	        String filePath = null;
 			String fileName = null;
 	        if (file != null && !file.isEmpty()) {
@@ -187,18 +166,16 @@ public class PostController {
 	            filePath = uploadedFile.getAbsolutePath();
 	        }
 
-	        // 파일 경로를 post 객체에 저장합니다.
-	        PostVo post = new PostVo();
-	        post.setUserId(userId);
-	        post.setPostTitle(postTitle);
-	        post.setPostContent(postContent);
-	        post.setPostTag(postTag);
+	        // 파일 경로 post 객체에 저장
 	        post.setPostImage(fileNames.toString());
 	        post.setSelectedPlants(selectedPlants);
 	        post.setPostFile(fileName);
 
 	        boolean flag = postService.saveItem(post);
-	        boolean flag2 = postService.saveItem2(post);
+			if(selectedPlants.isEmpty()) {
+			} else {
+				boolean flag2 = postService.saveItem2(post);
+			}
 	        if (flag) {
 	        	boolean flag3 = postService.writepoint(post);
 	            String redirectUrl = "/community"; // 리다이렉트할 URL
@@ -226,6 +203,8 @@ public class PostController {
 	@GetMapping("/form/{postId}")
 	public ModelAndView updateForm(@PathVariable int postId) {
 		ModelAndView mv = new ModelAndView("/community/updateForm");
+		PostVo post = postService.postDetail(postId);
+		mv.addObject("post", post);
 		logger.info("게시물 수정 폼 호출");
 		return mv;
 	}

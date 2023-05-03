@@ -51,7 +51,7 @@ public class MainController {
             post.setCommentCount(mainService.getCommentCount(post.getPostId()));
         }
         mv.addObject("posts", list);
-        mv.setViewName("/post/postList");
+        mv.setViewName("/community/postList");
         return mv;
     }
     /* 식물일기 이동 (로그인 후) */
