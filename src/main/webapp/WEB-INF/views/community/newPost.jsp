@@ -116,12 +116,12 @@ $(document).ready(function() {
             <br>           
 			<div>
                 <h4 class = "title">이미지첨부</h4>
-                <input class="upload_img" type="file" name=postImage multiple>
+                <input class="upload_img" type="file" name="postImage" multiple>
             </div>
             <br>           
 			<div>
                 <h4 class = "title">데이터첨부</h4>
-                <input class="upload_data" type="file" name="postFile">
+                <input class="upload_data" type="file" name="postMultiFile" id="postMultiFile">
             </div>    	
 	<br>
 	<div class="submit">

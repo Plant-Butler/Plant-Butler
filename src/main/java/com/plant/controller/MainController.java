@@ -45,13 +45,14 @@ public class MainController {
         params.put("searchField", searchField);
         params.put("keyword", keyword);
         PageInfo<PostVo> list = mainService.getCommunityList(pageNum , pageSize, params);
+        System.out.println(list);
         List<PostVo> postList = list.getList();
         /*댓글수 조회 로직*/
         for (PostVo post : postList) {
             post.setCommentCount(mainService.getCommentCount(post.getPostId()));
         }
         mv.addObject("posts", list);
-        mv.setViewName("/post/postList");
+        mv.setViewName("/community/postList");
         return mv;
     }
     /* 식물일기 이동 (로그인 후) */
