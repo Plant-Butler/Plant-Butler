@@ -21,7 +21,7 @@
     <table>
         <c:forEach var="myPlant" items="${myPlantList}">
             <tr>
-                <td><img src="/images/${myPlant.myplantImage}"</td>
+                <td><img src="/uploads/${myPlant.myplantImage}"</td>
                 <td>${myPlant.distbNm}</td>
                 <td>${myPlant.myplantNick}</td>
                 <td><fmt:formatDate value="${myPlant.firstDate}" type="date"/></td>

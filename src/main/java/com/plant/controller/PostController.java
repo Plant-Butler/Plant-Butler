@@ -14,11 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 @RestController
@@ -51,7 +48,7 @@ public class PostController {
     /* 첨부파일 다운로드 */
     @GetMapping("/download.do")
     public void download(@RequestParam("fileName") String fileName, HttpServletResponse resp) throws IOException {
-        File downloadFile = new File("D:\\23-04-BIT-final-project-new\\workspace\\Plant-Butler\\src\\main\\resources\\uploads\\"+fileName);
+        File downloadFile = new File("D:\\23-04-BIT-final-project-new\\workspace\\Plant-Butler\\src\\main\\resources\\static\\uploads\\"+fileName);
 
         try {
             fileName = new String(fileName.getBytes("UTF-8"),"ISO-8859-1");

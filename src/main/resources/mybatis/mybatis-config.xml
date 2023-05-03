@@ -6,5 +6,6 @@
     <mapper resource="ManagerMapper.xml"/>
     <mapper resource="UserMapper.xml"/>
     <mapper resource="CommentMapper.xml"/>
+    <mapper resource="MypageMapper.xml"/>
   </mappers>
 </configuration>

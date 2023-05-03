@@ -40,7 +40,7 @@
                                 for(var i = 0; i < 3; i++) {
                                     var user = users[i];
                                     if(user.myplantImage != null) {
-                                        row += "<td>" + user.myplantImage + "</td>";
+                                        row += "<td><img src='/uploads/" + user.myplantImage + "></td>";
                                     } else {
                                         row += "<td>사진이 없습니다.</td>";
                                     }

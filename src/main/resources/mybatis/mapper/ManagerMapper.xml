@@ -62,12 +62,12 @@
     <!-- 우수회원 광고 -->
     <select id="getBestUser" resultMap="BestUserMap">
         <![CDATA[
-            select nickname, myplant_image, distbNm, myplant_nick
-            from bestuser b
-            join user_table u ON b.user_id = u.user_id
-            join myplant mp ON mp.user_id = b.user_id
-            join plant p ON p.plant_id = mp.plant_id
-            group by b.user_id;
+            SELECT nickname, MIN(myplant_image) as myplant_image, MIN(distbNm) as distbNm, MIN(myplant_nick) as myplant_nick
+            FROM bestuser b
+            JOIN user_table u ON b.user_id = u.user_id
+            JOIN myplant mp ON mp.user_id = b.user_id
+            JOIN plant p ON p.plant_id = mp.plant_id
+            GROUP BY b.user_id;
         ]]>
     </select>
 
