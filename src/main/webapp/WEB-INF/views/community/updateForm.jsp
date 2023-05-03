@@ -9,11 +9,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
 <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 <meta charset="UTF-8">
-<title>Write Item</title>
+<title>Update Item</title>
 </head>
 <body>
 <div class="about-section">
-<h1>New Post</h1>
+<h1>Update Post</h1>
 </div>
 <br>
 <%
@@ -33,18 +33,18 @@
             <br>
             <div>
                 <h4 class = "title">제목</h4>
-                <input  class="upload_title" type="text" name="postTitle" id = "postTitle" value=<%=userId %>>
+                <input  class="upload_title" type="text" name="postTitle" id = "postTitle" value="${post.postTitle}">
             </div>
             <br>
             <div>
                 <h4 class = "title">내용</h4>
-                <textarea cols="80" rows="5" name="postContent"></textarea>
+                  <textarea cols="80" rows="5" name="postContent" id="postContent">${post.postContent}</textarea>
             </div>
             <br>
             <br>           
 			<div>
                 <h4 class = "title">이미지첨부</h4>
-                <input class="upload_img" type="file" name=postImage>
+                <input class="upload_img" type="file" name=postImage >
             </div>
             <br>           
 			<div>

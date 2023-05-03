@@ -21,7 +21,7 @@
     <table>
         <c:forEach var="myPlant" items="${myPlantList}">
             <tr>
-                <td><img src="/images/${myPlant.myplantImage}"></td>
+                <td><img src="D:/ml/${myPlant.myplantImage}"></td>
                 <td>${myPlant.distbNm}</td>
                 <td>${myPlant.myplantNick}</td>
                 <td><fmt:formatDate value="${myPlant.firstDate}" type="date"/></td>
@@ -36,7 +36,7 @@ ${post.postContent}
 
 <c:if test="${not empty post.postImage}">
 이미지
-	<img src="/images/${post.postImage}" />
+	<img src="D://ml/image/${post.postImage}" />
 </c:if>
 <br>
 <c:if test="${not empty post.postFile}">
@@ -49,7 +49,8 @@ ${post.postContent}
 <c:if test="${not empty sessionScope.user.userId}">
     <button type="button" onclick="declare(0, ${post.postId}, 0)">신고하기</button>
     <c:if test="${post.userId eq sessionScope.user.userId}">
-        <button type="button" onclick="location.href='/community/form/${post.postId}'">수정</button>
+<button type="button" onclick="location.href='/community/form/${post.postId}?postTitle=${post.postTitle}&postContent=${post.postContent}'">수정</button>
+
         <button type="button" onclick="deletePost(${post.postId})">삭제</button>
     </c:if>
 </c:if>
@@ -158,7 +159,27 @@ ${post.postContent}
             }
         });
     }
-
+    // 게시물 수정
+    function updatePost(postId, postTitle, postContent) {
+        $.ajax({
+            url: "/community/form/" + postId,
+            type: "GET",
+            data: {
+                postId : postId,
+                postTitle : postTitle,
+                postContent : postContent
+            },
+            success: function(response) {
+                window.location.assign("/community/");
+            },
+            error: function(request, status, error) {
+                alert('게시물을 수정할 수 없습니다.');
+                console.log("code: " + request.status)
+                console.log("message: " + request.responseText)
+                console.log("error: " + error);
+            }
+        });
+    }
     // 게시물 삭제
     function deletePost(postId) {
         $.ajax({

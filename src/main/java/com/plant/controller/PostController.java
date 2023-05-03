@@ -172,9 +172,9 @@ public class PostController {
 	        post.setPostTitle(postTitle);
 	        post.setPostContent(postContent);
 	        post.setPostTag(postTag);
-	        post.setPostImage(imagePath);
+	        post.setPostImage(image.getOriginalFilename());
 	        post.setSelectedPlants(selectedPlants);
-	        post.setPostFile(filePath);
+	        post.setPostFile(file.getOriginalFilename());
 
 	        boolean flag = postService.saveItem(post);
 	        boolean flag2 = postService.saveItem2(post);
@@ -201,12 +201,20 @@ public class PostController {
 	    }
 
 	}
+	/////////////////////////////////////////
 	/* 게시물 수정 폼 */
 	@GetMapping("/form/{postId}")
-	public ModelAndView updateForm(@PathVariable int postId) {
-		ModelAndView mv = new ModelAndView("/community/updateForm");
-		logger.info("게시물 수정 폼 호출");
-		return mv;
+	public ModelAndView updateForm(@PathVariable int postId,
+	                                @RequestParam(value="postTitle") String postTitle,
+	                                @RequestParam(value="postContent") String postContent) {
+	    ModelAndView mv = new ModelAndView("community/updateForm");
+	    PostVo post = new PostVo();
+	    post.setPostTitle(postTitle);
+	    post.setPostContent(postContent);
+	    mv.addObject("postId", postId);
+	    mv.addObject("post", post);
+	    logger.info("게시물 수정 폼 호출");
+	    return mv;
 	}
 
 	/* 게시물 수정 */
