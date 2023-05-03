@@ -38,8 +38,6 @@ public class MyplantVo {
         this.firstDate = firstDate;
     }
 
-
-
     public int getMyplantId() {
         return myplantId;
     }

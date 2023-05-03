@@ -42,7 +42,7 @@ public class UserController {
 	}
 	
 	/* 회원가입 */	
-	@PostMapping("/regist")
+	@PostMapping("/registPage")
 	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, HttpServletResponse response) throws IOException {
 		System.out.println(user.getUserId());
 		System.out.println(user.getPassword());
@@ -66,7 +66,7 @@ public class UserController {
 		return mv;
 	}
 	/* 로그인 */
-	@PostMapping("/login")
+	@GetMapping("/loginPage/login")
 	public ResponseEntity<?> login(@ModelAttribute("user") UserVo user,
 		HttpSession session,
 		RedirectAttributes redirectAttributes) throws SQLException {
@@ -90,9 +90,7 @@ public class UserController {
 
 		}
 	
-
 	}
-
 
 	/* 로그아웃 */
 	@GetMapping("/logout")
@@ -101,13 +99,13 @@ public class UserController {
 		session.invalidate();
 		return mv;
 	}
-	
+	/* 아이디 체크 1 */
 	@GetMapping("/idCheckForm")
 	public ModelAndView idCheckForm() {
 		ModelAndView mv = new ModelAndView("/login/idCheckForm");
 		return mv;
 	}
-	
+	/* 아이디 체크 2 */
 	@PostMapping("/idCheckProc")
 	public ModelAndView idCheckProc(@RequestParam("id") String id) {
 	    ModelAndView mv = new ModelAndView("/login/idCheckProc");
@@ -116,39 +114,35 @@ public class UserController {
 	    mv.addObject("id", id);
 	    return mv;
 	}
-
+	
+	/* 아이디 체크 1 */
+	@GetMapping("/nickCheckForm")
+	public ModelAndView nickCheckForm() {
+		ModelAndView mv = new ModelAndView("/login/nickCheckForm");
+		return mv;
+	}
+	/* 아이디 체크 2 */
+	@PostMapping("/nickCheckProc")
+	public ModelAndView nickCheckProc(@RequestParam("nickname") String nickname) {
+	    ModelAndView mv = new ModelAndView("/login/nickCheckProc");
+	    int cnt = userService.duplicateNick(nickname);
+	    mv.addObject("cnt", cnt);
+	    mv.addObject("nickname", nickname);
+	    return mv;
+	}
+	
+	/* 쿠키 동의 */
     @GetMapping("/cookie")
     public ModelAndView cookie(HttpSession session) {
         ModelAndView mv = new ModelAndView("agreement/cookie");
         return mv;
     }
-    
+    /* 웹푸시 동의 */
     @GetMapping("/webpush")
     public ModelAndView webpush(HttpSession session) {
         ModelAndView mv = new ModelAndView("agreement/webpush");
         return mv;
     }
-	
-//	/* 전체 게시물 목록 */
-//	@GetMapping(value="/all")
-//	public ModelAndView readAll() {
-//		ModelAndView mv = new ModelAndView("test");
-//		ArrayList<TestVo> testList = testService.boardList();
-//		mv.addObject("testList", testList);
-//
-//		return mv;
-//	}
-//	
-//	/* 게시글 작성 */
-//	@PostMapping(value=" ")
-//	public ResponseEntity<?> write(TestVo vo) {
-//		testService.write(vo);
-//		logger.info("write 테스트 컨트롤러 호출");
-//		HttpHeaders headers = new HttpHeaders();
-//		headers.setLocation(URI.create("test/all"));
-//		return new ResponseEntity<>(headers, HttpStatus.MOVED_PERMANENTLY);
-//	}
-
 
 
 }

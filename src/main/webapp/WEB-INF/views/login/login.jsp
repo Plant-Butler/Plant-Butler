@@ -10,7 +10,7 @@
 <body style="text-align: center">
 </div> 
 <br>
-	<form action="./login" method="post" class = "right">
+	<form action="./loginPage/login" method="get" class = "right">
 		<div class="wrap">
         <div class="login">
         	<h3>Plant</h3>
