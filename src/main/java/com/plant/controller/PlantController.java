@@ -32,7 +32,7 @@ public class PlantController {
     @Autowired
     private MyPlantService MyPlantService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+//    test test test
 
     @GetMapping(value="")
     public ModelAndView main(HttpSession session) {
