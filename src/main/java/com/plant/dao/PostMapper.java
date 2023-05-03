@@ -34,4 +34,5 @@ public interface PostMapper {
 	List<MyplantVo> plantall(String userId);
 	boolean writepoint(PostVo post);
 
+    boolean deleteItemMp(int postId);
 }

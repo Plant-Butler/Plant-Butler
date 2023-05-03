@@ -283,8 +283,9 @@ public class PostController {
 	@DeleteMapping(value="/{postId}")
 	public ResponseEntity<?> remove(@RequestParam("postId") int postId) {
 	    logger.info("게시글 삭제 postId={}", postId);
-	    boolean flag = postService.removeItem(postId);
-	    if (flag) {
+		boolean flag = postService.removeItemMP(postId);
+	    boolean flag2 = postService.removeItem(postId);
+	    if (flag2) {
 	        return ResponseEntity.ok().build();
 	    } else {
 	        return ResponseEntity.badRequest().build();

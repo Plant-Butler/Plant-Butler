@@ -137,4 +137,8 @@ public class PostService {
 		return postList;
 	}
 
+    public boolean removeItemMP(int postId) {
+        boolean flag = postMapper.deleteItemMp(postId);
+        return flag;
+    }
 }

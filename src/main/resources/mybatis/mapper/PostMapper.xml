@@ -4,9 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.plant.dao.PostMapper">
-    <!--  <resultMap id="userNick" type="String">
-          <result column="nickname" property="nickname"/>
-      </resultMap> -->
+
       <resultMap id="PostDetailMap" type="com.plant.vo.PostVo">
           <result column="post_id" property="postId"/>
           <result column="user_id" property="userId"/>
@@ -109,7 +107,7 @@
 	<update id="updateItem" parameterType="com.plant.vo.PostVo">
       <![CDATA[
 		update post set post_title = #{postTitle}, post_content = #{postContent},
-						post_image = #{postImage}, post_file = #{postFile} where post_id = #{postId}"
+						post_image = #{postImage}, post_file = #{postFile} where post_id = #{postId}
 		]]>
 	</update>
 	<update id="writepoint" parameterType="com.plant.vo.UserVo">
@@ -117,6 +115,12 @@
 		update user_table set point = point + 10 where user_id = #{userId}
 		]]>
 	</update>
+
+	<delete id="deleteItemMp" parameterType="int">
+ <![CDATA[
+		DELETE FROM postmp WHERE post_id =#{postId}
+		]]>
+	</delete>
 	<delete id="deleteItem" parameterType="com.plant.vo.PostVo">
       <![CDATA[
 		delete from post where post_id = #{postId}
