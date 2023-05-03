@@ -1,6 +1,7 @@
 package com.plant.vo;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class PostVo {
 
@@ -17,6 +18,8 @@ public class PostVo {
     private int commentCount;
     private int flag; // 신고 수
     private String nickname;
+    private int myplantId;
+    private List<String> selectedPlants;
 
     public PostVo() {}
 
@@ -34,7 +37,15 @@ public class PostVo {
         this.flag = flag;
     }
 
-    public int getPostId() {
+    public List<String> getSelectedPlants() {
+		return selectedPlants;
+	}
+
+	public void setSelectedPlants(List<String> selectedPlants) {
+		this.selectedPlants = selectedPlants;
+	}
+
+	public int getPostId() {
         return postId;
     }
 
@@ -129,4 +140,14 @@ public class PostVo {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+	public int getMyplantId() {
+		return myplantId;
+	}
+
+	public void setMyplantId(int myplantId) {
+		this.myplantId = myplantId;
+	}
+
+
 }

@@ -20,6 +20,7 @@ public class MyplantVo {
     private Date firstDate;
 
 
+
     public MyplantVo() {
 
     }
@@ -37,8 +38,6 @@ public class MyplantVo {
         this.myplantRadius2 = myplantRadius2;
         this.firstDate = firstDate;
     }
-
-
 
     public int getMyplantId() {
         return myplantId;
