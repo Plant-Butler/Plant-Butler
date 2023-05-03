@@ -52,7 +52,7 @@
             <option value="user_id">작성자</option>
         </select>
         <input type="text" id="searchText" name="keyword">
-        <button type="submit">검색 </button> <p style="text-align:right;"><div class=submit_box><a class = "submit" href="./community/form">새 게시물 등록</a></div><p>
+        <button type="submit">검색 </button> <p style="text-align:right;"><div class=submit_box><a class = "submit" href="/community/form">새 게시물 등록</a></div><p>
     </div>
 </form>
 

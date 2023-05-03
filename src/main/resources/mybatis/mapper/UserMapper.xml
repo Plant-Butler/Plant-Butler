@@ -25,7 +25,7 @@
 	</select>
 	<select id="duplicateNick" resultType="int">
       <![CDATA[
-         SELECT count(nickname) as cnt FROM user WHERE nickname = #{nickname}
+         SELECT count(nickname) as cnt FROM user_table WHERE nickname = #{nickname}
       ]]>
 	</select>
 	<insert id="insert" parameterType="com.plant.vo.UserVo">
