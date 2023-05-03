@@ -53,7 +53,7 @@
 	</update>
 	<update id="writepoint" parameterType="com.plant.vo.UserVo">
       <![CDATA[
-         update user set point = point + 10 where user_id = #{userId}
+         update user_table set point = point + 10 where user_id = #{userId}
       ]]>
 	</update>
 	<delete id="deleteItem" parameterType="com.plant.vo.PostVo">
