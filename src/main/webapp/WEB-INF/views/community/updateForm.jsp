@@ -1,7 +1,6 @@
 <%@page import="com.plant.vo.UserVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ include file="../main/header.jsp" %> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,12 +43,12 @@
             <br>           
 			<div>
                 <h4 class = "title">이미지첨부</h4>
-                <input class="upload_img" type="file" name=postImage >
+                <input class="upload_img" type="file" name=postImage value="${post.postImage}">
             </div>
             <br>           
 			<div>
                 <h4 class = "title">데이터첨부</h4>
-                <input class="upload_data" type="file" name="postFile">
+                <input class="upload_data" type="file" name="postFile" value="${post.postFile}">
             </div>    	
 	<br>
 	<div class="submit">

@@ -4,17 +4,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-<<<<<<< HEAD
+
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-=======
+
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
->>>>>>> master
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-<<<<<<< HEAD
-=======
+
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -233,7 +232,6 @@ public class PostController {
 
     }
 
-	/////////////////////////////////////////
 	/* 게시물 수정 폼 */
 	@GetMapping("/form/{postId}")
 	public ModelAndView updateForm(@PathVariable int postId,
