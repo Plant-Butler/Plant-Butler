@@ -1,29 +1,24 @@
 package com.plant.controller;
 
-import java.io.IOException;
-import java.net.URI;
-import java.sql.SQLException;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.plant.service.UserService;
+import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import com.plant.service.UserService;
-import com.plant.vo.UserVo;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.net.URI;
+import java.sql.SQLException;
 
 @RestController
 @RequestMapping("")
@@ -65,31 +60,35 @@ public class UserController {
 		logger.info("로그인 페이지 호출");
 		return mv;
 	}
+
 	/* 로그인 */
 	@GetMapping("/loginPage/login")
 	public ResponseEntity<?> login(@ModelAttribute("user") UserVo user,
-		HttpSession session,
-		RedirectAttributes redirectAttributes) throws SQLException {
+								   HttpSession session,
+								   RedirectAttributes redirectAttributes) throws SQLException {
 		UserVo user1 = userService.validMember(user);
 		logger.info("로그인");
 		System.out.println(user1);
 		if (user1 != null) {
-			logger.info("널 아님");
 			session.setAttribute("user", user1);
 			redirectAttributes.addFlashAttribute("successMessage", "로그인에 성공했습니다.");
 			URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-				.path("/home")
-				.build()
-				.toUri();
+					.path("/home")
+					.build()
+					.toUri();
 			return ResponseEntity.status(HttpStatus.FOUND)
-				.location(location)
-				.build();
+					.location(location)
+					.build();
 		} else {
-			session.setAttribute("user", null);
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).header("Location", "/loginPage?errorMessage=로그인에 실패했습니다. 아이디 또는 비밀번호를 확인하세요.").build();
+			URI uri = UriComponentsBuilder.fromPath("/loginPage")
+					.queryParam("errorMessage", "아이디 또는 비밀번호가 올바르지 않습니다.")
+					.build()
+					.toUri();
+			HttpHeaders headers = new HttpHeaders();
+			headers.setLocation(uri);
+			return new ResponseEntity<>(headers, HttpStatus.FOUND);
 
 		}
-	
 	}
 
 	/* 로그아웃 */

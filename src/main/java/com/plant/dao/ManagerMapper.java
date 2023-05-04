@@ -35,5 +35,5 @@ public interface ManagerMapper {
     public List<PostVo> getCommunityList(Map<String, Object> params);
 
     int getCommentCount(int postId) throws SQLException;
-    Page<PostVo> selsectAll();
+
 }
