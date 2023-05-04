@@ -107,11 +107,11 @@ $(document).ready(function() {
            data: { userId : userId, selectedPlants: selectedPlants },
            success: function(data) {
              $("#result").show();
-             var html = "<ul>";
+             var html = "";
              for (var i = 0; i < data.length; i++) {
                 console.log(data[i])
-                html += "<li>" + data[i].myplantNick + "</li>";
-                html += '<button type="button" onclick="postMyplant(' + data[i].myplantId + ', ' + "'" + data[i].myplantNick + "'" + ')">선택</button>';
+                html += "<li>" + data[i].myplantNick;
+                html += ' <button type="button" onclick="postMyplant(' + data[i].myplantId + ', ' + "'" + data[i].myplantNick + "'" + ')">선택</button></li>';
              }
              html += "</ul>";
              $("#result").html(html);
