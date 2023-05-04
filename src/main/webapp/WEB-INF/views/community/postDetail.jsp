@@ -179,7 +179,7 @@ ${post.postContent}
             },
             success: function(response) {
                 alert('삭제되었습니다.');
-                window.location.assign("/community/");
+                window.location.assign("/community");
             },
             error: function(request, status, error) {
                 alert('게시물을 삭제할 수 없습니다.');
@@ -200,7 +200,7 @@ ${post.postContent}
             },
             success: function(response) {
                 alert('삭제되었습니다.');
-                window.location.assign("/community/");
+                window.location.assign("../../..");
             },
             error: function(request, status, error) {
                 alert('댓글을 삭제할 수 없습니다.');

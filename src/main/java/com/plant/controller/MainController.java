@@ -45,6 +45,7 @@ public class MainController {
         params.put("searchField", searchField);
         params.put("keyword", keyword);
         PageInfo<PostVo> list = mainService.getCommunityList(pageNum , pageSize, params);
+        System.out.println(list);
         List<PostVo> postList = list.getList();
         /*댓글수 조회 로직*/
         for (PostVo post : postList) {
