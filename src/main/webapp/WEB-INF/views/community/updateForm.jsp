@@ -1,6 +1,9 @@
 <%@page import="com.plant.vo.UserVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +25,7 @@
 %>
 
 
-	<form action="./update" method="post" enctype="multipart/form-data">
+	<form action="./update" method="put" enctype="multipart/form-data">
 	<div class = "form_table">
 		 <div>
 		 <br>
@@ -41,15 +44,32 @@
             </div>
             <br>
             <br>           
-			<div>
-                <h4 class = "title">이미지첨부</h4>
-                <input class="upload_img" type="file" name=postImage value="${post.postImage}">
+            <div>
+                <h4 class="title">이미지 첨부</h4>
+
+                <c:if test="${not empty post.postImage}">
+                <td>
+                    <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
+                        <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
+                    </c:forEach>
+
+                    </td>
+                </c:if>
+                <input class="upload_img" type="file" name="postImage">
+                <br>
+                <p class="form_note">(JPEG, PNG, GIF 파일만 등록 가능합니다.)</p>
+                <br>
+                <br>
             </div>
-            <br>           
+
+            <br>
 			<div>
-                <h4 class = "title">데이터첨부</h4>
-                <input class="upload_data" type="file" name="postFile" value="${post.postFile}">
-            </div>    	
+                <c:if test="${not empty post.postFile}">
+                [첨부파일]
+                    <a>${post.postFile}</a>
+                </c:if><br><br>
+                <input class="upload_data" type="file" name="postFile" value="${post.postFile}" >
+            </div>
 	<br>
 	<div class="submit">
 	    <input type="submit" value="수정">

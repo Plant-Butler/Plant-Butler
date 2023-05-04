@@ -72,7 +72,7 @@ public class PostController {
     @GetMapping("/{postId}")
     public ModelAndView postDetail(@PathVariable int postId,
                                    @RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize) {
-        ModelAndView mv = new ModelAndView("/post/postDetail");
+        ModelAndView mv = new ModelAndView("/community/postDetail");
         PostVo postVo = postService.postDetail(postId);
         ArrayList<MyplantVo> myPlantList = postService.postMyPlantDetail(postId);
         //ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
@@ -89,7 +89,7 @@ public class PostController {
 	@GetMapping("/download.do")
 	public void download(@RequestParam("fileName") String encodedFileName, HttpServletResponse resp) throws IOException {
 		String fileName = URLDecoder.decode(encodedFileName, StandardCharsets.UTF_8);
-		String basePath = "D:/Plant-Butler/src/main/resources/static/uploads";
+		String basePath = "D:/final/Plant-Butler/src/main/resources/static/uploads";
 		File downloadFile = new File(basePath, fileName);
 		fileName = URLEncoder.encode(fileName, "UTF-8");
 		resp.setContentType("application/octet-stream");
@@ -138,18 +138,15 @@ public class PostController {
 
     /* 새로운 게시물 등록 */
     @PostMapping("/form")
-    public ResponseEntity<String> upload(
-        @RequestParam(value="userId") String userId,
-        @RequestParam(value="postTitle") String postTitle,
-        @RequestParam(value="postContent") String postContent,
-        @RequestParam(value="postTag", required=false) String postTag,
-        @RequestParam(value="postImage", required=false) List<MultipartFile> image,
-        @RequestParam(value="postFile", required=false) MultipartFile file,
-        @RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
-        RedirectAttributes redirectAttributes) throws SQLException {
+	public ResponseEntity<String> upload(
+			@ModelAttribute("post") PostVo post,
+			@RequestParam(value="postMultiImage", required=false) List<MultipartFile> image,
+			@RequestParam(value="postMultiFile", required=false) MultipartFile file,
+			@RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
+			RedirectAttributes redirectAttributes) {
         try {
             // 업로드된 파일을 저장할 디렉토리를 지정합니다.
-            String uploadFile = "D:/Plant-Butler/src/main/resources/static/uploads/";
+            String uploadFile = "D:/final/Plant-Butler/src/main/resources/static/uploads/";
             File dir2 = new File(uploadFile);
             if (!dir2.exists()) {
                 dir2.mkdir();
@@ -171,7 +168,7 @@ public class PostController {
                    }
                    fileNames.append(fileName);
                    // 이미지 파일을 저장할 위치 지정
-                   String uploadPath = "D:/Plant-Butler/src/main/resources/static/uploads/";
+                   String uploadPath = "D:/final/Plant-Butler/src/main/resources/static/uploads/";
                    File uploadDir = new File(uploadPath);
                    if (!uploadDir.exists()) {
                       uploadDir.mkdirs();
@@ -197,11 +194,6 @@ public class PostController {
             }
 
             // 파일 경로를 post 객체에 저장합니다.
-            PostVo post = new PostVo();
-            post.setUserId(userId);
-            post.setPostTitle(postTitle);
-            post.setPostContent(postContent);
-            post.setPostTag(postTag);
             post.setPostImage(fileNames.toString());
             post.setSelectedPlants(selectedPlants);
             post.setPostFile(fileName);
@@ -234,83 +226,101 @@ public class PostController {
 
 	/* 게시물 수정 폼 */
 	@GetMapping("/form/{postId}")
-	public ModelAndView updateForm(@PathVariable int postId,
-	                                @RequestParam(value="postTitle") String postTitle,
-	                                @RequestParam(value="postContent") String postContent) {
-	    ModelAndView mv = new ModelAndView("community/updateForm");
-	    PostVo post = new PostVo();
-	    post.setPostTitle(postTitle);
-	    post.setPostContent(postContent);
-	    mv.addObject("postId", postId);
-	    mv.addObject("post", post);
-	    logger.info("게시물 수정 폼 호출");
-	    return mv;
+	public ModelAndView updateForm(@PathVariable int postId) {
+		ModelAndView mv = new ModelAndView("/community/updateForm");
+		PostVo post = postService.postDetail(postId);
+		mv.addObject("post", post);
+		logger.info("게시물 수정 폼 호출");
+		return mv;
 	}
 
 	/* 게시물 수정 */
 	@PutMapping("/{postId}")
 	public ResponseEntity<String> update(
-			@PathVariable int postId,
-			@RequestParam(value="userId") String userId,
-			@RequestParam(value="postTitle") String postTitle,
-			@RequestParam(value="postContent") String postContent,
-			@RequestParam(value="postImage", required=false) MultipartFile image,
-	        @RequestParam(value="postFile", required=false) MultipartFile file,
+			@ModelAttribute("post") PostVo post,
+			@RequestParam(value="postMultiImage", required=false) List<MultipartFile> image,
+			@RequestParam(value="postMultiFile", required=false) MultipartFile file,
+			@RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
 	        RedirectAttributes redirectAttributes) throws SQLException {
-	    try {
-	        String uploadImage = "D://ml/image";
-	        File dir = new File(uploadImage);
-	        if (!dir.exists()) {
-	            dir.mkdir();
-	        }
-	        String uploadFile = "D://ml/file";
-	        File dir2 = new File(uploadFile);
-	        if (!dir2.exists()) {
-	        	dir2.mkdir();
-	        }
-	        String imageName = image.getOriginalFilename();
-	        System.out.println(imageName);
-	        File uploadedImage = new File(uploadImage + "/" + imageName);
-	        System.out.println(uploadedImage);
-	        image.transferTo(uploadedImage);
-	        System.out.println("here2");
+		try {
+			// 업로드된 파일을 저장할 디렉토리를 지정합니다.
+			String uploadFile = "D:/final/Plant-Butler/src/main/resources/static/uploads/";
+			File dir2 = new File(uploadFile);
+			if (!dir2.exists()) {
+				dir2.mkdir();
+			}
 
-	        String fileName = file.getOriginalFilename();
-	        System.out.println(fileName);
-	        File uploadedFile = new File(uploadFile + "/" + fileName);
-	        System.out.println(uploadedFile);
-	        file.transferTo(uploadedFile);
-	        System.out.println("file");
-	        // 파일 경로를 post 객체에 저장합니다.
-	        PostVo post = new PostVo();
-	        post.setUserId(userId);
-	        post.setPostTitle(postTitle);
-	        post.setPostContent(postContent);
-	        post.setPostImage(uploadedImage.getAbsolutePath());
-	        post.setPostFile(uploadedFile.getAbsolutePath());
-	        boolean flag = postService.updateItem(post);
 
-	        if (flag) {
-	            String redirectUrl = "/community";
-	            URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-	                    .path(redirectUrl)
-	                    .build()
-	                    .toUri();
-	            redirectAttributes.addAttribute("success", "true");
-	            return ResponseEntity.status(HttpStatus.FOUND)
-	                    .location(location)
-	                    .build();
-	        } else {
-	            redirectAttributes.addAttribute("success", "false");
-	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	        }
+			// 이미지 파일을 저장합니다.
 
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-	    }
+			List<MultipartFile> images = image;
+			StringBuilder fileNames = new StringBuilder();
+			if (images!= null && !images.isEmpty()) {
+				int imageCount = 0;
+				for (MultipartFile image1 : images) {
+					if (!image1.isEmpty()) {
+						String fileName = Objects.requireNonNull(image1.getOriginalFilename());
+						// 쉼표를 추가하기 전에 이미지 수를 확인
+						if (imageCount > 0) {
+							fileNames.append(",");
+						}
+						fileNames.append(fileName);
+						// 이미지 파일을 저장할 위치 지정
+						String uploadPath = "D:/final/Plant-Butler/src/main/resources/static/uploads/";
+						File uploadDir = new File(uploadPath);
+						if (!uploadDir.exists()) {
+							uploadDir.mkdirs();
+						}
+						try (InputStream inputStream = image1.getInputStream()) {
+							Files.copy(inputStream, Paths.get(uploadPath + fileName), StandardCopyOption.REPLACE_EXISTING);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						imageCount++;
+					}
+				}
+			}
+
+			// 파일을 저장합니다.
+			String filePath = null;
+			String fileName = null;
+			if (file != null && !file.isEmpty()) {
+				fileName = file.getOriginalFilename();
+				File uploadedFile = new File(uploadFile + "/" + fileName);
+				file.transferTo(uploadedFile);
+				filePath = uploadedFile.getAbsolutePath();
+			}
+
+			// 파일 경로를 post 객체에 저장합니다.
+			post.setPostImage(fileNames.toString());
+			post.setSelectedPlants(selectedPlants);
+			post.setPostFile(fileName);
+
+			boolean flag = postService.updateItem(post);
+//			boolean flag2 = postService.saveItem2(post);
+			if (flag) {
+//				boolean flag3 = postService.writepoint(post);
+				String redirectUrl = "/community"; // 리다이렉트할 URL
+				URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
+						.path(redirectUrl)
+						.build()
+						.toUri();
+				redirectAttributes.addAttribute("success", "true"); // 성공 여부를 파라미터로 전달
+				return ResponseEntity.status(HttpStatus.FOUND)
+						.location(location)
+						.build();
+			} else {
+				redirectAttributes.addAttribute("success", "false"); // 실패 여부를 파라미터로 전달
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+		}
+
 	}
-
 
 	/* 게시물 삭제 */
 	@DeleteMapping(value="/{postId}")
