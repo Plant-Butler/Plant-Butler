@@ -9,6 +9,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <style>
+        .max-small {
+            width: auto; height: auto;
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
     <meta charset="UTF-8">
     <title>Write Item</title>
     <script>
@@ -72,10 +79,12 @@
             <br>
 			<div>
                 <h4 class = "title">이미지첨부</h4>
+                <p >
                 <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
                     <!-- 여기에서 image 변수를 사용하여 각 이미지를 처리합니다. -->
-                    <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
+                    <img class="max-small" src="/uploads/${image}">
                 </c:forEach>
+                </p>
                 <input class="upload_img" type="file" name="postMultiImage" id="postMultiImage" multiple>
             </div>
             <br>
