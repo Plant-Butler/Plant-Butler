@@ -171,6 +171,15 @@ public class PostController {
 	        post.setSelectedPlants(selectedPlants);
 	        post.setPostFile(fileName);
 
+			// 태그 영어 -> 한글
+			if(post.getPostTag().equals("information")) {
+				post.setPostTag("정보 공유");
+			} else if(post.getPostTag().equals("boast")) {
+				post.setPostTag("식물 자랑");
+			} else {
+				post.setPostTag("수다 ");
+			}
+
 	        boolean flag = postService.saveItem(post);
 			if(selectedPlants.isEmpty()) {
 			} else {
