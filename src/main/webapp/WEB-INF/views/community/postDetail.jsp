@@ -11,7 +11,17 @@
 <title>커뮤니티</title>
 <%@ include file="../main/header.jsp" %>
 <style>
-    
+        .box {
+            width: 100px;
+            height: 100px;
+            border-radius: 70%;
+            overflow: hidden;
+        }
+        .plantImg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 </style>
 </head>
 <body>
@@ -26,7 +36,9 @@
         <c:forEach var="myPlant" items="${myPlantList}">
             <tr>
                 <c:if test="${not empty myPlant.myplantImage}">
-                    <td><a href="/uploads/${myPlant.myplantImage}"><img src="/uploads/${myPlant.myplantImage}"></a></td>
+                    <td><div class="box" style="background: #BDBDBD;">
+                        <a href="/uploads/${myPlant.myplantImage}"><img class="plantImg" src="/uploads/${myPlant.myplantImage}"></a>
+                    </div></td>
                 </c:if>
                 <td>${myPlant.distbNm}</td>
                 <td>${myPlant.myplantNick}</td>
@@ -200,7 +212,7 @@ ${post.postContent}
             },
             success: function(response) {
                 alert('삭제되었습니다.');
-                window.location.assign("../../..");
+                window.location.assign("./" + postId);
             },
             error: function(request, status, error) {
                 alert('댓글을 삭제할 수 없습니다.');

@@ -7,6 +7,13 @@
 <meta charset="UTF-8">
 <title>메인페이지</title>
 <%@ include file="../main/header.jsp" %>
+<style>
+   .plantImg {
+       width: auto; height: auto;
+       max-width: 100px;
+       max-height: 100px;
+   }
+</style>
 </head>
 <body>
 <div id="sugNdMy" data-isLoggedIn="<%= isLoggedIn %>" >
@@ -40,7 +47,7 @@
                                 for(var i = 0; i < 3; i++) {
                                     var user = users[i];
                                     if(user.myplantImage != null) {
-                                        row += "<td><img src='/uploads/" + user.myplantImage + "></td>";
+                                        row += "<td><img class='plantImg' src='/uploads/" + user.myplantImage + "'></td>";
                                     } else {
                                         row += "<td>사진이 없습니다.</td>";
                                     }

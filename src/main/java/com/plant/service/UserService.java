@@ -1,11 +1,11 @@
 package com.plant.service;
-import java.sql.SQLException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.plant.dao.UserMapper;
 import com.plant.vo.UserVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 
 @Service
 public class UserService {
@@ -26,8 +26,8 @@ public class UserService {
 		}
 		return flag;
 	}
-	
-	public UserVo validMember(UserVo user) throws SQLException {
+
+	public UserVo validMember(UserVo user) {
 		boolean flag = false;
 		UserVo vo = userMapper.checkMember(user);
 		System.out.println("I'm in service");
