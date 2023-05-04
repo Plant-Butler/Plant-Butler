@@ -29,6 +29,7 @@ public interface ManagerMapper {
 
     ArrayList<CommentVo> mgmtCommentList() throws SQLException;
 
+
     int deleteUser(String userId) throws SQLException;
 
     public List<PostVo> getCommunityList(Map<String, Object> params);

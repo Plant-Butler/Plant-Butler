@@ -16,7 +16,6 @@ import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +23,23 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URI;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -62,19 +74,19 @@ public class PostController {
 		ArrayList<MyplantVo> myPlantList = postService.postMyPlantDetail(postId);
 		//ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
 
-		PageInfo<CommentVo> commentList = commentService.getCommentList(postId, pageNum , pageSize);
-		mv.addObject("post", postVo);
-		mv.addObject("commentList", commentList);
-		mv.addObject("myPlantList", myPlantList);
+        PageInfo<CommentVo> commentList = commentService.getCommentList(postId, pageNum , pageSize);
+        mv.addObject("post", postVo);
+        mv.addObject("commentList", commentList);
+        mv.addObject("myPlantList", myPlantList);
 
-		return mv;
-	}
+        return mv;
+    }
 
-	/* 첨부파일 다운로드 */
+    /* 첨부파일 다운로드 */
 	@GetMapping("/download.do")
 	public void download(@RequestParam("fileName") String encodedFileName, HttpServletResponse resp) throws IOException {
 		String fileName = URLDecoder.decode(encodedFileName, StandardCharsets.UTF_8);
-		String basePath = "D:/Plant-Butler/src/main/resources/static/uploads";
+		String basePath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads";
 		File downloadFile = new File(basePath, fileName);
 		fileName = URLEncoder.encode(fileName, "UTF-8");
 		resp.setContentType("application/octet-stream");
@@ -128,17 +140,17 @@ public class PostController {
 			@RequestParam(value="postMultiImage", required=false) List<MultipartFile> image,
 			@RequestParam(value="postMultiFile", required=false) MultipartFile file,
 			@RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
-			RedirectAttributes redirectAttributes) throws SQLException {
-		try {
-			// 업로드된 파일을 저장할 디렉토리를 지정합니다.
-			String uploadFile = "D:/Plant-Butler/src/main/resources/static/uploads/";
-			File dir2 = new File(uploadFile);
-			if (!dir2.exists()) {
-				dir2.mkdir();
-			}
+			RedirectAttributes redirectAttributes) {
+	    try {
+	        // 파일 저장할 디렉토리를
+	        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
+	        File dir2 = new File(uploadFile);
+	        if (!dir2.exists()) {
+	            dir2.mkdir();
+	        }
 
 
-			// 이미지 파일을 저장합니다.
+	        // 이미지 파일 저장
 
 			List<MultipartFile> images = image;
 			StringBuilder fileNames = new StringBuilder();
@@ -153,7 +165,7 @@ public class PostController {
 						}
 						fileNames.append(fileName);
 						// 이미지 파일을 저장할 위치 지정
-						String uploadPath = "D:/Plant-Butler/src/main/resources/static/uploads/";
+						String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
 						File uploadDir = new File(uploadPath);
 						if (!uploadDir.exists()) {
 							uploadDir.mkdirs();
@@ -168,8 +180,8 @@ public class PostController {
 				}
 			}
 
-			// 파일을 저장합니다.
-			String filePath = null;
+	        // 파일 저장
+	        String filePath = null;
 			String fileName = null;
 			if (file != null && !file.isEmpty()) {
 				fileName = file.getOriginalFilename();
@@ -178,28 +190,40 @@ public class PostController {
 				filePath = uploadedFile.getAbsolutePath();
 			}
 
-			// 파일 경로를 post 객체에 저장합니다.
-			post.setPostImage(fileNames.toString());
-			post.setSelectedPlants(selectedPlants);
-			post.setPostFile(fileName);
+	        // 파일 경로 post 객체에 저장
+	        post.setPostImage(fileNames.toString());
+	        post.setSelectedPlants(selectedPlants);
+	        post.setPostFile(fileName);
 
-			boolean flag = postService.saveItem(post);
-			boolean flag2 = postService.saveItem2(post);
-			if (flag) {
-				boolean flag3 = postService.writepoint(post);
-				String redirectUrl = "/community"; // 리다이렉트할 URL
-				URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-						.path(redirectUrl)
-						.build()
-						.toUri();
-				redirectAttributes.addAttribute("success", "true"); // 성공 여부를 파라미터로 전달
-				return ResponseEntity.status(HttpStatus.FOUND)
-						.location(location)
-						.build();
+			// 태그 영어 -> 한글
+			if(post.getPostTag().equals("information")) {
+				post.setPostTag("정보 공유");
+			} else if(post.getPostTag().equals("boast")) {
+				post.setPostTag("식물 자랑");
 			} else {
-				redirectAttributes.addAttribute("success", "false"); // 실패 여부를 파라미터로 전달
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+				post.setPostTag("수다 ");
 			}
+
+	        boolean flag = postService.saveItem(post);
+			if(selectedPlants.isEmpty()) {
+			} else {
+				boolean flag2 = postService.saveItem2(post);
+			}
+	        if (flag) {
+	        	boolean flag3 = postService.writepoint(post);
+	            String redirectUrl = "/community"; // 리다이렉트할 URL
+	            URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
+	                .path(redirectUrl)
+	                .build()
+	                .toUri();
+	            redirectAttributes.addAttribute("success", "true"); // 성공 여부를 파라미터로 전달
+	            return ResponseEntity.status(HttpStatus.FOUND)
+	                .location(location)
+	                .build();
+	        } else {
+	            redirectAttributes.addAttribute("success", "false"); // 실패 여부를 파라미터로 전달
+	            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+	        }
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -211,10 +235,9 @@ public class PostController {
 	/* 게시물 수정 폼 */
 	@GetMapping("/form/{postId}")
 	public ModelAndView updateForm(@PathVariable int postId) {
-		PostVo post = postService.postDetail(postId);
 		ModelAndView mv = new ModelAndView("/community/updateForm");
+		PostVo post = postService.postDetail(postId);
 		mv.addObject("post", post);
-		System.out.println(post.getPostTitle());
 		logger.info("게시물 수정 폼 호출");
 		return mv;
 	}

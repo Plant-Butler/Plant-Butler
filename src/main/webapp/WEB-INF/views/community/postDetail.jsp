@@ -10,6 +10,9 @@
 <meta charset="UTF-8">
 <title>커뮤니티</title>
 <%@ include file="../main/header.jsp" %>
+<style>
+    
+</style>
 </head>
 <body>
 
@@ -22,7 +25,9 @@
     <table>
         <c:forEach var="myPlant" items="${myPlantList}">
             <tr>
-                <td><img src="/images/${myPlant.myplantImage}"</td>
+                <c:if test="${not empty myPlant.myplantImage}">
+                    <td><a href="/uploads/${myPlant.myplantImage}"><img src="/uploads/${myPlant.myplantImage}"></a></td>
+                </c:if>
                 <td>${myPlant.distbNm}</td>
                 <td>${myPlant.myplantNick}</td>
                 <td><fmt:formatDate value="${myPlant.firstDate}" type="date"/></td>
@@ -36,10 +41,8 @@ ${post.postContent}
 <br>
 
 <c:if test="${not empty post.postImage}">
-이미지
     <td>
         <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
-            <!-- 여기에서 image 변수를 사용하여 각 이미지를 처리합니다. -->
             <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
         </c:forEach>
 

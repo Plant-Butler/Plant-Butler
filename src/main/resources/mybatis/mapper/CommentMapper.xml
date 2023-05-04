@@ -36,7 +36,7 @@
     <!-- 댓글 작성 시 포인트 상승 -->
     <update id="commentPoint" parameterType="String">
         <![CDATA[
-            update user_table set point = point + 5 where user_id = #{user_id}
+            update user_table set point = point + 5 where user_id = #{userId}
       ]]>
     </update>
 

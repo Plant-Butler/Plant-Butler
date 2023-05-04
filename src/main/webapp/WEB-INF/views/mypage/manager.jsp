@@ -80,7 +80,7 @@
     <tr><th>아이디</th><th>포인트</th><th>우수회원 선택</th><th>우수회원 취소</th><th>회원삭제</th></tr>
     <c:forEach var="user" items="${userList.list}" varStatus="status">
         <tr>
-            <td><a href= "/mypage">${user.userId}</a></td>
+            <td>${user.userId}</td>
             <td>${user.point} 점</td>
             <td><button type="button" class="select-best" onclick="selectBest('${user.userId}', ${status.index})">우수회원 선택</button></td>
             <td><button type="button" class="delete-best" onclick="deleteBest('${user.userId}', ${status.index})">우수회원 취소</button></td>
@@ -229,6 +229,7 @@
             }
         });
     }
+
 </script>
 </body>
 </html>
