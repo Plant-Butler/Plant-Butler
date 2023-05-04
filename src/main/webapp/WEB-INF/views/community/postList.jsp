@@ -60,7 +60,7 @@
 <div>
     <!-- 이전 페이지 그룹 버튼 -->
     <c:if test="${posts.navigateFirstPage > 1}">
-        <a href="community?pageNum=${posts.navigateFirstPage - 1}&searchField=${param.searchField}&searchText=${param.searchText}">◀</a>
+        <a href="community?pageNum=${posts.navigateFirstPage - 1}&searchField=${param.searchField}&keyword=${param.keyword}">◀</a>
     </c:if>
 
     <c:forEach var="pageNum" begin="${posts.navigateFirstPage}" end="${posts.navigateLastPage}">
@@ -69,14 +69,14 @@
                 <span>${pageNum}</span>
             </c:when>
             <c:otherwise>
-                <a href="community?pageNum=${pageNum}&searchField=${param.searchField}&searchText=${param.searchText}">${pageNum}</a>
+                <a href="community?pageNum=${pageNum}&searchField=${param.searchField}&keyword=${param.keyword}">${pageNum}</a>
             </c:otherwise>
         </c:choose>
     </c:forEach>
 
     <!-- 다음 페이지 그룹 버튼 -->
     <c:if test="${posts.navigateLastPage < posts.pages}">
-        <a href="community?pageNum=${posts.navigateLastPage + 1}&searchField=${param.searchField}&searchText=${param.searchText}">▶</a>
+        <a href="community?pageNum=${posts.navigateLastPage + 1}&searchField=${param.searchField}&keyword=${param.keyword}">▶</a>
     </c:if>
 </div>
 

@@ -212,7 +212,7 @@ ${post.postContent}
             },
             success: function(response) {
                 alert('삭제되었습니다.');
-                window.location.assign("../../..");
+                window.location.assign("./" + postId);
             },
             error: function(request, status, error) {
                 alert('댓글을 삭제할 수 없습니다.');

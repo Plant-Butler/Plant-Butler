@@ -5,20 +5,16 @@ import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.net.URI;
-import java.sql.SQLException;
 
 @RestController
 @RequestMapping("")
@@ -62,32 +58,15 @@ public class UserController {
 	}
 
 	/* 로그인 */
-	@GetMapping("/loginPage/login")
-	public ResponseEntity<?> login(@ModelAttribute("user") UserVo user,
-								   HttpSession session,
-								   RedirectAttributes redirectAttributes) throws SQLException {
+	@PostMapping("/loginPage/login")
+	public ResponseEntity<String> login(@ModelAttribute UserVo user, HttpSession session) {
 		UserVo user1 = userService.validMember(user);
 		logger.info("로그인");
-		System.out.println(user1);
 		if (user1 != null) {
 			session.setAttribute("user", user1);
-			redirectAttributes.addFlashAttribute("successMessage", "로그인에 성공했습니다.");
-			URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-					.path("/home")
-					.build()
-					.toUri();
-			return ResponseEntity.status(HttpStatus.FOUND)
-					.location(location)
-					.build();
+			return ResponseEntity.ok("success");
 		} else {
-			URI uri = UriComponentsBuilder.fromPath("/loginPage")
-					.queryParam("errorMessage", "아이디 또는 비밀번호가 올바르지 않습니다.")
-					.build()
-					.toUri();
-			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(uri);
-			return new ResponseEntity<>(headers, HttpStatus.FOUND);
-
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
 		}
 	}
 
@@ -114,13 +93,13 @@ public class UserController {
 	    return mv;
 	}
 	
-	/* 아이디 체크 1 */
+	/* 닉네임 체크 1 */
 	@GetMapping("/nickCheckForm")
 	public ModelAndView nickCheckForm() {
 		ModelAndView mv = new ModelAndView("/login/nickCheckForm");
 		return mv;
 	}
-	/* 아이디 체크 2 */
+	/* 닉네임 체크 2 */
 	@PostMapping("/nickCheckProc")
 	public ModelAndView nickCheckProc(@RequestParam("nickname") String nickname) {
 	    ModelAndView mv = new ModelAndView("/login/nickCheckProc");
