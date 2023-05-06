@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Mapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Mapper
@@ -35,4 +37,20 @@ public interface PostMapper {
 	boolean writepoint(PostVo post);
 
     boolean deleteItemMp(int postId);
+
+    public List<PostVo> getCommunityList(Map<String, Object> params);
+
+    int getCommentCount(int postId) throws SQLException;
+
+    /* 좋아요 눌려있는지 확인 */
+    int searchHeart(HashMap<String, Object> map);
+
+    /* 게시물 좋아요 */
+    int insertHeart(HashMap<String, Object> map);
+
+    /* 게시물 좋아요 취소 */
+    int deleteHeart(HashMap<String, Object> map);
+
+    /* 게시물 좋아요 개수 카운트 */
+    int countHeart(int postId);
 }

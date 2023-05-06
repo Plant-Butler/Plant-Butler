@@ -9,8 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface ManagerMapper {
@@ -31,9 +29,5 @@ public interface ManagerMapper {
 
 
     int deleteUser(String userId) throws SQLException;
-
-    public List<PostVo> getCommunityList(Map<String, Object> params);
-
-    int getCommentCount(int postId) throws SQLException;
 
 }
