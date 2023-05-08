@@ -31,6 +31,8 @@ public class MypageService {
 
         logger.info("[Comment Service] updateComment(commentVo)");
         System.out.println("user = " + user.getPassword());
+        System.out.println("affectedCnt = " + affectedCnt);
+        System.out.println("flag = " + flag);
         return flag;
     }
 }

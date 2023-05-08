@@ -4,16 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.plant.dao.MypageMapper">
-    <resultMap id="UserResultMap" type="com.plant.vo.UserVo">
-        <result column="user_id" property="userId"/>
-        <result column="nickname" property="nickname"/>
-        <result column="password" property="password"/>
-        <result column="email" property="email"/>
-    </resultMap>
 
     <update id="updateMypage" parameterType="com.plant.vo.UserVo">
-        update user_table set password=#{password}, nickname=#{nickname}, email=#{email}
-        where user_id = #{userId}
+        <![CDATA[
+            update user_table set password = #{password}, nickname = #{nickname}, email = #{email}
+            where user_id = #{userId}
+        ]]>
     </update>
 
 </mapper>

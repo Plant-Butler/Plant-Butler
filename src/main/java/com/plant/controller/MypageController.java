@@ -14,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -44,21 +43,18 @@ public class MypageController {
     }
 
     /* 회원정보 수정 */
-    @PatchMapping(value="/{userId}")
-    public ResponseEntity<Map<String, Object>> updateMypage(@ModelAttribute("user") UserVo user) {
+    @PutMapping(value="/{userId}")
+    public ResponseEntity<Map<String, Object>> updateMypage(@ModelAttribute UserVo user) {
         boolean flag = mypageService.updateMypage(user);
 
         logger.info("[Comment Controller] updateMypage(user)");
         System.out.println("user = " + user.getPassword());
-        Map<String, Object> result = new HashMap<>();
         HttpHeaders headers = new HttpHeaders();
         if(flag) {
-            result.put("success", true);
-            result.put("message", "수정되었습니다");
-            headers.setLocation(URI.create("./" + user.getUserId()));
-            return new ResponseEntity<>(result, headers, HttpStatus.SEE_OTHER);
+            headers.setLocation(URI.create("/mypage/" + user.getUserId()));
+            return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
         } else {
-            return new ResponseEntity<>(result, headers, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>( headers, HttpStatus.BAD_REQUEST);
         }
 
     }
