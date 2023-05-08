@@ -43,7 +43,6 @@
         <td>내 식물 이미지:</td>
         <td>
             <c:forEach var="image" items="${fn:split(myPlant.myplantImage, ',')}">
-                <!-- 여기에서 image 변수를 사용하여 각 이미지를 처리합니다. -->
                 <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
             </c:forEach>
 
@@ -119,7 +118,6 @@
 
     <script>
         $("#saveBtn").on("click", function () {
-            // 데이터 수집 (필요한 경우 추가 validation 수행)
             var myplantVo = {
                 myplantId:${myPlant.myplantId},
                 plantId:${myPlant.plantId},
@@ -134,19 +132,16 @@
                 myplantRadius2: $("input[name='myplantRadius2']").val(),
             };
 
-            // 서버에 변경된 데이터 전송 (예: /updateMyPlant 엔드포인트)
             $.ajax({
                 url: "/myplants/"+${myPlant.myplantId},
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(myplantVo),
                 success: function () {
-                    // 성공 시 메시지 표시 및 페이지 새로고침 또는 업데이트
                     alert("성공적으로 수정되었습니다.");
                     location.reload();
                 },
                 error: function () {
-                    // 오류 시 메시지 표시
                     alert("수정에 실패했습니다. 다시 시도해주세요.");
                 },
             });
