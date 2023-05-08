@@ -1,6 +1,9 @@
 package com.plant.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.plant.service.MypageService;
+import com.plant.vo.CommentVo;
+import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +50,7 @@ public class MypageController {
     public ResponseEntity<Map<String, Object>> updateMypage(@ModelAttribute UserVo user) {
         boolean flag = mypageService.updateMypage(user);
 
-        logger.info("[Comment Controller] updateMypage(user)");
+        logger.info("[Mypage Controller] updateMypage(user)");
         System.out.println("user = " + user.getPassword());
         HttpHeaders headers = new HttpHeaders();
         if(flag) {
@@ -57,6 +60,21 @@ public class MypageController {
             return new ResponseEntity<>( headers, HttpStatus.BAD_REQUEST);
         }
 
+    }
+
+    /* 내 게시물, 댓글 모아보기 */
+    @GetMapping(value="/community/{userId}")
+    public ModelAndView myCommunity(@PathVariable String userId,
+                                    @RequestParam(defaultValue = "1") int postPage,
+                                    @RequestParam(defaultValue = "1") int commentPage) {
+        ModelAndView mv = new ModelAndView("/mypage/myCommunity");
+
+        PageInfo<PostVo> postList = mypageService.myPostList(userId, postPage, 10);
+        PageInfo<CommentVo> commentList = mypageService.myCommentList(userId, commentPage, 10);
+        mv.addObject("postList", postList);
+        mv.addObject("commentList", commentList);
+
+        return mv;
     }
 
 }
