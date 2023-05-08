@@ -27,7 +27,9 @@
 <br><br>
 <button type="button" onclick = "location.href = '/mypage/community/${userId}'">내 게시물 댓글</button>
 <br><br>
-<button type="button" onclick = "location.href = '/secession'">탈퇴하기 </button>
+<button type="button" onclick = "deleteUserCheck('${userId}', 0)">탈퇴하기 </button>
 
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/js/manager.js"></script>
 </body>
 </html>

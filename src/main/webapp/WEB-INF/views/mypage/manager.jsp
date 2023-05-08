@@ -84,7 +84,7 @@
             <td>${user.point} 점</td>
             <td><button type="button" class="select-best" onclick="selectBest('${user.userId}', ${status.index})">우수회원 선택</button></td>
             <td><button type="button" class="delete-best" onclick="deleteBest('${user.userId}', ${status.index})">우수회원 취소</button></td>
-            <td><button type="button" class="delete-best" onclick="deleteUserCheck('${user.userId}')">회원삭제</button></td>
+            <td><button type="button" class="delete-best" onclick="deleteUserCheck('${user.userId}', 1)">회원삭제</button></td>
         </tr>
     </c:forEach>
 </table>
@@ -110,126 +110,6 @@
             </c:if>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-
-    // 우수회원 선택
-    function selectBest(userId, index) {
-        $.ajax({
-            url: "/manager/best-user/" + userId,
-            type: "POST",
-            data: {
-                userId : userId
-            },
-            success: function(response) {
-                console.log(userId);
-                alert('추가되었습니다');
-                $(".select-best").eq(index).text("우수회원 선택완료");
-            },
-            error: function(request, status, error) {
-                alert('이미 추가된 회원입니다.');
-                console.log("code: " + request.status)
-                console.log("message: " + request.responseText)
-                console.log("error: " + error);
-            }
-        });
-    }
-
-        // 우수회원 취소
-        function deleteBest(userId, index) {
-            $.ajax({
-                url: "/manager/best-user/" + userId,
-                type: "DELETE",
-                data: {
-                    userId : userId
-                },
-                success: function(response) {
-                    console.log(userId);
-                    alert('취소되었습니다');
-                    $(".select-best").eq(index).text("우수회원 선택");
-                },
-                error: function(request, status, error) {
-                    alert('이미 취소된 회원입니다.');
-                        console.log("code: " + request.status)
-                        console.log("message: " + request.responseText)
-                        console.log("error: " + error);
-                }
-            });
-        }
-
-        // 우수회원 초기화
-        function deleteAllBest() {
-            $.ajax({
-               url: "/manager/best-user/all",
-               type: "DELETE",
-               success: function(response) {
-                   alert('초기화되었습니다');
-                   $(".select-best").text("우수회원 선택");
-               },
-               error: function(request, status, error) {
-                   alert('오류가 발생했습니다.');
-                   console.log("code: " + request.status)
-                   console.log("message: " + request.responseText)
-                   console.log("error: " + error);
-               }
-            });
-        }
-
-        // 회원 삭제 확인/취소 창
-        function deleteUserCheck(userId) {
-         if (confirm('강제로 탈퇴처리 하시겠습니까?') == true){    //확인
-             deleteUser(userId);
-         } else {
-             return false;
-         }
-        }
-
-        // 회원 삭제
-        function deleteUser(userId) {
-            $.ajax({
-               url: "/manager/" + userId,
-               type: "DELETE",
-               success: function(response) {
-                   alert('탈퇴처리 되었습니다');
-                   window.location.href = "/manager";
-               },
-               error: function(request, status, error) {
-                   alert('오류가 발생했습니다.');
-                   console.log("code: " + request.status)
-                   console.log("message: " + request.responseText)
-                   console.log("error: " + error);
-               }
-            });
-        }
-
-    // 게시물 or 댓글 삭제
-    function deleteM(commentId, postId, num) {
-        let url = "";
-        let data = {};
-        if(num == 0) {
-            url = "/community/" + postId;
-            data.postId = postId;
-        } else {
-            url =  "/community/comment/" + commentId;
-            data.commentId = commentId;
-        }
-
-        $.ajax({
-            url:  url,
-            type: "DELETE",
-            data: data,
-            success: function(response) {
-                alert('삭제되었습니다.');
-                window.location.href = "/manager";
-            },
-            error: function(request, status, error) {
-                alert('삭제 중 오류가 발생했습니다.');
-                console.log("code: " + request.status)
-                console.log("message: " + request.responseText)
-                console.log("error: " + error);
-            }
-        });
-    }
-
-</script>
+<script src="/js/manager.js"></script>
 </body>
 </html>
