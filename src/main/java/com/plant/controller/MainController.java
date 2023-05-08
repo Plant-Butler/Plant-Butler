@@ -39,11 +39,12 @@ public class MainController {
     /* 커뮤니티 이동 */
     @GetMapping(value="/community")
     public ModelAndView openCommunity(@RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize,
-                                      @RequestParam(required = false) String searchField, @RequestParam(required = false) String keyword) {
+                                      @RequestParam(required = false) String searchField, @RequestParam(required = false) String keyword,@RequestParam(required = false) String tag) {
         ModelAndView mv = new ModelAndView();
         Map<String, Object> params = new HashMap<>();
         params.put("searchField", searchField);
         params.put("keyword", keyword);
+        params.put("tag",tag);
         PageInfo<PostVo> list = mainService.getCommunityList(pageNum , pageSize, params);
         System.out.println(list);
         List<PostVo> postList = list.getList();

@@ -138,7 +138,6 @@ public class PostController {
 			@RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
 			RedirectAttributes redirectAttributes) {
 	    try {
-	        // 파일 저장할 디렉토리를
 	        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
 	        File dir2 = new File(uploadFile);
 	        if (!dir2.exists()) {
@@ -247,14 +246,12 @@ public class PostController {
 			@RequestParam(value="postMultiFile", required=false) MultipartFile file,
 			RedirectAttributes redirectAttributes) throws SQLException {
 		try {
-			// 업로드된 파일을 저장할 디렉토리를 지정합니다.
 			String uploadFile = "D:/Plant-Butler/src/main/resources/static/uploads/";
 			File dir2 = new File(uploadFile);
 			if (!dir2.exists()) {
 				dir2.mkdir();
 			}
 
-			// 이미지 파일을 저장합니다.
 			List<MultipartFile> images = image;
 			StringBuilder fileNames = new StringBuilder();
 			if (images!= null && !images.isEmpty()) {
@@ -283,7 +280,6 @@ public class PostController {
 				}
 			}
 
-			// 파일을 저장합니다.
 			String filePath = null;
 			String fileName = null;
 			if (file != null && !file.isEmpty()) {
@@ -292,7 +288,6 @@ public class PostController {
 				file.transferTo(uploadedFile);
 				filePath = uploadedFile.getAbsolutePath();
 			}
-			// 파일 경로를 post 객체에 저장합니다.
 			post.setPostImage(fileNames.toString());
 			post.setPostFile(fileName);
 

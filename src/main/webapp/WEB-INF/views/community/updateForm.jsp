@@ -20,11 +20,11 @@
     <title>Write Item</title>
     <script>
         function submitForm(event) {
-            event.preventDefault(); // 기본 폼 제출 동작을 방지
+            event.preventDefault();
 
             const form = document.getElementById("myForm");
             const formData = new FormData(form); // 폼 데이터 가져오기
-            const postId = ${postId}/* postId 값을 가져옵니다. */;
+            const postId = ${postId};
 
             fetch(`../${postId}`, {
                 method: "PUT",
@@ -32,15 +32,12 @@
             })
                 .then(response => {
                     if (response.ok) {
-                        // 요청이 성공적으로 처리되면 여기에 로직을 추가합니다.
-                        window.location.href = "/community"; // 수정 완료 후 목록 페이지로 이동합니다.
+                        window.location.href = "/community"; // 수정 완료 후 목록 페이지로 이동.
                     } else {
-                        // 에러 처리를 수행합니다.
                         alert("게시글 수정에 실패했습니다.");
                     }
                 })
                 .catch(error => {
-                    // 네트워크 에러 처리를 수행합니다.
                     alert("네트워크 에러가 발생했습니다.");
                 });
         }
@@ -81,7 +78,6 @@
                 <h4 class = "title">이미지첨부</h4>
                 <p >
                 <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
-                    <!-- 여기에서 image 변수를 사용하여 각 이미지를 처리합니다. -->
                     <img class="max-small" src="/uploads/${image}">
                 </c:forEach>
                 </p>

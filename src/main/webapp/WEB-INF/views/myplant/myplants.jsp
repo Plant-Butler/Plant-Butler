@@ -13,7 +13,7 @@
 <head>
     <script>
         function deleteMyPlant(myplantId) {
-            const url = '/myplants/form/' + myplantId; // your_base_url을 실제 URL로 교체하세요.
+            const url = '/myplants/form/' + myplantId;
             fetch(url, {
                 method: 'DELETE',
             }).then(response => {
