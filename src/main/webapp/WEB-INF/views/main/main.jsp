@@ -16,6 +16,9 @@
 </style>
 </head>
 <body>
+<body style="text-align: center">
+
+<br>
 <div id="sugNdMy" data-isLoggedIn="<%= isLoggedIn %>" >
     <!-- 나에게 맞는 식물 찾기 -->
     <a onclick="serviceSug()" >
@@ -27,9 +30,9 @@
         내 식물<img class="" src=""/>
     </a>
 </div>
-
+<br>
 <h2> 이번달 우수회원 </h2>
-    <table id="best-user-table">
+    <table id="best-user-table" style="margin-left:auto;margin-right:auto;" width="1000">
         <tbody></tbody>
     </table>
 
