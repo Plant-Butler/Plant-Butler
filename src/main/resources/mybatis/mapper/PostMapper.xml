@@ -162,8 +162,11 @@
 		<where>
 			<if test="searchField != null and searchField != '' and keyword != null and keyword != ''">
 				<![CDATA[
-      AND ${searchField} LIKE CONCAT('%', #{keyword}, '%')
-      ]]>
+  AND ${searchField} LIKE CONCAT('%', #{keyword}, '%')
+  ]]>
+			</if>
+			<if test="tag != null and tag != ''">
+				AND post_tag = #{tag}
 			</if>
 		</where>
 		ORDER BY post_date DESC
