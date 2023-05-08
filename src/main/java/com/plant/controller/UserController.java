@@ -13,12 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -46,8 +41,6 @@ public class UserController {
 	/* 회원가입 */	
 	@PostMapping("/registPage")
 	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, HttpServletResponse response) throws IOException {
-		System.out.println(user.getUserId());
-		System.out.println(user.getPassword());
 		boolean flag = userService.regist(user);
 		logger.info("회원가입");
 	    if (flag) {
@@ -68,35 +61,17 @@ public class UserController {
 		return mv;
 	}
 	/* 로그인 */
-	@GetMapping("/loginPage/login")
-	public ResponseEntity<?> login(@ModelAttribute("user") UserVo user,
-								   HttpSession session,
-								   RedirectAttributes redirectAttributes) throws SQLException {
+	@PostMapping("/loginPage/login")
+	public ResponseEntity<String> login(@ModelAttribute UserVo user, HttpSession session) {
 		UserVo user1 = userService.validMember(user);
 		logger.info("로그인");
-		System.out.println(user1);
 		if (user1 != null) {
 			session.setAttribute("user", user1);
-			redirectAttributes.addFlashAttribute("successMessage", "로그인에 성공했습니다.");
-			URI location = ServletUriComponentsBuilder.fromCurrentContextPath()
-					.path("/home")
-					.build()
-					.toUri();
-			return ResponseEntity.status(HttpStatus.FOUND)
-					.location(location)
-					.build();
+			return ResponseEntity.ok("success");
 		} else {
-			URI uri = UriComponentsBuilder.fromPath("/loginPage")
-					.queryParam("errorMessage", "아이디 또는 비밀번호가 올바르지 않습니다.")
-					.build()
-					.toUri();
-			HttpHeaders headers = new HttpHeaders();
-			headers.setLocation(uri);
-			return new ResponseEntity<>(headers, HttpStatus.FOUND);
-
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
 		}
 	}
-
 
 	/* 로그아웃 */
 	@GetMapping("/logout")
@@ -121,13 +96,13 @@ public class UserController {
 	    return mv;
 	}
 	
-	/* 아이디 체크 1 */
+	/* 닉네임 체크 1 */
 	@GetMapping("/nickCheckForm")
 	public ModelAndView nickCheckForm() {
 		ModelAndView mv = new ModelAndView("/login/nickCheckForm");
 		return mv;
 	}
-	/* 아이디 체크 2 */
+	/* 닉네임 체크 2 */
 	@PostMapping("/nickCheckProc")
 	public ModelAndView nickCheckProc(@RequestParam("nickname") String nickname) {
 	    ModelAndView mv = new ModelAndView("/login/nickCheckProc");

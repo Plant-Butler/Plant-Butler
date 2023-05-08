@@ -20,6 +20,11 @@ public class UserVo {
         this.manager = manager;
     }
 
+    public UserVo(String userId, String password) {
+        this.userId = userId;
+        this.password = password;
+    }
+
     public String getUserId() {
         return userId;
     }
