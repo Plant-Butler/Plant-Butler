@@ -1,26 +1,20 @@
 package com.plant.controller;
 
-import java.io.IOException;
-import java.net.URI;
-import java.sql.SQLException;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
+import com.plant.service.UserService;
+import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.plant.service.UserService;
-import com.plant.vo.UserVo;
-import org.springframework.web.util.UriComponentsBuilder;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.net.URI;
 
 @RestController
 @RequestMapping("")
@@ -41,6 +35,8 @@ public class UserController {
 	/* 회원가입 */	
 	@PostMapping("/registPage")
 	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, HttpServletResponse response) throws IOException {
+		System.out.println(user.getUserId());
+		System.out.println(user.getPassword());
 		boolean flag = userService.regist(user);
 		logger.info("회원가입");
 	    if (flag) {
@@ -60,6 +56,7 @@ public class UserController {
 		logger.info("로그인 페이지 호출");
 		return mv;
 	}
+
 	/* 로그인 */
 	@PostMapping("/loginPage/login")
 	public ResponseEntity<String> login(@ModelAttribute UserVo user, HttpSession session) {

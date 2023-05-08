@@ -1,17 +1,14 @@
 package com.plant.dao;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.data.domain.Page;
 
 import com.plant.vo.BestUserVo;
 import com.plant.vo.CommentVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 @Mapper
 public interface ManagerMapper {
@@ -30,10 +27,7 @@ public interface ManagerMapper {
 
     ArrayList<CommentVo> mgmtCommentList() throws SQLException;
 
+
     int deleteUser(String userId) throws SQLException;
-
-    public List<PostVo> getCommunityList(Map<String, Object> params);
-
-    int getCommentCount(int postId) throws SQLException;
 
 }

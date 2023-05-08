@@ -1,21 +1,51 @@
-<%@page import="com.plant.vo.UserVo"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@page import="com.plant.vo.UserVo"%>
+<%@ page import="com.plant.vo.PostVo" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%-- <%@ include file="../main/header.jsp" %> --%>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="preconnect" href="https://fonts.googleapis.com"> 
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-<link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
-<meta charset="UTF-8">
-<title>Update Item</title>
+    <style>
+        .max-small {
+            width: auto; height: auto;
+            max-width: 100px;
+            max-height: 100px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Write Item</title>
+    <script>
+        function submitForm(event) {
+            event.preventDefault();
+
+            const form = document.getElementById("myForm");
+            const formData = new FormData(form); // 폼 데이터 가져오기
+            const postId = ${postId};
+
+            fetch(`../${postId}`, {
+                method: "PUT",
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = "/community"; // 수정 완료 후 목록 페이지로 이동.
+                    } else {
+                        alert("게시글 수정에 실패했습니다.");
+                    }
+                })
+                .catch(error => {
+                    alert("네트워크 에러가 발생했습니다.");
+                });
+        }
+    </script>
 </head>
 <body>
 <div class="about-section">
-<h1>Update Post</h1>
+<h1>New Post</h1>
 </div>
 <br>
 <%
@@ -25,7 +55,7 @@
 %>
 
 
-	<form action="./update" method="put" enctype="multipart/form-data">
+    <form id="myForm" onsubmit="submitForm(event)" enctype="multipart/form-data">
 	<div class = "form_table">
 		 <div>
 		 <br>
@@ -35,47 +65,39 @@
             <br>
             <div>
                 <h4 class = "title">제목</h4>
-                <input  class="upload_title" type="text" name="postTitle" id = "postTitle" value="${post.postTitle}">
+                <input class="upload_title" type="text" name="postTitle" id = "postTitle" value="${post.postTitle}">
             </div>
             <br>
             <div>
                 <h4 class = "title">내용</h4>
-                  <textarea cols="80" rows="5" name="postContent" id="postContent">${post.postContent}</textarea>
+                <textarea cols="80" rows="5" name="postContent">${post.postContent}</textarea>
             </div>
             <br>
-            <br>           
-            <div>
-                <h4 class="title">이미지 첨부</h4>
-
-                <c:if test="${not empty post.postImage}">
-                <td>
-                    <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
-                        <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
-                    </c:forEach>
-
-                    </td>
-                </c:if>
-                <input class="upload_img" type="file" name="postImage">
-                <br>
-                <p class="form_note">(JPEG, PNG, GIF 파일만 등록 가능합니다.)</p>
-                <br>
-                <br>
-            </div>
-
             <br>
 			<div>
-                <c:if test="${not empty post.postFile}">
-                [첨부파일]
-                    <a>${post.postFile}</a>
-                </c:if><br><br>
-                <input class="upload_data" type="file" name="postFile" value="${post.postFile}" >
+                <h4 class = "title">이미지첨부</h4>
+                <p >
+                <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
+                    <img class="max-small" src="/uploads/${image}">
+                </c:forEach>
+                </p>
+                <input class="upload_img" type="file" name="postMultiImage" id="postMultiImage" multiple>
             </div>
+            <br>
+        <div>
+            <c:if test="${not empty post.postFile}">
+                [첨부파일]
+                <a>${post.postFile}</a>
+            </c:if><br><br>
+            <input class="upload_data" type="file" name="postMultiFile">
+        </div>
 	<br>
 	<div class="submit">
-	    <input type="submit" value="수정">
-	</div>
-	<br>
-	<br>
-</form>
+        <input type="submit" value="수정">
+    </div>
+    </div>
+    </form>
+<br>
+<br>
 </body>
 </html>

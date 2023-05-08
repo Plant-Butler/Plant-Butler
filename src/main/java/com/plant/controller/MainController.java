@@ -1,10 +1,8 @@
 package com.plant.controller;
 
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.github.pagehelper.PageInfo;
+import com.plant.service.MainService;
+import com.plant.vo.PostVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.pagehelper.PageInfo;
-import com.plant.service.MainService;
-import com.plant.vo.PostVo;
-
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MainController {
@@ -42,15 +39,15 @@ public class MainController {
     /* 커뮤니티 이동 */
     @GetMapping(value="/community")
     public ModelAndView openCommunity(@RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize,
-                                      @RequestParam(required = false) String searchField, @RequestParam(required = false) String keyword) {
+                                      @RequestParam(required = false) String searchField, @RequestParam(required = false) String keyword,@RequestParam(required = false) String tag) {
         ModelAndView mv = new ModelAndView();
         Map<String, Object> params = new HashMap<>();
         params.put("searchField", searchField);
         params.put("keyword", keyword);
+        params.put("tag",tag);
         PageInfo<PostVo> list = mainService.getCommunityList(pageNum , pageSize, params);
-        
-        List<PostVo> postList = list.getList();
         System.out.println(list);
+        List<PostVo> postList = list.getList();
         /*댓글수 조회 로직*/
         for (PostVo post : postList) {
             post.setCommentCount(mainService.getCommentCount(post.getPostId()));

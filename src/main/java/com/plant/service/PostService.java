@@ -1,6 +1,5 @@
 package com.plant.service;
 
-import com.plant.dao.MyPlantMapper;
 import com.plant.dao.PostMapper;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PostVo;
@@ -8,8 +7,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -140,5 +141,43 @@ public class PostService {
     public boolean removeItemMP(int postId) {
         boolean flag = postMapper.deleteItemMp(postId);
         return flag;
+    }
+
+    /* 좋아요 눌려있는지 확인 */
+    public int searchHeart(HashMap<String, Object> map) {
+        int result = postMapper.searchHeart(map);
+        return result;
+    }
+
+    /* 게시물 좋아요 */
+    public boolean addHeart(HashMap<String, Object> map) {
+        boolean flag = false;
+
+        int affectedCnt = 0;
+        affectedCnt = postMapper.insertHeart(map);
+
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+        return flag;
+    }
+
+    /* 게시물 좋아요 취소 */
+    public boolean deleteHeart(HashMap<String, Object> map) {
+        boolean flag = false;
+
+        int affectedCnt = 0;
+        affectedCnt = postMapper.deleteHeart(map);
+
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+        return flag;
+    }
+
+    /* 게시물 좋아요 개수 카운트 */
+    public int countHeart(int postId) {
+        int hearts = postMapper.countHeart(postId);
+        return hearts;
     }
 }

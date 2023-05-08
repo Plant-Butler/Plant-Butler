@@ -19,7 +19,7 @@
     	isLoggedIn = true;
     }
     %>
-    사이트명
+    Plantery
 
     <!-- 로그인 후 디스플레이 -->
     <%if (isLoggedIn) {

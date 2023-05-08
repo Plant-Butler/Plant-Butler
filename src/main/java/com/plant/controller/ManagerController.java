@@ -14,9 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import java.net.URI;
+
 import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/manager")
@@ -46,7 +45,7 @@ public class ManagerController {
 
     /* 우수회원 추가 */
     @PostMapping(value="/best-user/{userId}")
-    public ResponseEntity<?> insertBestUser(@RequestParam("userId") String userId) {
+    public ResponseEntity<Void> insertBestUser(@RequestParam("userId") String userId) {
         boolean flag = service.insertBestUser(userId);
 
         logger.info("[Manager Controller] insertBestUser()");
@@ -62,7 +61,7 @@ public class ManagerController {
 
     /* 우수회원에서 삭제 */
     @DeleteMapping(value="/best-user/{userId}")
-    public ResponseEntity<?> deleteBestUser(@RequestParam("userId") String userId) {
+    public ResponseEntity<Void> deleteBestUser(@RequestParam("userId") String userId) {
         boolean flag = service.deleteBestUser(userId);
 
         logger.info("[Manager Controller] deleteBestUser()");
@@ -77,7 +76,7 @@ public class ManagerController {
 
     /* 우수회원 초기화 */
     @DeleteMapping(value="/best-user/all")
-    public ResponseEntity<?> deleteAllBestUser() {
+    public ResponseEntity<Void> deleteAllBestUser() {
         service.deleteAllBestUser();
         logger.info("[Manager Controller] deleteAllBestUser()");
         HttpHeaders headers = new HttpHeaders();
