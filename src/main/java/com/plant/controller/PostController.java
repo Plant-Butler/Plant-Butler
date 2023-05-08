@@ -2,24 +2,15 @@ package com.plant.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.plant.service.CommentService;
+import com.plant.service.MainService;
 import com.plant.service.PostService;
 import com.plant.vo.CommentVo;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PostVo;
-import java.io.File;
-import java.io.IOException;
-import java.net.*;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URI;
 import java.net.URLDecoder;
@@ -38,21 +30,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.util.*;
 
 
 @RestController
@@ -63,13 +41,25 @@ public class PostController {
 	private PostService postService;
 	@Autowired
 	private CommentService commentService;
+	@Autowired
+	private MainService mainService;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/* 게시물 상세보기 */
 	@GetMapping("/{postId}")
 	public ModelAndView postDetail(@PathVariable int postId,
-								   @RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize) {
+								   @RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize,
+								   HttpSession session) {
 		ModelAndView mv = new ModelAndView("/community/postDetail");
+
+		UserVo user = (UserVo) session.getAttribute("user");
+		String userId = "";
+		if (user != null) {
+			userId = user.getUserId();
+			int alreadyHeart = this.searchHeart(postId, userId);
+			mv.addObject("alreadyHeart", alreadyHeart);
+		}
+
 		PostVo postVo = postService.postDetail(postId);
 		ArrayList<MyplantVo> myPlantList = postService.postMyPlantDetail(postId);
 		//ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
@@ -78,6 +68,12 @@ public class PostController {
         mv.addObject("post", postVo);
         mv.addObject("commentList", commentList);
         mv.addObject("myPlantList", myPlantList);
+
+		int commentCount = mainService.getCommentCount(postId);
+		mv.addObject("commentCount", commentCount);
+
+		int countHeart = postService.countHeart(postId);
+		mv.addObject("countHeart", countHeart);
 
         return mv;
     }
@@ -313,13 +309,11 @@ public class PostController {
 		}
 	}
 
-
-
 	/* 게시물 삭제 */
 	@DeleteMapping(value="/{postId}")
 	public ResponseEntity<?> remove(@RequestParam("postId") int postId) {
 		logger.info("게시글 삭제 postId={}", postId);
-		boolean flag = postService.removeItemMP(postId);
+		boolean flag1 = postService.removeItemMP(postId);
 		boolean flag2 = postService.removeItem(postId);
 		if (flag2) {
 			return ResponseEntity.ok().build();
@@ -330,7 +324,7 @@ public class PostController {
 
 	/* 내 식물 리스트 보여주기 */
 	@GetMapping(value="/plantall")
-	public ResponseEntity<?> plantall(@RequestParam("userId") String userId) {
+	public ResponseEntity<List<MyplantVo>> plantall(@RequestParam("userId") String userId) {
 		List<MyplantVo> plantList = postService.plantall(userId);
 		List<MyplantVo> resultList = new ArrayList<>();
 		for (int i=0; i< plantList.size(); i++) {
@@ -343,6 +337,45 @@ public class PostController {
 		}
 	}
 
+	/* 게시물 좋아요 */
+	@PostMapping(value="/{postId}/heart")
+	public ResponseEntity<String> addHeart(@PathVariable int postId, HttpSession session) {
+		UserVo user = (UserVo) session.getAttribute("user");
+		String userId = user.getUserId();
 
+		// 좋아요 눌려있는지 확인
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("postId", postId);
+		map.put("userId", userId);
+		int alreadyHeart = this.searchHeart(postId, userId);
+		boolean flag = false;
+		String result = "";
+		if (alreadyHeart == 0) {
+			// 좋아요 추가
+			flag = postService.addHeart(map);
+			result = "add";
+		} else {
+			// 좋아요 취소
+			flag = postService.deleteHeart(map);
+			result = "delete";
+		}
+
+		if(flag) {
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	/* 게시물 좋아요 클릭한 적 있는지 확인 */
+	public int searchHeart(int postId, String userId) {
+		// 좋아요 눌려있는지 확인
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("postId", postId);
+		map.put("userId", userId);
+		int alreadyHeart = postService.searchHeart(map);
+
+		return alreadyHeart;
+	}
 
 }

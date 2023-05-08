@@ -55,13 +55,26 @@
 		<result column="first_date" property="firstDate"/>
 	</resultMap>
 
+		<resultMap id="PostMap" type="com.plant.vo.PostVo">
+			<result column="post_id" property="postId"/>
+			<result column="user_id" property="userId"/>
+			<result column="Post_title" property="postTitle"/>
+			<result column="post_content" property="postContent"/>
+			<result column="post_tag" property="postTag"/>
+			<result column="post_image" property="postImage"/>
+			<result column="post_file" property="postFile"/>
+			<result column="post_date" property="postDate"/>
+			<result column="read_count" property="readCount"/>
+			<result column="flag" property="flag"/>
+		</resultMap>
+
     <!-- 게시물 상세조회 -->
     <select id="postDetail" resultMap="PostDetailMap" parameterType="int">
         <![CDATA[
             select post_id, p.user_id, post_title, post_content, post_tag, post_image, post_file, post_date, read_count, flag, nickname
             from post p
-            join user_table u
-            where post_id = #{postId} and p.user_id = u.user_id
+            join user_table u on p.user_id = u.user_id
+            where post_id = #{postId}
         ]]>
     </select>
 
@@ -142,5 +155,46 @@
 			(#{postId}, #{myplantId})
 		</foreach>
 	</insert>
+
+	<select id="getCommunityList" parameterType="java.util.Map" resultMap="PostMap">
+		SELECT *
+		FROM post
+		<where>
+			<if test="searchField != null and searchField != '' and keyword != null and keyword != ''">
+				<![CDATA[
+      AND ${searchField} LIKE CONCAT('%', #{keyword}, '%')
+      ]]>
+			</if>
+		</where>
+		ORDER BY post_date DESC
+	</select>
+
+	<select id="getCommentCount" parameterType="int" resultType="int">
+		SELECT COUNT(comment_id)
+		FROM comment c JOIN post p ON c.post_id = p.post_id
+		WHERE p.post_id = #{postId}
+	</select>
+
+	<!-- 좋아요 눌려있는지 확인 -->
+	<select id="searchHeart" parameterType="map" resultType="int">
+		select count(post_like_id) from post_like
+		where post_id = #{postId} and user_id = #{userId}
+	</select>
+
+	<!-- 게시물 좋아요 -->
+	<insert id="insertHeart" parameterType="map">
+		insert into post_like(post_id, user_id) values (#{postId}, #{userId})
+	</insert>
+
+	<!-- 게시물 좋아요 취소 -->
+	<delete id="deleteHeart" parameterType="map">
+		delete from post_like where post_id = #{postId} and user_id = #{userId}
+	</delete>
+
+	<!-- 게시물 좋아요 카운트 -->
+	<select id="countHeart" parameterType="int" resultType="int">
+		select count(post_like_id) from post_like
+		where post_id = #{postId}
+	</select>
 
 </mapper>

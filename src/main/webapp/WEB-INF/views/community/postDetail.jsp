@@ -10,23 +10,48 @@
 <meta charset="UTF-8">
 <title>커뮤니티</title>
 <%@ include file="../main/header.jsp" %>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
-    
+        .box {
+            width: 100px;
+            height: 100px;
+            border-radius: 70%;
+            overflow: hidden;
+        }
+        .plantImg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        #inputComment {
+              width:1000px;
+        }
 </style>
 </head>
 <body>
-
-[제목] ${post.postTitle}  [닉네임] ${post.nickname}  [조회수] ${post.readCount} [댓글] [신고] ${post.flag} [날짜] <fmt:formatDate value="${post.postDate}" type="date"/>
+<body style="text-align: center">
+<br>
+<table style="margin-left:auto;margin-right:auto;" width="1500" length="150">
+    <tr>
+        <td>[분류] ${post.postTag}</td>
+        <td>[제목] ${post.postTitle}</td>
+        <td>[닉네임] ${post.nickname}</td>
+        <td>[조회수] ${post.readCount}</td>
+        <td>[댓글] ${commentCount}</td>
+        <td>[신고] ${post.flag}</td>
+        <td>[날짜] <fmt:formatDate value="${post.postDate}" type="date"/></td>
+    </tr>
+</table>
 <hr>
-[분류] ${post.postTag}
-<br><br>
 <c:if test="${not empty myPlantList}">
     [${post.nickname} 님의 반려식물] <br>
-    <table>
+    <table style="margin-left:auto;margin-right:auto;" width="700" length="100">
         <c:forEach var="myPlant" items="${myPlantList}">
             <tr>
                 <c:if test="${not empty myPlant.myplantImage}">
-                    <td><a href="/uploads/${myPlant.myplantImage}"><img src="/uploads/${myPlant.myplantImage}"></a></td>
+                    <td><div class="box" style="background: #BDBDBD;">
+                        <a href="/uploads/${myPlant.myplantImage}"><img class="plantImg" src="/uploads/${myPlant.myplantImage}"></a>
+                    </div></td>
                 </c:if>
                 <td>${myPlant.distbNm}</td>
                 <td>${myPlant.myplantNick}</td>
@@ -57,27 +82,41 @@ ${post.postContent}
 
 <br>
 <c:if test="${not empty sessionScope.user.userId}">
-    <button type="button" onclick="declare(0, ${post.postId}, 0)">신고하기</button>
+  <div style="overflow: hidden;">
+    <div id="heart" style="float: left;">
+        <button id="heartBtn" onclick="heart(${post.postId}, '${sessionScope.user.userId}')">
+          <c:choose>
+            <c:when test="${alreadyHeart == 1}">
+              <i class="fa fa-heart" style="color: red;"></i>
+            </c:when>
+            <c:otherwise>
+              <i class="fa fa-heart-o" style="color: red;"></i>
+            </c:otherwise>
+          </c:choose>
+        </button>
+        ${countHeart}
+    </div>
+    <button type="button" onclick="declare(0, ${post.postId}, 0)" style="float: right;">신고하기</button>
     <c:if test="${post.userId eq sessionScope.user.userId}">
-        <button type="button" onclick="location.href='/community/form/${post.postId}'">수정</button>
-        <button type="button" onclick="deletePost(${post.postId})">삭제</button>
+        <button type="button" onclick="location.href='/community/form/${post.postId}'" style="float: right;">수정</button>
+        <button type="button" onclick="deletePost(${post.postId})" style="float: right;">삭제</button>
     </c:if>
+   </div>
 </c:if>
 
 <hr>
 댓글
 
-<table width="800">
+<table style="margin-left:auto;margin-right:auto;" width="1500" length="100">
     <!-- 댓글 작성 -->
         <c:if test="${not empty sessionScope.user.userId}">
             <form action="./comment" method="post" modelAttribute="commentVo">
                 <tr>
-                    <td><input type="text" name="nickname" value="${sessionScope.user.nickname}" readonly="readonly"></td>
-                    <td><input type="text" name="commentContent"></td>
-                    <td><input type="hidden" name="userId" value="${sessionScope.user.userId}"></td>
-                    <td><input type="hidden" name="postId" value="${post.postId}"</td>
-                        <td><input type="submit" value="작성"></td>
-                    </form>
+                    <td>${sessionScope.user.nickname}</td>
+                    <td><input type="text" name="commentContent" id="inputComment"></td>
+                    <td><input type="submit" value="작성" style="width:200px"></td>
+                    <td><input type="hidden" name="userId" value="${sessionScope.user.userId}">
+                        <input type="hidden" name="postId" value="${post.postId}"></td>
                 </tr>
             </form>
          </c:if>
@@ -87,13 +126,12 @@ ${post.postContent}
             <tr>
                 <td>${comment.nickname}</td>
                 <td><span id="commentContent_${comment.commentId}">${comment.commentContent}</span></td>
-                <td>신고 ${comment.flag}</td>
-                <td><fmt:formatDate value="${comment.commentDate}" type="date"/></td>
+                <td>신고 ${comment.flag} <fmt:formatDate value="${comment.commentDate}" type="date"/>
                 <c:if test="${not empty sessionScope.user.userId}">
-                    <td><button type="button" onclick="declare(${comment.commentId}, ${post.postId}, 1)">신고하기</button></td>
+                    <button type="button" onclick="declare(${comment.commentId}, ${post.postId}, 1)">신고하기</button></td>
                     <c:if test="${comment.userId eq sessionScope.user.userId}">
-                        <td><button type="button" onclick="updateBox('${comment.commentContent}', ${comment.commentId}, ${post.postId})">수정</button></td>
-                        <td><button type="button" onclick="deleteComm(${comment.commentId}, ${post.postId})">삭제</button></td>
+                        <td><button type="button" onclick="updateBox('${comment.commentContent}', ${comment.commentId}, ${post.postId})">수정</button>
+                        <button type="button" onclick="deleteComm(${comment.commentId}, ${post.postId})">삭제</button></td>
                     </c:if>
                 </c:if>
             </tr>
@@ -133,6 +171,7 @@ ${post.postContent}
           let input = document.createElement("input");
           input.type = "text";
           input.name = "updatedComment";
+          input.id = "inputComment";
           input.value = commentContent;
 
           //let updatedComment = input.value;
@@ -200,7 +239,7 @@ ${post.postContent}
             },
             success: function(response) {
                 alert('삭제되었습니다.');
-                window.location.assign("../../..");
+                window.location.assign("./" + postId);
             },
             error: function(request, status, error) {
                 alert('댓글을 삭제할 수 없습니다.');
@@ -239,6 +278,37 @@ ${post.postContent}
             }
         });
     }
+
+    // 게시물 좋아요
+    function heart(postId, userId) {
+        event.preventDefault();
+ 		let heartBtn = document.getElementById("heartBtn");
+
+ 	    $.ajax({
+ 			type :'POST',
+ 			url : './' + postId + '/heart',
+ 			contentType : 'application/json',
+ 			data : JSON.stringify({
+ 			    postId : postId,
+ 			    userId : userId
+ 			}),
+ 			success : function(result){
+ 				if (result === 'add'){
+ 					heartBtn.innerHTML = '<i class="fa fa-heart" style="color: red;"></i>';
+                    window.location.href = "/community/" + postId;
+ 				} else {
+                    heartBtn.innerHTML = '<i class="fa fa-heart-o" style="color: red;"></i>';
+                    window.location.href = "/community/" + postId;
+ 				}
+ 			},
+ 			 error: function(request, status, error) {
+                  alert('오류가 발생했습니다.');
+                  console.log("code: " + request.status)
+                  console.log("message: " + request.responseText)
+                  console.log("error: " + error);
+             }
+ 		});
+ 	};
 
 </script>
 

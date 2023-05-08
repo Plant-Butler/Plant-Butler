@@ -6,18 +6,14 @@
 <mapper namespace="com.plant.dao.UserMapper">
     <resultMap id="UserResultMap" type="com.plant.vo.UserVo">
         <result column="user_id" property="userId"/>
-        <result column="nickname" property="nickname"/>
         <result column="password" property="password"/>
-        <result column="email" property="email"/>
-        <result column="point" property="point"/>
-        <result column="manager" property="manager"/>
     </resultMap>
 
-	<select id="checkMember" resultMap="UserResultMap">
-      <![CDATA[
+    <select id="checkMember" parameterType="com.plant.vo.UserVo" resultMap="UserResultMap">
+        <![CDATA[
          SELECT * FROM user_table WHERE user_id = #{userId} AND password = #{password}
      ]]>
-	</select>
+    </select>
 	<select id="duplicateId" resultType="int">
       <![CDATA[
          SELECT count(user_id) as cnt FROM user_table WHERE user_id = #{userId}
