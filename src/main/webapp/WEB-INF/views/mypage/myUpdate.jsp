@@ -6,9 +6,17 @@
 <meta charset="UTF-8">
 <title>내 정보 수정</title>
 <%@ include file="../main/header.jsp" %>
+<style>
+    table {
+        text-align: center;
+        margin-left:auto;
+        margin-right:auto;
+    }
+</style>
 </head>
 <body>
-
+<body style="text-align: center">
+<br><br>
 <form name="joinform">
 <table>
     <tr>
@@ -35,7 +43,7 @@
 		<td><input type="text" name="email" id="email" value="${user.email}" required="required"></td>
 	</tr>
 	<tr>
-	    <td><button type="button" onclick="updateMypage('${user.userId}')">수정</button></td>
+	    <td></td><td><button type="button" onclick="updateMypage('${user.userId}')">수정</button></td><td></td>
 	</tr>
 </table>
 </form>

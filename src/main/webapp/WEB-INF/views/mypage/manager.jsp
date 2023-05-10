@@ -9,7 +9,9 @@
 <%@ include file="../main/header.jsp" %>
 </head>
 <body>
-<h1>게시물 관리</h1>
+<body style="text-align: center">
+<br><br>
+<h2>게시물 관리</h2>
 <table>
     <th>제목</th><th>아이디</th><th>신고</th><th>삭제</th>
        <c:forEach var="post" items="${postList.list}">
@@ -40,8 +42,8 @@
             <c:if test="${postList.navigateLastPage < postList.pages}">
                 <a href="?postPage=${boardList.navigateLastPage + 1}">▶</a>
             </c:if>
-
-<h1>댓글 관리</h1>
+<br><br>
+<h2>댓글 관리</h2>
 <table>
     <th>내용</th><th>아이디</th><th>신고</th><th>삭제</th>
     <c:forEach var="comment" items="${commentList.list}">
@@ -73,9 +75,9 @@
                 <a href="?commentPage=${commentList.navigateLastPage + 1}">▶</a>
             </c:if>
 
-
+<br><br>
 <div id="user-list">
-<h1> 회원관리 </h1> (3인 선택)
+<h2> 회원관리 </h2> (3인 선택)
 <table>
     <tr><th>아이디</th><th>포인트</th><th>우수회원 선택</th><th>우수회원 취소</th><th>회원삭제</th></tr>
     <c:forEach var="user" items="${userList.list}" varStatus="status">

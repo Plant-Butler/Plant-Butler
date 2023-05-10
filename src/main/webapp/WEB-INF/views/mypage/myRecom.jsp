@@ -21,7 +21,8 @@
 <body>
 <body style="text-align: center">
 <br>
-<
+<h2>나에게 맞는 반려식물 결과</h2>
+<br><br>
 <c:forEach var="plant" items="${recomPlantList}">
     <table width="1500" height="250">
         <tr>
