@@ -311,8 +311,8 @@ public class PostController {
 
 	/* 게시물 삭제 */
 	@DeleteMapping(value="/{postId}")
-	public ResponseEntity<?> remove(@RequestParam("postId") int postId) {
-		logger.info("게시글 삭제 postId={}", postId);
+	public ResponseEntity<Void> remove(@RequestParam("postId") int postId) {
+		logger.info("게시글 삭제 postId = " +  postId);
 		boolean flag1 = postService.removeItemMP(postId);
 		boolean flag2 = postService.removeItem(postId);
 		if (flag2) {
@@ -369,7 +369,6 @@ public class PostController {
 
 	/* 게시물 좋아요 클릭한 적 있는지 확인 */
 	public int searchHeart(int postId, String userId) {
-		// 좋아요 눌려있는지 확인
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("postId", postId);
 		map.put("userId", userId);

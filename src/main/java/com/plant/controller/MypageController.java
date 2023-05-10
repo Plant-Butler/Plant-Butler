@@ -1,7 +1,9 @@
 package com.plant.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.plant.service.CommentService;
 import com.plant.service.MypageService;
+import com.plant.service.PostService;
 import com.plant.vo.CommentVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 @RestController
@@ -25,6 +29,10 @@ public class MypageController {
 
     @Autowired
     private MypageService mypageService;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private CommentService commentService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 마이페이지 이동 (로그인 후) */
@@ -75,6 +83,42 @@ public class MypageController {
         mv.addObject("commentList", commentList);
 
         return mv;
+    }
+
+    /* 게시물, 댓글 선택삭제 */
+    @DeleteMapping(value="/community")
+    public ResponseEntity<Boolean> remove(@RequestParam Map<String, String> map) {
+        boolean flag = false;
+
+        String list = map.get("idxList");
+        ArrayList<String> idxList = new ArrayList<>(Arrays.asList(list.split(",")));
+        int num = Integer.parseInt(map.get("num"));
+
+        // 게시물
+        if(num == 0) {
+            for(String idx : idxList) {
+                int postId = Integer.parseInt(idx);
+                flag = postService.removeItem(postId);
+                if (!flag) {
+                    break;
+                }
+            }
+        // 댓글
+        } else if (num == 1){
+            for(String idx : idxList) {
+                int commentId = Integer.parseInt(idx);
+                flag = commentService.deleteComment(commentId);
+                if (!flag) {
+                    break;
+                }
+            }
+        }
+
+        if(flag) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
