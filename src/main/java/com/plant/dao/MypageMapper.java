@@ -1,6 +1,7 @@
 package com.plant.dao;
 
 import com.plant.vo.CommentVo;
+import com.plant.vo.PlantVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -19,4 +20,7 @@ public interface MypageMapper {
 
     /* 내 댓글 */
     ArrayList<CommentVo> myCommentList(String userId) throws SQLException;
+
+    /* 반려식물 추천 서비스 결과 */
+    ArrayList<PlantVo> myRecomList(String userId) throws SQLException;
 }

@@ -38,4 +38,13 @@
         ]]>
     </select>
 
+    <select id="myRecomList" parameterType="String"  resultType="com.plant.vo.PlantVo">
+        <![CDATA[
+            select p.plant_id, distbNm, adviseInfo, managelevelCodeNm, speclmanageInfo, clCodeNm, fncltyInfo, image
+            from recomplant r
+            inner join plant p on p.plant_id = r.plant_id
+            where user_id = #{user_id}
+        ]]>
+    </select>
+
 </mapper>

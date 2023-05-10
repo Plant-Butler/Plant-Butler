@@ -5,6 +5,7 @@ import com.plant.service.CommentService;
 import com.plant.service.MypageService;
 import com.plant.service.PostService;
 import com.plant.vo.CommentVo;
+import com.plant.vo.PlantVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
@@ -121,4 +122,14 @@ public class MypageController {
         }
     }
 
+    /* 반려식물 추천 서비스 결과 */
+    @GetMapping(value="/suggestions/{userId}")
+    public ModelAndView myRecom(@PathVariable String userId) {
+        ModelAndView mv = new ModelAndView("/mypage/myRecom");
+
+        ArrayList<PlantVo> recomPlantList = mypageService.myRecomList(userId);
+        mv.addObject("recomPlantList", recomPlantList);
+
+        return mv;
+    }
 }

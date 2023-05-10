@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.plant.dao.MypageMapper;
 import com.plant.vo.CommentVo;
+import com.plant.vo.PlantVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
@@ -67,5 +68,15 @@ public class MypageService {
         PageInfo<CommentVo> pageInfo = new PageInfo<>(commentList,10);
         logger.info("[Mypage Service] myCommentList()");
         return pageInfo;
+    }
+
+    /* 반려식물 추천 서비스 결과 */
+    public ArrayList<PlantVo> myRecomList(String userId) {
+        ArrayList<PlantVo> recomPlantList = null;
+        try {
+            recomPlantList = mypageMapper.myRecomList(userId);
+        } catch (SQLException e) {
+        }
+        return recomPlantList;
     }
 }
