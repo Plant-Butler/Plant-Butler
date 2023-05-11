@@ -7,10 +7,21 @@
 <meta charset="UTF-8">
 <title>관리자페이지</title>
 <%@ include file="../main/header.jsp" %>
+<style>
+    table {
+        margin-left:auto;
+        margin-right:auto;
+    }
+    th {
+        border: 1px solid;
+    }
+</style>
 </head>
 <body>
 <body style="text-align: center">
 <br><br>
+<div style="display:flex; justify-content:space-between; width:1800px;">
+<div style="width:33%;">
 <h2>게시물 관리</h2>
 <table>
     <th>제목</th><th>아이디</th><th>신고</th><th>삭제</th>
@@ -42,7 +53,8 @@
             <c:if test="${postList.navigateLastPage < postList.pages}">
                 <a href="?postPage=${boardList.navigateLastPage + 1}">▶</a>
             </c:if>
-<br><br>
+</div>
+<div style="width:33%;">
 <h2>댓글 관리</h2>
 <table>
     <th>내용</th><th>아이디</th><th>신고</th><th>삭제</th>
@@ -75,8 +87,8 @@
                 <a href="?commentPage=${commentList.navigateLastPage + 1}">▶</a>
             </c:if>
 
-<br><br>
-<div id="user-list">
+</div>
+<div style="width:33%;">
 <h2> 회원관리 </h2> (3인 선택)
 <table>
     <tr><th>아이디</th><th>포인트</th><th>우수회원 선택</th><th>우수회원 취소</th><th>회원삭제</th></tr>
@@ -110,7 +122,7 @@
             <c:if test="${userList.navigateLastPage < userList.pages}">
                 <a href="?userPage=${userList.navigateLastPage + 1}">▶</a>
             </c:if>
-
+</div>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/manager.js"></script>
 </body>

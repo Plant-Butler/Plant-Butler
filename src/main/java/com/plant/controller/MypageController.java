@@ -11,7 +11,6 @@ import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -56,17 +54,22 @@ public class MypageController {
 
     /* 회원정보 수정 */
     @PutMapping(value="/{userId}")
-    public ResponseEntity<Map<String, Object>> updateMypage(@ModelAttribute UserVo user) {
+    public ResponseEntity<Void> updateMypage(@ModelAttribute UserVo user, HttpServletRequest request) {
         boolean flag = mypageService.updateMypage(user);
 
         logger.info("[Mypage Controller] updateMypage(user)");
-        System.out.println("user = " + user.getPassword());
-        HttpHeaders headers = new HttpHeaders();
+        // 세션 반영
+        HttpSession session = request.getSession();
+        UserVo userVo = (UserVo) session.getAttribute("user");
+        userVo.setPassword(user.getPassword());
+        userVo.setNickname(user.getNickname());
+        userVo.setEmail(user.getEmail());
+        session.setAttribute("user", userVo);
+
         if(flag) {
-            headers.setLocation(URI.create("/mypage/" + user.getUserId()));
-            return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>( headers, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
     }

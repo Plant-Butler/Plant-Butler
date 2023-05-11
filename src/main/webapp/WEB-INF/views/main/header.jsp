@@ -42,6 +42,6 @@
         <a href="/loginPage">로그인</a>
     <%};%>
 </div>
-
+<br><br>
 </body>
 </html>

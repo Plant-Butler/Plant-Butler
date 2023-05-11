@@ -7,6 +7,12 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 <%@ include file="../main/header.jsp" %>
+<style>
+    th {
+        border: 1px solid;
+    }
+</style>
+
 </head>
 <body>
 <body style="text-align: center">
@@ -15,7 +21,7 @@
 <div style="display:flex; justify-content:space-between; width:1800px;">
 <div style="width:49%;">
 <h1>내 게시물</h1>
-<table style="margin:auto;" width="100%">
+<table style="margin-left:30px;" width="100%">
     <th><input type="checkbox" name="checkAll1" id="checkAll1"></th><th>분류</th><th>제목</th><th>작성날짜</th><th>신고</th>
        <c:forEach var="post" items="${postList.list}">
              <tr>
@@ -54,7 +60,7 @@
 
 <div style="width:49%;">
 <h1>내 댓글</h1>
-<table style="margin:auto;"  width="100%" >
+<table style="margin-left:70px;"  width="100%" >
     <th><input type="checkbox" name="checkAll2" id="checkAll2"><th>내용</th><th>작성날짜</th><th>신고</th>
     <c:forEach var="comment" items="${commentList.list}">
         <tr>

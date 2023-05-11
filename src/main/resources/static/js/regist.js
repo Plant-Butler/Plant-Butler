@@ -99,6 +99,7 @@ function IdCheck() {
                     },
                     success: function(response) {
                         alert('수정되었습니다');
+                        location.reload();
                     },
                     error: function(request, status, error) {
                         alert('오류가 발생하였습니다.');

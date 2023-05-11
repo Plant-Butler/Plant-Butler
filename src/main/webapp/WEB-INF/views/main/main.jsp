@@ -8,10 +8,24 @@
 <title>메인페이지</title>
 <%@ include file="../main/header.jsp" %>
 <style>
+   .box {
+        width: 100px;
+        height: 100px;
+        border-radius: 70%;
+        overflow: hidden;
+        margin-left:auto;
+        margin-right:auto
+   }
    .plantImg {
-       width: auto; height: auto;
-       max-width: 100px;
-       max-height: 100px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+   }
+
+   table, tbody, td {
+        width:1000px;
+        margin-left:auto;
+        margin-right:auto
    }
 </style>
 </head>
@@ -32,7 +46,7 @@
 </div>
 <br>
 <h2> 이번달 우수회원 </h2>
-    <table id="best-user-table" style="margin-left:auto;margin-right:auto;" width="1000">
+    <table id="best-user-table">
         <tbody></tbody>
     </table>
 
@@ -50,7 +64,7 @@
                                 for(var i = 0; i < 3; i++) {
                                     var user = users[i];
                                     if(user.myplantImage != null) {
-                                        row += "<td><img class='plantImg' src='/uploads/" + user.myplantImage + "'></td>";
+                                        row += "<td><div class='box' style='background: #BDBDBD;'><img class='plantImg' src='/uploads/" + user.myplantImage + "'></div></td>";
                                     } else {
                                         row += "<td>사진이 없습니다.</td>";
                                     }
