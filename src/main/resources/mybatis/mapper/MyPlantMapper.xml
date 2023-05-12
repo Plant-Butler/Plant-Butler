@@ -16,6 +16,7 @@
         <result column="myplant_radius1" property="myplantRadius1"/>
         <result column="myplant_radius2" property="myplantRadius2"/>
         <result column="first_date" property="firstDate"/>
+        <result column="schedule_date" property="scheduleDate"/>
     </resultMap>
 
     <select id="selectMyPlants" resultMap="MyplantResultMap">
@@ -48,7 +49,7 @@
     <select id="searchPlant" resultMap="MyplantResultMap">
 
       <![CDATA[
-        select * from myplant where myplant_id = #{myplant_id}
+        select * from myplant where myplant_id = #{myplantId}
         ]]>
 	</select>
 
@@ -74,5 +75,14 @@
         select *
         from plant where plant_id = #{plantId};
     </select>
+
+    <update id="registRepresent" parameterType="int">
+        update myplant set represent = 1 where myplant_id=#{myplantId}
+
+    </update>
+
+    <update id="registRepresent2">
+        update myplant set represent = 0 where represent = 1;
+    </update>
 
 </mapper>

@@ -5,6 +5,7 @@ import com.plant.vo.PlantVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
@@ -24,4 +25,10 @@ public interface MyPlantMapper {
     void editMyPlant(MyplantVo myplantVo);
 
 	PlantVo searchPlantToNum(int plantId);
+
+	void registRepresent(int result,int myplantId);
+
+	void registRepresent2();
+
+
 }

@@ -1,6 +1,8 @@
 package com.plant.vo;
 
 import java.sql.Date;
+import java.sql.Time;
+import java.sql.Timestamp;
 
 public class MyplantVo {
 
@@ -19,13 +21,16 @@ public class MyplantVo {
     private int myplantRadius2; // 화분 반지름2
     private Date firstDate;
 
+    private int represent;
+
+    private long scheduleDate;
 
 
     public MyplantVo() {
 
     }
 
-    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantDepth, int myplantRadius1, int myplantRadius2, Date firstDate) {
+    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantDepth, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate) {
         this.myplantId = myplantId;
         this.plantId = plantId;
         this.userId = userId;
@@ -37,6 +42,8 @@ public class MyplantVo {
         this.myplantRadius1 = myplantRadius1;
         this.myplantRadius2 = myplantRadius2;
         this.firstDate = firstDate;
+        this.represent = represent;
+        this.scheduleDate = scheduleDate;
     }
 
     public int getMyplantId() {
@@ -141,6 +148,22 @@ public class MyplantVo {
 
     public void setDistbNm(String distbNm) {
         this.distbNm = distbNm;
+    }
+
+    public int getRepresent() {
+        return represent;
+    }
+
+    public void setRepresent(int represent) {
+        this.represent = represent;
+    }
+
+    public long getScheduleDate() {
+        return scheduleDate;
+    }
+
+    public void setScheduleDate(long scheduleDate) {
+        this.scheduleDate = scheduleDate;
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.plant.service;
 import com.plant.dao.MyPlantMapper;
+import com.plant.dao.ScheduleMapper;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PlantVo;
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 @Service
@@ -21,7 +23,6 @@ public class MyPlantService {
         try {
             System.out.println(UserId);
             myPlant = (ArrayList<MyplantVo>) myPlantMapper.selectMyPlants(UserId);
-            logger.info("Plant List: {}", myPlant);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -64,4 +65,10 @@ public class MyPlantService {
         PlantVo plantVo = myPlantMapper.searchPlantToNum(plantId);
         return plantVo;
     }
+    public void registRepresent(int result,int myplantId) {
+        myPlantMapper.registRepresent2();
+        myPlantMapper.registRepresent(result,myplantId);
+
+    }
+
 }

@@ -3,11 +3,8 @@ package com.plant.vo;
 import java.sql.Timestamp;
 
 public class ScheduleVo {
-
     private int scheduleId;
-
     private int myplantId;
-
     private String userId;
     private Timestamp scheduleDate;
     private int watering;   // 물
@@ -28,6 +25,11 @@ public class ScheduleVo {
         this.prun = prun;
         this.soil = soil;
         this.ventilation = ventilation;
+    }
+
+    public ScheduleVo(int myplantId, Timestamp scheduleDate) {
+        this.myplantId = myplantId;
+        this.scheduleDate = scheduleDate;
     }
 
     public int getScheduleId() {
@@ -100,5 +102,20 @@ public class ScheduleVo {
 
     public void setVentilation(int ventilation) {
         this.ventilation = ventilation;
+    }
+
+    @Override
+    public String toString() {
+        return "ScheduleVo{" +
+                "scheduleId=" + scheduleId +
+                ", myplantId=" + myplantId +
+                ", userId='" + userId + '\'' +
+                ", scheduleDate=" + scheduleDate +
+                ", watering=" + watering +
+                ", nutri=" + nutri +
+                ", prun=" + prun +
+                ", soil=" + soil +
+                ", ventilation=" + ventilation +
+                '}';
     }
 }
