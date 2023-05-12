@@ -1,8 +1,10 @@
 package com.plant.controller;
 
 import com.plant.service.MyPlantService;
+import com.plant.service.ScheduleService;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PlantVo;
+import com.plant.vo.ScheduleVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/myplants")
@@ -31,27 +36,52 @@ public class PlantController {
 
     @Autowired
     private MyPlantService MyPlantService;
+    @Autowired
+    private ScheduleService scheduleService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @GetMapping(value="")
+    /* 메인페이지 이동 */
     public ModelAndView main(HttpSession session) {
         UserVo user = (UserVo) session.getAttribute("user");
-        String UserId = user.getUserId();
-        ArrayList<MyplantVo> plantList = new ArrayList<>();
+        String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
-
-        plantList = MyPlantService.MyPlantList(UserId);
-
-        System.out.println(plantList);
+        ArrayList<MyplantVo> plantList = MyPlantService.MyPlantList(userId);
+        ArrayList<ScheduleVo> scheduleVos = scheduleService.getScheduleListToUserId(userId);
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"));
+        /* 각 식물 리스트의 관리기록 작성일 계산 */
+        long scheduleDate = 0;
+        for (int i = 0; i < plantList.size(); i++) {
+            boolean matchFound = false;
+            for (int y = 0; y < scheduleVos.size(); y++) {
+                if (scheduleVos.get(y).getMyplantId() == plantList.get(i).getMyplantId()) {
+                    scheduleDate =scheduleVos.get(y).getScheduleDate().getTime()/(1000 * 60 * 60 * 24);
+                    scheduleService.setSchedule(plantList.get(i).getMyplantId(), scheduleDate);
+                    matchFound = true;
+                    break;
+                }
+            }
+            if (!matchFound) {
+                Timestamp time = new Timestamp(plantList.get(i).getFirstDate().getTime());
+                scheduleDate =plantList.get(i).getFirstDate().getTime()/(1000 * 60 * 60 * 24);
+                scheduleService.setSchedule(plantList.get(i).getMyplantId(), scheduleDate);
+                System.out.println(time);
+            }
+        }
+        /* 현재 시각 계산 */
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        long todayInDays = timestamp.getTime()/ (1000 * 60 * 60 * 24);
+        model.addObject("endDate", todayInDays);
         model.addObject("plantList", plantList);
-
         model.setViewName("myplant/myplants");
         return model;
     }
     @GetMapping(value="/form")
-    public ModelAndView myPlantRegistForm() {
+    /* 메인페이지 이동 */
+    public ModelAndView myPlantRegistForm(HttpSession session) {
         ModelAndView model = new ModelAndView();
+        session.getAttribute("user");
         model.setViewName("myplant/myPlantRegistForm");
         return model;
     }
@@ -116,5 +146,12 @@ public class PlantController {
 
     }
 
+    @PostMapping("/{myplantId}/represent")
+    public ResponseEntity<Void> insertRepresent(@RequestBody String represent,@PathVariable int myplantId) {
+        int result = Integer.parseInt(represent);
+        MyPlantService.registRepresent(result,myplantId);
+
+        return ResponseEntity.ok().build();
+    }
 
 }
