@@ -3,7 +3,6 @@ package com.plant.service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.plant.dao.CommentMapper;
-import com.plant.dao.PostMapper;
 import com.plant.vo.CommentVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +48,18 @@ public class CommentService {
 
         logger.info("[Comment Service] postComment()");
         return flag;
+    }
+
+    /* 포인트 갱신 */
+    public int getPoint(String userId) {
+        int point = 0;
+
+        try {
+            point = commentMapper.getPoint(userId);
+        } catch (SQLException e) {
+        }
+
+        return point;
     }
 
     /* 댓글 삭제 */

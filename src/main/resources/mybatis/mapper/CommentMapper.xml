@@ -63,4 +63,13 @@
         ]]>
     </update>
 
+    <!-- 포인트 갱신 -->
+    <select id="getPoint" resultType="int" parameterType="String">
+        <![CDATA[
+            select point
+            from user_table
+            where user_id = #{userId}
+        ]]>
+    </select>
+
 </mapper>
