@@ -78,7 +78,7 @@ public class PlantController {
         return model;
     }
     @GetMapping(value="/form")
-    /* 메인페이지 이동 */
+    /* 등록페이지 이동 */
     public ModelAndView myPlantRegistForm(HttpSession session) {
         ModelAndView model = new ModelAndView();
         session.getAttribute("user");
@@ -111,6 +111,9 @@ public class PlantController {
             }
         }
         myplantVo.setMyplantImage(fileNames.toString());
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        long scheduleDate = timestamp.getTime()/ (1000 * 60 * 60 * 24);
+        myplantVo.setScheduleDate(scheduleDate);
         MyPlantService.registMyPlant(myplantVo);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/myplants"));

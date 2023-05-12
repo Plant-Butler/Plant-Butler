@@ -32,7 +32,6 @@
     <title>myplants</title>
 </head>
 <body>
-
 <h1>myplants</h1>
 <h2>Plant List Size: ${fn:length(plantList)}</h2>
 <table>
@@ -46,7 +45,6 @@
             <td>${list.myplantImage}</td>
             <td>${list.myplantWeight}</td>
             <td>${list.myplantLength}</td>
-            <td>${list.myplantDepth}</td>
             <td>${list.myplantRadius1}</td>
             <td>${list.firstDate}</td>
             <c:choose>

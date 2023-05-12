@@ -26,7 +26,6 @@
                     if (response.ok) {
                         window.location.replace("/myplants");
                     } else {
-
                         console.error('Error:', response.statusText);
                     }
                 })
@@ -84,15 +83,7 @@
         <td></td>
     </tr>
     <tr>
-        <td>내 화분 깊이 :</td>
-        <td>
-            <p class="editable" name="myplantDepth">${myPlant.myplantDepth}</p>
-            <input type="text" class="input-editable" name="myplantDepth" value="${myPlant.myplantDepth}" style="display:none;">
-        </td>
-        <td></td>
-    </tr>
-    <tr>
-        <td>내 화분 지름 1:</td>
+        <td id="radius1Label">내 화분 밑 지름:</td>
         <td>
             <p class="editable" name="myplantRadius1">${myPlant.myplantRadius1}</p>
             <input type="text" class="input-editable" name="myplantRadius1" value="${myPlant.myplantRadius1}" style="display:none;">
@@ -100,15 +91,17 @@
         <td></td>
     </tr>
     <tr>
-        <td>내 화분 지름 2:</td>
-        <td><p class="editable" name="myplantRadius2">${myPlant.myplantRadius2}</p>
-        <input type="text" class="input-editable" name="myplantRadius2" value="${myPlant.myplantRadius2}" style="display:none;">
+        <td id="radius2Label">내 화분 윗 지름:</td>
+        <td>
+            <p class="editable" name="myplantRadius2">${myPlant.myplantRadius2}</p>
+            <input type="text" class="input-editable" name="myplantRadius2" value="${myPlant.myplantRadius2}" style="display:none;">
         </td>
         <td></td>
     </tr>
     <tr>
         <td>분양일:</td>
-        <td><p class="editable" name="myplantRadius2">${myPlant.firstDate}</p>
+        <td>
+            <p class="editable" name="myplantRadius2">${myPlant.firstDate}</p>
             <input type="text" class="input-editable" name="firstDate" value="${myPlant.firstDate}" style="display:none;">
         </td>
         <td></td>
@@ -243,7 +236,6 @@
             $("#saveBtn").show();
         });
     </script>
-
     <script>
         $("#saveBtn").on("click", function () {
             var myplantVo = {
@@ -254,12 +246,9 @@
                 myplantImage: $("input[name='myplantImage']").val(),
                 myplantWeight: $("input[name='myplantWeight']:checked").val(),
                 myplantLength: $("input[name='myplantLength']").val(),
-                myplantDepth: $("input[name='myplantDepth']").val(),
                 myplantRadius1: $("input[name='myplantRadius1']").val(),
                 myplantRadius2: $("input[name='myplantRadius2']").val(),
-                myplantRadius2: $("input[name='myplantRadius2']").val(),
             };
-
             $.ajax({
                 url: "/myplants/"+${myPlant.myplantId},
                 method: "POST",
@@ -273,6 +262,29 @@
                     alert("수정에 실패했습니다. 다시 시도해주세요.");
                 },
             });
+        });
+    </script>
+    <script>
+            $(document).ready(function () {
+            // 초기화 시 라디오 버튼 상태에 따라 radius1Label과 radius2Label의 내용을 변경
+            if ($("input[name='myplantWeight']:checked").val() === "1") {
+            $("#radius1Label").text("내 화분 밑 지름:");
+            $("#radius2Label").text("내 화분 윗 지름:");
+        } else {
+            $("#radius1Label").text("내 화분 가로:");
+            $("#radius2Label").text("내 화분 세로:");
+        }
+        });
+
+            // 라디오 버튼 변경 시 radius1Label과 radius2Label의 내용을 변경
+            $("input[name='myplantWeight']").on("change", function () {
+            if ($(this).val() === "1") {
+            $("#radius1Label").text("내 화분 밑 지름:");
+            $("#radius2Label").text("내 화분 윗 지름:");
+        } else {
+            $("#radius1Label").text("내 화분 가로:");
+            $("#radius2Label").text("내 화분 세로:");
+        }
         });
     </script>
 </table>

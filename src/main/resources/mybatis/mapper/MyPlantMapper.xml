@@ -12,7 +12,6 @@
         <result column="myplant_image" property="myplantImage"/>
         <result column="myplant_weight" property="myplantWeight"/>
         <result column="myplant_length" property="myplantLength"/>
-        <result column="myplant_depth" property="myplantDepth"/>
         <result column="myplant_radius1" property="myplantRadius1"/>
         <result column="myplant_radius2" property="myplantRadius2"/>
         <result column="first_date" property="firstDate"/>
@@ -27,7 +26,7 @@
 	</select>
 
     <insert id="insertMyplant" parameterType="com.plant.vo.MyplantVo">
-        INSERT INTO myplant(plant_id, user_id, myplant_nick, myplant_image, myplant_weight, myplant_length,myplant_depth, myplant_radius1, myplant_radius2,first_date)
+        INSERT INTO myplant(plant_id, user_id, myplant_nick, myplant_image, myplant_weight, myplant_length, myplant_radius1, myplant_radius2,first_date,schedule_date)
         VALUES (
                    #{plantId},
                    #{userId},
@@ -35,10 +34,10 @@
                    #{myplantImage},
                    #{myplantWeight},
                    #{myplantLength},
-                   #{myplantDepth},
                    #{myplantRadius1},
                    #{myplantRadius2},
-                   #{firstDate}
+                   #{firstDate},
+                   #{scheduleDate}
                )
     </insert>
 
@@ -63,7 +62,6 @@
                            myplant_image = #{myplantImage},
                            myplant_weight = #{myplantWeight},
                            myplant_length = #{myplantLength},
-                           myplant_depth = #{myplantDepth},
                            myplant_radius1 = #{myplantRadius1},
                            myplant_radius2 = #{myplantRadius2}
         WHERE myplant_id = #{myplantId}

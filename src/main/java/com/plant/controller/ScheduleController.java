@@ -32,6 +32,7 @@ public class ScheduleController {
         MyplantVo myplant1 = myPlantService.myPlantDetail(myplantId.intValue());
         Timestamp date = scheduleService.checkWatering(myplantId);
         System.out.println(date);
+        double water1 = 0;
         if(date==null){
             date = new Timestamp(myplant1.getFirstDate().getTime());
         }
@@ -39,9 +40,13 @@ public class ScheduleController {
         if(date2==null){
             date2 = new Timestamp(myplant1.getFirstDate().getTime());
         }
-
+        if(myplant1.getMyplantWeight()==1){
         double water = (1.0/12.0) * Math.PI * myplant1.getMyplantLength() * (Math.pow(myplant1.getMyplantRadius1() / 2.0, 2) + (myplant1.getMyplantRadius1() / 2.0) * (myplant1.getMyplantRadius2() / 2.0) + Math.pow(myplant1.getMyplantRadius2() / 2.0, 2));
-        double water1 = water/1000;
+        water1 = water/1000;}
+        else if(myplant1.getMyplantWeight()==2){
+            double water =(myplant1.getMyplantRadius2() * myplant1.getMyplantRadius2() * myplant1.getMyplantLength()*(1.0/4.0));
+            water1 = water/1000;
+        }
         String water2 = String.format("%.2f", water1);
         model.addObject("water",water2);
         model.addObject("date",date);

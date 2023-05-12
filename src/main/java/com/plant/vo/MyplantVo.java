@@ -16,7 +16,6 @@ public class MyplantVo {
     private String myplantImage;
     private int myplantWeight; // 화분 가로
     private int myplantLength; // 화분 세로
-    private int myplantDepth;  // 화분 깊이
     private int myplantRadius1; // 화분 반지름1
     private int myplantRadius2; // 화분 반지름2
     private Date firstDate;
@@ -30,7 +29,7 @@ public class MyplantVo {
 
     }
 
-    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantDepth, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate) {
+    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate) {
         this.myplantId = myplantId;
         this.plantId = plantId;
         this.userId = userId;
@@ -38,7 +37,6 @@ public class MyplantVo {
         this.myplantImage = myplantImage;
         this.myplantWeight = myplantWeight;
         this.myplantLength = myplantLength;
-        this.myplantDepth = myplantDepth;
         this.myplantRadius1 = myplantRadius1;
         this.myplantRadius2 = myplantRadius2;
         this.firstDate = firstDate;
@@ -102,13 +100,6 @@ public class MyplantVo {
         this.myplantLength = myplantLength;
     }
 
-    public int getMyplantDepth() {
-        return myplantDepth;
-    }
-
-    public void setMyplantDepth(int myplantDepth) {
-        this.myplantDepth = myplantDepth;
-    }
 
     public int getMyplantRadius1() {
         return myplantRadius1;
@@ -176,7 +167,6 @@ public class MyplantVo {
                 ", myplantImage='" + myplantImage + '\'' +
                 ", myplantWeight=" + myplantWeight +
                 ", myplantLength=" + myplantLength +
-                ", myplantDepth=" + myplantDepth +
                 ", myplantRadius1=" + myplantRadius1 +
                 ", myplantRadius2=" + myplantRadius2 +
                 ", firstDate=" + firstDate +

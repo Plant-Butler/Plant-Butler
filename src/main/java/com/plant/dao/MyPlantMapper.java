@@ -3,6 +3,7 @@ package com.plant.dao;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PlantVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
