@@ -33,9 +33,9 @@ public class ManagerController {
         ModelAndView mv = new ModelAndView("/mypage/manager");
         //ArrayList<UserVo> userList = service.getUserList();
 
-        PageInfo<PostVo> postList = service.mgmtPostList(postPage, 10);
-        PageInfo<CommentVo> commentList = service.mgmtCommentList(commentPage, 10);
-        PageInfo<UserVo> userList = service.getUserList(userPage, 10);
+        PageInfo<PostVo> postList = service.mgmtPostList(postPage, 15);
+        PageInfo<CommentVo> commentList = service.mgmtCommentList(commentPage, 15);
+        PageInfo<UserVo> userList = service.getUserList(userPage, 15);
         mv.addObject("postList", postList);
         mv.addObject("commentList", commentList);
         mv.addObject("userList", userList);
