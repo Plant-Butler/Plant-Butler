@@ -21,7 +21,6 @@
         <result column="schedule_date" property="scheduleDate"/>
     </resultMap>
 
-    <!-- 댓글 목록 -->
     <select id="selectScheduleList" resultMap="scheduleMap" parameterType="java.lang.Long">
         <![CDATA[
             SELECT * from schedule where myplant_id = #{myplantId}

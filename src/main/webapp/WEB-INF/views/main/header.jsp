@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>header</title>
+
 </head>
 <body>
 <div id="header">
@@ -19,7 +20,7 @@
     	isLoggedIn = true;
     }
     %>
-    Plantery
+    <a href="/home">Plantery</a>
 
     <!-- 로그인 후 디스플레이 -->
     <%if (isLoggedIn) {
@@ -41,6 +42,6 @@
         <a href="/loginPage">로그인</a>
     <%};%>
 </div>
-
+<br><br>
 </body>
 </html>

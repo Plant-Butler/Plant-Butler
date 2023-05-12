@@ -32,7 +32,7 @@ public class MainController {
     /* 나에게 맞는 식물 이동 */
     @GetMapping(value="/suggestions")
     public ModelAndView openSuggestions() {
-        ModelAndView mv = new ModelAndView("/suggestions/suggestions");
+        ModelAndView mv = new ModelAndView("/suggestions/questions");
         return mv;
     }
 

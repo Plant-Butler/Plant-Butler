@@ -1,8 +1,6 @@
 package com.plant.vo;
 
 import java.sql.Date;
-import java.sql.Time;
-import java.sql.Timestamp;
 
 public class MyplantVo {
 
@@ -62,12 +60,28 @@ public class MyplantVo {
         this.plantId = plantId;
     }
 
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getDistbNm() {
+        return distbNm;
+    }
+
+    public void setDistbNm(String distbNm) {
+        this.distbNm = distbNm;
     }
 
     public String getMyplantNick() {
@@ -132,22 +146,6 @@ public class MyplantVo {
 
     public void setFirstDate(Date firstDate) {
         this.firstDate = firstDate;
-    }
-
-    public int getPostId() {
-        return postId;
-    }
-
-    public void setPostId(int postId) {
-        this.postId = postId;
-    }
-
-    public String getDistbNm() {
-        return distbNm;
-    }
-
-    public void setDistbNm(String distbNm) {
-        this.distbNm = distbNm;
     }
 
     public int getRepresent() {
