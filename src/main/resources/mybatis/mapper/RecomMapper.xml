@@ -25,4 +25,20 @@
         ]]>
     </select>
 
+    <!-- 추천 결과 최초 저장 -->
+    <insert id="insertResultPlant" parameterType="map">
+        insert recomplant(plant_id, user_id) values (#{plant_id}, #{userId})
+    </insert>
+
+    <!-- 추천 서비스 이용한 적 있는지 조회 -->
+    <select id="selectRecomCnt" resultType="int" parameterType="String">
+        select count(*) from recomplant where user_id = #{userId}
+    </select>
+
+    <!-- 기존 추천 결과 삭제 -->
+    <delete id="deleteResultList" parameterType="String">
+        delete from recomplant where user_id = #{userId}
+    </delete>
+
+
 </mapper>

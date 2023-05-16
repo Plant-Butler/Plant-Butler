@@ -15,6 +15,11 @@
         margin-right:auto;
         border: 1px solid;
     }
+
+    td {
+        width: 40%
+    }
+
     .background {
         position: fixed;
         top: 0;
@@ -58,6 +63,7 @@
         transition: all 0.5s;
     }
 </style>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
     // 쿼리스트링 제외
@@ -89,13 +95,46 @@
       document.querySelector(".background").className = "background";
     }
 
+
+    // 마이페이지에 저장
+    function savePlants() {
+        let idxList = "";
+
+        $( "input[name='plant_id']" ).each (function (){
+             idxList = idxList + $(this).val() + "," ;
+        });
+
+        idxList = idxList.substring(0, idxList.lastIndexOf(","));
+        console.log(idxList);
+
+        $.ajax({
+             url:  "/suggestions/result",
+             type: "POST",
+             data: { idxList: idxList },
+             success: function(response) {
+                   if(response) {
+                        alert('저장되었습니다.');
+                   } else {
+                        alert('저장에 실패하였습니다.');
+                   }
+             },
+             error: function(request, status, error) {
+                   alert('오류가 발생했습니다.');
+                   console.log("code: " + request.status)
+                   console.log("message: " + request.responseText)
+                   console.log("error: " + error);
+             }
+        });
+    }
+
 </script>
 </head>
 <body>
 <body style="text-align: center">
 ${user.nickname}님에게 어울리는 식물이에요. <br><br>
 
-    <c:forEach var="plant" items="${resultList}">
+
+<c:forEach var="plant" items="${resultList}">
         <table width="1500" height="250">
             <tr>
                 <!-- <th colspan="2"><img class="plantImg" src="/uploads/${plant.image}"></th> -->
@@ -110,34 +149,38 @@ ${user.nickname}님에게 어울리는 식물이에요. <br><br>
                                                                 "${plant.postngplaceCodeNm}")'>이 식물 분양 준비하기</button></td>
             </tr>
         </table>
-    </c:forEach>
+    <input type="hidden" name="plant_id" value="${plant.plant_id}">
+</c:forEach>
+<button onclick="savePlants()">저장하기</button>
+
+
 
 <div class="background">
     <div class="window">
         <div class="popup">
-             <button id="close" onclick="closePop()">창 닫기</button>
+             <button id="close" onclick="closePop()">창 닫기</button><br><br>
                  <table>
                     <tr><td colspan="4" id="distbNm"></td></tr>
                     <tr><td colspan="4" id="sentence"></td></tr>
                     <tr>
-                        <td>비료</td><td id="frtlzrInfo"></td>
-                        <td>토양</td><td id="soilInfo"></td>
+                        <th>비료</th><td id="frtlzrInfo"></td>
+                        <th>토양</th><td id="soilInfo"></td>
                     </tr>
                     <tr>
-                        <td>생육온도</td><td id="grwhTpCodeNm"></td>
-                        <td>겨울최저온도</td><td id="winterLwetTpCodeNm"></td>
+                        <th>생육온도</th><td id="grwhTpCodeNm"></td>
+                        <th>겨울최저온도</th><td id="winterLwetTpCodeNm"></td>
                     </tr>
                     <tr>
-                        <td>물주기 봄</td><td id="watercycleSprngCodeNm"></td>
-                        <td>물주기 여름</td><td id="watercycleSummerCodeNm"></td>
+                        <th>물주기 봄</th><td id="watercycleSprngCodeNm"></td>
+                        <th>물주기 여름</th><td id="watercycleSummerCodeNm"></td>
                     </tr>
                     <tr>
-                        <td>물주기 가을</td><td id="watercycleAutumnCodeNm"></td>
-                        <td>물주기 겨울</td><td id="watercycleWinterCodeNm"></td>
+                        <th>물주기 가을</th><td id="watercycleAutumnCodeNm"></td>
+                        <th>물주기 겨울</th><td id="watercycleWinterCodeNm"></td>
                     </tr>
                     <tr>
-                        <td>습도</td><td id="hdCodeNm"></td>
-                        <td>배치 장소</td><td id="postngplaceCodeNm"></td>
+                        <th>습도</th><td id="hdCodeNm"></td>
+                        <th>배치 장소</th><td id="postngplaceCodeNm"></td>
                     </tr>
                  </table>
         </div>
