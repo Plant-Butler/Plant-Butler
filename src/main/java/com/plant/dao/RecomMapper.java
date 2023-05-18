@@ -11,7 +11,10 @@ import java.util.HashMap;
 public interface RecomMapper {
 
     /* 추천 결과 보기 */
-    ArrayList<PlantVo> getResultList(PlantVo plantVo) throws SQLException;
+    ArrayList<PlantVo> selectResultList(PlantVo plantVo) throws SQLException;
+
+    /* 추천 식물 상세정보 */
+    PlantVo selectPlantDetail(int plantId) throws SQLException;
 
     /* 추천 결과 최초 저장 */
     boolean insertResultPlant(HashMap<String, Object> map) throws SQLException;
@@ -21,4 +24,6 @@ public interface RecomMapper {
 
     /* 기존 추천 결과 삭제 */
     int deleteResultList(String userId) throws SQLException;
+
+
 }

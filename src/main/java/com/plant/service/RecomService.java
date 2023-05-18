@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class RecomService {
@@ -22,8 +23,8 @@ public class RecomService {
     public ArrayList<PlantVo> getResultList (PlantVo plantVo) {
         ArrayList<PlantVo> resultList = null;
         try {
-            resultList = recomMapper.getResultList(plantVo);
-        } catch (SQLException e) {}
+            resultList = recomMapper.selectResultList(plantVo);
+        } catch (SQLException e) { throw new RuntimeException(e); }
         return resultList;
     }
 
@@ -32,7 +33,7 @@ public class RecomService {
         boolean flag = false;
         try {
             flag = recomMapper.insertResultPlant(map);
-        } catch (SQLException e) {}
+        } catch (SQLException e) { throw new RuntimeException(e); }
 
         logger.info("[RecomController Service] saveResultList()");
         return flag;
@@ -43,7 +44,7 @@ public class RecomService {
         int count = 0;
         try {
             count = recomMapper.selectRecomCnt(userId);
-        } catch (SQLException e) {}
+        } catch (SQLException e) { throw new RuntimeException(e); }
         return count;
     }
 
@@ -54,7 +55,7 @@ public class RecomService {
 
         try {
             affectedCnt = recomMapper.deleteResultList(userId);
-        } catch (SQLException e) {}
+        } catch (SQLException e) { throw new RuntimeException(e); }
 
 
         if(affectedCnt > 0) {
@@ -62,5 +63,39 @@ public class RecomService {
         }
 
         return flag;
+    }
+
+    /* 추천 식물 상세정보 */
+    public PlantVo getPlantDetail(int plantId) {
+        PlantVo vo = null;
+
+        try {
+            vo = recomMapper.selectPlantDetail(plantId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return vo;
+    }
+
+    /* 추천 식물 화분 크기 계산 */
+    public Map<String, Integer> calcPot(int plantId) {
+        Map<String, Integer> potMap = new HashMap<>();
+        PlantVo vo = this.getPlantDetail(plantId);
+
+        String hg =  vo.getGrowthHgInfo();
+        String ara = vo.getGrowthAraInfo();
+
+        int idealHg = 0;
+        int idealAra = 0;
+
+        if (hg != null && ara != null) {
+            idealHg = Integer.parseInt(hg) / 3;
+            idealAra = Integer.parseInt(ara) + 5;
+        }
+
+        potMap.put("idealHg", idealHg);
+        potMap.put("idealAra", idealAra);
+
+        return potMap;
     }
 }

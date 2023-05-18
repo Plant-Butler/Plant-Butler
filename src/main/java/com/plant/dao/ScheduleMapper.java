@@ -19,7 +19,6 @@ public interface ScheduleMapper {
 
     Timestamp checkWatering(Long myplantId);
 
-
     Timestamp checkSchedule(Long myplantId);
 
     ArrayList<ScheduleVo> getScheduleListToUserId(String userId);
