@@ -2,6 +2,7 @@ package com.plant.controller;
 
 import com.plant.service.CommentService;
 import com.plant.vo.CommentVo;
+import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.net.URI;
 
 
@@ -23,8 +26,14 @@ public class CommentController {
 
     /* 댓글 작성 */
     @PostMapping("")
-    public ResponseEntity<Void> postComment(@ModelAttribute("CommentVo") CommentVo commentVo) {
+    public ResponseEntity<Void> postComment(@ModelAttribute("CommentVo") CommentVo commentVo, HttpServletRequest request) {
         boolean flag = commentService.postComment(commentVo);
+        int point = commentService.getPoint(commentVo.getUserId());
+
+        HttpSession session = request.getSession();
+        UserVo userVo = (UserVo) session.getAttribute("user");
+        userVo.setPoint(point);
+        session.setAttribute("user", userVo);
 
         logger.info("[Comment Controller] postComment()");
         HttpHeaders headers = new HttpHeaders();

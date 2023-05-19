@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.plant.vo.UserVo" %><%--
   Created by IntelliJ IDEA.
   User: BIT
   Date: 2023-04-26
@@ -10,6 +10,17 @@
 <head>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+    function insertValue(value) {
+      var textBox = document.getElementById("code");
+      textBox.value = value;
+      newWindow.close();
+    }
+    window.insertValue = insertValue;
+  </script>
+  <script>
+    var newWindow;
+
+
     function printDetail() {
       var inputValue = $("#searchInput").val();
       console.log("Input value:", inputValue);
@@ -21,21 +32,29 @@
           console.log("Response data:", data);
           var resultHtml = "";
           if (data && data.length > 0) {
-            resultHtml = "<ul>";
+            resultHtml = "<table border='1'>";
+            resultHtml += "<tr><th>Plant Name</th><th>FML Code Name</th><th>Advise Info</th></tr>";
             for (var i = 0; i < data.length; i++) {
-              resultHtml += "<li>";
-              for (var key in data[i]) {
-                if (data[i].hasOwnProperty(key)) {
-                  resultHtml += key + ": " + data[i][key] + "<br>";
-                }
-              }
-              resultHtml += "</li>";
+              var plantId = data[i]["plant_id"];
+              var plantName = data[i]["distbNm"];
+              var fmlCodeNm = data[i]["fmlCodeNm"];
+              var adviseInfo = data[i]["adviseInfo"];
+
+              resultHtml += "<tr>";
+              resultHtml += "<td>" + plantName + "</td>";
+              resultHtml += "<td>" + fmlCodeNm + "</td>";
+              resultHtml += "<td>" + adviseInfo + "</td>";
+              resultHtml += "<td><button type='button' value='" + plantId + "' onclick='window.opener.insertValue(this.value)'>선택하기</button></td>";
+              resultHtml += "</tr>";
             }
-            resultHtml += "</ul>";
+            resultHtml += "</table>";
           } else {
             resultHtml = "<p>No results found.</p>";
           }
-          $("#searchResults").html(resultHtml);
+          if (!newWindow || newWindow.closed) {
+            newWindow = window.open("", "_blank");
+          }
+          newWindow.document.body.innerHTML = resultHtml;
         },
         error: function(xhr, status, error) {
           console.log(status, error);
@@ -47,6 +66,10 @@
 </head>
 <body>
 <h1>regist form</h1>
+<%
+  UserVo userVo = (UserVo) session.getAttribute("user");
+  String userId = userVo.getUserId();
+%>
 <form action="/myplants/form" method="post" enctype="multipart/form-data">
   <table>
     <tr>
@@ -58,15 +81,15 @@
 
   <div id="searchResults"></div>
   <table>
-    <tr><td>식물아이디 :</td><td><input type="text" name = "plantId"></td><td></td></tr>
-    <tr><td>유저아이디 :</td><td><input type="text" name = "userId"></td><td></td></tr>
+    <tr><td>식물아이디 :</td><td><input type="text" name = "plantId" readonly="readonly" id="code"></td><td></td></tr>
+    <tr><td>유저닉네임 :</td><td><input type="text" name = "userId" value="<%=userId%>" readonly="readonly"></td><td></td></tr>
     <tr><td>식물닉네임 :</td><td><input type="text" name = "myplantNick"></td><td></td></tr>
     <tr><td>내 식물 이미지:</td><td><input type="file" name= "uploadedImages" multiple></td><td></td></tr>
-    <tr><td>내 식물 무게 :</td><td><input type="text" name = "myplantWeight"></td><td></td></tr>
-    <tr><td>내 식물 높이 :</td><td><input type="text" name = "myplantLength"></td><td></td></tr>
-    <tr><td>내 식물 깊이 :</td><td><input type="text" name = "myplantDepth"></td><td></td></tr>
-    <tr><td>내 화분 지름 1:</td><td><input type="text" name="myplantRadius1"></td><td></td></tr>
-    <tr><td>내 화분 지름 2:</td><td><input type="text" name ="myplantRadius2"></td><td></td></tr>
+    <tr><td>내 화분 종류:</td><td><input type="radio" class="flowerpot" name="myplantWeight" value=1>원통형 <input type="radio" class="flowerpot" name="myplantWeight" value=2>사각형</td><td></td></tr>
+    <tr><td>내 화분 높이 :</td><td><input type="text" name = "myplantLength"></td><td></td></tr>
+    <tr><td>내 화분 깊이 :</td><td><input type="text" name = "myplantDepth"></td><td></td></tr>
+    <tr><td>내 화분 밑면 지름:</td><td><input type="text" name="myplantRadius1"></td><td></td></tr>
+    <tr><td>내 화분 윗면 지름:</td><td><input type="text" name ="myplantRadius2"></td><td></td></tr>
     <tr><td>분양일:</td><td><input type="date" name ="firstDate"></td><td></td></tr>
 
   </table>

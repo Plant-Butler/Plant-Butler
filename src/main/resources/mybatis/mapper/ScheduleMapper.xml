@@ -4,12 +4,49 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.plant.dao.ScheduleMapper">
+    <resultMap id="scheduleMap" type="com.plant.vo.ScheduleVo">
+        <result column="schedule_id" property="scheduleId"/>
+        <result column="myplant_id" property="myplantId"/>
+        <result column="user_id" property="userId"/>
+        <result column="schedule_date" property="scheduleDate"/>
+        <result column="watering" property="watering"/>
+        <result column="nutri" property="nutri"/>
+        <result column="prun" property="prun"/>
+        <result column="soil" property="soil"/>
+        <result column="ventilation" property="ventilation"/>
+    </resultMap>
 
-    <!-- 댓글 목록 -->
-    <select id="selectScheduleList" resultType="com.plant.vo.ScheduleVo" parameterType="java.lang.Long">
+    <resultMap id="scheduleDateMap" type="com.plant.vo.ScheduleVo">
+        <result column="myplant_id" property="myplantId"/>
+        <result column="schedule_date" property="scheduleDate"/>
+    </resultMap>
+
+    <select id="selectScheduleList" resultMap="scheduleMap" parameterType="java.lang.Long">
         <![CDATA[
             SELECT * from schedule where myplant_id = #{myplantId}
         ]]>
     </select>
+    <insert id="registSchedule" parameterType="com.plant.vo.ScheduleVo">
+        insert into schedule (myplant_id, user_id, schedule_date, watering, nutri, prun, soil, ventilation) values (#{myplantId},#{userId},now(),#{watering},#{nutri},#{prun},#{soil},#{ventilation})
+    </insert>
 
+    <delete id="deleteSchedule" parameterType="int">
+        delete from schedule where schedule_id=#{scheduleId}
+    </delete>
+
+    <select id="checkWatering" resultType="java.sql.Timestamp">
+        select schedule_date from schedule where myplant_id =#{myplantId} and watering = 1 order by schedule_id DESC limit 1
+    </select>
+
+    <select id="checkSchedule" resultType="java.sql.Timestamp">
+        select schedule_date from schedule where myplant_id=#{myplantId} order by schedule_id DESC limit 1
+    </select>
+
+    <select id="getScheduleListToUserId" resultMap="scheduleDateMap" parameterType="String">
+        SELECT myplant_id, MAX(schedule_date) AS schedule_date FROM schedule WHERE user_id = #{userId} GROUP BY myplant_id
+    </select>
+
+    <update id="setSchedule">
+        update myplant set schedule_date = #{scheduleDate} where myplant_id=#{myplantId}
+    </update>
 </mapper>

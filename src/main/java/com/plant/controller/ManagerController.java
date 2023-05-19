@@ -9,7 +9,6 @@ import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +30,10 @@ public class ManagerController {
                                     @RequestParam(defaultValue = "1") int commentPage,
                                     @RequestParam(defaultValue = "1") int userPage) {
         ModelAndView mv = new ModelAndView("/mypage/manager");
-        //ArrayList<UserVo> userList = service.getUserList();
 
-        PageInfo<PostVo> postList = service.mgmtPostList(postPage, 10);
-        PageInfo<CommentVo> commentList = service.mgmtCommentList(commentPage, 10);
-        PageInfo<UserVo> userList = service.getUserList(userPage, 10);
+        PageInfo<PostVo> postList = service.mgmtPostList(postPage, 15);
+        PageInfo<CommentVo> commentList = service.mgmtCommentList(commentPage, 15);
+        PageInfo<UserVo> userList = service.getUserList(userPage, 15);
         mv.addObject("postList", postList);
         mv.addObject("commentList", commentList);
         mv.addObject("userList", userList);
@@ -49,13 +47,11 @@ public class ManagerController {
         boolean flag = service.insertBestUser(userId);
 
         logger.info("[Manager Controller] insertBestUser()");
-        HttpHeaders headers = new HttpHeaders();
 
         if(flag) {
-            //headers.setLocation(URI.create("/manager"));
-            return new ResponseEntity<>(headers, HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(headers, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
@@ -65,12 +61,10 @@ public class ManagerController {
         boolean flag = service.deleteBestUser(userId);
 
         logger.info("[Manager Controller] deleteBestUser()");
-        HttpHeaders headers = new HttpHeaders();
         if(flag) {
-            //headers.setLocation(URI.create("/manager"));
-            return new ResponseEntity<>(headers, HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -79,9 +73,7 @@ public class ManagerController {
     public ResponseEntity<Void> deleteAllBestUser() {
         service.deleteAllBestUser();
         logger.info("[Manager Controller] deleteAllBestUser()");
-        HttpHeaders headers = new HttpHeaders();
-        //headers.setLocation(URI.create("/manager"));
-        return new ResponseEntity<>(headers, HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     /* 우수회원 광고 */

@@ -19,13 +19,16 @@ public class MyplantVo {
     private int myplantRadius2; // 화분 반지름2
     private Date firstDate;
 
+    private int represent;
+
+    private long scheduleDate;
 
 
     public MyplantVo() {
 
     }
 
-    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantDepth, int myplantRadius1, int myplantRadius2, Date firstDate) {
+    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantDepth, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate) {
         this.myplantId = myplantId;
         this.plantId = plantId;
         this.userId = userId;
@@ -37,6 +40,8 @@ public class MyplantVo {
         this.myplantRadius1 = myplantRadius1;
         this.myplantRadius2 = myplantRadius2;
         this.firstDate = firstDate;
+        this.represent = represent;
+        this.scheduleDate = scheduleDate;
     }
 
     public int getMyplantId() {
@@ -55,12 +60,28 @@ public class MyplantVo {
         this.plantId = plantId;
     }
 
+    public int getPostId() {
+        return postId;
+    }
+
+    public void setPostId(int postId) {
+        this.postId = postId;
+    }
+
     public String getUserId() {
         return userId;
     }
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getDistbNm() {
+        return distbNm;
+    }
+
+    public void setDistbNm(String distbNm) {
+        this.distbNm = distbNm;
     }
 
     public String getMyplantNick() {
@@ -127,20 +148,20 @@ public class MyplantVo {
         this.firstDate = firstDate;
     }
 
-    public int getPostId() {
-        return postId;
+    public int getRepresent() {
+        return represent;
     }
 
-    public void setPostId(int postId) {
-        this.postId = postId;
+    public void setRepresent(int represent) {
+        this.represent = represent;
     }
 
-    public String getDistbNm() {
-        return distbNm;
+    public long getScheduleDate() {
+        return scheduleDate;
     }
 
-    public void setDistbNm(String distbNm) {
-        this.distbNm = distbNm;
+    public void setScheduleDate(long scheduleDate) {
+        this.scheduleDate = scheduleDate;
     }
 
     @Override

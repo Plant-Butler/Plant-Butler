@@ -70,12 +70,26 @@ public class PlantVo {
     private String postngplaceCodeNm;
     private String  dlthtsCode;
     private String  dlthtsCodeNm;
-
+    private String sentence;
 
     public PlantVo() {
     }
 
-    public PlantVo(int plant_id, String plntbneNm, String plntzrNm, String distbNm, String fmlNm, String fmlCodeNm, String orgplceInfo, String adviseInfo, String image, String growthHgInfo, String growthAraInfo, String lefStleInfo, String smellCode, String smellCodeNm, String toxctyInfo, String prpgtEraInfo, String etcEraInfo, String managelevelCode, String managelevelCodeNm, String grwtveCode, String grwtveCodeNm, String grwhTpCode, String grwhTpCodeNm, String winterLwetTpCode, String winterLwetTpCodeNm, String hdCode, String hdCodeNm, String frtlzrInfo, String soilInfo, String watercycleSprngCode, String watercycleSprngCodeNm, String watercycleSummerCode, String watercycleSummerCodeNm, String watercycleAutumnCode, String watercycleAutumnCodeNm, String watercycleWinterCode, String watercycleWinterCodeNm, String dlthtsManageInfo, String speclmanageInfo, String fncltyInfo, String managedemanddoCode, String managedemanddoCodeNm, String clCode, String clCodeNm, String grwhstleCode, String grwhstleCodeNm, String indoorpsncpacompositionCode, String indoorpsncpacompositionCodeNm, String eclgyCode, String eclgyCodeNm, String lefmrkCode, String lefmrkCodeNm, String lefcolrCode, String lefcolrCodeNm, String ignSeasonCode, String ignSeasonCodeNm, String flclrCode, String flclrCodeNm, String fmldeSeasonCode, String fmldeSeasonCodeNm, String fmldecolrCode, String fmldecolrCodeNm, String prpgtmthCode, String prpgtmthCodeNm, String lighttdemanddoCode, String lighttdemanddoCodeNm, String postngplaceCode, String postngplaceCodeNm, String dlthtsCode, String dlthtsCodeNm) {
+    public PlantVo(int plant_id, String plntbneNm, String plntzrNm, String distbNm, String fmlNm, String fmlCodeNm,
+                   String orgplceInfo, String adviseInfo, String image, String growthHgInfo, String growthAraInfo,
+                   String lefStleInfo, String smellCode, String smellCodeNm, String toxctyInfo, String prpgtEraInfo,
+                   String etcEraInfo, String managelevelCode, String managelevelCodeNm, String grwtveCode, String grwtveCodeNm,
+                   String grwhTpCode, String grwhTpCodeNm, String winterLwetTpCode, String winterLwetTpCodeNm, String hdCode,
+                   String hdCodeNm, String frtlzrInfo, String soilInfo, String watercycleSprngCode, String watercycleSprngCodeNm,
+                   String watercycleSummerCode, String watercycleSummerCodeNm, String watercycleAutumnCode, String watercycleAutumnCodeNm,
+                   String watercycleWinterCode, String watercycleWinterCodeNm, String dlthtsManageInfo, String speclmanageInfo,
+                   String fncltyInfo, String managedemanddoCode, String managedemanddoCodeNm, String clCode, String clCodeNm,
+                   String grwhstleCode, String grwhstleCodeNm, String indoorpsncpacompositionCode, String indoorpsncpacompositionCodeNm,
+                   String eclgyCode, String eclgyCodeNm, String lefmrkCode, String lefmrkCodeNm, String lefcolrCode,
+                   String lefcolrCodeNm, String ignSeasonCode, String ignSeasonCodeNm, String flclrCode, String flclrCodeNm,
+                   String fmldeSeasonCode, String fmldeSeasonCodeNm, String fmldecolrCode, String fmldecolrCodeNm, String prpgtmthCode,
+                   String prpgtmthCodeNm, String lighttdemanddoCode, String lighttdemanddoCodeNm, String postngplaceCode, String postngplaceCodeNm,
+                   String dlthtsCode, String dlthtsCodeNm, String sentence) {
         this.plant_id = plant_id;
         this.plntbneNm = plntbneNm;
         this.plntzrNm = plntzrNm;
@@ -146,6 +160,7 @@ public class PlantVo {
         this.postngplaceCodeNm = postngplaceCodeNm;
         this.dlthtsCode = dlthtsCode;
         this.dlthtsCodeNm = dlthtsCodeNm;
+        this.sentence = sentence;
     }
 
     public int getPlant_id() {
@@ -706,5 +721,13 @@ public class PlantVo {
 
     public void setDlthtsCodeNm(String dlthtsCodeNm) {
         this.dlthtsCodeNm = dlthtsCodeNm;
+    }
+
+    public String getSentence() {
+        return sentence;
+    }
+
+    public void setSentence(String sentence) {
+        this.sentence = sentence;
     }
 }

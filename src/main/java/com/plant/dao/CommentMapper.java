@@ -26,4 +26,7 @@ public interface CommentMapper {
 
     /* 댓글 신고 */
     int declareComment(int commentId) throws SQLException;
+
+    /* 포인트 갱신 */
+    int getPoint(String userId) throws SQLException;
 }
