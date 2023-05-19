@@ -138,7 +138,7 @@ public class PostController {
 			@RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
 			RedirectAttributes redirectAttributes) {
 	    try {
-	        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
+	        String uploadFile = "D:/final/Plant-Butler/uploads/";
 	        File dir2 = new File(uploadFile);
 	        if (!dir2.exists()) {
 	            dir2.mkdir();
@@ -160,7 +160,7 @@ public class PostController {
 						}
 						fileNames.append(fileName);
 						// 이미지 파일을 저장할 위치 지정
-						String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
+						String uploadPath = "D:/final/Plant-Butler/uploads/";
 						File uploadDir = new File(uploadPath);
 						if (!uploadDir.exists()) {
 							uploadDir.mkdirs();
@@ -246,7 +246,7 @@ public class PostController {
 			@RequestParam(value="postMultiFile", required=false) MultipartFile file,
 			RedirectAttributes redirectAttributes) throws SQLException {
 		try {
-			String uploadFile = "D:/Plant-Butler/src/main/resources/static/uploads/";
+			String uploadFile = "D:/final/Plant-Butler/uploads/";
 			File dir2 = new File(uploadFile);
 			if (!dir2.exists()) {
 				dir2.mkdir();
@@ -265,7 +265,7 @@ public class PostController {
 						}
 						fileNames.append(fileName);
 						// 이미지 파일을 저장할 위치 지정
-						String uploadPath = "D:/Plant-Butler/src/main/resources/static/uploads/";
+						String uploadPath = "D:/final/Plant-Butler/uploads/";
 						File uploadDir = new File(uploadPath);
 						if (!uploadDir.exists()) {
 							uploadDir.mkdirs();

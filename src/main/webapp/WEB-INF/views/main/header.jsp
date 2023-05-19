@@ -7,6 +7,13 @@
 <head>
 <meta charset="UTF-8">
 <title>header</title>
+<style>
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+</style>
 </head>
 <body>
 <div id="header">
@@ -19,13 +26,14 @@
     	isLoggedIn = true;
     }
     %>
-    Plantery
+    <a href="/home">Plantery</a>
 
     <!-- 로그인 후 디스플레이 -->
     <%if (isLoggedIn) {
         if (userVo.getManager() == 0) {
     %>
             <a href="/mypage">마이페이지</a> <a href="/diaries">식물일기</a>
+            <a href="/diagnosis">질병진단</a> <a href="/diaries">식물일기</a>
     <%  } else {%>
             <a href="/manager">관리자페이지</a>
     <%  }

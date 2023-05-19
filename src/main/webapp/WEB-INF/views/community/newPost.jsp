@@ -2,7 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%-- <%@ include file="../main/header.jsp" %> --%>
-<%@ page import="utils.DateUtils" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <!DOCTYPE html>
@@ -11,6 +10,17 @@
 <meta charset="UTF-8">
 <title>Write Item</title>
 <%@ include file="../main/header.jsp" %>
+
+<style>
+
+   h1 {
+        text-align: center;
+  }
+  .form_table {
+    text-align: center;
+  }
+</style>
+
 </head>
 <body>
 
@@ -38,13 +48,13 @@
 
    <form action="./form" method="post" enctype="multipart/form-data" >
    <div class = "form_table">
-       <div>
-       <br>
+             <br>
+             <div>
                 <h4 class = "title">작성자</h4>
                 <input  class="upload_writer" type="hidden" name="userId" id = "userId"  value=<%=userId %> readonly = "readonly">
                 <input  class="upload_writer" type="text" name="nickname" id = "nickname"  value=<%=userNickname %> readonly = "readonly">
             </div>
-            <br>
+
          <div>
            <h4 class="title">태그</h4>
            <input type="radio" name="postTag" value="information"  class="ajaxClick" id="information" style="display:inline-block; margin-left: 10px;" required><label for="information">정보 공유</label>

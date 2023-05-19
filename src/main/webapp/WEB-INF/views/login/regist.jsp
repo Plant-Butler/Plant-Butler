@@ -75,11 +75,12 @@
           var email = document.joinform.email.value;
           var cookie = document.joinform.cookie.checked;
           var webpush = document.joinform.webpush.checked;
+          var location = document.joinform.location.checked;
           var email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
           var pwd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
           // pwdCheck() 함수 호출하여 비밀번호 유효성 체크 결과 받아옴
           var isValidPassword = pwdCheck();
-            if ((id != null) && (pw1 == pw2) && (pw1 != "") && (pw2 != "") && (email_regex.test(email)) &&(pwd_regex.test(pw1)) && cookie && webpush) {
+            if ((id != null) && (pw1 == pw2) && (pw1 != "") && (pw2 != "") && (email_regex.test(email)) &&(pwd_regex.test(pw1)) && cookie && webpush && location) {
                 alert('가입 완료! 로그인해주세요');
             } else {
                 alert("조건이 맞지 않습니다. 다시 시도해주세요.");
@@ -144,6 +145,11 @@
                <td><input type="checkbox" name="webpush" value="webpush" id="webpush" style="display:inline-block; margin-left: 10px;" required></td>
 
             </tr>
+            <tr style="height:100px">
+                       <th>위치 정보 수집 동의 약관</th>
+                       <td><p style="font-size: 12px; display:inline-block;">이 사이트는 사용자의 위치 정보를 사용합니다.<br>이용 약관 및 개인정보 취급 방침에 따라 위치 정보 사용에 동의하십니까?</p></td>
+                       <td><input type="checkbox" name="location" value="location" id="location" style="display:inline-block; margin-left: 10px;" required></td>
+                     </tr>
          </div>
          <div>
          <tr style="height:100px">

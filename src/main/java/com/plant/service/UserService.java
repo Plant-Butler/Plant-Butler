@@ -29,7 +29,6 @@ public class UserService {
 	
 	public UserVo validMember(UserVo user) {
 		UserVo vo = userMapper.checkMember(user);
-		System.out.println("I'm in service");
 		return vo;
 	}
 	
