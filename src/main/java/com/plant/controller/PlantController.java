@@ -100,7 +100,7 @@ public class PlantController {
                     }
                     fileNames.append(fileName);
                     // 이미지 파일을 저장할 위치 지정
-                    String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
+                    String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
                     try (InputStream inputStream = image.getInputStream()) {
                         Files.copy(inputStream, Paths.get(uploadPath + fileName), StandardCopyOption.REPLACE_EXISTING);
                     } catch (IOException e) {

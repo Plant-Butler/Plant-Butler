@@ -27,13 +27,18 @@ public interface PostMapper {
     /* 게시물 신고 */
     int declarePost(int postId) throws SQLException;
 
-
 	boolean insert(PostVo vo) throws SQLException;
+
 	boolean insert2(PostVo post) throws SQLException;
+
 	List<PostVo> all();
+
 	int updateItem(PostVo post) throws SQLException;
+
 	int deleteItem(int postId) throws SQLException;
+
 	List<MyplantVo> plantall(String userId);
+
 	boolean writepoint(PostVo post);
 
     boolean deleteItemMp(int postId);

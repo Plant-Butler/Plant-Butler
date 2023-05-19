@@ -11,6 +11,12 @@ public class UserVo {
 
     public UserVo() {}
 
+    public UserVo(String nickname, String password, String email) {
+        this.nickname = nickname;
+        this.password = password;
+        this.email = email;
+    }
+
     public UserVo(String userId, String nickname, String password, String email, int point, int manager) {
         this.userId = userId;
         this.nickname = nickname;

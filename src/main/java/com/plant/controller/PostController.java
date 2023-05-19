@@ -138,7 +138,7 @@ public class PostController {
 			@RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
 			RedirectAttributes redirectAttributes) {
 	    try {
-	        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
+	        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
 	        File dir2 = new File(uploadFile);
 	        if (!dir2.exists()) {
 	            dir2.mkdir();
@@ -160,7 +160,7 @@ public class PostController {
 						}
 						fileNames.append(fileName);
 						// 이미지 파일을 저장할 위치 지정
-						String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/src/main/resources/static/uploads/";
+						String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
 						File uploadDir = new File(uploadPath);
 						if (!uploadDir.exists()) {
 							uploadDir.mkdirs();
@@ -246,7 +246,7 @@ public class PostController {
 			@RequestParam(value="postMultiFile", required=false) MultipartFile file,
 			RedirectAttributes redirectAttributes) throws SQLException {
 		try {
-			String uploadFile = "D:/Plant-Butler/src/main/resources/static/uploads/";
+			String uploadFile = "D:/Plant-Butler/uploads/";
 			File dir2 = new File(uploadFile);
 			if (!dir2.exists()) {
 				dir2.mkdir();
@@ -265,7 +265,7 @@ public class PostController {
 						}
 						fileNames.append(fileName);
 						// 이미지 파일을 저장할 위치 지정
-						String uploadPath = "D:/Plant-Butler/src/main/resources/static/uploads/";
+						String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
 						File uploadDir = new File(uploadPath);
 						if (!uploadDir.exists()) {
 							uploadDir.mkdirs();
@@ -311,8 +311,8 @@ public class PostController {
 
 	/* 게시물 삭제 */
 	@DeleteMapping(value="/{postId}")
-	public ResponseEntity<?> remove(@RequestParam("postId") int postId) {
-		logger.info("게시글 삭제 postId={}", postId);
+	public ResponseEntity<Void> remove(@RequestParam("postId") int postId) {
+		logger.info("게시글 삭제 postId = " +  postId);
 		boolean flag1 = postService.removeItemMP(postId);
 		boolean flag2 = postService.removeItem(postId);
 		if (flag2) {
@@ -369,7 +369,6 @@ public class PostController {
 
 	/* 게시물 좋아요 클릭한 적 있는지 확인 */
 	public int searchHeart(int postId, String userId) {
-		// 좋아요 눌려있는지 확인
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("postId", postId);
 		map.put("userId", userId);

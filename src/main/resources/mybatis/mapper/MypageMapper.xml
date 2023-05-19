@@ -4,16 +4,47 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.plant.dao.MypageMapper">
-    <resultMap id="UserResultMap" type="com.plant.vo.UserVo">
-        <result column="user_id" property="userId"/>
-        <result column="nickname" property="nickname"/>
-        <result column="password" property="password"/>
-        <result column="email" property="email"/>
+    <resultMap id="MyPostMap" type="com.plant.vo.PostVo">
+        <result column="post_id" property="postId"/>
+        <result column="post_title" property="postTitle"/>
+        <result column="post_date" property="postDate"/>
+        <result column="post_tag" property="postTag"/>
+        <result column="flag" property="flag"/>
+    </resultMap>
+    <resultMap id="MyCommentMap" type="com.plant.vo.CommentVo">
+        <result column="post_id" property="postId"/>
+        <result column="comment_id" property="commentId"/>
+        <result column="comment_content" property="commentContent"/>
+        <result column="comment_date" property="commentDate"/>
+        <result column="flag" property="flag"/>
     </resultMap>
 
     <update id="updateMypage" parameterType="com.plant.vo.UserVo">
-        update user_table set password=#{password}, nickname=#{nickname}, email=#{email}
-        where user_id = #{userId}
+        <![CDATA[
+            update user_table set password = #{password}, nickname = #{nickname}, email = #{email}
+            where user_id = #{userId}
+        ]]>
     </update>
+
+    <select id="myPostList" parameterType="String" resultMap="MyPostMap">
+        <![CDATA[
+            select post_id, post_title, post_date, post_tag, flag from post where user_id = #{userId}
+        ]]>
+    </select>
+
+    <select id="myCommentList" parameterType="String"  resultMap="MyCommentMap">
+        <![CDATA[
+            select post_id, comment_id, comment_date, flag, comment_content from comment where user_id = #{userId}
+        ]]>
+    </select>
+
+    <select id="myRecomList" parameterType="String"  resultType="com.plant.vo.PlantVo">
+        <![CDATA[
+            select p.plant_id, distbNm, adviseInfo, managelevelCodeNm, speclmanageInfo, clCodeNm, fncltyInfo, image
+            from recomplant r
+            inner join plant p on p.plant_id = r.plant_id
+            where user_id = #{user_id}
+        ]]>
+    </select>
 
 </mapper>
