@@ -99,7 +99,7 @@ ${post.postContent}
     <button type="button" onclick="declare(0, ${post.postId}, 0)" style="float: right;">신고하기</button>
     <c:if test="${post.userId eq sessionScope.user.userId}">
         <button type="button" onclick="location.href='/community/form/${post.postId}'" style="float: right;">수정</button>
-        <button type="button" onclick="deletePost(${post.postId})" style="float: right;">삭제</button>
+        <button type="button" onclick="del(0, ${post.postId}, 0)" style="float: right;">삭제</button>
     </c:if>
    </div>
 </c:if>
@@ -131,7 +131,7 @@ ${post.postContent}
                     <button type="button" onclick="declare(${comment.commentId}, ${post.postId}, 1)">신고하기</button></td>
                     <c:if test="${comment.userId eq sessionScope.user.userId}">
                         <td><button type="button" onclick="updateBox('${comment.commentContent}', ${comment.commentId}, ${post.postId})">수정</button>
-                        <button type="button" onclick="deleteComm(${comment.commentId}, ${post.postId})">삭제</button></td>
+                        <button type="button" onclick="del(${comment.commentId}, ${post.postId}, 1)">삭제</button></td>
                     </c:if>
                 </c:if>
             </tr>
@@ -162,155 +162,7 @@ ${post.postContent}
 </div>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-
-    // 댓글 수정창 열기
-    function updateBox(commentContent, commentId, postId) {
-          let span = document.getElementById("commentContent_" + commentId);
-
-          let input = document.createElement("input");
-          input.type = "text";
-          input.name = "updatedComment";
-          input.id = "inputComment";
-          input.value = commentContent;
-
-          //let updatedComment = input.value;
-          let button = document.createElement("button");
-          button.type = "button";
-          button.onclick = function() {
-            updateComment(input.value, commentId, postId);
-          };
-          button.innerHTML = "수정완료";
-
-          span.innerHTML = "";
-          span.appendChild(input);
-          span.appendChild(button);
-    }
-
-    // 댓글 수정
-    function updateComment(updatedComment, commentId, postId) {
-        $.ajax({
-            url: "/community/comment/" + commentId,
-            type: "PUT",
-            data: {
-                commentContent : updatedComment,
-                commentId : commentId
-            },
-            success: function(response) {
-                window.location.href = "/community/" + postId;
-            },
-            error: function(request, status, error) {
-                alert('댓글을 수정할 수 없습니다.');
-                console.log("code: " + request.status)
-                console.log("message: " + request.responseText)
-                console.log("error: " + error);
-            }
-        });
-    }
-
-    // 게시물 삭제
-    function deletePost(postId) {
-        $.ajax({
-            url: "/community/" + postId,
-            type: "DELETE",
-            data: {
-                postId : postId
-            },
-            success: function(response) {
-                alert('삭제되었습니다.');
-                window.location.assign("/community");
-            },
-            error: function(request, status, error) {
-                alert('게시물을 삭제할 수 없습니다.');
-                console.log("code: " + request.status)
-                console.log("message: " + request.responseText)
-                console.log("error: " + error);
-            }
-        });
-    }
-
-    // 댓글 삭제
-    function deleteComm(commentId, postId) {
-        $.ajax({
-            url: "/community/comment/" + commentId,
-            type: "DELETE",
-            data: {
-                commentId : commentId
-            },
-            success: function(response) {
-                alert('삭제되었습니다.');
-                window.location.assign("./" + postId);
-            },
-            error: function(request, status, error) {
-                alert('댓글을 삭제할 수 없습니다.');
-                console.log("code: " + request.status)
-                console.log("message: " + request.responseText)
-                console.log("error: " + error);
-            }
-        });
-    }
-
-    // 게시물 & 댓글 신고
-    function declare(commentId, postId, num) {
-        let url = "";
-        let data = {};
-        if(num == 0) {
-            url = "/community/" + postId;
-            data.postId = postId;
-        } else {
-            url =  "/community/comment/" + commentId;
-            data.commentId = commentId;
-        }
-
-        $.ajax({
-            url:  url,
-            type: "PATCH",
-            data: data,
-            success: function(response) {
-                alert('신고되었습니다.');
-                window.location.href = "/community/" + postId;
-            },
-            error: function(request, status, error) {
-                alert('신고 중 오류가 발생했습니다.');
-                console.log("code: " + request.status)
-                console.log("message: " + request.responseText)
-                console.log("error: " + error);
-            }
-        });
-    }
-
-    // 게시물 좋아요
-    function heart(postId, userId) {
-        event.preventDefault();
- 		let heartBtn = document.getElementById("heartBtn");
-
- 	    $.ajax({
- 			type :'POST',
- 			url : './' + postId + '/heart',
- 			contentType : 'application/json',
- 			data : JSON.stringify({
- 			    postId : postId,
- 			    userId : userId
- 			}),
- 			success : function(result){
- 				if (result === 'add'){
- 					heartBtn.innerHTML = '<i class="fa fa-heart" style="color: red;"></i>';
-                    window.location.href = "/community/" + postId;
- 				} else {
-                    heartBtn.innerHTML = '<i class="fa fa-heart-o" style="color: red;"></i>';
-                    window.location.href = "/community/" + postId;
- 				}
- 			},
- 			 error: function(request, status, error) {
-                  alert('오류가 발생했습니다.');
-                  console.log("code: " + request.status)
-                  console.log("message: " + request.responseText)
-                  console.log("error: " + error);
-             }
- 		});
- 	};
-
-</script>
+<script src="/js/postDetail.js"></script>
 
 </body>
 </html>
