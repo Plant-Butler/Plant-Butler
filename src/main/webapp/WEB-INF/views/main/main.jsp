@@ -23,94 +23,58 @@
    }
 
    table, tbody, td {
-        width:1000px;
+        width:800px;
         margin-left:auto;
-        margin-right:auto
+        margin-right:auto;
    }
 </style>
 </head>
 <body>
-<body style="text-align: center">
+<body style="text-align: center"><br>
 
-<br>
-<div id="sugNdMy" data-isLoggedIn="<%= isLoggedIn %>" >
-    <!-- 나에게 맞는 식물 찾기 -->
-    <a onclick="serviceSug()" >
-        나에게 맞는 식물 찾기<img class="" src=""/>
-    </a>
+        <section class="page-section clearfix">
+            <div class="container">
+                <div class="intro">
+                    <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="assets/img/close-up-picture-hand-watering-sapling-plant.jpg" alt="..." />
+                    <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+                        <div id="sugNdMy" data-isLoggedIn="<%= isLoggedIn %>" >
+                            <h2 class="section-heading mb-4">
+                                <span class="section-heading-upper">당신만을 위한</span>
+                                <span class="section-heading-lower">나에게 맞는 반려식물 찾기</span>
+                            </h2>
+                            <p class="mb-3">나의 성향 & 취향 & 환경을 모두 고려한 최적의 반려 식물은 무엇일까요?</p>
+                            <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" onclick="serviceSug()">GO!</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <!-- 내 식물 -->
-    <a onclick="serviceMy()" >
-        내 식물<img class="" src=""/>
-    </a>
-</div>
-<br>
-<h2> 이번달 우수회원 </h2>
-    <table id="best-user-table">
-        <tbody></tbody>
-    </table>
+
+
+<section class="page-section cta">
+    <div class="container">
+         <div class="row">
+               <div class="col-xl-9 mx-auto">
+                   <div class="cta-inner bg-faded text-center rounded">
+                         <h2 class="section-heading mb-4"> 이번달 우수회원 </h2>
+                                <table id="best-user-table">
+                                    <tbody></tbody>
+                                </table>
+                   </div>
+               </div>
+         </div>
+    </div>
+</section>
+
+        <footer class="footer text-faded text-center py-5">
+            <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+        </footer>
 
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $.ajax({
-            url: "/manager/best-list",
-            type: "GET",
-            success: function(response) {
-                var users = response;
-                var tableBody = $("#best-user-table tbody");
-                var row = "<tr>";
-                                for(var i = 0; i < 3; i++) {
-                                    var user = users[i];
-                                    if(user.myplantImage != null) {
-                                        row += "<td><div class='box' style='background: #BDBDBD;'><img class='plantImg' src='/uploads/" + user.myplantImage + "'></div></td>";
-                                    } else {
-                                        row += "<td>사진이 없습니다.</td>";
-                                    }
-                                }
-                                row += "</tr><tr>";
-                                for(var i = 0; i < 3; i++) {
-                                    var user = users[i];
-                                    row += "<td>" + user.nickname + "</td>";
-                                }
-                                row += "</tr><tr>";
-                                for(var i = 0; i < 3; i++) {
-                                     var user = users[i];
-                                     row += "<td>" + user.distbNm + "</td>";
-                                 }
-                                 row += "</tr><tr>";
-                                for(var i = 0; i < 3; i++) {
-                                    var user = users[i];
-                                    row += "<td>" + user.myplantNick + "</td>";
-                                }
-                                tableBody.append(row);
-                                console.log(row);
-            },
-            error: function(xhr, status, error) {
-                alert('오류가 발생했습니다.');
-            }
-        });
-    });
+<script src="/js/main.js"></script>
 
-        let isLoggedIn = document.getElementById("sugNdMy").getAttribute("data-isLoggedIn");
-        function serviceSug() {
-            if (isLoggedIn == "true") {
-                location.href = "/suggestions"
-            } else {
-                alert('로그인 후 이용해주세요')
-                location.href = "/loginPage"
-            }
-        }
 
-        function serviceMy() {
-            if (isLoggedIn == "true") {
-                location.href = "/myplants"
-            } else {
-                alert('로그인 후 이용해주세요')
-                location.href = "/loginPage"
-            }
-        }
-</script>
 </body>
 </html>

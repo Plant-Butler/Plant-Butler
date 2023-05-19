@@ -36,6 +36,14 @@
             <td>${plant.clCodeNm}</td>
         </tr>
         <tr>
+            <th>비료 정보</th>
+            <td><c:if test="${empty plant.frtlzrInfo}"> - </c:if> ${plant.frtlzrInfo}</td>
+        </tr>
+        <tr>
+            <th>토양 정보</th>
+            <td><c:if test="${empty plant.soilInfo}"> - </c:if> ${plant.soilInfo}</td>
+        </tr>
+        <tr>
             <th>조언</th>
             <td>${plant.adviseInfo}</td>
         </tr>

@@ -13,6 +13,7 @@
 
 <html>
 <head>
+<%@ include file="../main/header.jsp" %>
     <script>
         function deleteMyPlant(myplantId) {
             const url = '/myplants/form/' + myplantId;

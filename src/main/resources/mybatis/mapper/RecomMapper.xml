@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.plant.dao.RecomMapper">
+
+    <select id="selectResultList" resultType="com.plant.vo.PlantVo" parameterType="com.plant.vo.PlantVo">
+        <![CDATA[
+            select plant_id, plntzrNm, distbNm, soilInfo, image
+            from plant
+            where managelevelCodeNm like concat('%', #{managelevelCodeNm}, '%')
+            and (watercycleSprngCodeNm like concat('%', #{watercycleSprngCodeNm}, '%')
+            and watercycleSummerCodeNm like concat('%', #{watercycleSprngCodeNm}, '%')
+            and watercycleAutumnCodeNm like concat('%', #{watercycleSprngCodeNm}, '%')
+            and watercycleWinterCodeNm like concat('%', #{watercycleSprngCodeNm}, '%'))
+            and managedemanddoCodeNm like concat('%', #{managedemanddoCodeNm}, '%')
+            and (fncltyInfo not like concat('%', #{toxctyInfo}, '%') or toxctyInfo not like concat('%', #{toxctyInfo}, '%'))
+            and lighttdemanddoCodeNm like concat('%', #{lighttdemanddoCodeNm}, '%')
+            and clCodeNm like concat('%', #{clCodeNm}, '%')
+            and grwhTpCodeNm like concat('%', #{grwhTpCodeNm}, '%')
+            and winterLwetTpCodeNm like concat('%', #{winterLwetTpCodeNm}, '%')
+            and hdCodeNm like concat('%', #{hdCodeNm}, '%');
+        ]]>
+    </select>
+
+    <!-- 추천 식물 상세정보 -->
+    <select id="selectPlantDetail" resultType="com.plant.vo.PlantVo" parameterType="int">
+            select plant_id, plntzrNm, frtlzrInfo, grwhTpCodeNm, winterLwetTpCodeNm, hdCodeNm, growthHgInfo, growthAraInfo,
+                    watercycleSprngCodeNm, watercycleSummerCodeNm, watercycleAutumnCodeNm, watercycleWinterCodeNm, postngplaceCodeNm, image, sentence
+            from plant where plant_id = #{plant_id}
+    </select>
+
+    <!-- 추천 결과 최초 저장 -->
+    <insert id="insertResultPlant" parameterType="map">
+        insert recomplant(plant_id, user_id) values (#{plant_id}, #{userId})
+    </insert>
+
+    <!-- 추천 서비스 이용한 적 있는지 조회 -->
+    <select id="selectRecomCnt" resultType="int" parameterType="String">
+        select count(*) from recomplant where user_id = #{userId}
+    </select>
+
+    <!-- 기존 추천 결과 삭제 -->
+    <delete id="deleteResultList" parameterType="String">
+        delete from recomplant where user_id = #{userId}
+    </delete>
+
+
+</mapper>

@@ -18,6 +18,8 @@
 </style>
 </head>
 <body>
+<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+<script src="/js/manager.js"></script>
 <body style="text-align: center">
 <br><br>
 <div style="display:flex; justify-content:space-between; width:1800px;">
@@ -36,7 +38,7 @@
 </table>
 <%-- 이전 페이지 버튼 --%>
             <c:if test="${postList.navigateFirstPage > 1}">
-                <a href="?postPage=${postList.navigateFirstPage - 1}">◀</a>
+                <a href="?postPage=${postList.navigateFirstPage - 1}&commentPage=${commentList.pageNum}&userPage=${userList.pageNum}" aria-label="Previous"">◀</a>
             </c:if>
             <%-- 페이지 번호 출력 --%>
             <c:forEach var="pageNum" begin="${postList.navigateFirstPage}" end="${postList.navigateLastPage}">
@@ -45,13 +47,13 @@
                         <span>${pageNum}</span>
                     </c:when>
                     <c:otherwise>
-                        <a href="?postPage=${pageNum}">${pageNum}</a>
+                        <a href="?postPage=${pageNum}&commentPage=${commentList.pageNum}&userPage=${userList.pageNum}">${pageNum}</a>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
             <%-- 다음 페이지 버튼 --%>
             <c:if test="${postList.navigateLastPage < postList.pages}">
-                <a href="?postPage=${boardList.navigateLastPage + 1}">▶</a>
+                <a href="?postPage=${boardList.navigateLastPage + 1}&commentPage=${commentList.pageNum}&userPage=${userList.pageNum}">▶</a>
             </c:if>
 </div>
 <div style="width:33%;">
@@ -69,7 +71,7 @@
 </table>
 <%-- 이전 페이지 버튼 --%>
             <c:if test="${commentList.navigateFirstPage > 1}">
-                <a href="?commentPage=${commentList.navigateFirstPage - 1}">◀</a>
+                <a href="?commentPage=${commentList.navigateFirstPage - 1}&userPage=${userList.pageNum}">◀</a>
             </c:if>
             <%-- 페이지 번호 출력 --%>
             <c:forEach var="pageNum" begin="${commentList.navigateFirstPage}" end="${commentList.navigateLastPage}">
@@ -78,13 +80,13 @@
                         <span>${pageNum}</span>
                     </c:when>
                     <c:otherwise>
-                        <a href="?commentPage=${pageNum}">${pageNum}</a>
+                        <a href="?postPage=${postList.pageNum}&commentPage=${pageNum}&userPage=${userList.pageNum}">${pageNum}</a>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
             <%-- 다음 페이지 버튼 --%>
             <c:if test="${commentList.navigateLastPage < commentList.pages}">
-                <a href="?commentPage=${commentList.navigateLastPage + 1}">▶</a>
+                <a href="?postPage=${postList.pageNum}&commentPage=${commentList.navigateLastPage + 1}&userPage=${userList.pageNum}">▶</a>
             </c:if>
 
 </div>
@@ -105,7 +107,7 @@
 <button type="button" onclick="deleteAllBest()">우수회원 초기화</button><br>
     <!-- 이전 페이지 -->
             <c:if test="${userList.navigateFirstPage > 1}">
-                <a href="?userPage=${userList.navigateFirstPage - 1}">◀</a>
+                <a href="?postPage=${postList.pageNum}&commentPage=${commentList.pageNum}&userPage=${userList.navigateFirstPage - 1}">◀</a>
             </c:if>
             <%-- 페이지 번호 출력 --%>
             <c:forEach var="pageNum" begin="${userList.navigateFirstPage}" end="${userList.navigateLastPage}">
@@ -114,16 +116,14 @@
                         <span>${pageNum}</span>
                     </c:when>
                     <c:otherwise>
-                        <a href="?userPage=${pageNum}">${pageNum}</a>
+                       <a href="?postPage=${postList.pageNum}&commentPage=${commentList.pageNum}&userPage=${pageNum}">${pageNum}</a>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
             <%-- 다음 페이지 버튼 --%>
             <c:if test="${userList.navigateLastPage < userList.pages}">
-                <a href="?userPage=${userList.navigateLastPage + 1}">▶</a>
+                <a href="?postPage=${postList.pageNum}&commentPage=${commentList.pageNum}&userPage=${userList.navigateLastPage + 1}">▶</a>
             </c:if>
 </div>
-<script src="https://code.jquery.com/jquery-latest.min.js"></script>
-<script src="/js/manager.js"></script>
 </body>
 </html>
