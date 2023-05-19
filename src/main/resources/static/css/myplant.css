@@ -1,0 +1,104 @@
+body {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.ptyValueContainer{
+    font-family: 'Nanum Gothic', sans-serif;
+}
+
+#insertplant{
+    text-align: right;
+    display: block;
+    width: 100%;
+}
+h1{
+    color: white;
+    width: 1700px;
+    height: 200px;
+    display: flex; /* 이 부분을 변경하세요. */
+    align-items: center; /* 이 부분을 추가하세요. */
+    justify-content: center; /* 이 부분을 추가하세요. */
+    background-image: url('../images/titleimage.jpg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+table {
+    width: 800px;
+    border-collapse: collapse;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    float: right;
+    font-family: 'Nanum Gothic', sans-serif;
+    height: 800px;
+}
+
+tr {
+    background-color: #ffffff; /* 박스의 배경색을 설정합니다 */
+    border: 1px solid #000000; /* 박스의 테두리를 설정합니다 */
+}
+
+#dataContainer{
+    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    width: 800px;
+
+}
+#skyValueContainer{
+    font-family: sans-serif;
+    display: inline-block;
+    font-size: 30px;
+    font-weight: bold;
+    width: 80px;
+    text-align:left;
+}
+
+#t1hValueContainer{
+    font-family: sans-serif;
+    font-size: 60px;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 180px;
+    text-align: center;
+
+}
+#rehValueContainer{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    width : 100px;
+    height: 55px;
+}
+
+#newContainer{
+    display: inline-block;
+
+    font-family: sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    width: 200px;
+}
+
+rn1ValueContainer{
+
+
+}
+.clear {
+    background-image: url('../images/clear.png');
+}
+
+.cloudy {
+    background-image: url('../images/cloudysky.png');
+}
+
+.overcast {
+    background-image: url('../images/overcastsky.png');
+}

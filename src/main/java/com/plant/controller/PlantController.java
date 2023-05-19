@@ -157,4 +157,11 @@ public class PlantController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/test")
+    public ModelAndView testpage(){
+        ModelAndView model = new ModelAndView();
+        model.setViewName("myplant/test");
+        return model;
+    }
+
 }

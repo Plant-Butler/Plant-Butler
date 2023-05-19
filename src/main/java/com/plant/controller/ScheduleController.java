@@ -30,6 +30,8 @@ public class ScheduleController {
         ModelAndView model = new ModelAndView();
         ArrayList<ScheduleVo> scheduleVos = scheduleService.getScheduleList(myplantId);
         MyplantVo myplant1 = myPlantService.myPlantDetail(myplantId.intValue());
+
+        PlantVo plantVo = myPlantService.searchPlantToNum(myplant1.getPlantId());
         Timestamp date = scheduleService.checkWatering(myplantId);
         System.out.println(date);
         double water1 = 0;
@@ -54,6 +56,7 @@ public class ScheduleController {
         model.addObject("myplantId",myplantId);
         model.addObject("schedulelist",scheduleVos);
         model.addObject("myplant1",myplant1);
+        model.addObject("plantVo",plantVo);
         model.setViewName("schedule/myPlantSchedule");
         return model;
     }
@@ -76,6 +79,13 @@ public class ScheduleController {
         boolean flag = false;
         flag = scheduleService.registSchedule(scheduleVo);
         return new RedirectView("/myplants/{myplantId}/schedule");
+    }
+
+    @GetMapping("/push")
+    public ModelAndView pushPage(){
+        ModelAndView model = new ModelAndView();
+        model.setViewName("schedule/push");
+        return model;
     }
 
 }

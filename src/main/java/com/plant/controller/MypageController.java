@@ -1,6 +1,7 @@
 package com.plant.controller;
 
 import com.plant.service.MypageService;
+import com.plant.utils.DynamicChangeScheduler;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,26 +14,43 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.FileInputStream;
 import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import com.google.firebase.messaging.*;
+
 
 @RestController
 @RequestMapping("/mypage")
 public class MypageController {
 
     @Autowired
+    private DynamicChangeScheduler ps;
+    @Autowired
     private MypageService mypageService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 마이페이지 이동 (로그인 후) */
     @GetMapping(value=" ")
-    public ModelAndView openMypage(HttpServletRequest request) {
+    public ModelAndView openMypage(HttpServletRequest request) throws FirebaseMessagingException {
         ModelAndView mv = new ModelAndView("/mypage/mypage");
         HttpSession session = request.getSession();
         UserVo userVo = (UserVo) session.getAttribute("user");
         String userId = userVo.getUserId();;
         mv.addObject("userId", userId);
+
+            Message message = Message.builder()
+                    .putData("score", "이은서")
+                    .putData("time", "너 너무 건방져")
+                    .setToken("dVWGoN9HNhmtvZ2FlW06ei:APA91bGdNZeDPgD6EUeLGLC9PbAluNK4MRwp3hZNbVWHovUsOXGDl_WQvcxBO8oaPChVOfZinjVUNBL2ZfLlKOt_QbhZEBS3lb-7C7SYGE8xiGnO_TvruvXml0Ap17c1htVSOpfbE12v")
+                    .build();
+            String response = FirebaseMessaging.getInstance().send(message);
+            System.out.println("Successfully sent message: " + response);
+
         return mv;
     }
 
