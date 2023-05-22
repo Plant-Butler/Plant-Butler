@@ -1,6 +1,7 @@
 package com.plant.controller;
 
 import com.plant.service.RecomService;
+import com.plant.utils.ApiKey;
 import com.plant.utils.ShopApi;
 import com.plant.vo.PlantVo;
 import com.plant.vo.UserVo;
@@ -26,14 +27,22 @@ public class RecomController {
 
     @Autowired
     private RecomService recomService;
+    @Autowired
+    private ApiKey apiKeys;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     /* 추천 결과 보기 */
     @GetMapping(value="/result")
     public ModelAndView getResultList(@ModelAttribute PlantVo plantVo) {
         ModelAndView mv = new ModelAndView("/suggestions/result");
         ArrayList<PlantVo> resultList = recomService.getResultList(plantVo);
+
+        String mapApiKey = apiKeys.getKakaomapKey();
+
         mv.addObject("resultList", resultList);
+        mv.addObject("mapApiKey", mapApiKey);
+        logger.info("[RecomController Controller] getResultList()");
         return mv;
     }
 
@@ -90,7 +99,7 @@ public class RecomController {
         resultMap.put("plantVo", plantVo);
 
         // 인터넷 쇼핑 상품정보
-        ShopApi shop = new ShopApi();
+        ShopApi shop = new ShopApi(apiKeys);
 
         int idealHg = recomService.calcPot(plantId).get("idealHg");
         int idealAra = recomService.calcPot(plantId).get("idealAra");
