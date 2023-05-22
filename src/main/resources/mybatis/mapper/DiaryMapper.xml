@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.plant.dao.DiaryMapper">
+    <resultMap id="DiaryListMap" type="com.plant.vo.DiaryVo">
+        <result column="diary_id" property="diaryId"/>
+        <result column="diary_title" property="diaryTitle"/>
+        <result column="diary_date" property="diaryDate"/>
+    </resultMap>
+    <resultMap id="DiaryDetailMap" type="com.plant.vo.DiaryVo">
+        <result column="diary_id" property="diaryId"/>
+        <result column="diary_title" property="diaryTitle"/>
+        <result column="diary_date" property="diaryDate"/>
+        <result column="diary_praise_regret" property="diaryPraiseRegret"/>
+        <result column="diary_emotion" property="diaryEmotion"/>
+        <result column="diary_growth" property="diaryGrowth"/>
+        <result column="diary_content" property="diaryContent"/>
+        <result column="diary_image" property="diaryImage"/>
+    </resultMap>
+
+    <select id="selectAllDiary" parameterType="String" resultMap="DiaryListMap">
+        <![CDATA[
+         select diary_id, diary_title, diary_date from diary where user_id = #{userId} order by diary_date desc
+     ]]>
+    </select>
+
+    <select id="selectDiary" parameterType="int" resultMap="DiaryDetailMap">
+        <![CDATA[
+         select * from diary where diary_id = #{diaryId}
+     ]]>
+    </select>
+
+    <delete id="deleteDiary" parameterType="int">
+        <![CDATA[
+         delete from diary where diary_id = #{diaryId}
+     ]]>
+    </delete>
+
+
+</mapper>

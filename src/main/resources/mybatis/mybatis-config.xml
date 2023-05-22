@@ -7,5 +7,8 @@
     <mapper resource="UserMapper.xml"/>
     <mapper resource="CommentMapper.xml"/>
     <mapper resource="MypageMapper.xml"/>
+    <mapper resource="DiaryMapper.xml"/>
+    <mapper resource="PostMapper.xml"/>
+    <mapper resource="RecomMapper.xml"/>
   </mappers>
 </configuration>

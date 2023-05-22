@@ -56,12 +56,6 @@ public class MainController {
         mv.setViewName("/community/postList");
         return mv;
     }
-    /* 식물일기 이동 (로그인 후) */
-    @GetMapping(value="/diaries")
-    public ModelAndView openDiary() {
-        ModelAndView mv = new ModelAndView("");
-        return mv;
-    }
 
 
 }
