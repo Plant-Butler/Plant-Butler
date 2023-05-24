@@ -88,7 +88,7 @@ public class RecomController {
     * 3. 해당 식물에 적합한 토양의 인터넷 쇼핑 상품정보
     * 4. 해당 식물에 적합한 크기의 화분 인터넷 쇼핑 상품정보
     *
-    * */
+    */
     @GetMapping(value="/result/detail")
     public ResponseEntity<Map> getDetailInfo(@RequestParam("plant_id") int plantId, @RequestParam("distbNm") String distbNm,
                                        @RequestParam("soilInfo") String soilInfo) {

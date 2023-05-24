@@ -11,22 +11,6 @@
 <title>커뮤니티</title>
 <%@ include file="../main/header.jsp" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-        .box {
-            width: 100px;
-            height: 100px;
-            border-radius: 70%;
-            overflow: hidden;
-        }
-        .plantImg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        #inputComment {
-              width:1000px;
-        }
-</style>
 </head>
 <body>
 <body style="text-align: center">

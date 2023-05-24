@@ -47,8 +47,11 @@
         <c:if test="${diaryList.navigateLastPage < diaryList.pages}">
             <a href="/diaries?pageNum=${diaryList.navigateLastPage + 1}">▶</a>
         </c:if>
+
+        <br><button onclick="location.href='/diaries/form'">오늘 일기 작성하기</button>
     </div>
 </section>
+
 
 </body>
 </html>

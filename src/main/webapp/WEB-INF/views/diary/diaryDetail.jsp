@@ -15,16 +15,53 @@
 
 <section class="page-section cta">
     <div class="container">
-        <table>
-            <tr>
-                <c:if test="${not empty diary.diaryImage}">
-                    <td>
-                        <c:forEach var="image" items="${fn:split(diary.diaryImage, ',')}">
-                            <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
+        <!-- 첨부된 내 식물 -->
+        <c:if test="${not empty myPlantList}">
+            <table>
+                <c:forEach var="myPlant" items="${myPlantList}">
+                    <tr>
+                        <c:if test="${not empty myPlant.myplantImage}">
+                            <td><div class="box" style="background: #BDBDBD;">
+                                <img class="plantImg" src="/uploads/${myPlant.myplantImage}">
+                            </div></td>
+                        </c:if>
+                        <c:if test="${empty myPlant.myplantImage}">
+                            <td>사진이 없어요</td>
+                        </c:if>
+                        <td>${myPlant.myplantNick}</td>
+                        <td>${myPlant.distbNm}</td>
+                        <td><fmt:formatDate value="${myPlant.firstDate}" type="date"/></td>
+                    </tr>
+
+                        <!-- 첨부된 내 식물 내 식물의 오늘 관리기록 -->
+                        <c:set var="hasSchedule" value="false" />
+                        <c:forEach var="schedule" items="${scheduleList}">
+                            <c:if test="${myPlant.myplantId eq schedule.myplantId}">
+                                <c:set var="hasSchedule" value="true" />
+                                <tr>
+                                    <td></td>
+                                    <td>물주기 ${schedule.watering}회</td>
+                                    <td>영양제 ${schedule.nutri}회</td>
+                                    <td>가지치기 ${schedule.prun}회</td>
+                                    <td>분갈이 ${schedule.soil}회</td>
+                                    <td>환기 ${schedule.ventilation}회</td>
+                                </tr>
+                            </c:if>
                         </c:forEach>
-                    </td>
-                </c:if>
-            </tr>
+
+                        <c:if test="${not hasSchedule}">
+                            <tr>
+                                <td></td>
+                                <td colspan="5">관리기록이 비어있어요</td>
+                            </tr>
+                        </c:if>
+
+                </c:forEach>
+            </table>
+        </c:if>
+
+<br>
+        <table>
             <tr>
                 <td colspan="2">${diary.diaryTitle}</td>
             </tr>
@@ -46,6 +83,15 @@
             <tr>
                 <td>자유</td>
                 <td>${diary.diaryContent}</td>
+            </tr>
+            <tr>
+                <c:if test="${not empty diary.diaryImage}">
+                    <td>
+                        <c:forEach var="image" items="${fn:split(diary.diaryImage, ',')}">
+                            <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
+                        </c:forEach>
+                    </td>
+                </c:if>
             </tr>
         </table>
         <button onclick="">수정</button>
