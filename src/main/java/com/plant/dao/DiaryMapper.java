@@ -36,8 +36,10 @@ public interface DiaryMapper {
     /* 내 식물 관리기록 불러오기 */
     ScheduleVo showSchedule(int myplantId) throws SQLException;
 
+    /* 식물일기 수정 */
+    int updateDiary(DiaryVo diary) throws SQLException;
+
     /* 식물일기 삭제 */
     int deleteDiary(int diaryId) throws SQLException;
-
 
 }

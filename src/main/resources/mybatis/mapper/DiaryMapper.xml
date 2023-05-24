@@ -107,6 +107,16 @@
          ]]>
     </select>
 
+    <!-- 식물일기 수정 -->
+    <update id="updateDiary" parameterType="com.plant.vo.DiaryVo">
+        <![CDATA[
+            update diary
+            set diary_title = #{diaryTitle}, diary_praise_regret = #{diaryPraiseRegret}, diary_emotion = #{diaryEmotion},
+                diary_growth = #{diaryGrowth}, diary_content = #{diaryContent}, diary_image = #{diaryImage}
+            where diary_id = #{diaryId}
+        ]]>
+    </update>
+
     <!-- 식물일기 삭제 -->
     <delete id="deleteDiary" parameterType="int">
         <![CDATA[

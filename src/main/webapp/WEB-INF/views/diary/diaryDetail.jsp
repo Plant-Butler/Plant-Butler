@@ -94,7 +94,7 @@
                 </c:if>
             </tr>
         </table>
-        <button onclick="">수정</button>
+        <button onclick='location.href="/diaries/form/${diary.diaryId}"'>수정</button>
         <button onclick="deleteCheck(${diary.diaryId})">삭제</button>
         <button onclick='location.href="/diaries"'>목록</button>
     </div>
@@ -103,6 +103,7 @@
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
+    // 식물일기 삭제 확인창
     function deleteCheck(diaryId) {
          let say = '삭제하시겠습니까?';
 
@@ -113,6 +114,7 @@
          }
     }
 
+    // 식물일기 삭제
     function deleteDiary(diaryId) {
         $.ajax({
             url: "/diaries/" + diaryId,
@@ -134,6 +136,7 @@
             }
         });
     }
+
 </script>
 
 </body>

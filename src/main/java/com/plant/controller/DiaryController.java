@@ -3,10 +3,7 @@ package com.plant.controller;
 import com.github.pagehelper.PageInfo;
 import com.plant.service.DiaryService;
 import com.plant.service.PostService;
-import com.plant.vo.DiaryVo;
-import com.plant.vo.MyplantVo;
-import com.plant.vo.ScheduleVo;
-import com.plant.vo.UserVo;
+import com.plant.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -177,6 +174,69 @@ public class DiaryController {
         logger.info("[Diary Controller] getSchedule()");
         return new ResponseEntity<>(vo, HttpStatus.OK);
     }
+
+    /* 식물일기 수정 페이지 */
+    @GetMapping("/form/{diaryId}")
+    public ModelAndView modifyDiaryForm(@PathVariable int diaryId) {
+        ModelAndView mv = new ModelAndView("/diary/updateDiary");
+        DiaryVo diary = diaryService.getDiaryDetail(diaryId);
+        mv.addObject("diary", diary);
+        logger.info("[Diary Controller] modifyDiaryForm()");
+        return mv;
+    }
+
+    /* 식물일기 수정 */
+    @PutMapping(value="/{diaryId}")
+    public ResponseEntity<Boolean> modifyDiary(@PathVariable int diaryId,
+                                               @ModelAttribute DiaryVo diary,
+                                               @RequestParam(value="diaryMultiImage", required=false) List<MultipartFile> image) {
+
+        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
+        File dir2 = new File(uploadFile);
+        if (!dir2.exists()) {
+            dir2.mkdir();
+        }
+
+        // 이미지
+        List<MultipartFile> images = image;
+        StringBuilder fileNames = new StringBuilder();
+        if (images != null && !images.isEmpty()) {
+            int imageCount = 0;
+            for (MultipartFile image1 : images) {
+                if (!image1.isEmpty()) {
+                    String fileName = Objects.requireNonNull(image1.getOriginalFilename());
+                    if (imageCount > 0) {
+                        fileNames.append(",");
+                    }
+                    fileNames.append(fileName);
+                    String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
+                    File uploadDir = new File(uploadPath);
+                    if (!uploadDir.exists()) {
+                        uploadDir.mkdirs();
+                    }
+                    try (InputStream inputStream = image1.getInputStream()) {
+                        Files.copy(inputStream, Paths.get(uploadPath + fileName), StandardCopyOption.REPLACE_EXISTING);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    imageCount++;
+                }
+            }
+        }
+        diary.setDiaryImage(fileNames.toString());
+
+        // 일기 내용
+        boolean flag = false;
+        flag = diaryService.modifyDiary(diary);
+
+        logger.info("[Diary Controller] modifyDiary()");
+        if(flag) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
     /* 식물일기 삭제 */
     @DeleteMapping(value="/{diaryId}")

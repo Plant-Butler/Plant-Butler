@@ -120,6 +120,23 @@ public class DiaryService {
         return vo;
     }
 
+    /* 식물일기 수정 */
+    public boolean modifyDiary(DiaryVo diary) {
+        boolean flag = false;
+        int affectedCnt = 0;
+
+        try {
+            affectedCnt = diaryMapper.updateDiary(diary);
+        } catch (SQLException e) {
+            throw new RuntimeException("일기 수정 실패", e);
+        }
+
+        if(affectedCnt > 0) {
+            flag = true;
+        }
+        return flag;
+    }
+
     /* 식물일기 삭제 */
     public boolean removeDiary(int diaryId) {
         boolean flag = false;
