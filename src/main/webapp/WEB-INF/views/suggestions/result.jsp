@@ -65,7 +65,7 @@ ${user.nickname}님에게 어울리는 식물이에요. <br><br>
     </div>
 </div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=&libraries=services"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${mapApiKey}&libraries=services"></script>
 <script src="/js/KakaoFlower.js"></script>
 </body>
 </html>

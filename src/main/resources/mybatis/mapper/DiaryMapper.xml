@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.plant.dao.DiaryMapper">
+    <resultMap id="DiaryListMap" type="com.plant.vo.DiaryVo">
+        <result column="diary_id" property="diaryId"/>
+        <result column="diary_title" property="diaryTitle"/>
+        <result column="diary_date" property="diaryDate"/>
+    </resultMap>
+    <resultMap id="DiaryDetailMap" type="com.plant.vo.DiaryVo">
+        <result column="diary_id" property="diaryId"/>
+        <result column="diary_title" property="diaryTitle"/>
+        <result column="diary_date" property="diaryDate"/>
+        <result column="diary_praise_regret" property="diaryPraiseRegret"/>
+        <result column="diary_emotion" property="diaryEmotion"/>
+        <result column="diary_growth" property="diaryGrowth"/>
+        <result column="diary_content" property="diaryContent"/>
+        <result column="diary_image" property="diaryImage"/>
+    </resultMap>
+    <resultMap id="DiaryMyPlantMap" type="com.plant.vo.MyplantVo">
+        <result column="myplant_id" property="myplantId"/>
+        <result column="myplant_nick" property="myplantNick"/>
+        <result column="myplant_image" property="myplantImage"/>
+        <result column="distbNm" property="distbNm"/>
+        <result column="first_date" property="firstDate"/>
+    </resultMap>
+    <resultMap id="DiaryScheduleMap" type="com.plant.vo.ScheduleVo">
+        <result column="myplant_id" property="myplantId"/>
+        <result column="watering" property="watering"/>
+        <result column="nutri" property="nutri"/>
+        <result column="prun" property="prun"/>
+        <result column="soil" property="soil"/>
+        <result column="ventilation" property="ventilation"/>
+    </resultMap>
+
+
+    <!-- 전체 식물일기 조회 -->
+    <select id="selectAllDiary" parameterType="String" resultMap="DiaryListMap">
+        <![CDATA[
+         select diary_id, diary_title, diary_date from diary where user_id = #{userId} order by diary_date desc
+     ]]>
+    </select>
+
+    <!-- 식물일기 상세조회 -->
+    <select id="selectDiary" parameterType="int" resultMap="DiaryDetailMap">
+        <![CDATA[
+         select * from diary where diary_id = #{diaryId}
+     ]]>
+    </select>
+
+    <!-- 식물일기 상세조회 시 내 식물 -->
+    <select id="selectMyplants" parameterType="int" resultMap="DiaryMyPlantMap">
+        <![CDATA[
+            select dmp.myplant_id, myplant_nick, myplant_image, distbNm, first_date
+            from diary d
+            join diary_myplant dmp on dmp.diary_id = d.diary_id
+            join myplant mp on mp.myplant_id = dmp.myplant_id
+            join plant pl on pl.plant_id = mp.plant_id
+            where d.diary_id = #{diaryId}
+         ]]>
+    </select>
+
+    <!-- 식물일기 상세조회 시 내 식물 관리기록 -->
+    <select id="selectSchedule" parameterType="int" resultMap="DiaryScheduleMap">
+        <![CDATA[
+            select s.myplant_id, watering, nutri, prun, soil, ventilation
+            from schedule s
+            inner join diary d on date(schedule_date) = date(diary_date)
+            inner join diary_myplant mp on mp.myplant_id = s.myplant_id and mp.diary_id = d.diary_id
+            where d.diary_id = #{diaryId};
+         ]]>
+    </select>
+
+    <!-- 식물일기 작성 -->
+    <insert id="insertDiary" parameterType="com.plant.vo.DiaryVo">
+        <![CDATA[
+            insert into diary (user_id, diary_title, diary_praise_regret, diary_emotion, diary_growth, diary_content, diary_image, diary_date)
+            values ( #{userId}, #{diaryTitle},  #{diaryPraiseRegret}, #{diaryEmotion}, #{diaryGrowth}, #{diaryContent}, #{diaryImage}, now())
+        ]]>
+        <selectKey keyProperty="diaryId" resultType="int" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- 식물일기 작성 포인트 -->
+    <insert id="diaryPoint" parameterType="String">
+        <![CDATA[
+         update user_table set point = point + 15 where user_id = #{userId}
+     ]]>
+    </insert>
+
+    <!-- 식물일기 작성 시 내 식물 첨부 -->
+    <insert id="insertMyplant">
+        <![CDATA[
+            insert into diary_myplant (diary_id, myplant_id) values (#{diaryId}, #{myplantId})
+        ]]>
+    </insert>
+
+    <!-- 식물일기 작성 시 내 식물 관리기록 불러오기 -->
+    <select id="showSchedule" parameterType="int" resultMap="DiaryScheduleMap">
+        <![CDATA[
+            select myplant_id, watering, nutri, prun, soil, ventilation
+            from schedule
+            where myplant_id = #{myplantId} and date(schedule_date) = CURDATE()
+         ]]>
+    </select>
+
+    <!-- 식물일기 수정 -->
+    <update id="updateDiary" parameterType="com.plant.vo.DiaryVo">
+        <![CDATA[
+            update diary
+            set diary_title = #{diaryTitle}, diary_praise_regret = #{diaryPraiseRegret}, diary_emotion = #{diaryEmotion},
+                diary_growth = #{diaryGrowth}, diary_content = #{diaryContent}, diary_image = #{diaryImage}
+            where diary_id = #{diaryId}
+        ]]>
+    </update>
+
+    <!-- 식물일기 삭제 -->
+    <delete id="deleteDiary" parameterType="int">
+        <![CDATA[
+         delete from diary where diary_id = #{diaryId}
+        ]]>
+    </delete>
+
+</mapper>

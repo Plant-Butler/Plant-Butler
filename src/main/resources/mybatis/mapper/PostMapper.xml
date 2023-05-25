@@ -83,7 +83,7 @@
         <![CDATA[
             select p.post_id, myplant_nick, myplant_image, distbNm, first_date
             from post p
-            join postmp pmp on pmp.post_id = p.post_id
+            join post_myplant pmp on pmp.post_id = p.post_id
             join myplant mp on mp.myplant_id = pmp.myplant_id
             join plant pl on pl.plant_id = mp.plant_id
             where p.post_id = #{postId}
@@ -131,7 +131,7 @@
 
 	<delete id="deleteItemMp" parameterType="int">
  <![CDATA[
-		DELETE FROM postmp WHERE post_id =#{postId}
+		DELETE FROM post_myplant WHERE post_id =#{postId}
 		]]>
 	</delete>
 	<delete id="deleteItem" parameterType="com.plant.vo.PostVo">
@@ -149,7 +149,7 @@
 	</insert>
 
 	<insert id="insert2" parameterType="com.plant.vo.PostVo">
-		INSERT INTO postmp (post_id, myplant_id)
+		INSERT INTO post_myplant (post_id, myplant_id)
 		VALUES
 		<foreach item="myplantId" collection="selectedPlants" separator=",">
 			(#{postId}, #{myplantId})
@@ -162,8 +162,8 @@
 		<where>
 			<if test="searchField != null and searchField != '' and keyword != null and keyword != ''">
 				<![CDATA[
-  AND ${searchField} LIKE CONCAT('%', #{keyword}, '%')
-  ]]>
+				  AND ${searchField} LIKE CONCAT('%', #{keyword}, '%')
+				  ]]>
 			</if>
 			<if test="tag != null and tag != ''">
 				AND post_tag = #{tag}
