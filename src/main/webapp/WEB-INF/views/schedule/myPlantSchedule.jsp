@@ -8,10 +8,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%
     UserVo userVo = (UserVo) session.getAttribute("user");
     String userId = userVo.getUserId();
 %>
+<script>
+    var csrfToken = '${_csrf.token}';
+    var csrfHeader = '${_csrf.headerName}';
+</script>
 <html>
 <head>
     <style>
@@ -75,7 +80,10 @@
 
             fetch('/myplants/${myplantId}/schedule/form', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
             })
                 .then(response => {
                     if (response.ok) {
@@ -142,7 +150,10 @@
                     deleteBtn.addEventListener('click', function() {
                         var scheduleId = arg.event.extendedProps.scheduleId;
                         fetch('/myplants/${myplantId}/schedule/'+ scheduleId , {
-                            method: 'DELETE'
+                            method: 'DELETE',
+                            headers: {
+                                [csrfHeader]: csrfToken
+                            }
                         })
                             .then(response => {
                                 if (response.ok) {
@@ -183,10 +194,11 @@
 <body>
 <div id="fourSeasonContainer"></div>
 <h1>${myplant1.myplantNick}의 관리페이지</h1>
-<button class="btn btn-primary">${myplant1.myplantNick}의 물주기 알림 설정</button>
+<button class="btn btn-primary" type="button" onclick="location.href='/myplants/${myplantId}/schedule/push'">물주기 알람 설정</button>
 <button class="btn btn-primary" onclick="showForm()">오늘기록 추가하기</button>
 <div id="schedule-form" style="display:none;">
     <form id="scheduleForm">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div>
             <input type="hidden" name = "myplantId" value="${myplantId}">
             <input type="hidden" name = "userId" value="<%=userId%>">
@@ -252,7 +264,6 @@
             case Calendar.NOVEMBER:
                 text=plantVo.getWatercycleAutumnCodeNm();
                 break;
-            // 다른 경우들을 여기에 추가합니다.
         }
     %>
 

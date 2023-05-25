@@ -5,31 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
-    <script type="module" src="../mainscript.js"></script>
-    <script type="module">
-        import { getMessaging, onMessage } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging.js';
-        try {
-            Notification.requestPermission().then((permission) => {
-                if (permission === "granted") {
-                    const messaging = getMessaging();
+    <script type="module" src="/js/mainscript.js"></script>
 
-                    onMessage(messaging, (payload) => {
-                        console.log("Message received. ", payload);
-                        const notificationTitle = payload.data.score;
-                        const notificationOptions = {
-                            body: payload.data.time,
-                        };
-                        new Notification(notificationTitle, notificationOptions);
-                    });
-                }
-            }).catch(error => {
-                console.error("An error occurred while requesting permission:", error);
-            });
-        } catch (error) {
-            console.error("An unexpected error occurred:", error);
-        }
-
-    </script>
 <%@ include file="../main/header.jsp" %>
 <style>
   #point{

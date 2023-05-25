@@ -71,6 +71,7 @@
   String userId = userVo.getUserId();
 %>
 <form action="/myplants/form" method="post" enctype="multipart/form-data">
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
   <table>
     <tr>
       <td>내식물 검색하기</td>
@@ -104,8 +105,8 @@
     <tr>
       <td>내 화분 종류:</td>
       <td>
-        <input type="radio" class="flowerpot" name="myplantWeight" value="1">원통형
-        <input type="radio" class="flowerpot" name="myplantWeight" value="2">사각형
+        <input type="radio" class="flowerpot" name="myplantweight" value="1">원통형
+        <input type="radio" class="flowerpot" name="myplantweight" value="2">사각형
       </td>
       <td></td>
     </tr>

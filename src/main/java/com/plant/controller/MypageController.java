@@ -3,7 +3,6 @@ package com.plant.controller;
 import com.github.pagehelper.PageInfo;
 import com.plant.service.CommentService;
 import com.plant.service.MypageService;
-import com.plant.utils.DynamicChangeScheduler;
 import com.plant.service.PostService;
 import com.plant.vo.CommentVo;
 import com.plant.vo.PlantVo;
@@ -19,15 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.FileInputStream;
-import java.net.URI;
-import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
+
 import com.google.firebase.messaging.*;
 
 
@@ -35,8 +29,6 @@ import com.google.firebase.messaging.*;
 @RequestMapping("/mypage")
 public class MypageController {
 
-    @Autowired
-    private DynamicChangeScheduler ps;
     @Autowired
     private MypageService mypageService;
     @Autowired
@@ -53,14 +45,6 @@ public class MypageController {
         UserVo userVo = (UserVo) session.getAttribute("user");
         String userId = userVo.getUserId();;
         mv.addObject("userId", userId);
-
-            Message message = Message.builder()
-                    .putData("score", "이은서")
-                    .putData("time", "너 너무 건방져")
-                    .setToken("dVWGoN9HNhmtvZ2FlW06ei:APA91bGdNZeDPgD6EUeLGLC9PbAluNK4MRwp3hZNbVWHovUsOXGDl_WQvcxBO8oaPChVOfZinjVUNBL2ZfLlKOt_QbhZEBS3lb-7C7SYGE8xiGnO_TvruvXml0Ap17c1htVSOpfbE12v")
-                    .build();
-            String response = FirebaseMessaging.getInstance().send(message);
-            System.out.println("Successfully sent message: " + response);
 
         return mv;
     }

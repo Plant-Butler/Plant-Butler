@@ -27,9 +27,12 @@ public interface MyPlantMapper {
 
 	PlantVo searchPlantToNum(int plantId);
 
-	void registRepresent(int result,int myplantId);
+	void registRepresent(@Param("result") int result,@Param("myplantId") int myplantId);
 
-	void registRepresent2();
+	void registRepresent2(int myplantId);
 
 
+    boolean insertWebPushData(@Param("myplantId") int myplantId,@Param("dayInput") int dayInput, @Param("timeInput") String timeInput);
+
+	boolean point(long todayInDays);
 }

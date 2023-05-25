@@ -2,6 +2,7 @@ package com.plant.controller;
 
 import com.plant.service.MyPlantService;
 import com.plant.service.ScheduleService;
+import com.plant.utils.ApiKey;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PlantVo;
 import com.plant.vo.ScheduleVo;
@@ -38,25 +39,26 @@ public class PlantController {
     private MyPlantService MyPlantService;
     @Autowired
     private ScheduleService scheduleService;
+    @Autowired
+    private ApiKey apiKey;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     @GetMapping(value="")
     /* 메인페이지 이동 */
     public ModelAndView main(HttpSession session) {
-        UserVo user = (UserVo) session.getAttribute("user");
+        UserVo user = (UserVo) session.getAttribute("user");// 로그인한 유저의 세션 정보를 불러옴
         String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
-        ArrayList<MyplantVo> plantList = MyPlantService.MyPlantList(userId);
-        ArrayList<ScheduleVo> scheduleVos = scheduleService.getScheduleListToUserId(userId);
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"));
+        ArrayList<MyplantVo> plantList = MyPlantService.MyPlantList(userId); //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
+        ArrayList<ScheduleVo> scheduleVos = scheduleService.getScheduleListToUserId(userId);//세션에서 얻은 유저의 아이디를 통해 해당 유저의 스케쥴 작성 목록 불러오기
         /* 각 식물 리스트의 관리기록 작성일 계산 */
         long scheduleDate = 0;
         for (int i = 0; i < plantList.size(); i++) {
             boolean matchFound = false;
             for (int y = 0; y < scheduleVos.size(); y++) {
                 if (scheduleVos.get(y).getMyplantId() == plantList.get(i).getMyplantId()) {
-                    scheduleDate =scheduleVos.get(y).getScheduleDate().getTime()/(1000 * 60 * 60 * 24);
+                    scheduleDate =scheduleVos.get(y).getScheduleDate().getTime()/(1000 * 60 * 60 * 24);//해당 식물에 맞는 스케쥴 작성 목록이 있는지 찾기
                     scheduleService.setSchedule(plantList.get(i).getMyplantId(), scheduleDate);
                     matchFound = true;
                     break;
@@ -65,15 +67,22 @@ public class PlantController {
             if (!matchFound) {
                 Timestamp time = new Timestamp(plantList.get(i).getFirstDate().getTime());
                 scheduleDate =plantList.get(i).getFirstDate().getTime()/(1000 * 60 * 60 * 24);
-                scheduleService.setSchedule(plantList.get(i).getMyplantId(), scheduleDate);
+                scheduleService.setSchedule(plantList.get(i).getMyplantId(), scheduleDate);//해당 식물에 대한 스케쥴이 없으면 식물 등록일을 대신 추가하기
                 System.out.println(time);
             }
         }
         /* 현재 시각 계산 */
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         long todayInDays = timestamp.getTime()/ (1000 * 60 * 60 * 24);
+        String gisang = apiKey.getGisangKey();
+        String mise = apiKey.getMiseKey();
+        String kakaoMap = apiKey.getKakaomapKey();
         model.addObject("endDate", todayInDays);
         model.addObject("plantList", plantList);
+        model.addObject("gisang",gisang);
+        model.addObject("kakaoMap",kakaoMap);
+        model.addObject("mise",mise);
+
         model.setViewName("myplant/myplants");
         return model;
     }
@@ -86,10 +95,11 @@ public class PlantController {
         return model;
     }
     @PostMapping(value="/form")
+    /* 내 식물 등록하기 */
     public ResponseEntity<MyplantVo> registMyPlant(@ModelAttribute MyplantVo myplantVo, @RequestParam("uploadedImages") List<MultipartFile> uploadedImages){
         List<MultipartFile> images = uploadedImages;
         StringBuilder fileNames = new StringBuilder();
-        if (images != null && !images.isEmpty()) {
+        if (!images.isEmpty()) {
             int imageCount = 0;
             for (MultipartFile image : images) {
                 if (!image.isEmpty()) {
@@ -100,7 +110,7 @@ public class PlantController {
                     }
                     fileNames.append(fileName);
                     // 이미지 파일을 저장할 위치 지정
-                    String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
+                    String uploadPath = "D:/uploads/";
                     try (InputStream inputStream = image.getInputStream()) {
                         Files.copy(inputStream, Paths.get(uploadPath + fileName), StandardCopyOption.REPLACE_EXISTING);
                     } catch (IOException e) {
@@ -117,7 +127,7 @@ public class PlantController {
         MyPlantService.registMyPlant(myplantVo);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/myplants"));
-        return new ResponseEntity<>(myplantVo, headers, HttpStatus.SEE_OTHER);
+        return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
     }
     @DeleteMapping(value="/form/{myplantId}")
     public ResponseEntity<Void> deleteMyPlant(@PathVariable("myplantId") int myplantId) {

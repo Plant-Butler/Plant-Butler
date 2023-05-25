@@ -59,16 +59,16 @@
         <td>내 화분 종류 :</td>
         <td>
             <c:choose>
-                <c:when test="${myPlant.myplantWeight==1}">
-                    <p class="editable" name="myplantWeight">원통형</p>
+                <c:when test="${myPlant.myplantPot==1}">
+                    <p class="editable" name="myplantPot">원통형</p>
                 </c:when>
                 <c:otherwise>
-                    <p class="editable" name="myplantWeight">사각형</p>
+                    <p class="editable" name="myplantPot">사각형</p>
                 </c:otherwise>
             </c:choose>
-            <input type="radio" class="input-editable" id="cylinder" name="myplantWeight" value="1" style="display:none;">
+            <input type="radio" class="input-editable" id="cylinder" name="myplantPot" value="1" style="display:none;">
             <label class="input-editable" for="cylinder" style="display:none;">원통형</label>
-            <input type="radio" class="input-editable" id="rectangle" name="myplantWeight" value="2" style="display:none;">
+            <input type="radio" class="input-editable" id="rectangle" name="myplantPot" value="2" style="display:none;">
             <label class="input-editable" for="rectangle" style="display:none;">사각형</label>
 
         </td>
@@ -244,7 +244,7 @@
                 userId:"${myPlant.userId}",
                 myplantNick: $("input[name='myplantNick']").val(),
                 myplantImage: $("input[name='myplantImage']").val(),
-                myplantWeight: $("input[name='myplantWeight']:checked").val(),
+                myplantPot: $("input[name='myplantPot']:checked").val(),
                 myplantLength: $("input[name='myplantLength']").val(),
                 myplantRadius1: $("input[name='myplantRadius1']").val(),
                 myplantRadius2: $("input[name='myplantRadius2']").val(),
@@ -267,7 +267,7 @@
     <script>
             $(document).ready(function () {
             // 초기화 시 라디오 버튼 상태에 따라 radius1Label과 radius2Label의 내용을 변경
-            if ($("input[name='myplantWeight']:checked").val() === "1") {
+            if ($("input[name='myplantPot']:checked").val() === "1") {
             $("#radius1Label").text("내 화분 밑 지름:");
             $("#radius2Label").text("내 화분 윗 지름:");
         } else {
@@ -277,7 +277,7 @@
         });
 
             // 라디오 버튼 변경 시 radius1Label과 radius2Label의 내용을 변경
-            $("input[name='myplantWeight']").on("change", function () {
+            $("input[name='myplantPot']").on("change", function () {
             if ($(this).val() === "1") {
             $("#radius1Label").text("내 화분 밑 지름:");
             $("#radius2Label").text("내 화분 윗 지름:");

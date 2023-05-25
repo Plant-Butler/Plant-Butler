@@ -12,7 +12,7 @@ public class MyplantVo {
     private String distbNm;
     private String myplantNick;
     private String myplantImage;
-    private int myplantWeight; // 화분 가로
+    private int myplantPot; // 화분 가로
     private int myplantLength; // 화분 세로
     private int myplantRadius1; // 화분 반지름1
     private int myplantRadius2; // 화분 반지름2
@@ -22,24 +22,32 @@ public class MyplantVo {
 
     private long scheduleDate;
 
+    private int webPushDate;
+    private String webPushTime;
+
+
+
+
 
     public MyplantVo() {
 
     }
 
-    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantWeight, int myplantLength, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate) {
+    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantPot, int myplantLength, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate,int webPushDate,String webPushTime) {
         this.myplantId = myplantId;
         this.plantId = plantId;
         this.userId = userId;
         this.myplantNick = myplantNick;
         this.myplantImage = myplantImage;
-        this.myplantWeight = myplantWeight;
+        this.myplantPot = myplantPot;
         this.myplantLength = myplantLength;
         this.myplantRadius1 = myplantRadius1;
         this.myplantRadius2 = myplantRadius2;
         this.firstDate = firstDate;
         this.represent = represent;
         this.scheduleDate = scheduleDate;
+        this.webPushDate =  webPushDate;
+        this.webPushTime = webPushTime;
     }
 
     public int getMyplantId() {
@@ -98,12 +106,12 @@ public class MyplantVo {
         this.myplantImage = myplantImage;
     }
 
-    public int getMyplantWeight() {
-        return myplantWeight;
+    public int getMyplantPot() {
+        return myplantPot;
     }
 
-    public void setMyplantWeight(int myplantWeight) {
-        this.myplantWeight = myplantWeight;
+    public void setMyplantPot(int myplantPot) {
+        this.myplantPot = myplantPot;
     }
 
     public int getMyplantLength() {
@@ -155,19 +163,41 @@ public class MyplantVo {
         this.scheduleDate = scheduleDate;
     }
 
+    public int getWebPushDate() {
+        return webPushDate;
+    }
+
+    public void setWebPushDate(int webPushDate) {
+        this.webPushDate = webPushDate;
+    }
+
+    public String getWebPushTime() {
+        return webPushTime;
+    }
+
+    public void setWebPushTime(String webPushTime) {
+        this.webPushTime = webPushTime;
+    }
+
     @Override
     public String toString() {
         return "MyplantVo{" +
                 "myplantId=" + myplantId +
                 ", plantId=" + plantId +
+                ", postId=" + postId +
                 ", userId='" + userId + '\'' +
+                ", distbNm='" + distbNm + '\'' +
                 ", myplantNick='" + myplantNick + '\'' +
                 ", myplantImage='" + myplantImage + '\'' +
-                ", myplantWeight=" + myplantWeight +
+                ", myplantPot=" + myplantPot +
                 ", myplantLength=" + myplantLength +
                 ", myplantRadius1=" + myplantRadius1 +
                 ", myplantRadius2=" + myplantRadius2 +
                 ", firstDate=" + firstDate +
+                ", represent=" + represent +
+                ", scheduleDate=" + scheduleDate +
+                ", webPushDate=" + webPushDate +
+                ", webPushTime='" + webPushTime + '\'' +
                 '}';
     }
 }

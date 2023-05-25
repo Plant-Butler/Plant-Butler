@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,9 @@
 <body>
 	<div style="text-align: center;">
 		<h3>아이디 중복 확인</h3>
+
 		<form action="./idCheckProc" method="post" onsubmit="return blankCheck(this)">
+			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 			아이디: <input type="text" name="id"><input type="submit" value="중복확인">
 
 		</form>

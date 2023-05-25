@@ -2,12 +2,14 @@ package com.plant.controller;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.plant.service.UserService;
+import com.plant.utils.PasswordEncoderConfig;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -24,7 +26,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	/* 회원가입 폼 */	
 	@GetMapping("/registPage")
 	public ModelAndView viewRegist() {
@@ -33,21 +36,21 @@ public class UserController {
 		return mv;
 	}
 	
-	/* 회원가입 */	
+	/* 회원가입 */
 	@PostMapping("/registPage")
 	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, HttpServletResponse response) throws IOException {
-		System.out.println(user.getUserId());
-		System.out.println(user.getPassword());
+		// 비밀번호를 암호화하여 저장합니다.
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+
 		boolean flag = userService.regist(user);
 		logger.info("회원가입");
-	    if (flag) {
-	        URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/loginPage").build().toUri();
-	        response.sendRedirect(location.toString());
-	        return ResponseEntity.ok().build();
+		if (flag) {
+			URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/loginPage").build().toUri();
+			response.sendRedirect(location.toString());
+			return ResponseEntity.ok().build();
 		} else {
 			return ResponseEntity.badRequest().body("회원가입에 실패하였습니다.");
 		}
-		
 	}
 	
 	/* 로그인 페이지 */
@@ -61,10 +64,10 @@ public class UserController {
 	/* 로그인 */
 	@PostMapping("/loginPage/login")
 	public ResponseEntity<String> login(@ModelAttribute UserVo user, HttpSession session) {
-		UserVo user1 = userService.validMember(user);
-		logger.info("로그인");
-		if (user1 != null) {
-			session.setAttribute("user", user1);
+		String userId = user.getUserId();
+		UserVo userFromDB = userService.validMember(userId);
+		if (passwordEncoder.matches(user.getPassword(), userFromDB.getPassword())) {
+			session.setAttribute("user", userFromDB);
 			return ResponseEntity.ok("success");
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");

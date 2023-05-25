@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <head>
 <%@ include file="../main/header.jsp" %>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,7 +53,7 @@
             <td hidden="hidden">${list.userId}</td>
             <td>${list.myplantNick}</td>
             <td hidden="hidden">${list.myplantImage}</td>
-            <td hidden="hidden">${list.myplantWeight}</td>
+            <td hidden="hidden">${list.myplantPot}</td>
             <td hidden="hidden">${list.myplantLength}</td>
             <td hidden="hidden">${list.myplantRadius1}</td>
             <td>${list.firstDate}</td>
@@ -95,7 +96,7 @@
         <span id="centerAddr"></span>
     </div>
 
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey==services"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=${kakaoMap}&libraries=services"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.min.js"></script>
 <script>
     navigator.geolocation.getCurrentPosition(function(position) {
@@ -197,7 +198,7 @@
             console.log("encodedCityName:", encodedCityName);
 
             try {
-                var response = await fetch(`http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=&numOfRows=100&returnType=json&sidoName=`+encodedCityName);
+                var response = await fetch(`http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${mise}&numOfRows=100&returnType=json&sidoName=`+encodedCityName);
                 var data = await response.json();
                 console.log("Fetched data:", data);
 
@@ -333,7 +334,7 @@
             console.log(rs.x, rs.y);
 
             try {
-                var response = await fetch('http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?&numOfRows=60&dataType=JSON&pageNo=1&base_date='+formattedDate+'&base_time=1330&nx='+rs.x+'&ny='+rs.y);
+                var response = await fetch('http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${gisang}&numOfRows=60&dataType=JSON&pageNo=1&base_date='+formattedDate+'&base_time='+time+'&nx='+rs.x+'&ny='+rs.y);
                 console.log(response);
                 var data = await response.json();
                 console.log("Fetched data:", data);

@@ -5,22 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <title>로그인</title>
-    <script type="module" src="../mainscript.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('../firebase-messaging-sw.js').then(function(registration) {
-                    // Registration was successful
-                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                }, function(err) {
-                    // registration failed :(
-                    console.log('ServiceWorker registration failed: ', err);
-                });
-            });
-        }
-    </script>
-
+    <script type="module" src="/js/mainscript.js"></script>
     <%@ include file="../main/header.jsp" %>
+    <script>
+        var csrfToken = '${_csrf.token}';
+        var csrfHeader = '${_csrf.headerName}';
+    </script>
 </head>
 <body style="text-align: center">
 <style>
@@ -55,12 +45,14 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function login(){
+    function login() {
         let userId = document.getElementById("userId").value;
         let password = document.getElementById("password").value;
-        let data = {};
-        data.userId = userId;
-        data.password = password;
+        let data = {
+            userId: userId,
+            password: password
+        };
+
         console.log(userId);
         console.log(data);
 
@@ -68,6 +60,9 @@
             type: "POST",
             url: "/loginPage/login",
             data: data,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            },
             success: function(data) {
                 if (data === 'success') {
                     alert("환영합니다!");
@@ -79,7 +74,7 @@
                 alert('아이디 또는 비밀번호가 올바르지 않습니다.');
             }
         });
-    };
+    }
 
 
 </script>
