@@ -36,3 +36,5 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/java/com/plant/utils/ShopApi.java
+/src/main/resources/application-API-KEY.properties

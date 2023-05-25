@@ -63,10 +63,6 @@ public class PostService {
         return flag;
     }
 
-    @Autowired
-    public PostService(PostMapper commMapper) {
-        this.postMapper = commMapper;
-    }
     /* 게시물 저장1 */
 	public boolean saveItem(PostVo post) {
 		boolean flag = false;
@@ -128,7 +124,6 @@ public class PostService {
 	/* 게시물 작성 시 내 식물 리스트 보여주기 */
 	public List<MyplantVo> plantall(String userId) {
 	    List<MyplantVo> plantList = postMapper.plantall(userId);
-	    System.out.println(plantList);
 	    return plantList;
 	}
 	/* 모든 게시물 */
