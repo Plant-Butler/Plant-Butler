@@ -16,6 +16,12 @@ public class ApiKey {
     @Value("${kakaomap-key}")
     private String kakaomapKey;
 
+    //기상청 날씨, 미세먼지
+    @Value("${gisang-key}")
+    private String gisangKey;
+    @Value("${mise-key}")
+    private String miseKey;
+
     public String getNavershopKey() {
         return navershopKey;
     }
@@ -27,4 +33,8 @@ public class ApiKey {
     public String getKakaomapKey() {
         return kakaomapKey;
     }
+
+    public String getGisangKey(){return gisangKey;}
+
+    public String getMiseKey(){return miseKey;}
 }

@@ -9,11 +9,11 @@
         <result column="password" property="password"/>
     </resultMap>
 
-    <select id="checkMember" parameterType="com.plant.vo.UserVo" resultMap="UserResultMap">
-        <![CDATA[
-         SELECT * FROM user_table WHERE user_id = #{userId} AND password = #{password}
-     ]]>
-    </select>
+    <select id="checkMember" parameterType="java.lang.String" resultMap="UserResultMap">
+    <![CDATA[
+        SELECT * FROM user_table WHERE user_id = #{userId}
+        ]]>
+</select>
 	<select id="duplicateId" resultType="int">
       <![CDATA[
          SELECT count(user_id) as cnt FROM user_table WHERE user_id = #{userId}
@@ -26,8 +26,8 @@
 	</select>
 	<insert id="insert" parameterType="com.plant.vo.UserVo">
       <![CDATA[
-         insert into user_table (user_Id, nickname, password, email)
-         values (#{userId}, #{nickname}, #{password}, #{email})
+         insert into user_table (user_Id, nickname, password, email, token)
+         values (#{userId}, #{nickname}, #{password}, #{email},#{token})
       ]]>
 	</insert>
 

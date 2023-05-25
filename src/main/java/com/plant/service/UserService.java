@@ -27,9 +27,9 @@ public class UserService {
 		return flag;
 	}
 
-	public UserVo validMember(UserVo user) {
+	public UserVo validMember(String userId) {
 		boolean flag = false;
-		UserVo vo = userMapper.checkMember(user);
+		UserVo vo = userMapper.checkMember(userId);
 		System.out.println("I'm in service");
 		return vo;
 	}

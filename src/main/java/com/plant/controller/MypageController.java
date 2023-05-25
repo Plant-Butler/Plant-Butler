@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.google.firebase.messaging.*;
+
+
 @RestController
 @RequestMapping("/mypage")
 public class MypageController {
@@ -36,12 +39,13 @@ public class MypageController {
 
     /* 마이페이지 이동 (로그인 후) */
     @GetMapping(value=" ")
-    public ModelAndView openMypage(HttpServletRequest request) {
+    public ModelAndView openMypage(HttpServletRequest request) throws FirebaseMessagingException {
         ModelAndView mv = new ModelAndView("/mypage/mypage");
         HttpSession session = request.getSession();
         UserVo userVo = (UserVo) session.getAttribute("user");
         String userId = userVo.getUserId();;
         mv.addObject("userId", userId);
+
         return mv;
     }
 
