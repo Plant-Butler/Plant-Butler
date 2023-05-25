@@ -1,7 +1,6 @@
 package com.plant.controller;
 
 import com.plant.service.RecomService;
-import com.plant.utils.ShopApi;
 import com.plant.vo.PlantVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
