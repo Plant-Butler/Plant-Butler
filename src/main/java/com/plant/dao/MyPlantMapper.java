@@ -3,6 +3,7 @@ package com.plant.dao;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PlantVo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -26,9 +27,12 @@ public interface MyPlantMapper {
 
 	PlantVo searchPlantToNum(int plantId);
 
-	void registRepresent(int result,int myplantId);
+	void registRepresent(@Param("result") int result,@Param("myplantId") int myplantId);
 
-	void registRepresent2();
+	void registRepresent2(int myplantId);
 
 
+    boolean insertWebPushData(@Param("myplantId") int myplantId,@Param("dayInput") int dayInput, @Param("timeInput") String timeInput);
+
+	boolean point(long todayInDays);
 }

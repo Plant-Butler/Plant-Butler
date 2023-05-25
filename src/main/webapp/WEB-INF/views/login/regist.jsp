@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ page import="java.util.regex.Pattern" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,6 +33,7 @@
    </div>
 <br>
    <form id = "myform" action="./registPage" method="post" name="joinform" onsubmit="return finalCheck(event);">
+      <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
       <table style="margin-left:auto;margin-right:auto;" width="900" length="100">
          <div>
          <tr style="height:100px">
@@ -77,7 +79,7 @@
 
                 <th>웹푸시 동의 약관</th>
                 <td><p style="font-size: 12px; display:inline-block;">이 사이트에서는 웹 푸시 알림을 제공합니다.<br>이용 약관 및 개인정보 취급 방침에 따라 웹 푸시 알림 사용에 동의하십니까?</p></td>
-               <td><input type="checkbox" name="webpush" value="webpush" id="webpush" style="display:inline-block; margin-left: 10px;" required></td>
+               <td><input type="checkbox" name="token" value="webpush" id="token" style="display:inline-block; margin-left: 10px;" required></td>
 
             </tr>
          </div>
@@ -90,6 +92,40 @@
          </div>
       </table>
    </form>
+   <script type="module">
+      import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+      import { getMessaging, getToken } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-messaging.js';
+      const firebaseConfig = {
+         apiKey: "AIzaSyCKyFlG1N4vK5l0OyAjgDbO1pGuxLaiOt4",
+         authDomain: "plant-butler-c4fd9.firebaseapp.com",
+         projectId: "plant-butler-c4fd9",
+         storageBucket: "plant-butler-c4fd9.appspot.com",
+         messagingSenderId: "451724146100",
+         appId: "1:451724146100:web:153ea324ff6f8c0ec12ee1",
+         measurementId: "G-CKME0S96GE"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const messaging = getMessaging(app);
+
+      const myButton = document.getElementById('token');
+
+      myButton.addEventListener('click', () => {
+         getToken(messaging)
+                 .then((currentToken) => {
+                    if (currentToken) {
+                       console.log('Token: ', currentToken);
+                       myButton.value = currentToken;
+                    } else {
+                       console.log('No registration token available. Request permission to generate one.');
+                    }
+                 })
+                 .catch((err) => {
+                    console.log('An error occurred while retrieving token. ', err);
+                 });
+      });
+   </script>
+
    <script src="./js/regist.js"></script>
 </body>
 

@@ -3,6 +3,7 @@ import com.plant.dao.MyPlantMapper;
 import com.plant.dao.ScheduleMapper;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PlantVo;
+import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,9 +67,19 @@ public class MyPlantService {
         return plantVo;
     }
     public void registRepresent(int result,int myplantId) {
-        myPlantMapper.registRepresent2();
+        myPlantMapper.registRepresent2(myplantId);
         myPlantMapper.registRepresent(result,myplantId);
 
     }
 
+    public boolean insertWebPushData(int myplantId,int dayInput, String timeInput) {
+       boolean flag = myPlantMapper.insertWebPushData(myplantId,dayInput,timeInput);
+        return flag;
+    }
+
+
+    public boolean point(long todayInDays) {
+        boolean flag = myPlantMapper.point(todayInDays);
+        return flag;
+    }
 }

@@ -1,7 +1,7 @@
-<%@page import="com.plant.service.UserService"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="org.springframework.beans.factory.annotation.Autowired"%>
+
 <!DOCTYPE html>
 <html>
 <head>

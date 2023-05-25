@@ -5,6 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지</title>
+    <script type="module" src="/js/mainscript.js"></script>
+
 <%@ include file="../main/header.jsp" %>
 <style>
   #point{

@@ -9,6 +9,8 @@ public class UserVo {
     private int point;
     private int manager;
 
+
+
     public UserVo() {}
 
     public UserVo(String nickname, String password, String email) {
@@ -24,6 +26,7 @@ public class UserVo {
         this.email = email;
         this.point = point;
         this.manager = manager;
+
     }
 
     public String getUserId() {
@@ -73,4 +76,5 @@ public class UserVo {
     public void setManager(int manager) {
         this.manager = manager;
     }
+
 }

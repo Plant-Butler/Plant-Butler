@@ -2,14 +2,21 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="java.time.temporal.ChronoUnit" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="com.plant.vo.PlantVo" %>
 <!DOCTYPE html>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%
     UserVo userVo = (UserVo) session.getAttribute("user");
     String userId = userVo.getUserId();
 %>
+<script>
+    var csrfToken = '${_csrf.token}';
+    var csrfHeader = '${_csrf.headerName}';
+</script>
 <html>
 <head>
     <style>
@@ -51,9 +58,11 @@
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="/css/cal.css" rel="stylesheet" />
+    <link href="${pageContext.request.contextPath}/static/css/cal.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/e84e54149f.js" crossorigin="anonymous"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js'></script>
+    <link href="https://fonts.cdnfonts.com/css/sf-ui-text-2" rel="stylesheet">
+
     <script>
         function showForm() {
             var form = document.getElementById("schedule-form");
@@ -71,7 +80,10 @@
 
             fetch('/myplants/${myplantId}/schedule/form', {
                 method: 'POST',
-                body: formData
+                body: formData,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
             })
                 .then(response => {
                     if (response.ok) {
@@ -138,7 +150,10 @@
                     deleteBtn.addEventListener('click', function() {
                         var scheduleId = arg.event.extendedProps.scheduleId;
                         fetch('/myplants/${myplantId}/schedule/'+ scheduleId , {
-                            method: 'DELETE'
+                            method: 'DELETE',
+                            headers: {
+                                [csrfHeader]: csrfToken
+                            }
                         })
                             .then(response => {
                                 if (response.ok) {
@@ -177,11 +192,13 @@
     <title>Title</title>
 </head>
 <body>
+<div id="fourSeasonContainer"></div>
 <h1>${myplant1.myplantNick}의 관리페이지</h1>
-<button class="btn btn-primary">${myplant1.myplantNick}의 물주기 알림 설정</button>
+<button class="btn btn-primary" type="button" onclick="location.href='/myplants/${myplantId}/schedule/push'">물주기 알람 설정</button>
 <button class="btn btn-primary" onclick="showForm()">오늘기록 추가하기</button>
 <div id="schedule-form" style="display:none;">
     <form id="scheduleForm">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div>
             <input type="hidden" name = "myplantId" value="${myplantId}">
             <input type="hidden" name = "userId" value="<%=userId%>">
@@ -217,8 +234,40 @@
     <h1>물의 양</h1>
     ${myplant1.myplantNick}의 화분에 맞는 물의 양은 ${water}L 입니다
 
-
     최근에 물을 준 날짜 : <fmt:formatDate pattern="yyyy-MM-dd" value="${date}"></fmt:formatDate>
+
+    <%
+        Calendar cal = Calendar.getInstance();
+        int month = cal.get(Calendar.MONTH);
+        String text = "";
+        PlantVo plantVo =(PlantVo)request.getAttribute("plantVo");
+
+        switch(month){
+            case Calendar.JANUARY:
+            case Calendar.FEBRUARY:
+            case Calendar.DECEMBER:
+                text=plantVo.getWatercycleWinterCodeNm();
+                break;
+
+            case Calendar.MARCH:
+            case Calendar.APRIL:
+            case Calendar.MAY:
+                text=plantVo.getWatercycleSprngCodeNm();
+                break;
+            case Calendar.JUNE:
+            case Calendar.JULY:
+            case Calendar.AUGUST:
+                text=plantVo.getWatercycleSummerCodeNm();
+                break;
+            case Calendar.SEPTEMBER:
+            case Calendar.OCTOBER:
+            case Calendar.NOVEMBER:
+                text=plantVo.getWatercycleAutumnCodeNm();
+                break;
+        }
+    %>
+
+    <%=text%>
 
     <%
         long diffInDays = 0;
@@ -258,5 +307,9 @@
 
 </div>
 <i class="fi fi-rr-Search"></i>
+
+<div>
+    <a href="/myplants/${myplantId}/schedule/push" class="button">물주기 알람 설정</a>
+</div>
 </body>
 </html>
