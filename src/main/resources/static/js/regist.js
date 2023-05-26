@@ -75,19 +75,23 @@ function IdCheck() {
                 let password = $('#password').val();
                 let checkPwd = $('#checkPwd').val();
 
+                var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+                var csrfToken = $("meta[name='_csrf']").attr("content");
+
                 var email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
                 var pwd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-                console.log('nickname = ' + nickname);
-                console.log('email = ' + email);
-                console.log('password = ' + password);
-                console.log('checkPwd = ' + checkPwd);
 
                 if((password === "") || (password !== checkPwd) || (nickname === "") || (email === "") || (!email_regex.test(email)) || (!pwd_regex.test(password))) {
                     alert("조건이 맞지 않습니다. 다시 시도해주세요.");
                     event.preventDefault();
                     return false;
                 }
+
+                $.ajaxSetup({
+                  beforeSend: function(xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                  }
+                });
 
                 $.ajax({
                     url: '/mypage/' + userId,

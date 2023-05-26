@@ -1,6 +1,6 @@
     $(document).ready(function() {
         $.ajax({
-            url: "/manager/best-list",
+            url: "/home/best-list",
             type: "GET",
             success: function(response) {
                 var users = response;
@@ -38,12 +38,3 @@
         });
     });
 
-        let isLoggedIn = document.getElementById("sugNdMy").getAttribute("data-isLoggedIn");
-        function serviceSug() {
-            if (isLoggedIn == "true") {
-                location.href = "/suggestions"
-            } else {
-                alert('로그인 후 이용해주세요')
-                location.href = "/loginPage"
-            }
-        }

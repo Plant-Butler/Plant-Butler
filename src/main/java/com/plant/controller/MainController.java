@@ -2,13 +2,21 @@ package com.plant.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.plant.service.MainService;
+import com.plant.service.ManagerService;
+import com.plant.vo.BestUserVo;
 import com.plant.vo.PostVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +26,8 @@ public class MainController {
 
     @Autowired
     private MainService mainService;
+    @Autowired
+    private ManagerService managerService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 메인페이지 */
@@ -54,5 +64,15 @@ public class MainController {
         mv.setViewName("/community/postList");
         return mv;
     }
+
+    /* 우수회원 광고 */
+    @GetMapping(value="/home/best-list")
+    public ResponseEntity<ArrayList<BestUserVo>> selectBestUser() {
+        ArrayList<BestUserVo> bestList = managerService.getBestUser();
+        logger.info(bestList.toString());
+        logger.info("[Manager Controller] selectBestUser()");
+        return new ResponseEntity<>(bestList, HttpStatus.OK);
+    }
+
 
 }
