@@ -1,6 +1,7 @@
 package com.plant.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.plant.service.CommentService;
 import com.plant.service.MypageService;
 import com.plant.service.PostService;
@@ -13,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,8 +24,6 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
-
-import com.google.firebase.messaging.*;
 
 
 @RestController
@@ -39,13 +40,16 @@ public class MypageController {
 
     /* 마이페이지 이동 (로그인 후) */
     @GetMapping(value=" ")
-    public ModelAndView openMypage(HttpServletRequest request) throws FirebaseMessagingException {
+    public ModelAndView openMypage() throws FirebaseMessagingException {
         ModelAndView mv = new ModelAndView("/mypage/mypage");
-        HttpSession session = request.getSession();
-        UserVo userVo = (UserVo) session.getAttribute("user");
-        String userId = userVo.getUserId();;
-        mv.addObject("userId", userId);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            UserVo user = (UserVo) authentication.getPrincipal();
+            mv.addObject("point", user.getPoint());
+            mv.addObject("userId", user.getUserId());
+            mv.addObject("nickname", user.getNickname());
+        }
         return mv;
     }
 

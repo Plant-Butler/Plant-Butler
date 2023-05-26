@@ -28,8 +28,10 @@
 </head>
 <body>
 <body style="text-align: center">
+
+
 <br>
-<h2><span id="nick">${user.nickname}</span> 님의 현재 포인트는 <span id="point">${user.point}</span> 점 입니다.</h2>
+<h2><span id="nick">${nickname}</span> 님의 현재 포인트는 <span id="point">${point}</span> 점 입니다.</h2>
 <br><br>
 <button type="button" onclick="location.href='/mypage/${userId}'">내 정보 수정</button>
 <br><br>
