@@ -37,14 +37,13 @@
                 <div class="intro">
                     <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="assets/img/close-up-picture-hand-watering-sapling-plant.jpg" alt="..." />
                     <div class="intro-text left-0 text-center bg-faded p-5 rounded">
-                        <div id="sugNdMy" data-isLoggedIn="<%= isLoggedIn %>" >
                             <h2 class="section-heading mb-4">
                                 <span class="section-heading-upper">당신만을 위한</span>
                                 <span class="section-heading-lower">나에게 맞는 반려식물 찾기</span>
                             </h2>
                             <p class="mb-3">나의 성향 & 취향 & 환경을 모두 고려한 최적의 반려 식물은 무엇일까요?</p>
-                            <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" onclick="serviceSug()">GO!</a></div>
-                        </div>
+                            <div class="intro-button mx-auto"><a class="btn btn-primary btn-xl" onclick="location.href='/suggestions'">GO!</a></div>
+
                     </div>
                 </div>
             </div>

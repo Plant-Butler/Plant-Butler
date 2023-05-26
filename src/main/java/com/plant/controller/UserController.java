@@ -1,14 +1,17 @@
 package com.plant.controller;
 
-import com.google.firebase.auth.FirebaseAuth;
+import com.plant.service.CustomUserDetailsService;
 import com.plant.service.UserService;
-import com.plant.utils.PasswordEncoderConfig;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,10 +28,13 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
-	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	@Autowired
+	private CustomUserDetailsService detailService;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-	/* 회원가입 폼 */	
+	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	/* 회원가입 폼 */
 	@GetMapping("/registPage")
 	public ModelAndView viewRegist() {
 		ModelAndView mv = new ModelAndView("/login/regist");
@@ -39,7 +45,7 @@ public class UserController {
 	/* 회원가입 */
 	@PostMapping("/registPage")
 	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, HttpServletResponse response) throws IOException {
-		// 비밀번호를 암호화하여 저장합니다.
+		// 비밀번호를 암호화하여 저장
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		boolean flag = userService.regist(user);
@@ -63,11 +69,14 @@ public class UserController {
 
 	/* 로그인 */
 	@PostMapping("/loginPage/login")
-	public ResponseEntity<String> login(@ModelAttribute UserVo user, HttpSession session) {
+	public ResponseEntity<String> login(@ModelAttribute UserVo user) {
 		String userId = user.getUserId();
 		UserVo userFromDB = userService.validMember(userId);
 		if (passwordEncoder.matches(user.getPassword(), userFromDB.getPassword())) {
-			session.setAttribute("user", userFromDB);
+			UserDetails userDetails = detailService.loadUserByUsername(userFromDB.getUserId());
+			Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			System.out.println("userDetails = " + userDetails);
 			return ResponseEntity.ok("success");
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
@@ -115,13 +124,13 @@ public class UserController {
 	
 	/* 쿠키 동의 */
     @GetMapping("/cookie")
-    public ModelAndView cookie(HttpSession session) {
+    public ModelAndView cookie() {
         ModelAndView mv = new ModelAndView("agreement/cookie");
         return mv;
     }
     /* 웹푸시 동의 */
     @GetMapping("/webpush")
-    public ModelAndView webpush(HttpSession session) {
+    public ModelAndView webpush() {
         ModelAndView mv = new ModelAndView("agreement/webpush");
         return mv;
     }

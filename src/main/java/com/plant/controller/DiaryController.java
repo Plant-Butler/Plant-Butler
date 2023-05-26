@@ -3,19 +3,23 @@ package com.plant.controller;
 import com.github.pagehelper.PageInfo;
 import com.plant.service.DiaryService;
 import com.plant.service.PostService;
-import com.plant.vo.*;
+import com.plant.vo.DiaryVo;
+import com.plant.vo.MyplantVo;
+import com.plant.vo.ScheduleVo;
+import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,8 +48,8 @@ public class DiaryController {
                                      @RequestParam(defaultValue = "10") Integer pageSize, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("/diary/diaryList");
 
-        HttpSession session = request.getSession();
-        UserVo userVo = (UserVo) session.getAttribute("user");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
         String userId = userVo.getUserId();
 
         PageInfo<DiaryVo> diaryList = diaryService.getDiaryList(userId, pageNum, pageSize);
@@ -85,8 +89,8 @@ public class DiaryController {
     public ModelAndView openDiaryForm(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView("/diary/newDiary");
 
-        HttpSession session = request.getSession();
-        UserVo userVo = (UserVo) session.getAttribute("user");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
         String userId = userVo.getUserId();
         List<MyplantVo> myplantList = postService.plantall(userId);
 

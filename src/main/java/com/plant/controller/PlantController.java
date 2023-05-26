@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,12 +26,10 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.TimeZone;
 
 @RestController
 @RequestMapping("/myplants")
@@ -47,7 +47,8 @@ public class PlantController {
     @GetMapping(value="")
     /* 메인페이지 이동 */
     public ModelAndView main(HttpSession session) {
-        UserVo user = (UserVo) session.getAttribute("user");// 로그인한 유저의 세션 정보를 불러옴
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo user = (UserVo) authentication.getPrincipal();
         String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
         ArrayList<MyplantVo> plantList = MyPlantService.MyPlantList(userId); //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기

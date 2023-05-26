@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.plant.vo.UserVo" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,40 +30,33 @@
         <div class="container">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mx-auto">
-                    <%
-                    UserVo userVo = (UserVo) session.getAttribute("user");
-                    System.out.println("user session = " + userVo);
-                    boolean isLoggedIn = false;
-
-                    if (userVo != null) {
-                        isLoggedIn = true;
-                    }
-                    %>
-
                     <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/home">HOME</a></li>
+                    <sec:authorize access="isAuthenticated()">
+                        <sec:authentication property="principal" var="userPrincipal" />
 
-                    <!-- 로그인 후 디스플레이 -->
-                    <%if (isLoggedIn) {
-                        if (userVo.getManager() == 0) {
-                    %>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/mypage">마이페이지</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/diaries">식물일기</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/myplants">내 식물</a></li>
+                        <%-- 로그인 후 디스플레이 --%>
+                        <sec:authorize access="hasRole('ROLE_USER')">
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/mypage">마이페이지</a></li>
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/diaries">식물일기</a></li>
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/myplants">내 식물</a></li>
+                        </sec:authorize>
 
-                    <%  } else {%>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/manager">관리자페이지</a></li>
-                    <%  }
-                    };%>
+                        <sec:authorize access="hasRole('ROLE_ADMIN')">
+                            <%-- 관리자만 표시하는 경우 --%>
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/manager">관리자페이지</a></li>
+                        </sec:authorize>
 
-                    <!-- 로그인 전&후 디스플레이 -->
-                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/community">커뮤니티</a></li>
-
-                    <!-- 로그인/로그아웃 -->
-                    <%if (isLoggedIn) {%>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/community">커뮤니티</a></li>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/logout">로그아웃</a></li>
-                    <%} else {%>
+                    </sec:authorize>
+
+                    <sec:authorize access="!isAuthenticated()">
+                        <%-- 로그인 전 디스플레이 --%>
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/community">커뮤니티</a></li>
+
+                        <%-- 로그인 --%>
                         <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/loginPage">로그인</a></li>
-                    <%};%>
+                    </sec:authorize>
                 </ul>
             </div>
         </div>
