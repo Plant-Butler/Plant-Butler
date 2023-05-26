@@ -61,6 +61,10 @@
 
         // 회원 삭제 확인/취소 창
         function deleteUserCheck(userId, num) {
+
+         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+         var csrfToken = $("meta[name='_csrf']").attr("content");
+
          let say = '';
          if(num === 0) {
             say = '탈퇴하시겠습니까?';
@@ -69,16 +73,30 @@
          }
 
          if (confirm(say) == true){
-             deleteUser(userId, num);
+             deleteUser(userId, num, csrfHeader, csrfToken);
          } else {
              return false;
          }
+
         }
 
         // 회원 삭제
-        function deleteUser(userId, num) {
+        function deleteUser(userId, num, csrfHeader, csrfToken) {
+            let url = "";
+            if(num == 0) {
+                url = "/mypage/" + userId;
+            } else {
+                url =  "/manager/" + userId;
+            }
+
+            $.ajaxSetup({
+                headers: {
+                    [csrfHeader] : csrfToken
+                }
+            });
+
             $.ajax({
-               url: "/manager/" + userId,
+               url: url,
                type: "DELETE",
                success: function(response) {
                    alert('탈퇴처리 되었습니다');

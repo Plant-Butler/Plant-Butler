@@ -25,8 +25,6 @@
    }
 </style>
 </head>
-<body>
-
 <body style="text-align: center">
    <div class="about-section">
   <h1>회원가입</h1>
@@ -75,11 +73,14 @@
            <td><input type="checkbox" name="cookie" value="cookie" id="cookie" style="display:inline-block; margin-left: 10px;" required></td>
          </tr>
 
+
             <tr style="height:100px">
 
-                <!-- <th>웹푸시 동의 약관</th>
+                <th>웹푸시 동의 약관</th>
                 <td><p style="font-size: 12px; display:inline-block;">이 사이트에서는 웹 푸시 알림을 제공합니다.<br>이용 약관 및 개인정보 취급 방침에 따라 웹 푸시 알림 사용에 동의하십니까?</p></td>
-               <td><input type="checkbox" name="token" value="webpush" id="token" style="display:inline-block; margin-left: 10px;" required></td> -->
+               <td><<input type="checkbox" name="tokenCheckbox" id="tokenCheckbox" style="display:inline-block; margin-left: 10px;" required>
+                  <input type="hidden" name="tokenValue" id="tokenValueInput"><!-- 토큰 값을 전송하기 위한 숨겨진 입력 필드 -->
+               </td>
 
             </tr>
          </div>
@@ -92,6 +93,7 @@
          </div>
       </table>
    </form>
+
 
 
    <script src="./js/regist.js"></script>

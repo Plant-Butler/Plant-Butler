@@ -45,7 +45,7 @@ public class UserController {
 	/* 회원가입 */
 	@PostMapping("/registPage")
 	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, HttpServletResponse response) throws IOException {
-		// 비밀번호를 암호화하여 저장합니다.
+		// 비밀번호를 암호화하여 저장
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		boolean flag = userService.regist(user);
@@ -124,13 +124,13 @@ public class UserController {
 	
 	/* 쿠키 동의 */
     @GetMapping("/cookie")
-    public ModelAndView cookie(HttpSession session) {
+    public ModelAndView cookie() {
         ModelAndView mv = new ModelAndView("agreement/cookie");
         return mv;
     }
     /* 웹푸시 동의 */
     @GetMapping("/webpush")
-    public ModelAndView webpush(HttpSession session) {
+    public ModelAndView webpush() {
         ModelAndView mv = new ModelAndView("agreement/webpush");
         return mv;
     }

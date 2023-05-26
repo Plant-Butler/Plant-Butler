@@ -128,4 +128,18 @@ public class UserVo implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "UserVo{" +
+                "userId='" + userId + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", point=" + point +
+                ", manager=" + manager +
+                ", token='" + token + '\'' +
+                ", authorities=" + authorities +
+                '}';
+    }
 }
