@@ -5,22 +5,23 @@
   Time: 오전 9:17
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ include file="../main/header.jsp" %>
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <title>Title</title>
     <script>
         function registRepresent() {
-            const represent = 1;
-            fetch(`/myplants/${myplantId}/represent`, {
+            var csrfToken = '${_csrf.token}';
+            var csrfHeader = '${_csrf.headerName}';
+            var userId = '${myPlant.userId}';
+            fetch(`/myplants/${myPlant.myplantId}/${myPlant.userId}/represent`, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'text/plain',
+                    [csrfHeader]: csrfToken
                 },
-                body: represent.toString(),
             })
                 .then((response) => {
                     if (response.ok) {
@@ -34,6 +35,7 @@
                 });
         }
     </script>
+    <title>Title</title>
 </head>
 <body>
 <h1>내 식물 상세보기</h1> <button class="btn btn-primary" onclick="registRepresent()">대표식물로 지정</button>
@@ -226,6 +228,7 @@
             <button id="saveBtn" style="display:none;">저장</button>
         </td>
     </tr>
+
 
     <script>
         $("#editBtn").on("click", function () {

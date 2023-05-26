@@ -66,9 +66,10 @@ public class MyPlantService {
         PlantVo plantVo = myPlantMapper.searchPlantToNum(plantId);
         return plantVo;
     }
-    public void registRepresent(int result,int myplantId) {
+    public void registRepresent(String userId,int myplantId) {
+        myPlantMapper.registRepresent(userId);
         myPlantMapper.registRepresent2(myplantId);
-        myPlantMapper.registRepresent(result,myplantId);
+
 
     }
 

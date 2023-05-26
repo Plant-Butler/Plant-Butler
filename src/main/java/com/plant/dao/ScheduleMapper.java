@@ -27,5 +27,5 @@ public interface ScheduleMapper {
 
     boolean findSchedule(int myplantId);
 
-    String getToken(String userId);
+    String[] getToken(String userId);
 }

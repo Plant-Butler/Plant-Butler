@@ -76,13 +76,13 @@
         from plant where plant_id = #{plantId};
     </select>
 
-    <update id="registRepresent" parameterType="int">
+    <update id="registRepresent2" parameterType="int">
         update myplant set represent = 1 where myplant_id=#{myplantId}
 
     </update>
 
-    <update id="registRepresent2" parameterType="int">
-        update myplant set represent = 0 where myplant_id=#{myplantId} and represent = 1;
+    <update id="registRepresent" parameterType="java.lang.String">
+        update myplant set represent = 0 where user_id=#{userId};
     </update>
 
     <update id="insertWebPushData">

@@ -55,6 +55,6 @@
     </select>
 
     <select id="getToken" resultType="java.lang.String">
-        select token from user_table where user_id = #{userId}
+        select tokenNum from token where user_id = #{userId}
     </select>
 </mapper>

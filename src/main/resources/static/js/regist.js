@@ -54,12 +54,12 @@ function IdCheck() {
           var pw2 = document.joinform.checkPwd.value;
           var email = document.joinform.email.value;
           var cookie = document.joinform.cookie.checked;
-          var webpush = document.joinform.webpush.checked;
+          var tokenCheckbox = document.joinform.tokenCheckbox.checked;
           var email_regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
           var pwd_regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
           // pwdCheck() 함수 호출하여 비밀번호 유효성 체크 결과 받아옴
           var isValidPassword = pwdCheck();
-            if ((id != null) && (pw1 == pw2) && (pw1 != "") && (pw2 != "") && (email_regex.test(email)) &&(pwd_regex.test(pw1)) && cookie && webpush) {
+            if ((id != null) && (pw1 == pw2) && (pw1 != "") && (pw2 != "") && (email_regex.test(email)) &&(pwd_regex.test(pw1)) && cookie && tokenCheckbox) {
                 alert('가입 완료! 로그인해주세요');
             } else {
                 alert("조건이 맞지 않습니다. 다시 시도해주세요.");

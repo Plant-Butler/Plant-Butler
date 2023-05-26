@@ -28,11 +28,11 @@ public class FCMInitializer {
     public void initialize() {
         try {
             FileInputStream serviceAccount =
-                    new FileInputStream("src/main/resources/firebase/plant-butler-c4fd9-5f2f281aeaca.json");
+                    new FileInputStream("src/main/resources/firebase/plant-butler-97f48-firebase-adminsdk-zj3ua-50d19b0665.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setProjectId("plant-butler-c4fd9")
+                    .setProjectId("plant-butler-97f48")
                     .build();
 
             if (FirebaseApp.getApps().isEmpty()) {

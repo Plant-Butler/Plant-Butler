@@ -26,10 +26,26 @@
 	</select>
 	<insert id="insert" parameterType="com.plant.vo.UserVo">
       <![CDATA[
-         insert into user_table (user_Id, nickname, password, email, token)
-         values (#{userId}, #{nickname}, #{password}, #{email},#{token})
+         insert into user_table (user_Id, nickname, password, email)
+         values (#{userId}, #{nickname}, #{password}, #{email})
       ]]>
 	</insert>
+
+    <insert id="saveToken">
+         <![CDATA[
+        insert into token (user_Id, tokenNum)
+        values (#{userId}, #{token})
+        ]]>
+
+    </insert>
+
+    <select id="findToken" resultType="java.lang.String">
+        select tokenNum from token where tokenNum=#{token}
+    </select>
+
+    <delete id="deleteToken">
+        delete from token where tokenNum=#{token}
+    </delete>
 
 
 

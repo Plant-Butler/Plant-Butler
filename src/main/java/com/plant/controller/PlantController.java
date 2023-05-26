@@ -134,7 +134,7 @@ public class PlantController {
         MyPlantService.deleteMyPlant(myplantId);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping(value="/{myplantId}&{plantId}")
+    @GetMapping(value="/{myplantId}/{plantId}")
     public ModelAndView myPlantDetail(@PathVariable("myplantId") int myplantId , @PathVariable("plantId") int plantId){
         ModelAndView model = new ModelAndView();
         MyplantVo myplantVo = MyPlantService.myPlantDetail(myplantId);
@@ -159,19 +159,10 @@ public class PlantController {
 
     }
 
-    @PostMapping("/{myplantId}/represent")
-    public ResponseEntity<Void> insertRepresent(@RequestBody String represent,@PathVariable int myplantId) {
-        int result = Integer.parseInt(represent);
-        MyPlantService.registRepresent(result,myplantId);
-
+    @PostMapping("/{myplantId}/{userId}/represent")
+    public ResponseEntity<Void> insertRepresent(@PathVariable int myplantId, @PathVariable String userId) {
+        MyPlantService.registRepresent(userId, myplantId);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/test")
-    public ModelAndView testpage(){
-        ModelAndView model = new ModelAndView();
-        model.setViewName("myplant/test");
-        return model;
     }
 
 }

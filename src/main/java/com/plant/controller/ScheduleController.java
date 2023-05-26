@@ -103,7 +103,7 @@ public class ScheduleController {
     public ModelAndView setpush(@PathVariable int myplantId, @RequestParam("dayInput")int dayInput ,@RequestParam("timeInput") String timeInput,@RequestParam("userId")String userId){
         String[] parts = timeInput.split(":");
         String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
-        String token = scheduleService.getToken(userId);
+        String[] token = scheduleService.getToken(userId);
         webpush.scheduleTask(myplantId,cronExpression,token);
         boolean flag = myPlantService.insertWebPushData(myplantId,dayInput,timeInput);
         ModelAndView mav = new ModelAndView();
@@ -115,5 +115,6 @@ public class ScheduleController {
         webpush.cancelTask(myplantId);
         return ResponseEntity.ok().build();
     }
+
 
 }
