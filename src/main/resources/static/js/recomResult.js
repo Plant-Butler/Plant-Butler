@@ -94,6 +94,9 @@
 
     /* 마이페이지에 저장 */
     function savePlants() {
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+
         let idxList = "";
 
         $( "input[name='plant_id']" ).each (function (){
@@ -102,6 +105,12 @@
 
         idxList = idxList.substring(0, idxList.lastIndexOf(","));
         console.log(idxList);
+
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            }
+        })
 
         $.ajax({
              url:  "/suggestions/result",
