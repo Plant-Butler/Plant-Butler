@@ -61,8 +61,7 @@
 </select>
     <update id="editMyPlant" parameterType="com.plant.vo.MyplantVo">
         UPDATE myplant SET myplant_nick = #{myplantNick},
-                           myplant_image = #{myplantImage},
-                           myplant_pot = #{myplantWeight},
+                           myplant_pot = #{myplantPot},
                            myplant_length = #{myplantLength},
                            myplant_radius1 = #{myplantRadius1},
                            myplant_radius2 = #{myplantRadius2}

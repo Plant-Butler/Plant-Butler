@@ -44,7 +44,7 @@ public class FCMInitializer {
         }
     }
     @PostConstruct
-    @Scheduled(cron = "*/20 * * * * *")
+    @Scheduled(cron = "0 0 0 * * ?")
     public void point(){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         long todayInDays = timestamp.getTime()/ (1000 * 60 * 60 * 24);

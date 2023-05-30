@@ -4,6 +4,7 @@
 <%-- <%@ include file="../main/header.jsp" %> --%>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +12,7 @@
 <title>Write Item</title>
 <%@ include file="../main/header.jsp" %>
 </head>
+
 <body>
 
 
@@ -20,28 +22,20 @@
 </div>
 <br>
 <%
-    //UserVo userVo = (UserVo) session.getAttribute("user");
-    String userId = "";
-    String userNickname = "";
-    if (userVo != null) {
-        userNickname = userVo.getNickname();
-        userId = userVo.getUserId();
-    }
     LocalDateTime now = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     String formattedNow = now.format(formatter);
-
-
 %>
 
 
    <form action="./form" method="post" enctype="multipart/form-data" >
+       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
    <div class = "form_table">
        <div>
        <br>
                 <h4 class = "title">작성자</h4>
-                <input  class="upload_writer" type="hidden" name="userId" id = "userId"  value=<%=userId %> readonly = "readonly">
-                <input  class="upload_writer" type="text" name="nickname" id = "nickname"  value=<%=userNickname %> readonly = "readonly">
+                <input  class="upload_writer" type="hidden" name="userId" id = "userId"  value="${userVo.userId}" readonly = "readonly">
+                <input  class="upload_writer" type="text" name="nickname" id = "nickname"  value="${userVo.username}" readonly = "readonly">
             </div>
             <br>
          <div>
@@ -86,7 +80,8 @@
    </div>
    <br>
    <br>
-</form>
+   </div>
+   </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -97,7 +92,7 @@ $(document).ready(function() {
 
      $("input[type='radio']").change(function(e){
        var useYn = $(this).val();
-       var userId = "<%= ((UserVo)session.getAttribute("user")).getUserId() %>";
+       var userId = "${userVo.userId}";
        if (useYn == "boast" || useYn == "information") {
          $.ajax({
            url: "/community/plantall",

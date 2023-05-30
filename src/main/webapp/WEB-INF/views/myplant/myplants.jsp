@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/sf-ui-text-2" rel="stylesheet">
-    <link rel="stylesheet"href="../css/myplant.css">
+    <link rel="stylesheet" href="../css/myplantStyle.css">
     <link rel="stylesheet" href="../css/card.css">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
     <script>
@@ -50,12 +50,10 @@
     <a href="/myplants/form">추가하기</a>
 </div>
 <div>
-<table>
-    <tbody>
     <c:forEach var="list" items="${plantList}">
         <div class="card">
-
-            <div class="card-header" style="background-image: url('/uploads/${list.myplantImage}');">
+            <c:set var="images" value="${fn:split(list.myplantImage, ',')}" />
+            <div class="card-header" style="background-image: url('/uploads/${images[0]}');">
                 <c:if test="${list.represent==1}">
                     <div class = "card-header-is_closed">
 
@@ -85,8 +83,6 @@
             </div>
         </div>
     </c:forEach>
-    </tbody>
-</table>
 </div>
 <div id="cityName"></div>
 

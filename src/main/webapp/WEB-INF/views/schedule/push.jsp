@@ -15,9 +15,6 @@
 <head>
     <title>Title</title>
     <%@ include file="../main/header.jsp" %>
-    <%
-        String userId = userVo.getUserId();
-    %>
     <script>
         var csrfToken = "${_csrf.token}";
         var csrfHeader="${_csrf.headerName}";
@@ -57,7 +54,7 @@
     일 간격으로
     <input type="time" id="timeInput" name="timeInput">
     에 알림받기
-    <input type="hidden" id="userId" name="userId" value="<%=userId%>">
+    <input type="hidden" id="userId" name="userId" value="${userId}">
     <br>
     <input type="submit" value="설정하기">
 </form>

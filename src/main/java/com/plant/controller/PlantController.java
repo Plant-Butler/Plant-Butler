@@ -89,9 +89,12 @@ public class PlantController {
     }
     @GetMapping(value="/form")
     /* 등록페이지 이동 */
-    public ModelAndView myPlantRegistForm(HttpSession session) {
+    public ModelAndView myPlantRegistForm() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo user = (UserVo) authentication.getPrincipal();
+        String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
-        session.getAttribute("user");
+        model.addObject("userId",userId);
         model.setViewName("myplant/myPlantRegistForm");
         return model;
     }
