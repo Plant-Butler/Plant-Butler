@@ -6,11 +6,14 @@ import com.plant.service.webpushService;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PlantVo;
 import com.plant.vo.ScheduleVo;
+import com.plant.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.TaskScheduler;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -34,6 +37,9 @@ public class ScheduleController {
 
     @GetMapping("")
     public ModelAndView myPlantSchedule(@PathVariable Long myplantId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
+        String userId = userVo.getUserId();
         ModelAndView model = new ModelAndView();
         ArrayList<ScheduleVo> scheduleVos = scheduleService.getScheduleList(myplantId);
         MyplantVo myplant1 = myPlantService.myPlantDetail(myplantId.intValue());
@@ -57,6 +63,7 @@ public class ScheduleController {
             water1 = water/1000;
         }
         String water2 = String.format("%.2f", water1);
+        model.addObject("userId",userId);
         model.addObject("water",water2);
         model.addObject("date",date);
         model.addObject("date2",date2);
@@ -90,8 +97,12 @@ public class ScheduleController {
 
     @GetMapping("/push")
     public ModelAndView pushPage(@PathVariable int myplantId){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
+        String userId = userVo.getUserId();
         ModelAndView model = new ModelAndView();
         MyplantVo myplantVo = myPlantService.myPlantDetail(myplantId);
+        model.addObject("userId",userId);
         model.addObject("myplantId", myplantId);
         model.addObject("now", new Date());
         model.addObject("myplantvo",myplantVo);
@@ -103,7 +114,7 @@ public class ScheduleController {
     public ModelAndView setpush(@PathVariable int myplantId, @RequestParam("dayInput")int dayInput ,@RequestParam("timeInput") String timeInput,@RequestParam("userId")String userId){
         String[] parts = timeInput.split(":");
         String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
-        String token = scheduleService.getToken(userId);
+        String[] token = scheduleService.getToken(userId);
         webpush.scheduleTask(myplantId,cronExpression,token);
         boolean flag = myPlantService.insertWebPushData(myplantId,dayInput,timeInput);
         ModelAndView mav = new ModelAndView();
@@ -115,5 +126,6 @@ public class ScheduleController {
         webpush.cancelTask(myplantId);
         return ResponseEntity.ok().build();
     }
+
 
 }

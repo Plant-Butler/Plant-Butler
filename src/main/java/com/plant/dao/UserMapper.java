@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.plant.vo.UserVo;
+import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface UserMapper {
@@ -14,4 +15,9 @@ public interface UserMapper {
 	int duplicateId(String userId);
 	int duplicateNick(String nickname);
 
+    boolean saveToken(@Param("token") String token, @Param("userId") String userId);
+
+    String findToken(String token);
+
+	boolean deleteToken(String token);
 }

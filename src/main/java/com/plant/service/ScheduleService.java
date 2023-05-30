@@ -68,8 +68,8 @@ public class ScheduleService {
         return flag;
     }
 
-    public String getToken(String userId) {
-        String token = scheduleMapper.getToken(userId);
+    public String[] getToken(String userId) {
+        String[] token = scheduleMapper.getToken(userId);
         return token;
     }
 }

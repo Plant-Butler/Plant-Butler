@@ -7,22 +7,10 @@ body {
     font-family: 'Nanum Gothic', sans-serif;
 }
 
-#insertplant{
+#insertplant {
     text-align: right;
     display: block;
     width: 100%;
-}
-h1{
-    color: white;
-    width: 1700px;
-    height: 200px;
-    display: flex; /* 이 부분을 변경하세요. */
-    align-items: center; /* 이 부분을 추가하세요. */
-    justify-content: center; /* 이 부분을 추가하세요. */
-    background-image: url('../images/titleimage.jpg');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 table {
@@ -36,8 +24,8 @@ table {
 }
 
 tr {
-    background-color: #ffffff; /* 박스의 배경색을 설정합니다 */
-    border: 1px solid #000000; /* 박스의 테두리를 설정합니다 */
+    background-color: #ffffff;
+    border: 1px solid #000000;
 }
 
 #dataContainer{

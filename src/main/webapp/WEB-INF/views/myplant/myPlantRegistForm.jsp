@@ -1,14 +1,11 @@
-<%@ page import="com.plant.vo.UserVo" %><%--
-  Created by IntelliJ IDEA.
-  User: BIT
-  Date: 2023-04-26
-  Time: 오전 11:49
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ include file="../main/header.jsp" %>
 <html>
 <head>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <script>
     function insertValue(value) {
       var textBox = document.getElementById("code");
@@ -66,10 +63,6 @@
 </head>
 <body>
 <h1>regist form</h1>
-<%
-  UserVo userVo = (UserVo) session.getAttribute("user");
-  String userId = userVo.getUserId();
-%>
 <form action="/myplants/form" method="post" enctype="multipart/form-data">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
   <table>
@@ -89,7 +82,7 @@
     </tr>
     <tr>
       <td>유저닉네임 :</td>
-      <td><input type="text" name="userId" value="<%=userId%>" readonly="readonly"></td>
+      <td><input type="text" name="userId" value="${userId}" readonly="readonly"></td>
       <td></td>
     </tr>
     <tr>

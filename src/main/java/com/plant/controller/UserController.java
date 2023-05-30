@@ -44,11 +44,11 @@ public class UserController {
 	
 	/* 회원가입 */
 	@PostMapping("/registPage")
-	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, HttpServletResponse response) throws IOException {
-		// 비밀번호를 암호화하여 저장
+	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, @RequestParam(value = "tokenValue", required = false) String token,HttpServletResponse response) throws IOException {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
 		boolean flag = userService.regist(user);
+		boolean flag2 = userService.saveToken(token,user.getUserId());
 		logger.info("회원가입");
 		if (flag) {
 			URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/loginPage").build().toUri();
@@ -57,6 +57,8 @@ public class UserController {
 		} else {
 			return ResponseEntity.badRequest().body("회원가입에 실패하였습니다.");
 		}
+
+
 	}
 	
 	/* 로그인 페이지 */
@@ -135,5 +137,16 @@ public class UserController {
         return mv;
     }
 
+	@PostMapping("/token")
+	public ResponseEntity<Void> getToken(@RequestParam String userId,@RequestParam String token){
+		boolean search = userService.findToken(token);
+		if(search==false) {
+			boolean flag = userService.saveToken(token, userId);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
+	public void deleteToken(String token){
+		boolean flag = userService.deleteToken(token);
+	}
 }
