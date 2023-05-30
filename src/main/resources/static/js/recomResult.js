@@ -23,14 +23,14 @@
              success: function(response) {
 
                 // 식물 상세정보
-                let html0 = '<table><tr><td colspan="4">' + distbNm + '</td></tr><tr><td colspan="4">' + response.plantVo.sentence + '</td></tr>'
-                         + '<tr><th>성장 높이</th><td>' + response.plantVo.growthHgInfo + '</td><th>성장 넓이</th><td>' + response.plantVo.growthAraInfo + '</td></tr>'
-                         + '<tr><th>비료</th><td>' + response.plantVo.frtlzrInfo + '</td><th>토양</th><td>' + soilInfo + '</td></tr>'
-                         + '<tr><th>생육온도</th><td>' + response.plantVo.grwhTpCodeNm + '</td><th>배치 장소</th><td>' +  response.plantVo.postngplaceCodeNm + '</td></tr>'
-                         + '<tr><th>물주기 봄</th><td>' + response.plantVo.watercycleSprngCodeNm
-                         + '</td><th>물주기 여름</th><td>' + response.plantVo.watercycleSummerCodeNm + '</td></tr>'
-                         + '<tr><th>물주기 가을</th><td>' + response.plantVo.watercycleAutumnCodeNm + '</td>'
-                         + '<th>물주기 겨울</th><td>' + response.plantVo.watercycleWinterCodeNm + '</td></tr></table>';
+                let html0 = '<table class="table"><tr><td colspan="4"><h1>' + distbNm + '</h1></td></tr><tr><td colspan="4" >' + response.plantVo.sentence + '</td></tr>'
+                         + '<tr><th class="table-success">성장 높이</th><td>' + response.plantVo.growthHgInfo + '</td><th class="table-success">성장 넓이</th><td>' + response.plantVo.growthAraInfo + '</td></tr>'
+                         + '<tr><th class="table-success">비료</th><td>' + response.plantVo.frtlzrInfo + '</td><th class="table-success">토양</th><td>' + soilInfo + '</td></tr>'
+                         + '<tr><th class="table-success">생육온도</th><td>' + response.plantVo.grwhTpCodeNm + '</td><th class="table-success">배치 장소</th><td>' +  response.plantVo.postngplaceCodeNm + '</td></tr>'
+                         + '<tr><th class="table-success">물주기 봄</th><td>' + response.plantVo.watercycleSprngCodeNm
+                         + '</td><th class="table-success">물주기 여름</th><td>' + response.plantVo.watercycleSummerCodeNm + '</td></tr>'
+                         + '<tr><th class="table-success">물주기 가을</th><td>' + response.plantVo.watercycleAutumnCodeNm + '</td>'
+                         + '<th class="table-success">물주기 겨울</th><td>' + response.plantVo.watercycleWinterCodeNm + '</td></tr></table>';
                 plant_detail.innerHTML = html0;
 
 
@@ -94,6 +94,9 @@
 
     /* 마이페이지에 저장 */
     function savePlants() {
+        var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+        var csrfToken = $("meta[name='_csrf']").attr("content");
+
         let idxList = "";
 
         $( "input[name='plant_id']" ).each (function (){
@@ -102,6 +105,12 @@
 
         idxList = idxList.substring(0, idxList.lastIndexOf(","));
         console.log(idxList);
+
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            }
+        })
 
         $.ajax({
              url:  "/suggestions/result",

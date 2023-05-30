@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +16,7 @@
 <section class="page-section cta">
     <div class="container">
         <form action="./form" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <input class="upload_img" type="file" name="diaryMultiImage" multiple>
 
             <div>
@@ -46,7 +48,7 @@
                 <textarea cols="150" rows="10" name="diaryContent" id="diaryContent" required>기록하고 싶은 말을 자유롭게 적어보세요.</textarea>
             </div>
 
-            <input type="hidden" name="userId" id="userId" value="${user.userId}">
+            <input type="hidden" name="userId" id="userId" value="${userId}">
             <input type="submit" value="작성">
         </form>
     </div>
@@ -56,6 +58,7 @@
 <script>
 
     $("input[type='checkbox']").change(function(e) {
+
         // 선택한 내 식물의 인덱스
         var selectedPlant = $(this).val();
         var checkboxId = document.getElementById("id_" + selectedPlant);
@@ -65,6 +68,7 @@
 
         // 체크박스 선택
         if ($(checkboxId).prop("checked")) {
+
             $.ajax({
                 url: "/diaries/schedule",
                 type: "GET",

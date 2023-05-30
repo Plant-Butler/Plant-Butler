@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,7 +44,7 @@ public class DiaryController {
     /* 전체 식물일기 조회 */
     @GetMapping(value="")
     public ModelAndView getDiaryList(@RequestParam(defaultValue = "1")Integer pageNum,
-                                     @RequestParam(defaultValue = "10") Integer pageSize, HttpServletRequest request) {
+                                     @RequestParam(defaultValue = "10") Integer pageSize) {
         ModelAndView mv = new ModelAndView("/diary/diaryList");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -86,7 +85,7 @@ public class DiaryController {
 
     /* 식물일기 작성 페이지 */
     @GetMapping(value="/form")
-    public ModelAndView openDiaryForm(HttpServletRequest request) {
+    public ModelAndView openDiaryForm() {
         ModelAndView mv = new ModelAndView("/diary/newDiary");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -95,6 +94,7 @@ public class DiaryController {
         List<MyplantVo> myplantList = postService.plantall(userId);
 
         mv.addObject("myplantList", myplantList);
+        mv.addObject("userId", userId);
         logger.info("[Diary Controller] openDiaryForm()");
         return mv;
     }

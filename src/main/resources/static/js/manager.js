@@ -1,4 +1,15 @@
+
+var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+var csrfToken = $("meta[name='_csrf']").attr("content");
+
    function selectBest(userId, index) {
+
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            }
+        })
+
         $.ajax({
             url: "/manager/best-user/" + userId,
             type: "POST",
@@ -21,6 +32,13 @@
 
         // 우수회원 취소
         function deleteBest(userId, index) {
+
+            $.ajaxSetup({
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                }
+            })
+
             $.ajax({
                 url: "/manager/best-user/" + userId,
                 type: "DELETE",
@@ -43,6 +61,13 @@
 
         // 우수회원 초기화
         function deleteAllBest() {
+
+            $.ajaxSetup({
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                }
+            })
+
             $.ajax({
                url: "/manager/best-user/all",
                type: "DELETE",
@@ -61,9 +86,6 @@
 
         // 회원 삭제 확인/취소 창
         function deleteUserCheck(userId, num) {
-
-         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
-         var csrfToken = $("meta[name='_csrf']").attr("content");
 
          let say = '';
          if(num === 0) {
@@ -123,6 +145,12 @@
             url =  "/community/comment/" + commentId;
             data.commentId = commentId;
         }
+
+        $.ajaxSetup({
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken);
+            }
+        })
 
         $.ajax({
             url:  url,
