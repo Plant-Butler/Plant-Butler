@@ -39,9 +39,14 @@ public class RecomController {
         ModelAndView mv = new ModelAndView("/suggestions/result");
         ArrayList<PlantVo> resultList = recomService.getResultList(plantVo);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
+        String nickname = userVo.getNickname();
+
         String mapApiKey = apiKeys.getKakaomapKey();
 
         mv.addObject("resultList", resultList);
+        mv.addObject("nickname", nickname);
         mv.addObject("mapApiKey", mapApiKey);
         logger.info("[RecomController Controller] getResultList()");
         return mv;
