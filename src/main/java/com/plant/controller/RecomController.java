@@ -10,10 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -38,9 +39,14 @@ public class RecomController {
         ModelAndView mv = new ModelAndView("/suggestions/result");
         ArrayList<PlantVo> resultList = recomService.getResultList(plantVo);
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
+        String nickname = userVo.getNickname();
+
         String mapApiKey = apiKeys.getKakaomapKey();
 
         mv.addObject("resultList", resultList);
+        mv.addObject("nickname", nickname);
         mv.addObject("mapApiKey", mapApiKey);
         logger.info("[RecomController Controller] getResultList()");
         return mv;
@@ -48,12 +54,13 @@ public class RecomController {
 
     /* 추천 결과 저장 */
     @PostMapping(value="/result")
-    public ResponseEntity<Boolean> saveResultList(@ModelAttribute("idxList") String plantIds, HttpSession session) {
+    public ResponseEntity<Boolean> saveResultList(@ModelAttribute("idxList") String plantIds) {
         boolean flag = false;
         boolean cntFlag = false;
 
-        UserVo user = (UserVo) session.getAttribute("user");
-        String userId = user.getUserId();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
+        String userId = userVo.getUserId();
 
         int already = recomService.getRecomCnt(userId);
         if(already > 0) {

@@ -3,12 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>식물일기</title>
  <%@ include file="../main/header.jsp" %>
+ <meta name="_csrf" content="${_csrf.token}"/>
+ <meta name="_csrf_header" content="${_csrf.headerName}"/>
 </head>
 <body>
 <body style="text-align: center"><br>
@@ -105,17 +108,28 @@
 
     // 식물일기 삭제 확인창
     function deleteCheck(diaryId) {
+
+         var csrfHeader = $("meta[name='_csrf_header']").attr("content");
+         var csrfToken = $("meta[name='_csrf']").attr("content");
+
          let say = '삭제하시겠습니까?';
 
          if (confirm(say) == true){
-             deleteDiary(diaryId);
+             deleteDiary(diaryId, csrfHeader, csrfToken);
          } else {
              return false;
          }
     }
 
     // 식물일기 삭제
-    function deleteDiary(diaryId) {
+    function deleteDiary(diaryId, csrfHeader, csrfToken) {
+
+        $.ajaxSetup({
+            headers: {
+                [csrfHeader] : csrfToken
+            }
+        });
+
         $.ajax({
             url: "/diaries/" + diaryId,
             type: "DELETE",

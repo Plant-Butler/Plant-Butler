@@ -1,9 +1,5 @@
-
-    table, td {
-        text-align: center;
-        margin-left:auto;
-        margin-right:auto;
-        border: 1px solid;
+    .white-box, h1 {
+        font-family: 'Yeon Sung', cursive;
     }
 
     .plant-shop, .soil-shop, .pot-shop {
