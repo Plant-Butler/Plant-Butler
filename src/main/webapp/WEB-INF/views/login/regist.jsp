@@ -25,6 +25,8 @@
    }
 </style>
 </head>
+<body>
+
 <body style="text-align: center">
    <div class="about-section">
   <h1>회원가입</h1>
@@ -73,7 +75,6 @@
            <td><input type="checkbox" name="cookie" value="cookie" id="cookie" style="display:inline-block; margin-left: 10px;" required></td>
          </tr>
 
-
             <tr style="height:100px">
 
                 <th>웹푸시 동의 약관</th>
@@ -93,9 +94,7 @@
          </div>
       </table>
    </form>
-
-
-
+   <script type="module" src="/js/registToken.js"></script>
    <script src="./js/regist.js"></script>
 </body>
 

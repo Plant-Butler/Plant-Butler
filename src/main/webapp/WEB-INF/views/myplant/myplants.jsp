@@ -11,13 +11,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/sf-ui-text-2" rel="stylesheet">
-    <link rel="stylesheet"href="../css/myplant.css">
+    <link rel="stylesheet" href="../css/myplantStyle.css">
+    <link rel="stylesheet" href="../css/card.css">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
     <script>
         function deleteMyPlant(myplantId) {
             const url = '/myplants/form/' + myplantId;
+            var csrfToken = '${_csrf.token}';
+            var csrfHeader = '${_csrf.headerName}';
             fetch(url, {
                 method: 'DELETE',
+                headers: {
+                    [csrfHeader]: csrfToken // CSRF 토큰을 요청 헤더에 추가
+                }
             }).then(response => {
                 if (response.ok) {
                     location.reload();
@@ -30,65 +36,63 @@
         }
     </script>
     <style>
-        .map_wrap {position:relative;width:30%;height:350px; border-radius: 50px; margin-top: 30px; }
+        .map_wrap {position:relative;width:30%;height:350px; border-radius: 50px; margin-top: 30px; visibility: hidden;}
         .title {font-weight:bold;display:block;}
         .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
         #centerAddr {display:block;margin-top:2px;font-weight: normal;}
         .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
     </style>
+
     <title>myplants</title>
 </head>
 <body>
-<h1>내 식물 </h1>
 <div id="insertplant">
     <a href="/myplants/form">추가하기</a>
 </div>
 <div>
-<table>
-    <tbody>
-    <c:forEach var="list" items="${plantList}" >
-        <tr>
-            <td ><a href="/myplants/${list.myplantId}&${list.plantId}">${list.myplantId}</a> </td>
-            <td hidden="hidden">${list.plantId}</td>
-            <td hidden="hidden">${list.userId}</td>
-            <td>${list.myplantNick}</td>
-            <td hidden="hidden">${list.myplantImage}</td>
-            <td hidden="hidden">${list.myplantPot}</td>
-            <td hidden="hidden">${list.myplantLength}</td>
-            <td hidden="hidden">${list.myplantRadius1}</td>
-            <td>${list.firstDate}</td>
-            <c:choose>
-                <c:when test="${(endDate-list.scheduleDate)-1>=10}">
-                    <td>경고</td>
-                </c:when>
-                <c:otherwise>
-                    <td></td>
-                </c:otherwise>
-            </c:choose>
-            <c:choose>
-                <c:when test="${list.represent==1}">
-                    <td>대표식물</td>
-                </c:when>
-                <c:otherwise>
-                    <td></td>
-                </c:otherwise>
-            </c:choose>
-            </td>
-            <td><a href="/myplants/${list.myplantId}/schedule">${list.myplantNick}의 관리페이지</a></td>
-            <td><button class="deleteBtn" onclick="deleteMyPlant(${list.myplantId})">삭제하기</button></td>
-        </tr>
-    </c:forEach>
-    </tbody>
-</table>
-</div>
+    <c:forEach var="list" items="${plantList}">
+        <div class="card">
+            <c:set var="images" value="${fn:split(list.myplantImage, ',')}" />
+            <div class="card-header" style="background-image: url('/uploads/${images[0]}');">
+                <c:if test="${list.represent==1}">
+                    <div class = "card-header-is_closed">
 
-<div id="dataContainer" ></div>
+                    </div >
+                </c:if>
+
+            </div>
+
+            <div class="card-body">
+                <div class="card-body-header">
+
+                    <h1>${list.myplantNick}</h1>
+                    <p class = "card-body-nickname">분양일 : ${list.firstDate}</p>
+                </div>
+
+                <p class="card-body-description">
+                    <a href="/myplants/${list.myplantId}/${list.plantId}">상세페이지</a>
+                </p>
+
+                <div class="card-body-footer">
+                    <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #EF5A31">
+                    <div>
+                        <a href="/myplants/${list.myplantId}/schedule">관리페이지</a>
+                        <a onclick="deleteMyPlant(${list.myplantId})" class="deleteLink">삭제하기</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c:forEach>
+</div>
+<div id="cityName"></div>
+
 <div id="t1hValueContainer"></div><div id="skyValueContainer"></div>
 <div id="newContainer">
     <div id="rehValueContainer"></div>
     <div id ='rn1ValueContainer'></div>
 </div>
 <div id ='ptyValueContainer' hidden="hidden"></div>
+<div id="dataContainer" ></div>
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
     <div class="hAddr">
@@ -181,6 +185,7 @@
                         console.log((result[i].x));
                         console.log((result[i].y));
                         var fuzzyresult = fuzzySearch(list,cityName);
+                        document.getElementById('cityName').textContent = result[i].address_name;
                         console.log("Calling fetchDataFromServer with cityName:", fuzzyresult[0].item);
                         var fetchedData = await fetchDataFromServer(fuzzyresult[0].item);
                         var fetchedWeatherData = await fetchWeatherDataFromServer(x,y);
@@ -240,7 +245,6 @@
             for (var i = 0; i < items.length; i++) {
                 var category = items[i].category;
 
-                // 이미 찾은 카테고리는 무시합니다.
                 if (foundCategories[category]) continue;
 
                 if (category === 'T1H') {

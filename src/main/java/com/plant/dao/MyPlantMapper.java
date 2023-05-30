@@ -27,9 +27,9 @@ public interface MyPlantMapper {
 
 	PlantVo searchPlantToNum(int plantId);
 
-	void registRepresent(@Param("result") int result,@Param("myplantId") int myplantId);
+	void registRepresent(@Param("userId") String userId);
 
-	void registRepresent2(int myplantId);
+	void registRepresent2(@Param("myplantId") int myplantId);
 
 
     boolean insertWebPushData(@Param("myplantId") int myplantId,@Param("dayInput") int dayInput, @Param("timeInput") String timeInput);

@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -51,8 +53,8 @@ public class PostController {
 								   @RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize,
 								   HttpSession session) {
 		ModelAndView mv = new ModelAndView("/community/postDetail");
-
-		UserVo user = (UserVo) session.getAttribute("user");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVo user = (UserVo) authentication.getPrincipal();
 		String userId = "";
 		if (user != null) {
 			userId = user.getUserId();
@@ -68,6 +70,7 @@ public class PostController {
         mv.addObject("post", postVo);
         mv.addObject("commentList", commentList);
         mv.addObject("myPlantList", myPlantList);
+		mv.addObject("user",user);
 
 		int commentCount = mainService.getCommentCount(postId);
 		mv.addObject("commentCount", commentCount);
@@ -124,7 +127,10 @@ public class PostController {
 	/* 새로운 게시물 등록 폼 */
 	@GetMapping("/form")
 	public ModelAndView newform() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVo user = (UserVo) authentication.getPrincipal();
 		ModelAndView mv = new ModelAndView("/community/newPost");
+		mv.addObject("userVo",user);
 		logger.info("게시물 등록 페이지 호출");
 		return mv;
 	}
@@ -230,8 +236,12 @@ public class PostController {
 	/* 게시물 수정 폼 */
 	@GetMapping("/form/{postId}")
 	public ModelAndView updateForm(@PathVariable int postId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVo user = (UserVo) authentication.getPrincipal();
+		String userId = user.getUserId();
 		ModelAndView mv = new ModelAndView("/community/updateForm");
 		PostVo post = postService.postDetail(postId);
+		mv.addObject("userId",userId);
 		mv.addObject("post", post);
 		logger.info("게시물 수정 폼 호출");
 		return mv;
@@ -340,9 +350,9 @@ public class PostController {
 	/* 게시물 좋아요 */
 	@PostMapping(value="/{postId}/heart")
 	public ResponseEntity<String> addHeart(@PathVariable int postId, HttpSession session) {
-		UserVo user = (UserVo) session.getAttribute("user");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVo user = (UserVo) authentication.getPrincipal();
 		String userId = user.getUserId();
-
 		// 좋아요 눌려있는지 확인
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("postId", postId);

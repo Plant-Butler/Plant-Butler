@@ -30,6 +30,9 @@
                 commentContent : updatedComment,
                 commentId : commentId
             },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰을 요청 헤더에 추가
+            },
             success: function(response) {
                 window.location.href = "/community/" + postId;
             },
@@ -59,6 +62,9 @@
             url: url,
             type: "DELETE",
             data: data,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰을 요청 헤더에 추가
+            },
             success: function(response) {
                 alert('삭제되었습니다.');
                 if(num == 0) {
@@ -92,6 +98,9 @@
             url:  url,
             type: "PATCH",
             data: data,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰을 요청 헤더에 추가
+            },
             success: function(response) {
                 alert('신고되었습니다.');
                 window.location.href = "/community/" + postId;
@@ -108,16 +117,19 @@
     // 게시물 좋아요
     function heart(postId, userId) {
         event.preventDefault();
- 		let heartBtn = document.getElementById("heartBtn");
+        let heartBtn = document.getElementById("heartBtn");
 
- 	    $.ajax({
- 			type :'POST',
- 			url : './' + postId + '/heart',
- 			contentType : 'application/json',
- 			data : JSON.stringify({
- 			    postId : postId,
- 			    userId : userId
- 			}),
+        $.ajax({
+            type: 'POST',
+            url: './' + postId + '/heart',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                postId: postId,
+                userId: userId
+            }),
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader(csrfHeader, csrfToken); // CSRF 토큰을 요청 헤더에 추가
+            },
  			success : function(result){
  				if (result === 'add'){
  					heartBtn.innerHTML = '<i class="fa fa-heart" style="color: red;"></i>';

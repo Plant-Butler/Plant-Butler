@@ -89,9 +89,12 @@ public class PlantController {
     }
     @GetMapping(value="/form")
     /* 등록페이지 이동 */
-    public ModelAndView myPlantRegistForm(HttpSession session) {
+    public ModelAndView myPlantRegistForm() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo user = (UserVo) authentication.getPrincipal();
+        String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
-        session.getAttribute("user");
+        model.addObject("userId",userId);
         model.setViewName("myplant/myPlantRegistForm");
         return model;
     }
@@ -135,7 +138,7 @@ public class PlantController {
         MyPlantService.deleteMyPlant(myplantId);
         return ResponseEntity.noContent().build();
     }
-    @GetMapping(value="/{myplantId}&{plantId}")
+    @GetMapping(value="/{myplantId}/{plantId}")
     public ModelAndView myPlantDetail(@PathVariable("myplantId") int myplantId , @PathVariable("plantId") int plantId){
         ModelAndView model = new ModelAndView();
         MyplantVo myplantVo = MyPlantService.myPlantDetail(myplantId);
@@ -160,19 +163,10 @@ public class PlantController {
 
     }
 
-    @PostMapping("/{myplantId}/represent")
-    public ResponseEntity<Void> insertRepresent(@RequestBody String represent,@PathVariable int myplantId) {
-        int result = Integer.parseInt(represent);
-        MyPlantService.registRepresent(result,myplantId);
-
+    @PostMapping("/{myplantId}/{userId}/represent")
+    public ResponseEntity<Void> insertRepresent(@PathVariable int myplantId, @PathVariable String userId) {
+        MyPlantService.registRepresent(userId, myplantId);
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/test")
-    public ModelAndView testpage(){
-        ModelAndView model = new ModelAndView();
-        model.setViewName("myplant/test");
-        return model;
     }
 
 }

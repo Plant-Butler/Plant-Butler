@@ -9,10 +9,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<%
-    UserVo userVo = (UserVo) session.getAttribute("user");
-    String userId = userVo.getUserId();
-%>
+<%@ include file="../main/header.jsp" %>
 <script>
     var csrfToken = '${_csrf.token}';
     var csrfHeader = '${_csrf.headerName}';
@@ -58,11 +55,10 @@
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link href="${pageContext.request.contextPath}/static/css/cal.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/css/cal.css">
     <script src="https://kit.fontawesome.com/e84e54149f.js" crossorigin="anonymous"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js'></script>
     <link href="https://fonts.cdnfonts.com/css/sf-ui-text-2" rel="stylesheet">
-
     <script>
         function showForm() {
             var form = document.getElementById("schedule-form");
@@ -104,6 +100,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
+                aspectRatio: 1.35,
+                height: 700,
                 customButtons: {
                     myCustomButton: {
                         text: '삭제버튼 활성화',
@@ -201,7 +199,7 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <div>
             <input type="hidden" name = "myplantId" value="${myplantId}">
-            <input type="hidden" name = "userId" value="<%=userId%>">
+            <input type="hidden" name = "userId" value="${userId}">
             <label for="watering">물주기</label>
         </div>
         <div>
@@ -227,7 +225,7 @@
         <button type="button" class="btn btn-primary" onclick="submitForm()">제출하기</button>
     </form>
 </div>
-<div id="container">
+<div id="container" style=" width: 50%;">
 <div id='calendar'></div>
 </div>
 <div id="waterAmount">
@@ -308,8 +306,5 @@
 </div>
 <i class="fi fi-rr-Search"></i>
 
-<div>
-    <a href="/myplants/${myplantId}/schedule/push" class="button">물주기 알람 설정</a>
-</div>
 </body>
 </html>

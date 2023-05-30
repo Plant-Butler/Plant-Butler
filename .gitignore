@@ -44,3 +44,6 @@ out/
 /src/main/resources/application-API-KEY.properties
 /src/main/resources/static/js/firebase-messaging-sw.js
 /src/main/resources/static/js/mainscript.js
+/src/main/resources/firebase/plant-butler-97f48-firebase-adminsdk-zj3ua-50d19b0665.json
+/src/main/resources/static/js/tokenscript.js
+/src/main/resources/static/js/registToken.js
