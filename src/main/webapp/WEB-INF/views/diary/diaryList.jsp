@@ -104,7 +104,7 @@
         </ul>
 
         <br>
-        <button onclick="location.href='/diaries/form'">오늘 일기 작성하기</button>
+        <button onclick="location.href='/diaries/form'" class="btn btn-success">오늘 일기 작성하기</button>
     </div>
 </section>
 
