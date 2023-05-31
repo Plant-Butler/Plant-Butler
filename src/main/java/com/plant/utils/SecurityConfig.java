@@ -31,13 +31,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/home/**", "/login/**", "/loginPage/**", "/community/**", "/css/**", "/js/**", "/assets/**").permitAll()
+                .antMatchers("/home/**", "/login/**", "/loginPage/**", "/community/**", "/css/**", "/js/**", "/assets/**", "/uploads/**").permitAll()
                 .antMatchers("/registPage", "/idCheckForm", "/idCheckProc", "/nickCheckForm", "/nickCheckProc").permitAll()
                 .antMatchers("/manager/**").hasRole("ADMIN")
                 .antMatchers("/diaries/**", "/suggestions/**", "/mypage/**", "/myplants/**").hasRole("USER")
                 .anyRequest().authenticated()
                     .and()
                 .formLogin()
+                    .loginPage("/loginPage")
                     .and()
                 .httpBasic()
                     .and()
@@ -47,7 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .logout()
                     .clearAuthentication(true) // 인증 정보 삭제
-                    .invalidateHttpSession(true); // 세션 무효화
+                    .invalidateHttpSession(true) // 세션 무효화
+                    .and()
+                .sessionManagement()
+                    .maximumSessions(1)
+                    .maxSessionsPreventsLogin(true)
+                    .expiredUrl("/loginPage");
     }
 
     @Override

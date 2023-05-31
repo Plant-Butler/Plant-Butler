@@ -10829,6 +10829,7 @@ body {
   background-attachment: fixed;
   background-position: center;
   background-size: cover;
+  background-image: linear-gradient(rgba(47, 23, 15, 0.65), rgba(47, 23, 15, 0.65)), url("../assets/img/green-houseplant-background-for-plant-lovers.jpg");
 }
 
 p {
@@ -10877,7 +10878,7 @@ p {
 }
 
 .bg-faded {
-  background-color: #f6e1c5;
+  background-color: #DCDCDC;
 }
 
 .btn-xl {
@@ -11046,8 +11047,3 @@ p {
             height: 100%;
             object-fit: cover;
         }
-
-    .white-box {
-        background-color: white;
-        opacity:0.855;
-    }

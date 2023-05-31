@@ -25,10 +25,10 @@
 <script src="/js/manager.js"></script>
 <body style="text-align: center">
 <br><br>
-<div style="display:flex; justify-content:space-between; width:1800px;">
+<div style="display:flex; justify-content:space-between; width:100%;" class="cta">
 <div style="width:33%;">
 <h2>게시물 관리</h2>
-<table>
+<table class="table table-striped">
     <th>제목</th><th>아이디</th><th>신고</th><th>삭제</th>
        <c:forEach var="post" items="${postList.list}">
              <tr>
@@ -61,7 +61,7 @@
 </div>
 <div style="width:33%;">
 <h2>댓글 관리</h2>
-<table>
+<table class="table table-striped">
     <th>내용</th><th>아이디</th><th>신고</th><th>삭제</th>
     <c:forEach var="comment" items="${commentList.list}">
         <tr>
@@ -95,7 +95,12 @@
 </div>
 <div style="width:33%;">
 <h2> 회원관리 </h2> (3인 선택)
-<table>
+<br>
+<p>현재 우수회원</p>
+<table id="best-user-table">
+    <tbody></tbody>
+</table>
+<table class="table table-striped">
     <tr><th>아이디</th><th>포인트</th><th>우수회원 선택</th><th>우수회원 취소</th><th>회원삭제</th></tr>
     <c:forEach var="user" items="${userList.list}" varStatus="status">
         <tr>

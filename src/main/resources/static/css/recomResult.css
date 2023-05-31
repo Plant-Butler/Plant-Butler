@@ -1,5 +1,42 @@
-    .white-box, h1 {
-        font-family: 'Yeon Sung', cursive;
+    div, table, h1, h2 {
+        font-family: 'Hahmlet', serif;
+    }
+    .recommend-result {
+        padding: 1em;
+    }
+    .carousel-indicators {
+        bottom: -40px;
+    }
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        filter: invert(100%);
+    }
+    h1 {
+        font-size: 55px;
+    }
+    .modal-ttl {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        width: 230px;
+        text-align: center;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        padding: 15px;
+    }
+    .modal-txt {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+    }
+    .popup {
+        border-radius: 10px;
+        background: url("/assets/img/brick-wall-painted-in-white.jpg") center/cover no-repeat;
+    }
+    .table {
+        background-color: white;
+        border-radius: 20px;
+        width: 95%;
+        padding: 10px;
+        font-size: 17px;
     }
 
     .plant-shop, .soil-shop, .pot-shop {

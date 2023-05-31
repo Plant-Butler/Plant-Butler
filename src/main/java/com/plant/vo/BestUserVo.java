@@ -2,6 +2,7 @@ package com.plant.vo;
 
 public class BestUserVo {
 
+    private String userId;
     private String nickname;
     private String myplantImage;
     private String distbNm;
@@ -9,11 +10,20 @@ public class BestUserVo {
 
     public BestUserVo() {}
 
-    public BestUserVo(String nickname, String myplantImage, String distbNm, String myplantNick) {
+    public BestUserVo(String userId, String nickname, String myplantImage, String distbNm, String myplantNick) {
+        this.userId = userId;
         this.nickname = nickname;
         this.myplantImage = myplantImage;
         this.distbNm = distbNm;
         this.myplantNick = myplantNick;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getNickname() {
