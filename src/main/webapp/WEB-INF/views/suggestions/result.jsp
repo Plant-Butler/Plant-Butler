@@ -124,7 +124,7 @@
 
 <!-- Footer -->
 <footer class="footer text-faded text-center py-5">
-    <div class="container"><p class="m-0 small">tile image 작가 kues1 출처 Freepik
+    <div class="container"><p class="m-0 small">brick-wall-painted-in-white 작가 kues1 출처 Freepik
                             <br> Copyright &copy; Plantery 2023</p></div>
 </footer>
 
