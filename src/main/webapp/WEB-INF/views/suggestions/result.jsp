@@ -46,6 +46,7 @@
                                         </tr>
                                     </table>
                                 </div>
+                                <input type="hidden" name="plant_id" value="${plant.plant_id}">
                             </c:forEach>
                         </div>
                         <ol class="carousel-indicators">

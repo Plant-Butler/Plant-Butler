@@ -130,6 +130,11 @@
 
 </section>
 
+<!-- Footer -->
+<footer class="footer text-faded text-center py-5">
+    <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
+
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
