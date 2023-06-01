@@ -1,0 +1,51 @@
+ div, h1, h4, textarea {
+        font-family: 'Hahmlet', serif;
+    }
+
+    .max-small {
+        width: auto; height: auto;
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    h4 {
+        font-size: 20px;
+        border-radius: 10px;
+        background-color: #b8d4c8;
+        padding: 10px;
+        display: inline-block;
+        text-align: center;
+     }
+
+    .diary-box {
+        border: 2px solid #b8d4c8;
+        border-radius: 10px;
+        padding: 10px;
+        box-shadow: 0 10px 11px rgba(0, 0, 0, 0.1);
+        background-color: white;
+    }
+
+     textarea {
+        border-radius: 10px;
+        border: 1px solid #b8d4c8;
+        text-align: center;
+     }
+
+     #diaryTitle {
+        width: 60%;
+        border-radius: 10px;
+        border: 1px solid #b8d4c8;
+        text-align: center;
+     }
+
+     .btn {
+        width: 20%;
+     }
+
+     .page-section {
+        background: url("/assets/img/leaf.png") center/cover no-repeat fixed;
+     }
+
+    .cta {
+        background-color: white;
+    }

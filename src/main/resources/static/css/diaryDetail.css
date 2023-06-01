@@ -1,0 +1,63 @@
+     div, table {
+         font-family: 'Hahmlet', serif;
+     }
+
+     .table td {
+        vertical-align: bottom;
+        width: 25%;
+     }
+
+     .table {
+        margin-bottom: 50px;
+     }
+
+     .box{
+        text-align: center;
+        vertical-align: bottom;
+        margin-left:auto;
+        margin-right:auto;
+     }
+
+     #diary-ttl {
+        font-size: 55px;
+     }
+
+     .diary-tbl {
+        width: 90%;
+        border-collapse: separate;
+        border-spacing: 0 30px;
+        border: 1px solid #b8d4c8;
+        border-radius: 50px;
+        box-shadow: 0 10px 11px rgba(0, 0, 0, 0.1);
+     }
+
+     .diary-td {
+        border-radius: 10px;
+        padding: 10px;
+     }
+
+     th {
+        font-size: 20px;
+        border-radius: 10px;
+        background-color: #b8d4c8;
+        padding: 10px;
+        width: 50%
+     }
+
+     .spacing {
+         margin-right: 70px;
+     }
+
+     img {
+        width: 50%;
+        height: auto;
+     }
+
+     .carousel-control-prev-icon,
+     .carousel-control-next-icon {
+         filter: invert(100%);
+     }
+
+     .cta {
+        background-color: white;
+     }

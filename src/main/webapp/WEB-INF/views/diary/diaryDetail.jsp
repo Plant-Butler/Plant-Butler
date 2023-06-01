@@ -15,63 +15,7 @@
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
  <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
- <style>
-     div, table {
-         font-family: 'Hahmlet', serif;
-     }
-
-     .table td {
-        vertical-align: bottom;
-     }
-
-     .box{
-        text-align: center;
-        vertical-align: bottom;
-        margin-left:auto;
-        margin-right:auto;
-     }
-
-     #diary-ttl {
-        font-size: 55px;
-     }
-
-     .diary-tbl {
-        width: 90%;
-        border-collapse: separate;
-        border-spacing: 0 30px;
-        border: 1px solid #b8d4c8;
-        border-radius: 50px;
-        box-shadow: 0 10px 11px rgba(0, 0, 0, 0.1);
-     }
-
-     .diary-td {
-        border-radius: 10px;
-        padding: 10px;
-     }
-
-     th {
-        font-size: 20px;
-        border-radius: 10px;
-        background-color: #b8d4c8;
-        padding: 10px;
-        width: 50%
-     }
-
-     img {
-        width: 50%;
-        height: auto;
-     }
-
-     .carousel-control-prev-icon,
-     .carousel-control-next-icon {
-         filter: invert(100%);
-     }
-
-     .cta {
-        background-color: white;
-     }
- </style>
-
+<link rel="stylesheet" href="/css/diaryDetail.css">
 </head>
 <body>
 <body style="text-align: center"><br>
@@ -101,26 +45,27 @@
                             <c:if test="${myPlant.myplantId eq schedule.myplantId}">
                                 <c:set var="hasSchedule" value="true" />
                                 <tr>
-                                    <td></td>
-                                    <td>물주기 ${schedule.watering}회</td>
-                                    <td>영양제 ${schedule.nutri}회</td>
-                                    <td>가지치기 ${schedule.prun}회</td>
-                                    <td>분갈이 ${schedule.soil}회</td>
-                                    <td>환기 ${schedule.ventilation}회</td>
+                                    <td colspan="4">
+                                        물주기 ${schedule.watering}회 <span class="spacing"></span>
+                                        영양제 ${schedule.nutri}회 <span class="spacing"></span>
+                                        가지치기 ${schedule.prun}회 <span class="spacing"></span>
+                                        분갈이 ${schedule.soil}회 <span class="spacing"></span>
+                                        환기 ${schedule.ventilation}회
+                                    </td>
                                 </tr>
                             </c:if>
                         </c:forEach>
 
                         <c:if test="${not hasSchedule}">
                             <tr>
-                                <td></td>
                                 <td colspan="5">관리기록이 비어있어요</td>
                             </tr>
                         </c:if>
-                    <tr style="height: 30px;"></tr>
                 </table>
             </c:forEach>
         </c:if>
+<br>
+<br>
 <br>
 <br>
         <table class="diary-tbl">
@@ -147,6 +92,7 @@
                 <td class="diary-td">${diary.diaryContent}</td>
             </tr>
         </table>
+<br>
 <br>
 <br>
 <br>
@@ -178,9 +124,9 @@
 
 <br>
 <br>
-        <button onclick='location.href="/diaries/form/${diary.diaryId}"'>수정</button>
-        <button onclick="deleteCheck(${diary.diaryId})">삭제</button>
-        <button onclick='location.href="/diaries"'>목록</button>
+        <button class="btn btn-success" onclick='location.href="/diaries/form/${diary.diaryId}"'>수정</button>
+        <button class="btn btn-success" onclick="deleteCheck(${diary.diaryId})">삭제</button>
+        <button class="btn btn-success" onclick='location.href="/diaries"'>목록</button>
 
 </section>
 

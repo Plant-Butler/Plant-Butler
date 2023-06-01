@@ -38,11 +38,14 @@
     .carousel-control-next-icon {
         filter: invert(100%);
     }
+        .cta {
+            background-color: white;
+         }
 </style>
 </head>
 <body>
 <body style="text-align: center">
-    <section class="page-section">
+    <section class="page-section cta">
         <h1 class="section-heading mb-4"> 나에게 맞는 식물 찾기 </h1>
         <p>아홉가지 질문을 통해 당신의 성향 & 취향 & 환경을 고려하여 <br> 당신만을 위한 식물을 알려드릴게요.<p>
 
