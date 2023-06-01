@@ -1,0 +1,96 @@
+#slide-image{
+ object-fit: contain; width: 100%; height: 100%;
+}
+.swiper{
+   width: 500px; height: 800px; float: left; margin-right: 70px;
+}
+#representContainer{
+    margin-top: 200px;
+   margin-bottom: 30px;
+    font-family: 'Hahmlet', serif;
+}
+#myplantContainer{
+    font-family: 'Hahmlet', serif;
+    font-size: 25px;
+
+}
+#detailTitle{
+    margin-top: 140px;
+    font-family: 'LINESeedKR-Bd', sans-serif;
+    text-align: center;
+}
+#myplantFirstDate{
+    font-size: 42px;
+    color : #157347;
+    font-style: italic;
+}
+#plantdetail2{
+    margin-top: 50px;
+}
+.highlight{
+    font-weight: 900;
+}
+.content {
+    display: none;
+}
+#buttonNav{
+    margin-top: 60px;
+    margin-bottom: 60px;
+    display: flex;
+    gap: 60px;
+    text-align: center;
+    justify-content: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+#button1{
+font-size: 30px;
+    margin-bottom: 30px;
+}
+#button2{
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+#button3{
+    font-size: 30px;
+    margin-bottom: 30px;
+}
+.seasonTitle{
+    font-family: 'LINESeedKR-Bd', sans-serif;
+    font-size: 35px;
+    display: inline;
+    justify-content: center;
+}
+#content1{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Hahmlet', serif;
+    font-size: 25px;
+}
+#season{
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-family: 'LINESeedKR-Bd', sans-serif;
+    font-size: 40px;
+    margin-bottom: 60px;
+    color : #157347;
+}
+#content2{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Hahmlet', serif;
+    font-size: 25px;
+}
+.footer{
+    margin-top: 150px;
+}
+@font-face {
+    font-family: 'LINESeedKR-Bd';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/LINESeedKR-Bd.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}

@@ -45,8 +45,9 @@
 </head>
 <body>
 <body style="text-align: center">
-    <section class="page-section cta">
-        <h1 class="section-heading mb-4"> 나에게 맞는 식물 찾기 </h1>
+<section class="page-section cta">
+    <div class="container" style="margin-top: 130px">
+        <h1 class="section-heading mb-4"> 나에게 맞는 식물 찾기 <h1>
         <p>아홉가지 질문을 통해 당신의 성향 & 취향 & 환경을 고려하여 <br> 당신만을 위한 식물을 알려드릴게요.<p>
 
         <br><br>
@@ -133,10 +134,10 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer text-faded text-center py-5">
-        <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
-    </footer>
+<!-- Footer -->
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
+  <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
 
 <script>
     function validateForm() {

@@ -22,7 +22,7 @@
 
 <br>
 <form>
-    <div class="wrap">
+    <div class="wrap" style="margin-top: 500px">
         <div class="login">
             <br>
             <h2>로그인</h2>

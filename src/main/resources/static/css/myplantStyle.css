@@ -63,7 +63,7 @@ tr {
     font-size: 15px;
     font-weight: bold;
     width : 100px;
-    height: 55px;
+    height: 25px;
 }
 
 #newContainer{
@@ -79,6 +79,14 @@ rn1ValueContainer{
 
 
 }
+#bodyContainer{
+padding-left: 200px; padding-right: 200px;
+    margin-top: 200px;
+    margin-bottom: 400px;
+    width: 1700px;
+    margin-right: auto;
+    margin-left: auto;
+}
 .clear {
     background-image: url('../images/clear.png');
 }
@@ -90,3 +98,4 @@ rn1ValueContainer{
 .overcast {
     background-image: url('../images/overcastsky.png');
 }
+

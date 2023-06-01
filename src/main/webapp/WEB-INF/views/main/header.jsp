@@ -21,46 +21,47 @@
 
 </head>
 <body>
-    <header>
-        <h1 class="site-heading text-center text-faded d-none d-lg-block">
-             <span class="site-heading-lower">Plantery</span>
+    <header id="mainheader">
+        <h1 id ="headertitle" class="site-heading text-center text-faded d-none d-lg-block" style="height: 80px; width: 100%;">
+             <span class="site-heading-lower" style="width: 100%;">Plantery</span>
         </h1>
-    </header>
-    <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
-        <div class="container">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/home">HOME</a></li>
-                    <sec:authorize access="isAuthenticated()">
-                        <sec:authentication property="principal" var="userPrincipal" />
+        <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
+            <div class="container">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/home" style="font-size: 17px">HOME</a></li>
+                        <sec:authorize access="isAuthenticated()">
+                            <sec:authentication property="principal" var="userPrincipal" />
 
-                        <%-- 로그인 후 디스플레이 --%>
-                        <sec:authorize access="hasRole('ROLE_USER')">
-                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/mypage">마이페이지</a></li>
-                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/diaries">식물일기</a></li>
-                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/myplants">내 식물</a></li>
+                            <%-- 로그인 후 디스플레이 --%>
+                            <sec:authorize access="hasRole('ROLE_USER')">
+                                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/mypage" style="font-size: 17px">마이페이지</a></li>
+                                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/diaries" style="font-size: 17px">식물일기</a></li>
+                                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/myplants" style="font-size: 17px">내 식물</a></li>
+                            </sec:authorize>
+
+                            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                <%-- 관리자만 표시하는 경우 --%>
+                                <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/manager" style="font-size: 17px">관리자페이지</a></li>
+                            </sec:authorize>
+
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/community" style="font-size: 17px">커뮤니티</a></li>
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/logout" style="font-size: 17px">로그아웃</a></li>
                         </sec:authorize>
 
-                        <sec:authorize access="hasRole('ROLE_ADMIN')">
-                            <%-- 관리자만 표시하는 경우 --%>
-                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/manager">관리자페이지</a></li>
+                        <sec:authorize access="!isAuthenticated()">
+                            <%-- 로그인 전 디스플레이 --%>
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/community" style="font-size: 17px">커뮤니티</a></li>
+
+                            <%-- 로그인 --%>
+                            <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/loginPage" style="font-size: 17px">로그인</a></li>
                         </sec:authorize>
-
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/community">커뮤니티</a></li>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/logout">로그아웃</a></li>
-                    </sec:authorize>
-
-                    <sec:authorize access="!isAuthenticated()">
-                        <%-- 로그인 전 디스플레이 --%>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/community">커뮤니티</a></li>
-
-                        <%-- 로그인 --%>
-                        <li class="nav-item px-lg-4"><a class="nav-link text-uppercase" href="/loginPage">로그인</a></li>
-                    </sec:authorize>
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
+
 
 
         <!-- Bootstrap core JS-->
