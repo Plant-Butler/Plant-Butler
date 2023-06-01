@@ -45,17 +45,15 @@
             display: none !important;
         }
         #container {
-            width: 1200px;
-        }
-        #waterAmount {
-            position: absolute;
-            top: 0;
-            right: 100px;
+            width: 1000px;
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="/css/cal.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/scheduleStyle.css">
     <script src="https://kit.fontawesome.com/e84e54149f.js" crossorigin="anonymous"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.6/index.global.min.js'></script>
     <link href="https://fonts.cdnfonts.com/css/sf-ui-text-2" rel="stylesheet">
@@ -189,11 +187,14 @@
     </script>
     <title>Title</title>
 </head>
-<body>
-<div id="fourSeasonContainer"></div>
-<h1>${myplant1.myplantNick}의 관리페이지</h1>
-<button class="btn btn-primary" type="button" onclick="location.href='/myplants/${myplantId}/schedule/push'">물주기 알람 설정</button>
-<button class="btn btn-primary" onclick="showForm()">오늘기록 추가하기</button>
+<body style="margin-top: 200px;height: 1500px;">
+<div id="bodyContainer">
+<h1 style="font-family: 'Hahmlet', serif;">${myplant1.myplantNick}의 관리페이지</h1>
+    <div id="linecontainer" style="height: 20px; width: 1300px; border-bottom : 1px solid rgba(128, 128, 128, 0.5);
+}"></div>
+    <div id="buttondiv" style="margin-top: 50px;">
+<button class="btn btn-primary" stype="button" onclick="location.href='/myplants/${myplantId}/schedule/push'">물주기 알람 설정</button>
+<button class="btn btn-primary" onclick="showForm()">오늘기록 추가하기</button></div>
 <div id="schedule-form" style="display:none;">
     <form id="scheduleForm">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -225,15 +226,15 @@
         <button type="button" class="btn btn-primary" onclick="submitForm()">제출하기</button>
     </form>
 </div>
-<div id="container" style=" width: 50%;">
-<div id='calendar'></div>
-</div>
-<div id="waterAmount">
-    <h1>물의 양</h1>
-    ${myplant1.myplantNick}의 화분에 맞는 물의 양은 ${water}L 입니다
-
-    최근에 물을 준 날짜 : <fmt:formatDate pattern="yyyy-MM-dd" value="${date}"></fmt:formatDate>
-
+    <div id="container" style="display: flex; width: 100%; margin-top: 30px">
+        <div id='calendar' style="width: 50%;"></div>
+        <div id="waterAmount" style="display: grid; justify-items: end; width: 50%; text-align: center;">
+            <table style="">
+                <tr><td style="height: 50px; font-size: 65px; font-family: 'Hahmlet', serif; text-align: right; vertical-align: top;">관리 정보</td></tr>
+                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'Hahmlet', serif; color:  #198754; ">적당한 물의 양</td></tr>
+                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);">${myplant1.myplantNick}의 화분에 맞는 물의 양은 ${water}L 입니다</td></tr>
+                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'Hahmlet', serif; color:  #198754; ">최근에 물을 준 날짜</td></tr>
+                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);"><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"></fmt:formatDate></td></tr>
     <%
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH);
@@ -265,7 +266,8 @@
         }
     %>
 
-    <%=text%>
+                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'Hahmlet', serif; color:  #198754; ">물 주는 시기</td></tr>
+                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);"><%=text%></td></tr>
 
     <%
         long diffInDays = 0;
@@ -283,8 +285,6 @@
             diffInDays = diffInMillies / (24 * 60 * 60 * 1000);
         }
     %>
-    오늘로부터 물을 <%=diffInDays%> 일 동안 주지 않았습니다!
-
     <%
 
         long diffInDays2 = 0;
@@ -299,12 +299,23 @@
             diffInDays2 = diffInMillies / (24 * 60 * 60 * 1000);
         }
     %>
+                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'Hahmlet', serif; color:  #198754; ">최근 관리기록 작성일</td></tr>
+                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; "><%=diffInDays2%> 일 전</td></tr>
+                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);">오늘로부터 물을 <%=diffInDays%> 일 동안 주지 않았습니다!</td></tr>
 
-    마지막 관리기록 작성일 : <%=diffInDays2%> 일 전
-
-
+            </table>
 </div>
-<i class="fi fi-rr-Search"></i>
+</div>
 
+<i class="fi fi-rr-Search"></i>
+</div>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;  margin-top: auto;">
+    <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
+<script>
+    // JavaScript를 사용하여 footer를 body의 가장 아래로 이동
+    var footer = document.querySelector('footer');
+    document.body.appendChild(footer);
+</script>
 </body>
 </html>

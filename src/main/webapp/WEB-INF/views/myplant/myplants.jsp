@@ -1,3 +1,4 @@
+<title>myplants</title>
 <%@ page import="java.util.Date" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
@@ -5,8 +6,9 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
-<head>
 <%@ include file="../main/header.jsp" %>
+
+<head>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
@@ -14,6 +16,7 @@
     <link rel="stylesheet" href="../css/myplantStyle.css">
     <link rel="stylesheet" href="../css/card.css">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&family=Noto+Sans+KR:wght@700&display=swap" rel="stylesheet">
+
     <script>
         function deleteMyPlant(myplantId) {
             const url = '/myplants/form/' + myplantId;
@@ -35,23 +38,35 @@
             });
         }
     </script>
-    <style>
-        .map_wrap {position:relative;width:30%;height:350px; border-radius: 50px; margin-top: 30px; visibility: hidden;}
-        .title {font-weight:bold;display:block;}
-        .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
-        #centerAddr {display:block;margin-top:2px;font-weight: normal;}
-        .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
-    </style>
-
-    <title>myplants</title>
 </head>
 <body>
+<style>
+    .map_wrap {position:relative;width:30%;height:350px; border-radius: 50px; margin-top: 30px; visibility: hidden;}
+    .title {font-weight:bold;display:block;}
+    .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
+    #centerAddr {display:block;margin-top:2px;font-weight: normal;}
+    .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+</style>
+
+
+<div id="bodyContainer">
+    <div>
+        <div id="cityName" style="font-family: 'LINESeedKR-Bd', sans-serif; font-size: 30px; font-weight: bold;"></div>
+
+        <div id="t1hValueContainer"></div><div id="skyValueContainer"></div>
+        <div id="newContainer" style="border-left:3px solid rgba(128, 128, 128, 0.3);">
+            <div id="rehValueContainer"></div>
+            <div id ='rn1ValueContainer'></div>
+        </div>
+        <div id ='ptyValueContainer' hidden="hidden"></div>
+        <div id="dataContainer" ></div>
+    </div>
 <div id="insertplant">
     <a href="/myplants/form">추가하기</a>
 </div>
-<div>
+<div style="width: 1200px;">
     <c:forEach var="list" items="${plantList}">
-        <div class="card">
+        <div class="card" style="width: 30%;">
             <c:set var="images" value="${fn:split(list.myplantImage, ',')}" />
             <div class="card-header" style="background-image: url('/uploads/${images[0]}');">
                 <c:if test="${list.represent==1}">
@@ -84,15 +99,6 @@
         </div>
     </c:forEach>
 </div>
-<div id="cityName"></div>
-
-<div id="t1hValueContainer"></div><div id="skyValueContainer"></div>
-<div id="newContainer">
-    <div id="rehValueContainer"></div>
-    <div id ='rn1ValueContainer'></div>
-</div>
-<div id ='ptyValueContainer' hidden="hidden"></div>
-<div id="dataContainer" ></div>
 <div class="map_wrap">
     <div id="map" style="width:100%;height:100%;position:relative;overflow:hidden;"></div>
     <div class="hAddr">
@@ -219,16 +225,16 @@
             var airvalue;
             switch (items[0].khaiGrade) {
                 case '1':
-                    airvalue = '오늘의 통합대기환경등급은 "좋음"입니다 환기하기 좋은 환경입니다!';
+                    airvalue = '오늘의 통합대기환경등급은 "좋음"입니다\n환기하기 좋은 환경입니다!';
                     break;
                 case '2':
-                    airvalue = '오늘의 통합대기환경등급은 "보통"입니다 환기를 하시되 너무 오래는 하지마세요';
+                    airvalue = '오늘의 통합대기환경등급은 "보통"입니다\n환기를 하시되 너무 오래는 하지마세요';
                     break;
                 case '3':
-                    var airvalue = '오늘의 통합대기환경등급은 "나쁨"입니다 창문을 열지 않는걸 추천해요';
+                    var airvalue = '오늘의 통합대기환경등급은 "나쁨"입니다\n창문을 열지 않는걸 추천해요';
                     break;
                 default:
-                    airvalue = '오늘의 통합대기환경등급은 "매우 나쁨"입니다 문을 꼭 닫아 놓으세요';
+                    airvalue = '오늘의 통합대기환경등급은 "매우 나쁨"입니다\n문을 꼭 닫아 놓으세요';
                     break;
             }
 
@@ -461,6 +467,11 @@
         return result;
     }
 </script>
-
+</div>
+</div>
 </body>
+</div>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px; background-repeat: no-repeat; background-size: cover;">
+    <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
 </html>
