@@ -31,7 +31,6 @@
 </head>
 <body>
 <body style="text-align: center"><br>
-
         <section class="page-section clearfix">
             <div class="container">
                 <div class="intro">

@@ -6,37 +6,40 @@
 <meta charset="UTF-8">
 <title>로그인</title>
 <%@ include file="../main/header.jsp" %>
+<link rel="stylesheet" type="text/css" href="/css/login.css">
 </head>
 <body style="text-align: center">
+    <section class="loginsection">
+        <div class="form-box">
+            <div class = "form-value">
+                    <h2 class="loginh2"> 로그인 </h2>
+                    <div class="inputbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input type="text" name="userId" id="userId" required>
+                        <label for="">Username</label>
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="password" name="password" id="password" required>
+                        <label for="">Password</label>
+                    </div>
+                    <div class="signin">
+                        <a href="./registPage">Sign In</a>
+                    </div>
+                   <button class="loginbutton" type="button" onclick="login()">로그인</button
+                </form>
+            </div>
+        </div>
+    </section>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
 <style>
     input {
         width:250px;
         text-align: center;
     }
 </style>
-
-<br>
-   <form>
-      <div class="wrap">
-        <div class="login">
-           <br>
-            <h2>로그인</h2>
-            <br>
-            <div class="login_id">
-                <h4>아이디</h4>
-                <input type="text" name="userId" id="userId" placeholder="ID">
-            </div>
-            <div class="login_pw">
-                <h4>비밀번호</h4>
-                <input type="password" name="password" id="password" placeholder="Password">
-            </div>
-                <br><button type="button" onclick="login()">로그인</button>
-        </div>
-    </div>
-   </form>
-               <div class="login_etc">
-                    <p style="text-align:middle;"><a type="submit" href='./registPage'>회원가입</a><p>
-               </div>
 
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
@@ -65,8 +68,11 @@
           }
         });
     };
-
-
     </script>
+        <br>
+        <br>
+        <footer class="footer text-faded text-center py-5">
+            <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+        </footer>
 </body>
 </html>

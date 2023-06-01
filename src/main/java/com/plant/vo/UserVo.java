@@ -9,6 +9,8 @@ public class UserVo {
     private int point;
     private int manager;
 
+    private String token;
+
     public UserVo() {}
 
     public UserVo(String nickname, String password, String email) {
@@ -17,18 +19,14 @@ public class UserVo {
         this.email = email;
     }
 
-    public UserVo(String userId, String nickname, String password, String email, int point, int manager) {
+    public UserVo(String userId, String nickname, String password, String email, int point, int manager, String token) {
         this.userId = userId;
         this.nickname = nickname;
         this.password = password;
         this.email = email;
         this.point = point;
         this.manager = manager;
-    }
-
-    public UserVo(String userId, String password) {
-        this.userId = userId;
-        this.password = password;
+        this.token = token;
     }
 
     public String getUserId() {
@@ -77,5 +75,13 @@ public class UserVo {
 
     public void setManager(int manager) {
         this.manager = manager;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }
