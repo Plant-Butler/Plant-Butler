@@ -9,11 +9,11 @@
         <result column="password" property="password"/>
     </resultMap>
 
-    <select id="checkMember" parameterType="com.plant.vo.UserVo" resultMap="UserResultMap">
-        <![CDATA[
-         SELECT * FROM user_table WHERE user_id = #{userId} AND password = #{password}
-     ]]>
-    </select>
+    <select id="checkMember" parameterType="java.lang.String" resultMap="UserResultMap">
+    <![CDATA[
+        SELECT * FROM user_table WHERE user_id = #{userId}
+        ]]>
+</select>
 	<select id="duplicateId" resultType="int">
       <![CDATA[
          SELECT count(user_id) as cnt FROM user_table WHERE user_id = #{userId}
@@ -30,6 +30,22 @@
          values (#{userId}, #{nickname}, #{password}, #{email})
       ]]>
 	</insert>
+
+    <insert id="saveToken">
+         <![CDATA[
+        insert into token (user_Id, tokenNum)
+        values (#{userId}, #{token})
+        ]]>
+
+    </insert>
+
+    <select id="findToken" resultType="java.lang.String">
+        select tokenNum from token where tokenNum=#{token}
+    </select>
+
+    <delete id="deleteToken">
+        delete from token where tokenNum=#{token}
+    </delete>
 
 
 

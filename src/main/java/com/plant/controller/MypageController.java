@@ -1,7 +1,9 @@
 package com.plant.controller;
 
 import com.github.pagehelper.PageInfo;
+import com.google.firebase.messaging.FirebaseMessagingException;
 import com.plant.service.CommentService;
+import com.plant.service.ManagerService;
 import com.plant.service.MypageService;
 import com.plant.service.PostService;
 import com.plant.vo.CommentVo;
@@ -13,14 +15,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
+
 
 @RestController
 @RequestMapping("/mypage")
@@ -29,19 +33,27 @@ public class MypageController {
     @Autowired
     private MypageService mypageService;
     @Autowired
+    private ManagerService managerService;
+    @Autowired
     private PostService postService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 마이페이지 이동 (로그인 후) */
     @GetMapping(value=" ")
-    public ModelAndView openMypage(HttpServletRequest request) {
+    public ModelAndView openMypage() throws FirebaseMessagingException {
         ModelAndView mv = new ModelAndView("/mypage/mypage");
-        HttpSession session = request.getSession();
-        UserVo userVo = (UserVo) session.getAttribute("user");
-        String userId = userVo.getUserId();;
-        mv.addObject("userId", userId);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            UserVo user = (UserVo) authentication.getPrincipal();
+            mv.addObject("point", user.getPoint());
+            mv.addObject("userId", user.getUserId());
+            mv.addObject("nickname", user.getNickname());
+        }
         return mv;
     }
 
@@ -49,23 +61,31 @@ public class MypageController {
     @GetMapping(value="/{userId}")
     public ModelAndView openUpdatePage(@PathVariable String userId) {
         ModelAndView mv = new ModelAndView("/mypage/myUpdate");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            UserVo user = (UserVo) authentication.getPrincipal();
+            mv.addObject("userId", user.getUserId());
+            mv.addObject("nickname", user.getNickname());
+            mv.addObject("email", user.getEmail());
+        }
         return mv;
     }
 
     /* 회원정보 수정 */
     @PutMapping(value="/{userId}")
-    public ResponseEntity<Void> updateMypage(@ModelAttribute UserVo user, HttpServletRequest request) {
-        boolean flag = mypageService.updateMypage(user);
+    public ResponseEntity<Void> updateMypage(@ModelAttribute UserVo user) {
 
-        logger.info("[Mypage Controller] updateMypage(user)");
-        // 세션 반영
-        HttpSession session = request.getSession();
-        UserVo userVo = (UserVo) session.getAttribute("user");
-        userVo.setPassword(user.getPassword());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
+        userVo.setPassword(passwordEncoder.encode(user.getPassword()));
         userVo.setNickname(user.getNickname());
         userVo.setEmail(user.getEmail());
-        session.setAttribute("user", userVo);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        boolean flag = mypageService.updateMypage(userVo);
+
+        logger.info("[Mypage Controller] updateMypage(user)");
         if(flag) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
@@ -134,5 +154,18 @@ public class MypageController {
         mv.addObject("recomPlantList", recomPlantList);
 
         return mv;
+    }
+
+    /* 회원 탈퇴 */
+    @DeleteMapping(value="/{userId}")
+    public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
+        boolean flag = managerService.deleteUser(userId);
+
+        logger.info("[Mypage Controller] deleteUser(userId)");
+        if(flag) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

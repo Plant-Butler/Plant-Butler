@@ -24,4 +24,8 @@ public interface ScheduleMapper {
     ArrayList<ScheduleVo> getScheduleListToUserId(String userId);
 
     void setSchedule(@Param("myplantId") int myplantId, @Param("scheduleDate") long scheduleDate);
+
+    boolean findSchedule(int myplantId);
+
+    String[] getToken(String userId);
 }

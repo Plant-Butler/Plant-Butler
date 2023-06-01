@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-   pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +7,14 @@
 <title>로그인</title>
 <%@ include file="../main/header.jsp" %>
 <link rel="stylesheet" type="text/css" href="/css/login.css">
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <script type="module" src="/js/mainscript.js"></script>
+    <%@ include file="../main/header.jsp" %>
+    <script>
+        var csrfToken = '${_csrf.token}';
+        var csrfHeader = '${_csrf.headerName}';
+    </script>
 </head>
 <body style="text-align: center">
     <section class="loginsection">

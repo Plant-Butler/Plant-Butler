@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.net.URI;
 
 
@@ -30,10 +31,10 @@ public class CommentController {
         boolean flag = commentService.postComment(commentVo);
         int point = commentService.getPoint(commentVo.getUserId());
 
-        HttpSession session = request.getSession();
-        UserVo userVo = (UserVo) session.getAttribute("user");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
         userVo.setPoint(point);
-        session.setAttribute("user", userVo);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
         logger.info("[Comment Controller] postComment()");
         HttpHeaders headers = new HttpHeaders();
@@ -83,4 +84,5 @@ public class CommentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
+
 }

@@ -1,6 +1,7 @@
 package com.plant.controller;
 
 import com.plant.service.RecomService;
+import com.plant.utils.ApiKey;
 import com.plant.utils.ShopApi;
 import com.plant.vo.PlantVo;
 import com.plant.vo.UserVo;
@@ -9,10 +10,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -26,25 +28,39 @@ public class RecomController {
 
     @Autowired
     private RecomService recomService;
+    @Autowired
+    private ApiKey apiKeys;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     /* 추천 결과 보기 */
     @GetMapping(value="/result")
     public ModelAndView getResultList(@ModelAttribute PlantVo plantVo) {
         ModelAndView mv = new ModelAndView("/suggestions/result");
         ArrayList<PlantVo> resultList = recomService.getResultList(plantVo);
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
+        String nickname = userVo.getNickname();
+
+        String mapApiKey = apiKeys.getKakaomapKey();
+
         mv.addObject("resultList", resultList);
+        mv.addObject("nickname", nickname);
+        mv.addObject("mapApiKey", mapApiKey);
+        logger.info("[RecomController Controller] getResultList()");
         return mv;
     }
 
     /* 추천 결과 저장 */
     @PostMapping(value="/result")
-    public ResponseEntity<Boolean> saveResultList(@ModelAttribute("idxList") String plantIds, HttpSession session) {
+    public ResponseEntity<Boolean> saveResultList(@ModelAttribute("idxList") String plantIds) {
         boolean flag = false;
         boolean cntFlag = false;
 
-        UserVo user = (UserVo) session.getAttribute("user");
-        String userId = user.getUserId();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserVo userVo = (UserVo) authentication.getPrincipal();
+        String userId = userVo.getUserId();
 
         int already = recomService.getRecomCnt(userId);
         if(already > 0) {
@@ -79,7 +95,7 @@ public class RecomController {
     * 3. 해당 식물에 적합한 토양의 인터넷 쇼핑 상품정보
     * 4. 해당 식물에 적합한 크기의 화분 인터넷 쇼핑 상품정보
     *
-    * */
+    */
     @GetMapping(value="/result/detail")
     public ResponseEntity<Map> getDetailInfo(@RequestParam("plant_id") int plantId, @RequestParam("distbNm") String distbNm,
                                        @RequestParam("soilInfo") String soilInfo) {
@@ -90,7 +106,7 @@ public class RecomController {
         resultMap.put("plantVo", plantVo);
 
         // 인터넷 쇼핑 상품정보
-        ShopApi shop = new ShopApi();
+        ShopApi shop = new ShopApi(apiKeys);
 
         int idealHg = recomService.calcPot(plantId).get("idealHg");
         int idealAra = recomService.calcPot(plantId).get("idealAra");

@@ -1,5 +1,6 @@
 package com.plant.controller;
 
+import com.plant.service.CustomUserDetailsService;
 import com.plant.service.UserService;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
@@ -7,6 +8,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -22,9 +28,13 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private CustomUserDetailsService detailService;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
-	
-	/* 회원가입 폼 */	
+
+	/* 회원가입 폼 */
 	@GetMapping("/registPage")
 	public ModelAndView viewRegist() {
 		ModelAndView mv = new ModelAndView("/login/regist");
@@ -32,21 +42,23 @@ public class UserController {
 		return mv;
 	}
 	
-	/* 회원가입 */	
+	/* 회원가입 */
 	@PostMapping("/registPage")
-	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, HttpServletResponse response) throws IOException {
-		System.out.println(user.getUserId());
-		System.out.println(user.getPassword());
+	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, @RequestParam(value = "tokenValue", required = false) String token,HttpServletResponse response) throws IOException {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+
 		boolean flag = userService.regist(user);
+		boolean flag2 = userService.saveToken(token,user.getUserId());
 		logger.info("회원가입");
-	    if (flag) {
-	        URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/loginPage").build().toUri();
-	        response.sendRedirect(location.toString());
-	        return ResponseEntity.ok().build();
+		if (flag) {
+			URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/loginPage").build().toUri();
+			response.sendRedirect(location.toString());
+			return ResponseEntity.ok().build();
 		} else {
 			return ResponseEntity.badRequest().body("회원가입에 실패하였습니다.");
 		}
-		
+
+
 	}
 	
 	/* 로그인 페이지 */
@@ -59,11 +71,14 @@ public class UserController {
 
 	/* 로그인 */
 	@PostMapping("/loginPage/login")
-	public ResponseEntity<String> login(@ModelAttribute UserVo user, HttpSession session) {
-		UserVo user1 = userService.validMember(user);
-		logger.info("로그인");
-		if (user1 != null) {
-			session.setAttribute("user", user1);
+	public ResponseEntity<String> login(@ModelAttribute UserVo user) {
+		String userId = user.getUserId();
+		UserVo userFromDB = userService.validMember(userId);
+		if (passwordEncoder.matches(user.getPassword(), userFromDB.getPassword())) {
+			UserDetails userDetails = detailService.loadUserByUsername(userFromDB.getUserId());
+			Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			System.out.println("userDetails = " + userDetails);
 			return ResponseEntity.ok("success");
 		} else {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("");
@@ -111,16 +126,27 @@ public class UserController {
 	
 	/* 쿠키 동의 */
     @GetMapping("/cookie")
-    public ModelAndView cookie(HttpSession session) {
+    public ModelAndView cookie() {
         ModelAndView mv = new ModelAndView("agreement/cookie");
         return mv;
     }
     /* 웹푸시 동의 */
     @GetMapping("/webpush")
-    public ModelAndView webpush(HttpSession session) {
+    public ModelAndView webpush() {
         ModelAndView mv = new ModelAndView("agreement/webpush");
         return mv;
     }
 
+	@PostMapping("/token")
+	public ResponseEntity<Void> getToken(@RequestParam String userId,@RequestParam String token){
+		boolean search = userService.findToken(token);
+		if(search==false) {
+			boolean flag = userService.saveToken(token, userId);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
+	public void deleteToken(String token){
+		boolean flag = userService.deleteToken(token);
+	}
 }

@@ -1,12 +1,10 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@page import="com.plant.vo.UserVo"%>
-<%@ page import="com.plant.vo.PostVo" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ include file="../main/header.jsp" %> --%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<%@ include file="../main/header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,8 +22,6 @@
            text-align: center;
          }
     </style>
-
-
     <meta charset="UTF-8">
     <title>Write Item</title>
     <script>
@@ -58,19 +54,14 @@
 <h1>Update Post</h1>
 </div>
 <br>
-<%
-    UserVo userVo = (UserVo) session.getAttribute("user");
-    String userId = userVo.getUserId();
-
-%>
-
 
     <form id="myForm" onsubmit="submitForm(event)" enctype="multipart/form-data">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<div class = "form_table">
 		 <div>
 		 <br>
                 <h4 class = "title">작성자</h4>
-             <input class="upload_writer" type="text" name="userId" id="userId" value="<%=userId %>" readonly>
+             <input class="upload_writer" type="text" name="userId" id="userId" value="${userId}" readonly>
             </div>
             <br>
             <div>

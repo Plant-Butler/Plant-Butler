@@ -49,4 +49,12 @@
     <update id="setSchedule">
         update myplant set schedule_date = #{scheduleDate} where myplant_id=#{myplantId}
     </update>
+
+    <select id="findSchduele" >
+        select schedule_id from schedule where myplant_id = #{myplantId}
+    </select>
+
+    <select id="getToken" resultType="java.lang.String">
+        select tokenNum from token where user_id = #{userId}
+    </select>
 </mapper>

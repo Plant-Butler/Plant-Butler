@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <%
     UserVo userVo = (UserVo) session.getAttribute("user");
     String userId = userVo.getUserId();
@@ -14,12 +15,14 @@
 <html>
 <head>
     <title>Title</title>
+    <script type="module" src="../mainscript.js"></script>
 </head>
 <body>
 <h1>스케쥴 등록하기 폼</h1>
 </body>
 
 <form action="/myplants/${myplantId}/schedule/form" method="post">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     <table>
     <tr><td></td><td><input type="hidden" name = "myplantId" value="${myplantId}"></td><td></td></tr>
     <tr><td></td><td><input type="text" name = "userId" value="<%=userId%>"></td><td></td></tr>

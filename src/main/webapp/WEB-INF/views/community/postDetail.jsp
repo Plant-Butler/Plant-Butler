@@ -11,22 +11,10 @@
 <title>커뮤니티</title>
 <%@ include file="../main/header.jsp" %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<style>
-        .box {
-            width: 100px;
-            height: 100px;
-            border-radius: 70%;
-            overflow: hidden;
-        }
-        .plantImg {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        #inputComment {
-              width:1000px;
-        }
-</style>
+<script>
+    var csrfToken = "${_csrf.token}";
+    var csrfHeader="${_csrf.headerName}";
+</script>
 </head>
 <body>
 <body style="text-align: center">
@@ -81,10 +69,10 @@ ${post.postContent}
 
 
 <br>
-<c:if test="${not empty sessionScope.user.userId}">
+<c:if test="${not empty user.userId}">
   <div style="overflow: hidden;">
     <div id="heart" style="float: left;">
-        <button id="heartBtn" onclick="heart(${post.postId}, '${sessionScope.user.userId}')">
+        <button id="heartBtn" onclick="heart(${post.postId}, '${user.userId}')">
           <c:choose>
             <c:when test="${alreadyHeart == 1}">
               <i class="fa fa-heart" style="color: red;"></i>
@@ -97,7 +85,7 @@ ${post.postContent}
         ${countHeart}
     </div>
     <button type="button" onclick="declare(0, ${post.postId}, 0)" style="float: right;">신고하기</button>
-    <c:if test="${post.userId eq sessionScope.user.userId}">
+    <c:if test="${post.userId eq user.userId}">
         <button type="button" onclick="location.href='/community/form/${post.postId}'" style="float: right;">수정</button>
         <button type="button" onclick="del(0, ${post.postId}, 0)" style="float: right;">삭제</button>
     </c:if>
@@ -109,13 +97,14 @@ ${post.postContent}
 
 <table style="margin-left:auto;margin-right:auto;" width="1500" length="100">
     <!-- 댓글 작성 -->
-        <c:if test="${not empty sessionScope.user.userId}">
+        <c:if test="${not empty user.userId}">
             <form action="./comment" method="post" modelAttribute="commentVo">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                 <tr>
-                    <td>${sessionScope.user.nickname}</td>
+                    <td>${user.nickname}</td>
                     <td><input type="text" name="commentContent" id="inputComment"></td>
                     <td><input type="submit" value="작성" style="width:200px"></td>
-                    <td><input type="hidden" name="userId" value="${sessionScope.user.userId}">
+                    <td><input type="hidden" name="userId" value="${user.userId}">
                         <input type="hidden" name="postId" value="${post.postId}"></td>
                 </tr>
             </form>
@@ -127,9 +116,9 @@ ${post.postContent}
                 <td>${comment.nickname}</td>
                 <td><span id="commentContent_${comment.commentId}">${comment.commentContent}</span></td>
                 <td>신고 ${comment.flag} <fmt:formatDate value="${comment.commentDate}" type="date"/>
-                <c:if test="${not empty sessionScope.user.userId}">
+                <c:if test="${not empty user.userId}">
                     <button type="button" onclick="declare(${comment.commentId}, ${post.postId}, 1)">신고하기</button></td>
-                    <c:if test="${comment.userId eq sessionScope.user.userId}">
+                    <c:if test="${comment.userId eq user.userId}">
                         <td><button type="button" onclick="updateBox('${comment.commentContent}', ${comment.commentId}, ${post.postId})">수정</button>
                         <button type="button" onclick="del(${comment.commentId}, ${post.postId}, 1)">삭제</button></td>
                     </c:if>

@@ -3,6 +3,7 @@ package com.plant.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 
 import com.plant.dao.ScheduleMapper;
@@ -12,8 +13,12 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ScheduledFuture;
+
 @Service
 public class ScheduleService {
+
     @Autowired
     private ScheduleMapper scheduleMapper;
 
@@ -51,5 +56,16 @@ public class ScheduleService {
 
     public void setSchedule(int myplantId, long scheduleDate) {
         scheduleMapper.setSchedule(myplantId,scheduleDate);
+    }
+
+
+    public boolean findSchedule(int myplantId) {
+        boolean flag = scheduleMapper.findSchedule(myplantId);
+        return flag;
+    }
+
+    public String[] getToken(String userId) {
+        String[] token = scheduleMapper.getToken(userId);
+        return token;
     }
 }

@@ -1,6 +1,6 @@
     $(document).ready(function() {
         $.ajax({
-            url: "/manager/best-list",
+            url: "/home/best-list",
             type: "GET",
             success: function(response) {
                 var users = response;
@@ -8,8 +8,8 @@
                 var row = "<tr>";
                                 for(var i = 0; i < 3; i++) {
                                     var user = users[i];
-                                    if(user.myplantImage != null) {
-                                        row += "<td><div class='box' style='background: #BDBDBD;'><img class='plantImg' src='/uploads/" + user.myplantImage + "'></div></td>";
+                                    if((user.myplantImage != null) && (user.myplantImage != '') ) {
+                                        row += "<td><div class='box' style='background: #BDBDBD; width: 200px; height: 200px;'><img class='plantImg' src='/uploads/" + user.myplantImage + "'></div></td>";
                                     } else {
                                         row += "<td>사진이 없습니다.</td>";
                                     }
@@ -38,12 +38,3 @@
         });
     });
 
-        let isLoggedIn = document.getElementById("sugNdMy").getAttribute("data-isLoggedIn");
-        function serviceSug() {
-            if (isLoggedIn == "true") {
-                location.href = "/suggestions"
-            } else {
-                alert('로그인 후 이용해주세요')
-                location.href = "/loginPage"
-            }
-        }

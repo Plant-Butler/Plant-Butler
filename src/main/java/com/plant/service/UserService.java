@@ -26,9 +26,11 @@ public class UserService {
 		}
 		return flag;
 	}
-	
-	public UserVo validMember(UserVo user) {
-		UserVo vo = userMapper.checkMember(user);
+
+	public UserVo validMember(String userId) {
+		boolean flag = false;
+		UserVo vo = userMapper.checkMember(userId);
+		System.out.println("I'm in service");
 		return vo;
 	}
 	
@@ -41,7 +43,25 @@ public class UserService {
 		int cnt = userMapper.duplicateNick(nickname);
 		return cnt;
 	}
-	
+
+    public boolean saveToken(String token, String userId) {
+		boolean flag = userMapper.saveToken(token,userId);
+		return flag;
+    }
+
+    public boolean findToken(String token) {
+		boolean search = false;
+		String token1 = userMapper.findToken(token);
+		if(token1!=null){
+			search=true;
+		}
+		return search;
+    }
+
+	public boolean deleteToken(String token) {
+		boolean flag = userMapper.deleteToken(token);
+		return flag;
+	}
 }
 
 	

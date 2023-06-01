@@ -1,6 +1,13 @@
 package com.plant.vo;
 
-public class UserVo {
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
+import java.util.Set;
+
+public class UserVo implements UserDetails {
 
     private String userId;
     private String nickname;
@@ -8,8 +15,10 @@ public class UserVo {
     private String email;
     private int point;
     private int manager;
-
     private String token;
+
+    private Set<SimpleGrantedAuthority> authorities;
+
 
     public UserVo() {}
 
@@ -19,14 +28,14 @@ public class UserVo {
         this.email = email;
     }
 
-    public UserVo(String userId, String nickname, String password, String email, int point, int manager, String token) {
+    public UserVo(String userId, String nickname, String password, String email, int point, int manager) {
         this.userId = userId;
         this.nickname = nickname;
         this.password = password;
         this.email = email;
         this.point = point;
         this.manager = manager;
-        this.token = token;
+
     }
 
     public String getUserId() {
@@ -83,5 +92,54 @@ public class UserVo {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public String getUsername() {
+        return nickname;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+
+    public void setAuthorities(Set<SimpleGrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "UserVo{" +
+                "userId='" + userId + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", point=" + point +
+                ", manager=" + manager +
+                ", token='" + token + '\'' +
+                ", authorities=" + authorities +
+                '}';
     }
 }

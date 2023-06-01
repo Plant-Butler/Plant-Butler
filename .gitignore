@@ -36,4 +36,14 @@ out/
 
 ### VS Code ###
 .vscode/
+/src/main/resources/firebase/plant-butler-c4fd9-firebase-adminsdk-mrs2y-1cb0378836.json
+/src/main/resources/firebase/plant-butler-c4fd9-5f2f281aeaca.json
+/src/main/resources/static/firebase-messaging-sw.js
+/src/main/resources/static/mainscript.js
 /src/main/java/com/plant/utils/ShopApi.java
+/src/main/resources/application-API-KEY.properties
+/src/main/resources/static/js/firebase-messaging-sw.js
+/src/main/resources/static/js/mainscript.js
+/src/main/resources/firebase/plant-butler-97f48-firebase-adminsdk-zj3ua-50d19b0665.json
+/src/main/resources/static/js/tokenscript.js
+/src/main/resources/static/js/registToken.js
