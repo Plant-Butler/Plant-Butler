@@ -1,0 +1,40 @@
+#bodyContainer {
+    padding-right: 50px;
+    padding-left: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 1600px;
+}
+html, body {
+    height: 100%;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+.btn-primary {
+    background-color: #198754 !important;
+}
+
+td {
+    height: 20px;
+}
+.fc .fc-col-header-cell {
+    background-color: #198754;
+    font-family: 'LINESeedKR-Bd', sans-serif;
+    color: white;
+}
+
+fc-col-header-cell-cushion{
+    color: white;
+}
+a {
+    color: white;
+}
+
+.fc .fc-daygrid-day-number {
+    padding: 4px;
+    position: relative;
+    z-index: 4;
+    color: black;
+}

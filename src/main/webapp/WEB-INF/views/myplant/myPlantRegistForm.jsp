@@ -61,7 +61,7 @@
   </script>
   <title>Title</title>
 </head>
-<body>
+<body style="margin-top: 200px">
 <h1>regist form</h1>
 <form action="/myplants/form" method="post" enctype="multipart/form-data">
   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>

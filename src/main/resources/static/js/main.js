@@ -8,8 +8,8 @@
                 var row = "<tr>";
                                 for(var i = 0; i < 3; i++) {
                                     var user = users[i];
-                                    if(user.myplantImage != null) {
-                                        row += "<td><div class='box' style='background: #BDBDBD;'><img class='plantImg' src='/uploads/" + user.myplantImage + "'></div></td>";
+                                    if((user.myplantImage != null) && (user.myplantImage != '') ) {
+                                        row += "<td><div class='box' style='background: #BDBDBD; width: 200px; height: 200px;'><img class='plantImg' src='/uploads/" + user.myplantImage + "'></div></td>";
                                     } else {
                                         row += "<td>사진이 없습니다.</td>";
                                     }
