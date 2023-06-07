@@ -33,6 +33,16 @@ public class DiaryService {
             throw new RuntimeException("일기 목록 데이터 로드 실패", e);
         }
 
+        // 첨부된 이미지 여러개일 시 첫번째 이미지만 가져오기
+        for(DiaryVo vo: diaryList) {
+            String img = vo.getDiaryImage();
+            if(img.contains(",")) {
+                int idx = img.indexOf(",");
+                String firstImg = img.substring(0, idx);
+                vo.setDiaryImage(firstImg);
+            }
+        }
+
         PageInfo<DiaryVo> pageInfo = new PageInfo<>(diaryList,15);
         return pageInfo;
     }

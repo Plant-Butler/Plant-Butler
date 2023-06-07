@@ -7,6 +7,7 @@
     <resultMap id="DiaryListMap" type="com.plant.vo.DiaryVo">
         <result column="diary_id" property="diaryId"/>
         <result column="diary_title" property="diaryTitle"/>
+        <result column="diary_image" property="diaryImage"/>
         <result column="diary_date" property="diaryDate"/>
     </resultMap>
     <resultMap id="DiaryDetailMap" type="com.plant.vo.DiaryVo">
@@ -39,7 +40,7 @@
     <!-- 전체 식물일기 조회 -->
     <select id="selectAllDiary" parameterType="String" resultMap="DiaryListMap">
         <![CDATA[
-         select diary_id, diary_title, diary_date from diary where user_id = #{userId} order by diary_date desc
+         select diary_id, diary_title, diary_image, diary_date from diary where user_id = #{userId} order by diary_date desc
      ]]>
     </select>
 

@@ -98,8 +98,8 @@
     <tr>
       <td>내 화분 종류:</td>
       <td>
-        <input type="radio" class="flowerpot" name="myplantweight" value="1">원통형
-        <input type="radio" class="flowerpot" name="myplantweight" value="2">사각형
+        <input type="radio" class="flowerpot" name="myplantPot" value="1">원통형
+        <input type="radio" class="flowerpot" name="myplantPot" value="2">사각형
       </td>
       <td></td>
     </tr>

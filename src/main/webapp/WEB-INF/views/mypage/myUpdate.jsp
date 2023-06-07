@@ -5,34 +5,45 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>내 정보 수정</title>
+<title>회원정보 수정</title>
 <%@ include file="../main/header.jsp" %>
     <style>
         table {
             text-align: center;
-            margin-left:630px;
-            width: 1000px;
+            margin-left: 480px;
+            width: 70%;
         }
         button {
           width: 250px;
           height: 30px;
           border-radius: 5px;
         }
-        th {
-          width: 150px;
-          height: 70px;
+        p {
+          background-color: #b8d4c8;
+          border-radius: 10px;
+        }
+        td{
+            padding: 10px;
         }
         input {
           text-align: center;
-          width: 300px;
-          height: 25px;
+          width: 85%;
+          height: 15%;
+          border-radius: 10px;
+          padding: 10px;
         }
         .submit {
             width: 80px;
         }
         .msg {
             text-align: left;
-            width: 500px;
+            width: 600px;
+        }
+        .nickCheck {
+            width:20%;
+        }
+        .cta {
+            background-color: white;
         }
     </style>
     <meta name="_csrf" content="${_csrf.token}"/>
@@ -40,37 +51,50 @@
 </head>
 <body style="text-align: center">
 <br><br>
+
+<section class="page-section cta">
+<div style="margin-top: 150px">
+<h1>회원 정보 수정</h1>
+<hr style="width: 70%; margin:auto;">
+<br>
 <form name="joinform">
 <table>
     <tr>
-        <th>아이디 </th>
+        <th><p>아이디</p></th>
         <td><input type="text" name="userId" id="userId" value="${userId}" readonly="readonly"></td>
     </tr>
     <tr>
-        <th>비밀번호 </th>
+        <th><p>비밀번호</p></th>
 		<td><input type="password" name="password" id="password" onkeyup="pwdCheck()" required="required"></td>
 		<td class="msg"><div id="password-message"></div></td>
 	</tr>
 	<tr>
-		<th>비밀번호 확인 </th>
+		<th><p>비밀번호 확인</p></th>
 		<td><input type="password" name="checkPwd" id="checkPwd" onkeyup="checkerPwd()" required="required"></td>
 		<td class="msg"><div id="checkerPwd">동일한 암호를 입력하세요.</div></td>
     </tr>
     <tr>
-        <th>닉네임 </th>
+        <th><p>닉네임</p></th>
 		<td><input type="text" name="nickname" id="nickname" value="${nickname}" required="required" readonly="readonly"></td>
-		<td class="msg"><input class = "submit" type="button" value="중복확인" onclick="NickUpdate()" required="required"></td>
+		<td class="msg"><input class = "submit nickCheck" type="button" value="중복확인" onclick="NickUpdate()" required="required"></td>
 	</tr>
     <tr>
-        <th>이메일 </th>
+        <th><p>이메일</p></th>
 		<td><input type="text" name="email" id="email" value="${email}" required="required"></td>
 	</tr>
-	<tr>
-	    <th></th>
-	    <td><button type="button" onclick="updateMypage('${userId}')">수정</button></td><td></td>
-	</tr>
 </table>
+<br>
+<br>
+<td colspan="3"><button type="button" onclick="updateMypage('${userId}')">수정</button></td>
 </form>
+
+</div>
+</section>
+
+<!-- Footer -->
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
+  <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
 
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
