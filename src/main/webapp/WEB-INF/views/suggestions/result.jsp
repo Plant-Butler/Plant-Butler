@@ -22,9 +22,10 @@
 <body style="text-align: center">
 <section class="page-section cta">
 
-    <div class="container">
+    <div class="container" style="margin-top: 150px">
         <div class="row">
-            <div class="cta-inner bg-faded text-center rounded">
+            <div class="mx-auto">
+            <div class="cta-inner text-center rounded">
                 <h1>${nickname}님에게 어울리는 식물이에요</h1> <br><br>
 
                 <div class="carousel-container">
@@ -37,11 +38,11 @@
                                             <th class="recommend-result" colspan="2"><img class="plantImg img-thumbnail" src="/uploads/${plant.image}"></th>
                                         </tr>
                                         <tr>
-                                            <th class="recommend-result">${plant.plntzrNm} ${plant.distbNm}</th>
+                                            <th class="recommend-result" style="font-size: 35px;">${plant.plntzrNm} ${plant.distbNm}</th>
                                         </tr>
                                         <tr>
                                             <td>
-                                                <button id="show${status.index}" onclick='show(${plant.plant_id}, "${fn:escapeXml(plant.distbNm)}", "${plant.soilInfo}")' class="btn btn-light">분양 준비하기</button>
+                                                <button id="show${status.index}" onclick='show(${plant.plant_id}, "${fn:escapeXml(plant.distbNm)}", "${plant.soilInfo}")' class="btn btn-success">분양 준비하기</button>
                                             </td>
                                         </tr>
                                     </table>
@@ -70,19 +71,19 @@
                 </div>
                 <br>
             </div>
-        </div>
-        <br><br><br>
-        <button onclick="savePlants()" class="btn btn-light">마이페이지에 저장</button>
-    </div>
-    <br><br><br><br><br>
-
-
-        <!-- 지도 -->
-        <div class="row">
-            <div class="col-xl-9 mx-auto">
-                <h1>근처에서 바로 입양을 준비해볼까요?</h1>
             </div>
         </div>
+        <br><br>
+        <button onclick="savePlants()" class="btn btn-light">마이페이지에 저장</button>
+    </div>
+    <br><br><br><br><br><br><br><br>
+
+        <!-- 지도 -->
+
+            <div class="col-xl-9 mx-auto">
+                <h1 id="map-ttl">근처에서 바로 입양을 준비해볼까요?</h1>
+            </div>
+
         <br>
         <div class="map_wrap">
             <div id="map" style="width:50%;height:100%;position:relative;overflow:hidden;border-radius:20px;margin-left:32%;"></div>
@@ -124,7 +125,7 @@
         </div>
 
 <!-- Footer -->
-<footer class="footer text-faded text-center py-5">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
     <div class="container"><p class="m-0 small">brick-wall-painted-in-white 작가 kues1 출처 Freepik
                             <br> Copyright &copy; Plantery 2023</p></div>
 </footer>

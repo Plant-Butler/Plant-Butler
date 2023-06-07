@@ -52,7 +52,8 @@
 <body style="text-align: center">
 <br><br>
 
-<div class="cta">
+<section class="page-section cta">
+<div style="margin-top: 150px">
 <h1>회원 정보 수정</h1>
 <hr style="width: 70%; margin:auto;">
 <br>
@@ -88,11 +89,13 @@
 </form>
 
 </div>
+</section>
 
 <!-- Footer -->
-<footer class="footer text-faded text-center py-5">
-    <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
+  <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
 </footer>
+
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="/js/regist.js"></script>
