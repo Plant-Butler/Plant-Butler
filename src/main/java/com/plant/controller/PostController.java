@@ -54,23 +54,25 @@ public class PostController {
 								   HttpSession session) {
 		ModelAndView mv = new ModelAndView("/community/postDetail");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserVo user = (UserVo) authentication.getPrincipal();
-		String userId = "";
-		if (user != null) {
-			userId = user.getUserId();
-			int alreadyHeart = this.searchHeart(postId, userId);
-			mv.addObject("alreadyHeart", alreadyHeart);
+		UserVo user = null;
+		if (authentication.getPrincipal() != "anonymousUser") {
+			user = (UserVo) authentication.getPrincipal();
+			String userId = "";
+			if (user != null) {
+				userId = user.getUserId();
+				int alreadyHeart = this.searchHeart(postId, userId);
+				mv.addObject("alreadyHeart", alreadyHeart);
+			}
 		}
-
 		PostVo postVo = postService.postDetail(postId);
 		ArrayList<MyplantVo> myPlantList = postService.postMyPlantDetail(postId);
 		//ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
 
-        PageInfo<CommentVo> commentList = commentService.getCommentList(postId, pageNum , pageSize);
-        mv.addObject("post", postVo);
-        mv.addObject("commentList", commentList);
-        mv.addObject("myPlantList", myPlantList);
-		mv.addObject("user",user);
+		PageInfo<CommentVo> commentList = commentService.getCommentList(postId, pageNum, pageSize);
+		mv.addObject("post", postVo);
+		mv.addObject("commentList", commentList);
+		mv.addObject("myPlantList", myPlantList);
+		mv.addObject("user", user);
 
 		int commentCount = mainService.getCommentCount(postId);
 		mv.addObject("commentCount", commentCount);

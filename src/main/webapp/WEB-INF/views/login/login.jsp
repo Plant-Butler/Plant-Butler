@@ -51,31 +51,36 @@
 
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    function login(){
-        let userId = document.getElementById("userId").value;
-        let password = document.getElementById("password").value;
-        let data = {};
-        data.userId = userId;
-        data.password = password;
-        console.log(userId);
-        console.log(data);
+        function login() {
+            let userId = document.getElementById("userId").value;
+            let password = document.getElementById("password").value;
+            let data = {
+                userId: userId,
+                password: password
+            };
 
-        $.ajax({
-          type: "POST",
-          url: "/loginPage/login",
-          data: data,
-          success: function(data) {
-            if (data === 'success') {
-              alert("환영합니다!");
-              location.href = '/home';
-            }
-          },
-          error: function(xhr, status, error) {
-            console.log('error:', error);
-            alert('아이디 또는 비밀번호가 올바르지 않습니다.');
-          }
-        });
-    };
+            console.log(userId);
+            console.log(data);
+
+            $.ajax({
+                type: "POST",
+                url: "/loginPage/login",
+                data: data,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader(csrfHeader, csrfToken);
+                },
+                success: function(data) {
+                    if (data === 'success') {
+                        alert("환영합니다!");
+                        location.href = '/home';
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('error:', error);
+                    alert('아이디 또는 비밀번호가 올바르지 않습니다.');
+                }
+            });
+        }
     </script>
         <br>
         <br>

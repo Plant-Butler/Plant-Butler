@@ -4,100 +4,291 @@
 <%-- <%@ include file="../main/header.jsp" %> --%>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Write Item</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 <%@ include file="../main/header.jsp" %>
 
-<style>
+</head>
 
-   h1 {
-        text-align: center;
-  }
-  .form_table {
+<body>
+<style>
+.custom-input {
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  padding:8px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.custom-input:focus {
+  border-color: #4caf50;
+}
+
+.custom-input.invalid {
+  border-color: #dc3545;
+}
+
+.custom-input.valid {
+  border-color: #28a745;
+}
+
+.newh1{
+    font-family: "KimjungchulGothic-Bold";
+    font-size: 3em;
+    color: #000000;
     text-align: center;
-  }
+    font-weight: 700;
+    font-style: normal;
+}
+
+.custom-textarea {
+  width: 60%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+.newform {
+  width: 1100px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+.form_table {
+  padding: 70px;
+  border-radius: 5px;
+}
+
+.title {
+  margin-top: 0;
+  font-size: 18px;
+}
+
+.upload_writer,
+.upload_date,
+.upload_title,
+.upload_img,
+.upload_data {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.custom-textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  font-size: 16px;
+}
+
+.submit {
+  text-align: center;
+}
+
+.submit input[type="submit"] {
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.submit input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.radio-group label {
+  margin-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.selected-plants {
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.selected-plants-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.selected-plants-list li {
+  margin-bottom: 5px;
+}
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+.form_wrapper {
+  border: 3px solid #eaeaea;
+  border-radius: 30px;
+  padding: 10px;
+  margin-bottom: -20px; /* Adjust the value as needed */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.newpostlayer{
+    font-weight: bold;
+    font-size: 20px;
+    font-family: "Jeju Gothic";
+}
+/* Hide the default radio button */
+input[type="radio"] {
+  display: none;
+}
+
+/* Style the custom radio button */
+.custom-radio {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+  background-color: #fff;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.radio-label {
+  font-weight: bold;
+}
+
+/* Add spacing between radio buttons */
+input[type="radio"] + label {
+  margin-right: 20px;
+}
+
+input[type="radio"]:checked + label .custom-radio {
+  background-color: #4caf50; /* Replace with your desired color for checked radio button */
+  border-color: #4caf50;
+}
+
+input[type="radio"]:checked + label .radio-label {
+  color: #4caf50; /* Replace with your desired color for checked label text */
+}
+.newsubmit{
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
 </style>
 
-</head>
-<body>
-
-
-
-<div class="about-section">
-<h1>New Post</h1>
+<div class="about-section" style="margin-top: 300px">
+    <h1 class = "newh1" style="font-family: 'LINESeedKR-Bd', sans-serif;">새 게시물</h1>
 </div>
-<br>
 <%
-    //UserVo userVo = (UserVo) session.getAttribute("user");
-    String userId = "";
-    String userNickname = "";
-    if (userVo != null) {
-        userNickname = userVo.getNickname();
-        userId = userVo.getUserId();
-    }
     LocalDateTime now = LocalDateTime.now();
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     String formattedNow = now.format(formatter);
-
-
 %>
+   <form action="./form" method="post" enctype="multipart/form-data" class = "newform">
+       <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+       <br>
+       <div class="form_wrapper">
+   <div class = "form_table" style="margin-top: 10px">
+       <div class="col-25">
+         <label class= "newpostlayer" for="fname">태그</label>
+       </div>
+       <div>
+       <input type="radio" name="postTag" value="information" class="ajaxClick" id="information" required>
+       <label for="information">
+         <span class="custom-radio"></span>
+         <span class="radio-label">정보 공유</span>
+       </label>
 
+       <input type="radio" name="postTag" value="boast" class="ajaxClick" id="boast" required>
+       <label for="boast">
+         <span class="custom-radio"></span>
+         <span class="radio-label">식물 자랑</span>
+       </label>
 
-   <form action="./form" method="post" enctype="multipart/form-data" >
-   <div class = "form_table">
-             <br>
-             <div>
-                <h4 class = "title">작성자</h4>
-                <input  class="upload_writer" type="hidden" name="userId" id = "userId"  value=<%=userId %> readonly = "readonly">
-                <input  class="upload_writer" type="text" name="nickname" id = "nickname"  value=<%=userNickname %> readonly = "readonly">
-            </div>
-
-         <div>
-           <h4 class="title">태그</h4>
-           <input type="radio" name="postTag" value="information"  class="ajaxClick" id="information" style="display:inline-block; margin-left: 10px;" required><label for="information">정보 공유</label>
-           <input type="radio" name="postTag" value="boast" class="ajaxClick"  id="boast" style="display:inline-block; margin-left: 10px;" required><label for="boast">식물 자랑</label>
-           <input type="radio" name="postTag" value="chat"  class="ajaxClick" id="chat" style="display:inline-block; margin-left: 10px;" required><label for="chat">수다</label>
-         </div>
+       <input type="radio" name="postTag" value="chat" class="ajaxClick" id="chat" required>
+       <label for="chat">
+         <span class="custom-radio"></span>
+         <span class="radio-label">수다</span>
+       </label>
+</div>
          <p id="result" style="display: none;">
          <br>
          </p>
           <input type="hidden" name="selectedPlants" id="selectedPlantsInput" value="">
-            <br>[선택된 내 식물]
-            <p id="selectedMyplantNick" style="display: none;">
-            <div>
-                <h4 class = "title">제목</h4>
-                <input  class="upload_title" type="text" name="postTitle" id = "postTitle">
-            </div>
-            <br>
-            <div>
-                <h4 class = "title">내용</h4>
-                <textarea cols="80" rows="5" name="postContent"></textarea>
-            </div>
-            <br>
+            [선택된 내 식물]
+            <p id="selectedMyplantNick" style="display: none;"></p>
+            <br><br>
+            <div class="col-25">
+             <label class= "newpostlayer" for="fname">제목</label>
+           </div>
              <div>
-                <h4 class = "title">작성일자</h4>
-                <input class="upload_date" type="text" name="postDate" value="<%=formattedNow%>" readonly = "readonly">
+                <input class="custom-input" type="text" name="postTitle" id = "postTitle">
+             </div>
+            <br> <br>
+            <div class="col-25">
+             <label class= "newpostlayer" for="fname">내용</label>
             </div>
-            <br>
-         <div>
-                <h4 class = "title">이미지첨부</h4>
-                <input class="upload_img" type="file" name="postMultiImage" multiple>
+             <br>
+            <div>
+                <textarea class="custom-input" cols="80" rows="10" name="postContent" ></textarea>
             </div>
-            <br>
-         <div>
-                <h4 class = "title">데이터첨부</h4>
-                <input class="upload_data" type="file" name="postMultiFile">
+             <br>
+            <br> <br>
+            <div class="col-25">
+             <label class= "newpostlayer" for="fname">이미지첨부</label>
             </div>
-   <br>
-   <div class="submit">
-       <input type="submit" value="작성">
-   </div>
-   <br>
-   <br>
-</form>
+            <div>
+                <input class="custom-input" class="upload_img" type="file" name="postMultiImage" multiple>
+            </div>
+
+            <br> <br> <br>
+            <div class="col-25">
+             <label class= "newpostlayer" for="fname">데이터첨부</label>
+            </div>
+             <div>
+                <input class="custom-input" class="upload_data" type="file" name="postMultiFile">
+            </div>
+    <br>
+    <br>
+    </div>
+    </div>
+    <br>
+    <br>
+    <div class="submit">
+      <input class = "newsubmit" type="submit" value="작성">
+    </div>
+    <br>
+    <br>
+    <br>
+   </form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
@@ -108,7 +299,7 @@ $(document).ready(function() {
 
      $("input[type='radio']").change(function(e){
        var useYn = $(this).val();
-       var userId = "<%= ((UserVo)session.getAttribute("user")).getUserId() %>";
+       var userId = "${userVo.userId}";
        if (useYn == "boast" || useYn == "information") {
          $.ajax({
            url: "/community/plantall",
@@ -141,10 +332,7 @@ $(document).ready(function() {
              selectedPlantsNick = [];
              $("#selectedMyplantNick").html(html);
         }
-
     });
-
-
           // postMyplant() 함수를 전역 함수로 정의
           window.postMyplant = function(myplantId, myplantNick) {
             console.log("postMyplant called with plantId:", myplantId);
@@ -168,5 +356,10 @@ $(document).ready(function() {
           };
         });
 </script>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px; flex-shrink: 0;">
+    <div class="container">
+        <p class="m-0 small">© Plantery 2023</p>
+    </div>
+</footer>
 </body>
 </html>
