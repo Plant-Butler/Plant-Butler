@@ -6,12 +6,20 @@
 <meta charset="UTF-8">
 <title>마이페이지</title>
 <%@ include file="../main/header.jsp" %>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <style>
-    table, td {
-        text-align: center;
-        margin-left:auto;
-        margin-right:auto;
-        border: 1px solid;
+    div, table {
+        font-family: 'Hahmlet', serif;
+    }
+    .result-tbl {
+        width: 90%;
+        border-collapse: separate;
+        border-spacing: 0 30px;
+        border: 1px solid #b8d4c8;
+        border-radius: 5px;
+        box-shadow: 0 10px 11px rgba(0, 0, 0, 0.1);
     }
     td {
         width: 90%;
@@ -24,7 +32,7 @@
 <h2>나에게 맞는 반려식물 결과</h2>
 <br><br>
 <c:forEach var="plant" items="${recomPlantList}">
-    <table width="1500" height="250">
+    <table class="result-tbl">
         <tr>
             <th colspan="2"><img class="plantImg" src="/uploads/${plant.image}"></th>
         </tr>
@@ -62,6 +70,11 @@
     </table>
     <br><br>
 </c:forEach>
+
+<!-- Footer -->
+<footer class="footer text-faded text-center py-5">
+    <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
 
 </body>
 </html>
