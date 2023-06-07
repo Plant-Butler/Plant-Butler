@@ -73,6 +73,7 @@ public class UserController {
 	@PostMapping("/loginPage/login")
 	public ResponseEntity<String> login(@ModelAttribute UserVo user) {
 		String userId = user.getUserId();
+		System.out.println(userId);
 		UserVo userFromDB = userService.validMember(userId);
 		if (passwordEncoder.matches(user.getPassword(), userFromDB.getPassword())) {
 			UserDetails userDetails = detailService.loadUserByUsername(userFromDB.getUserId());

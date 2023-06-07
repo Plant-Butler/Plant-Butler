@@ -1,0 +1,36 @@
+<insert id="insertPost" parameterType="map">
+  INSERT INTO post (user_id, post_title, post_content, post_image, post_tag, post_date, post_file)
+  VALUES (#{userId}, #{postTitle}, #{postContent}, #{postImage}, #{postTag}, now(), #{postFile})
+  <selectKey keyProperty="post_id" resultType="int" order="AFTER">
+    SELECT LAST_INSERT_ID()
+  </selectKey>
+</insert>
+
+<insert id="insertPostMp" parameterType="map">
+  INSERT INTO postmp (post_id, myplant_id)
+  VALUES 
+  <foreach item="myplantId" collection="selectedPlants" separator=",">
+    (#{post_id}, #{myplantId})
+  </foreach>
+</insert>
+
+
+collection해야됨
+
+로그인안되면 커뮤니티 안나옴
+
+selected가 안드러감
+
+링크, 파라미터
+
+헤더 붙이기
+
+user이름 바꾸기
+
+수정 이름
+
+
+상제 조회
+
+
+

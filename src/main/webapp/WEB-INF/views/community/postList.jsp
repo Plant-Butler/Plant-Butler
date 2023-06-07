@@ -8,59 +8,56 @@
     <meta charset="UTF-8">
     <title>게시물 목록</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 </head>
 <body>
 <style>
-    .buttonlist {
-        margin-left: 90px;
-    }
+  .buttonlist {
+      margin-left: 90px;
+  }
 
-    .newpost{
-        margin-left: 1200px;
-    }
-    .btn {
-        display: inline-block;
-        padding: 8px 16px;
-        font-size: 14px;
-        text-align: center;
-        text-decoration: none;
-        border: none;
-        border-radius: 4px;
-        background-color: #4CAF50;
-        color: white;
-        cursor: pointer;
-        margin-right: 10px;
-        margin-bottom: 10px;
-    }
+  .newpost{
+       margin-left: 1200px;
+  }
+  .btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
 
-    .btn-primary {
-        background-color: #4CAF50;
-    }
+  .btn-primary {
+    background-color: #4CAF50;
+  }
 
-    .btn-primary:hover {
-        background-color: #45a049;
-    }
-    .custom-table {
-        width: 90%;
-    }
+  .btn-primary:hover {
+    background-color: #45a049;
+  }
+   .custom-table {
+      width: 90%;
+  }
     .btn-container {
         margin-right: 10px;
     }
-    .posttitle{
-        color: #000000;
-        text-decoration: none;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-    }
-    .posth1{
-        font-size: 3em;
-        color: #000000;
-        text-align: center;
-    }
+   .posttitle{
+   color: #000000;
+   text-decoration: none;
+   }
+ .posth1{
+    font-family: 'KimjungchulGothic-Bold';
+    font-size: 3em;
+    color: #000000;
+    text-align: center;
+    font-weight: 700;
+    font-style: normal;
+ }
 
     .custom-table th.col-1,
     .custom-table td.col-1 {
@@ -73,14 +70,14 @@
     <!-- 검색 -->
 
     <!-- 리스트 테이블 -->
-    <h1 class="posth1" style="font-family: 'Hahmlet', serif;">커뮤니티</h1>
+    <h1 class="posth1">커뮤니티</h1>
     <br>
-    <div class="buttonlist">
-        <a class="btn btn-primary" href="/community?tag=수다">수다</a>
-        <a class="btn btn-primary" href="/community?tag=정보 공유">정보 공유</a>
-        <a class="btn btn-primary" href="/community?tag=식물 자랑">식물 자랑</a>
-        <a class="btn btn-primary newpost" href="/community/form">새 게시물 등록</a>
-    </div>
+<div class="buttonlist">
+  <a class="btn btn-primary" href="/community?tag=수다">수다</a>
+  <a class="btn btn-primary" href="/community?tag=정보 공유">정보 공유</a>
+  <a class="btn btn-primary" href="/community?tag=식물 자랑">식물 자랑</a>
+  <a class="btn btn-primary newpost" href="/community/form">새 게시물 등록</a>
+</div>
 
     <table class="table table-hover custom-table">
         <thead>

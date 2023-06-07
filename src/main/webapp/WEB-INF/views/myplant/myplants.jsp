@@ -62,6 +62,7 @@
         <div id="dataContainer" ></div>
     </div>
 <div id="insertplant">
+    <a href="/diagnosis">질병진단</a>
     <a href="/myplants/form">추가하기</a>
 </div>
 <div style="width: 1200px;">
