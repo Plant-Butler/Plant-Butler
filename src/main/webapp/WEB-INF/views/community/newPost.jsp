@@ -208,6 +208,7 @@
     <br>
     <div class="form_wrapper">
         <div class = "form_table" style="margin-top: 10px">
+            <input type="hidden" name="userId" id="userId" value="${userVo.userId}">
             <div class="col-25">
                 <label class= "newpostlayer" for="fname">태그</label>
             </div>

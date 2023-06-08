@@ -49,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                     .clearAuthentication(true) // 인증 정보 삭제
                     .invalidateHttpSession(true); // 세션 무효화
+
     }
 
     @Override

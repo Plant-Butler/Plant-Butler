@@ -131,6 +131,7 @@ public class PostController {
 		UserVo user = (UserVo) authentication.getPrincipal();
 		ModelAndView mv = new ModelAndView("/community/newPost");
 		mv.addObject("userVo",user);
+		System.out.println(user);
 		logger.info("게시물 등록 페이지 호출");
 		return mv;
 	}
@@ -149,7 +150,6 @@ public class PostController {
 	        if (!dir2.exists()) {
 	            dir2.mkdir();
 	        }
-
 
 	        // 이미지 파일 저장
 

@@ -14,23 +14,17 @@ import java.util.ArrayList;
 
 @Service
 public class MyPlantService {
-    @Autowired
+
     private MyPlantMapper myPlantMapper;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    public MyPlantService(MyPlantMapper myPlantMapper) {
+        this.myPlantMapper = myPlantMapper;
+    }
 
 
-    public ArrayList<MyplantVo> MyPlantList(String UserId) {
-        ArrayList<MyplantVo> myPlant = new ArrayList<>();
-        try {
-            System.out.println(UserId);
-            myPlant = (ArrayList<MyplantVo>) myPlantMapper.selectMyPlants(UserId);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public ArrayList<MyplantVo> myPlantList(String userId) throws SQLException {
+        return (ArrayList<MyplantVo>) myPlantMapper.selectMyPlants(userId);
 
-
-
-        return myPlant;
     }
 
 
@@ -77,10 +71,24 @@ public class MyPlantService {
        boolean flag = myPlantMapper.insertWebPushData(myplantId,dayInput,timeInput);
         return flag;
     }
+    public boolean insertWebPushData2(int myplantId, int dayInput, String timeInput) {
+        boolean flag = myPlantMapper.insertWebPushData2(myplantId,dayInput,timeInput);
+        return flag;
+
+    }
 
 
     public boolean point(long todayInDays) {
         boolean flag = myPlantMapper.point(todayInDays);
         return flag;
+    }
+
+    public void deleteSchedule(int myplantId) {
+        myPlantMapper.deleleMyPlantSchedule(myplantId);
+    }
+
+
+    public void deleteSchedule2(int myplantId) {
+        myPlantMapper.deleleMyPlantSchedule2(myplantId);
     }
 }

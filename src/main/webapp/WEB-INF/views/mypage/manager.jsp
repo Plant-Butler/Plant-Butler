@@ -41,7 +41,7 @@
 </table>
 <%-- 이전 페이지 버튼 --%>
             <c:if test="${postList.navigateFirstPage > 1}">
-                <a href="?postPage=${postList.navigateFirstPage - 1}&commentPage=${commentList.pageNum}&userPage=${userList.pageNum}" aria-label="Previous"">◀</a>
+                <a href="?postPage=${postList.navigateFirstPage - 1}&commentPage=${commentList.pageNum}&userPage=${userList.pageNum}" aria-label="Previous">◀</a>
             </c:if>
             <%-- 페이지 번호 출력 --%>
             <c:forEach var="pageNum" begin="${postList.navigateFirstPage}" end="${postList.navigateLastPage}">
@@ -128,5 +128,7 @@
                 <a href="?postPage=${postList.pageNum}&commentPage=${commentList.pageNum}&userPage=${userList.navigateLastPage + 1}">▶</a>
             </c:if>
 </div>
+</div>
+</body>
 </body>
 </html>

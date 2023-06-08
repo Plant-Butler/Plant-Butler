@@ -38,3 +38,35 @@
         });
     });
 
+    window.addEventListener("wheel", function(e){
+        e.preventDefault();
+    },{passive : false});
+
+    var $html = $("html");
+    var page = 1;
+    var lastPage = $(".content").length;
+    var pages = $(".content");
+    var headerHeight = 0;
+
+    $html.animate({scrollTop:0},10);
+
+    $(document).ready(function() {
+        headerHeight = $("#mainheader").outerHeight(); // 헤더의 ID를 실제 ID로 바꿔주세요.
+    });
+
+    $(window).on("wheel", function(e){
+
+        if($html.is(":animated")) return;
+
+        if(e.originalEvent.deltaY > 0){
+            if(page == lastPage) return;
+            page++;
+        }else if(e.originalEvent.deltaY < 0){
+            if(page == 1) return;
+            page--;
+        }
+
+        var posTop = pages.eq(page-1).offset().top - headerHeight;
+
+        $html.animate({scrollTop : posTop});
+    });

@@ -208,11 +208,11 @@
             <label for="watering">물주기</label>
         </div>
         <div>
-            <input type="checkbox" id="nutri" name="nutri" value="1">
+            <input type="checkbox" id="nutri" name="nutri" value="1" >
             <label for="nutri">영양제주기</label>
         </div>
         <div>
-            <input type="checkbox" id="prun" name="prun" value="1">
+            <input type="checkbox" id="prun" name="prun" value="1" >
             <label for="prun">가지치기</label>
         </div>
         <div>

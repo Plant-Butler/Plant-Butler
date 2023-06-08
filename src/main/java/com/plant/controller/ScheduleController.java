@@ -111,19 +111,38 @@ public class ScheduleController {
     }
 
     @PostMapping("/push")
-    public ModelAndView setpush(@PathVariable int myplantId, @RequestParam("dayInput")int dayInput ,@RequestParam("timeInput") String timeInput,@RequestParam("userId")String userId){
+    public ModelAndView setpush(@PathVariable int myplantId, @RequestParam(value = "dayInput")int dayInput ,@RequestParam(value = "timeInput") String timeInput,@RequestParam("userId")String userId,@RequestParam("water")String water){
         String[] parts = timeInput.split(":");
         String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
         String[] token = scheduleService.getToken(userId);
-        webpush.scheduleTask(myplantId,cronExpression,token);
+        webpush.scheduleTask(myplantId,water,cronExpression,token);
         boolean flag = myPlantService.insertWebPushData(myplantId,dayInput,timeInput);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("redirect:/myplants/"+myplantId+"/schedule/push");
         return mav;
     }
-    @DeleteMapping ("/push/delete")
-    public ResponseEntity deletepush(@PathVariable int myplantId){
-        webpush.cancelTask(myplantId);
+    @PostMapping("/push2")
+    public ModelAndView setpush2(@PathVariable int myplantId, @RequestParam(value = "dayInput")int dayInput ,@RequestParam(value = "timeInput") String timeInput,@RequestParam("userId")String userId,@RequestParam("drug")String drug){
+        String[] parts = timeInput.split(":");
+        String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
+        String[] token = scheduleService.getToken(userId);
+        webpush.scheduleTask2(myplantId,drug,cronExpression,token);
+        boolean flag = myPlantService.insertWebPushData2(myplantId,dayInput,timeInput);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/myplants/"+myplantId+"/schedule/push");
+        return mav;
+    }
+
+
+    @DeleteMapping ("/push/delete/{alarmType}")
+    public ResponseEntity deletepush(@PathVariable("myplantId") int myplantId, @PathVariable("alarmType") String alarmType){
+        String key = myplantId + "_" + alarmType;
+        System.out.println(alarmType);
+        if(alarmType.equals("water")){
+        webpush.cancelTask(myplantId,key);}
+        else {
+            webpush.cancelTask2(myplantId,key);
+        }
         return ResponseEntity.ok().build();
     }
 

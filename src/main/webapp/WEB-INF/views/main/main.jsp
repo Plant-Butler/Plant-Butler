@@ -33,7 +33,7 @@
 <div class="content" style=" flex: 1;">
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 <link rel="stylesheet" href="../css/mainStyle.css">
-<link rel="stylesheet" href="../css/styles.css">
+<link rel="stylesheet" href="../css/styles2.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
@@ -45,14 +45,14 @@
         <p id="app"></p>
     </div>
 
-    <div class="video-container">
+    <div class="video-container content">
         <video autoplay muted loop id="video">
             <source src="images/plant2.mp4" type="video/mp4">
             Your browser does not support HTML5 video.
         </video>
         <div class="overlay-text" data-aos="zoom-out-right" data-aos-once="false"><span id="introText"></span></div>
     </div>
-    <div class="container" data-aos="zoom-out-right" data-aos-once="false">
+    <div class="container content" data-aos="zoom-out-right" data-aos-once="false">
         <div class="col-xl-9 mx-auto">
             <div class="intro">
                     <h2 class="section-heading mb-4">
@@ -69,7 +69,7 @@
 
 
     <section class="page-section">
-        <div class="container" style="margin-bottom:200px">
+        <div class="container content" style="margin-bottom:200px">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
                     <div class="cta-inner bg-faded text-center rounded">
