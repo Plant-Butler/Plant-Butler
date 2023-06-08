@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.plant.dao.DiagnosisMapper">
+
+    <!-- 식물 정보 -->
+    <select id="diseaseDetail" resultType="com.plant.vo.DiseaseVo">
+        <![CDATA[
+            SELECT detail, solution, image
+            FROM disease
+            WHERE INSTR(#{predictedClass}, disease_id) > 0;
+
+        ]]>
+    </select>
+
+</mapper>

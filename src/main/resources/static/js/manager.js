@@ -19,7 +19,7 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
             success: function(response) {
                 console.log(userId);
                 alert('추가되었습니다');
-                $(".select-best").eq(index).text("우수회원 선택완료");
+                location.reload();
             },
             error: function(request, status, error) {
                 alert('이미 추가된 회원입니다.');
@@ -48,7 +48,7 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
                 success: function(response) {
                     console.log(userId);
                     alert('취소되었습니다');
-                    $(".select-best").eq(index).text("우수회원 선택");
+                    location.reload();
                 },
                 error: function(request, status, error) {
                     alert('이미 취소된 회원입니다.');
@@ -73,7 +73,7 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
                type: "DELETE",
                success: function(response) {
                    alert('초기화되었습니다');
-                   $(".select-best").text("우수회원 선택");
+                   location.reload();
                },
                error: function(request, status, error) {
                    alert('오류가 발생했습니다.');
@@ -169,4 +169,24 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
         });
     }
 
+    $(document).ready(function() {
+        $.ajax({
+            url: "/home/best-list",
+            type: "GET",
+            success: function(response) {
+                var users = response;
+                var tableBody = $("#best-user-table tbody");
+                var row = "<tr>";
+                for(var i = 0; i < users.length; i++) {
+                    var user = users[i];
+                    row += "<td>" + user.userId + " &ensp; </td>";
+                }
+                row += "</tr>";
+                tableBody.append(row);
+            },
+            error: function(xhr, status, error) {
+                alert('오류가 발생했습니다.');
+            }
+        });
+    });
 

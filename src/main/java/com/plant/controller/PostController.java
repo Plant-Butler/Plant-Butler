@@ -54,23 +54,25 @@ public class PostController {
 								   HttpSession session) {
 		ModelAndView mv = new ModelAndView("/community/postDetail");
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserVo user = (UserVo) authentication.getPrincipal();
-		String userId = "";
-		if (user != null) {
-			userId = user.getUserId();
-			int alreadyHeart = this.searchHeart(postId, userId);
-			mv.addObject("alreadyHeart", alreadyHeart);
+		UserVo user = null;
+		if (authentication.getPrincipal() != "anonymousUser") {
+			user = (UserVo) authentication.getPrincipal();
+			String userId = "";
+			if (user != null) {
+				userId = user.getUserId();
+				int alreadyHeart = this.searchHeart(postId, userId);
+				mv.addObject("alreadyHeart", alreadyHeart);
+			}
 		}
-
 		PostVo postVo = postService.postDetail(postId);
 		ArrayList<MyplantVo> myPlantList = postService.postMyPlantDetail(postId);
 		//ArrayList<CommentVo> commentList = commentService.getCommentList(postId);
 
-        PageInfo<CommentVo> commentList = commentService.getCommentList(postId, pageNum , pageSize);
-        mv.addObject("post", postVo);
-        mv.addObject("commentList", commentList);
-        mv.addObject("myPlantList", myPlantList);
-		mv.addObject("user",user);
+		PageInfo<CommentVo> commentList = commentService.getCommentList(postId, pageNum, pageSize);
+		mv.addObject("post", postVo);
+		mv.addObject("commentList", commentList);
+		mv.addObject("myPlantList", myPlantList);
+		mv.addObject("user", user);
 
 		int commentCount = mainService.getCommentCount(postId);
 		mv.addObject("commentCount", commentCount);
@@ -145,7 +147,7 @@ public class PostController {
 			@RequestParam(value="selectedPlants", required=false) List<String> selectedPlants,
 			RedirectAttributes redirectAttributes) {
 	    try {
-	        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
+	        String uploadFile = "D:/final/Plant-Butler/uploads/";
 	        File dir2 = new File(uploadFile);
 	        if (!dir2.exists()) {
 	            dir2.mkdir();
@@ -166,7 +168,7 @@ public class PostController {
 						}
 						fileNames.append(fileName);
 						// 이미지 파일을 저장할 위치 지정
-						String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
+						String uploadPath = "D:/final/Plant-Butler/uploads/";
 						File uploadDir = new File(uploadPath);
 						if (!uploadDir.exists()) {
 							uploadDir.mkdirs();
@@ -256,7 +258,7 @@ public class PostController {
 			@RequestParam(value="postMultiFile", required=false) MultipartFile file,
 			RedirectAttributes redirectAttributes) throws SQLException {
 		try {
-			String uploadFile = "D:/Plant-Butler/uploads/";
+			String uploadFile = "D:/final/Plant-Butler/uploads/";
 			File dir2 = new File(uploadFile);
 			if (!dir2.exists()) {
 				dir2.mkdir();
@@ -275,7 +277,7 @@ public class PostController {
 						}
 						fileNames.append(fileName);
 						// 이미지 파일을 저장할 위치 지정
-						String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
+						String uploadPath = "D:/final/Plant-Butler/uploads/";
 						File uploadDir = new File(uploadPath);
 						if (!uploadDir.exists()) {
 							uploadDir.mkdirs();

@@ -12,16 +12,19 @@
  <%@ include file="../main/header.jsp" %>
  <meta name="_csrf" content="${_csrf.token}"/>
  <meta name="_csrf_header" content="${_csrf.headerName}"/>
+ <link rel="preconnect" href="https://fonts.googleapis.com">
+ <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+ <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/diaryDetail.css">
 </head>
 <body>
 <body style="text-align: center"><br>
 
 <section class="page-section cta">
-    <div class="container">
         <!-- 첨부된 내 식물 -->
         <c:if test="${not empty myPlantList}">
-            <table>
-                <c:forEach var="myPlant" items="${myPlantList}">
+            <c:forEach var="myPlant" items="${myPlantList}">
+                <table class="table">
                     <tr>
                         <c:if test="${not empty myPlant.myplantImage}">
                             <td><div class="box" style="background: #BDBDBD;">
@@ -42,66 +45,95 @@
                             <c:if test="${myPlant.myplantId eq schedule.myplantId}">
                                 <c:set var="hasSchedule" value="true" />
                                 <tr>
-                                    <td></td>
-                                    <td>물주기 ${schedule.watering}회</td>
-                                    <td>영양제 ${schedule.nutri}회</td>
-                                    <td>가지치기 ${schedule.prun}회</td>
-                                    <td>분갈이 ${schedule.soil}회</td>
-                                    <td>환기 ${schedule.ventilation}회</td>
+                                    <td colspan="4">
+                                        물주기 ${schedule.watering}회 <span class="spacing"></span>
+                                        영양제 ${schedule.nutri}회 <span class="spacing"></span>
+                                        가지치기 ${schedule.prun}회 <span class="spacing"></span>
+                                        분갈이 ${schedule.soil}회 <span class="spacing"></span>
+                                        환기 ${schedule.ventilation}회
+                                    </td>
                                 </tr>
                             </c:if>
                         </c:forEach>
 
                         <c:if test="${not hasSchedule}">
                             <tr>
-                                <td></td>
                                 <td colspan="5">관리기록이 비어있어요</td>
                             </tr>
                         </c:if>
-
-                </c:forEach>
-            </table>
+                </table>
+            </c:forEach>
         </c:if>
-
 <br>
-        <table>
+<br>
+<br>
+<br>
+        <table class="diary-tbl">
             <tr>
-                <td colspan="2">${diary.diaryTitle}</td>
+                <td colspan="2" id="diary-ttl">${diary.diaryTitle}</td>
             </tr>
             <tr>
                 <td colspan="2"><fmt:formatDate value="${diary.diaryDate}" type="date"/></td>
             </tr>
             <tr>
-                <td>오늘 식물관리의 칭찬 혹은 반성</td>
-                <td>${diary.diaryPraiseRegret}</td>
+                <th>오늘 식물관리의 칭찬 혹은 반성</th>
+                <th>식물을 보며 느낀 나의 감정</th>
+             </tr>
+             <tr>
+                <td class="diary-td">${diary.diaryPraiseRegret}</td>
+                <td class="diary-td">${diary.diaryEmotion}</td>
             </tr>
             <tr>
-                <td>식물을 보며 느낀 나의 감정</td>
-                <td>${diary.diaryEmotion}</td>
+                <th>당신의 식물은 오늘 얼마나 성장했나요?</th>
+                <th>자유</th>
             </tr>
             <tr>
-                <td>당신의 식물은 오늘 얼마나 성장했나요?</td>
-                <td>${diary.diaryGrowth}</td>
-            </tr>
-            <tr>
-                <td>자유</td>
-                <td>${diary.diaryContent}</td>
-            </tr>
-            <tr>
-                <c:if test="${not empty diary.diaryImage}">
-                    <td>
-                        <c:forEach var="image" items="${fn:split(diary.diaryImage, ',')}">
-                            <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
-                        </c:forEach>
-                    </td>
-                </c:if>
+                <td class="diary-td">${diary.diaryGrowth}</td>
+                <td class="diary-td">${diary.diaryContent}</td>
             </tr>
         </table>
-        <button onclick='location.href="/diaries/form/${diary.diaryId}"'>수정</button>
-        <button onclick="deleteCheck(${diary.diaryId})">삭제</button>
-        <button onclick='location.href="/diaries"'>목록</button>
-    </div>
+<br>
+<br>
+<br>
+<br>
+        <c:if test="${not empty diary.diaryImage}">
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <ol class="carousel-indicators">
+                    <c:forEach var="image" items="${fn:split(diary.diaryImage, ',')}" varStatus="status">
+                        <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${status.index}" class="${status.index == 0 ? 'active' : ''}"></li>
+                    </c:forEach>
+                </ol>
+                <div class="carousel-inner">
+                    <c:forEach var="image" items="${fn:split(diary.diaryImage, ',')}" varStatus="status">
+                        <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
+                            <p><img class="img-thumbnail" src="/uploads/${image}"></p>
+                        </div>
+                    </c:forEach>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+        </c:if>
+
+
+<br>
+<br>
+        <button class="btn btn-success" onclick='location.href="/diaries/form/${diary.diaryId}"'>수정</button>
+        <button class="btn btn-success" onclick="deleteCheck(${diary.diaryId})">삭제</button>
+        <button class="btn btn-success" onclick='location.href="/diaries"'>목록</button>
+
 </section>
+
+<!-- Footer -->
+<footer class="footer text-faded text-center py-5">
+    <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>

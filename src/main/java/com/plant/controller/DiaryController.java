@@ -44,7 +44,7 @@ public class DiaryController {
     /* 전체 식물일기 조회 */
     @GetMapping(value="")
     public ModelAndView getDiaryList(@RequestParam(defaultValue = "1")Integer pageNum,
-                                     @RequestParam(defaultValue = "10") Integer pageSize) {
+                                     @RequestParam(defaultValue = "9") Integer pageSize) {
         ModelAndView mv = new ModelAndView("/diary/diaryList");
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

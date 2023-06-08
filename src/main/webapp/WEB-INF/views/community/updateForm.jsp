@@ -14,6 +14,13 @@
             max-width: 100px;
             max-height: 100px;
         }
+
+          h1 {
+               text-align: center;
+         }
+         .form_table {
+           text-align: center;
+         }
     </style>
     <meta charset="UTF-8">
     <title>Write Item</title>
@@ -44,7 +51,7 @@
 </head>
 <body>
 <div class="about-section">
-<h1>New Post</h1>
+<h1>Update Post</h1>
 </div>
 <br>
 
@@ -80,8 +87,8 @@
             <br>
         <div>
             <c:if test="${not empty post.postFile}">
-                [첨부파일]
-                <a>${post.postFile}</a>
+                <h4 class = "title">첨부파일</h4>
+                <a class = "title">기존 : ${post.postFile}</a>
             </c:if><br><br>
             <input class="upload_data" type="file" name="postMultiFile">
         </div>

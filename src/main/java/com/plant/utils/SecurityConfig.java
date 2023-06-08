@@ -38,7 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                     .and()
                 .formLogin()
-                .loginPage("/loginPage")
+                    .loginPage("/loginPage")
                     .and()
                 .httpBasic()
                     .and()
@@ -48,8 +48,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .logout()
                     .clearAuthentication(true) // 인증 정보 삭제
-                    .invalidateHttpSession(true); // 세션 무효화
-
+                    .invalidateHttpSession(true) // 세션 무효화
+                    .and()
+                .sessionManagement()
+                    .maximumSessions(1)
+                    .maxSessionsPreventsLogin(true)
+                    .expiredUrl("/loginPage");
     }
 
     @Override
