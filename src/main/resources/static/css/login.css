@@ -17,21 +17,21 @@
 .loginh2{
     font-family: 'Hahmlet', serif;
     font-size: 3em;
-    color: #000000;
+    color: #fff;
     text-align: center;
 }
 .inputbox{
     position: relative;
     margin: 30px 0;
     width: 380px;
-    border-bottom: 2px solid #000000;
+    border-bottom: 2px solid #fff;
 }
 .inputbox label{
     position: absolute;
     top: 50%;
     left: 5px;
     transform: translateY(-50%);
-    color: #000000;
+    color: #fff;
     font-size: 1em;
     pointer-events: none;
     transition: .5s;
@@ -90,4 +90,11 @@ input:focus ~ :valid{
     cursor: pointer;
     font-size: 1em;
     font-weight: 600;
+}
+.header-background {
+    background-image: url('/images/bodyimage.jpg'); /* 이미지 파일의 경로를 지정하세요 */
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    height: 1500px; /* 배경 이미지의 높이를 조정하세요 */
 }

@@ -36,5 +36,15 @@ public class DiagnosisService {
         return diseaseVo;
     }
 
+    /* 해충 상세조회 */
+    public DiseaseVo pestInfo(String predictedClass) {
+        DiseaseVo diseaseVo = null;
+        try {
+            diseaseVo = diagnosisMapper.pestDetail(predictedClass);
+        } catch (SQLException e) {
+
+        }
+        return diseaseVo;
+    }
 
 }

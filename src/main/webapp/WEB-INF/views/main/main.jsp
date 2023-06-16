@@ -26,23 +26,48 @@
             margin-left:auto;
             margin-right:auto;
         }
+        .best-users {
+          background-color: #f8f8f8; /* 배경색 지정 */
+          text-align: center; /* 텍스트 가운데 정렬 */
+          border-radius: 10px; /* 테두리 둥글게 처리 */
+          padding: 20px; /* 내부 여백 설정 */
+        }
+
+        /* 예시 스타일링 */
+        .best-users {
+          background-color: #f8f8f8;
+          text-align: center;
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+          margin-top: 20px; /* 위쪽 여백 추가 */
+          font-family: Arial, sans-serif; /* 폰트 지정 */
+          font-size: 18px; /* 폰트 크기 지정 */
+          color: #333; /* 텍스트 색상 지정 */
+        }
+        .bestusers{
+        margin-top: 10px;
+        font-family: 'KimjungchulGothic-Bold';
+        font-size: 50px;
+        }
     </style>
+
 </head>
 <body style="height: 5000px; text-align: center;   display: flex; flex-direction: column; background:#F4FAF9;">
 <div class="content" style=" flex: 1;">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link rel="stylesheet" href="../css/mainStyle.css">
-    <link rel="stylesheet" href="../css/styles2.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+<link rel="stylesheet" href="../css/mainStyle.css">
+<link rel="stylesheet" href="../css/styles2.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
 
-    <section class="page-section clearfix" style="margin-top: 500px;">
-        <div id="maintextdiv">
-            <p id="app"></p>
-        </div>
+<section class="page-section clearfix" style="margin-top: 500px;">
+    <div id="maintextdiv">
+        <p id="app"></p>
+    </div>
 
         <div class="video-container content">
             <video autoplay muted loop id="video">
@@ -71,8 +96,8 @@
         <div class="container content" style="margin-bottom:200px">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
-                    <div class="cta-inner bg-faded text-center rounded">
-                        <h2 class="section-heading mb-4"> 이달의 우수회원 </h2>
+                    <div class="best-users">
+                        <h2 class="bestusers"> 이달의 우수회원 </h2>
                         <table id="best-user-table" style="font-family: 'Hahmlet', serif; font-size: 25px">
                             <tbody></tbody>
                         </table>
@@ -108,14 +133,14 @@
                     delay: 75,
                 });
 
-                typewriter2
-                    .pauseFor(500)
-                    .typeString('<span style="color: #f6e1c5; font-weight: bold; font-family: Raleway, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;">PLANTERY</span>와 함께')
-                    .typeString('<br/>')
-                    .typeString('당신만의 특별한 ')
-                    .typeString('<br/>')
-                    .typeString('식물을 발견하세요')
-                    .start();
+            typewriter2
+                .pauseFor(500)
+                .typeString('<span style="color: #f6e1c5; font-weight: bold; font-family: Raleway, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;">PLANTERY</span>와 함께')
+                .typeString('<br/>')
+                .typeString('당신만의 특별한 ')
+                .typeString('<br/>')
+                .typeString('식물을 발견하세요')
+                .start();
 
                 window.removeEventListener('scroll', checkScroll);
             }

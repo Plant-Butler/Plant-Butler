@@ -1,32 +1,41 @@
- div, h1, h4, textarea {
+  div, h1, h4, textarea {
         font-family: 'Hahmlet', serif;
     }
 
-    .max-small {
-        width: auto; height: auto;
-        max-width: 100px;
-        max-height: 100px;
-    }
-
-    h4 {
-        font-size: 20px;
-        border-radius: 10px;
-        background-color: #b8d4c8;
-        padding: 10px;
-        display: inline-block;
+    .newdiarytitle{
+        font-family: 'Hahmlet', serif;
+        font-size: 3em;
+        color: #000000;
         text-align: center;
-     }
+        font-weight: 700;
+        font-style: normal;
 
+    }
+    .newdiarysubmit{
+      padding: 10px 30px;
+      background-color: #b8d4c8;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 20px;
+      width: 200px;
+    }
+    .minititle{
+        color: black;
+        font-weight: 400;
+        font-size: 30px;
+    }
     .diary-box {
         border: 2px solid #b8d4c8;
-        border-radius: 10px;
+        border-radius: 5px;
         padding: 10px;
         box-shadow: 0 10px 11px rgba(0, 0, 0, 0.1);
         background-color: white;
     }
 
      textarea {
-        border-radius: 10px;
+        border-radius: 11px;
         border: 1px solid #b8d4c8;
         text-align: center;
      }
@@ -36,16 +45,82 @@
         border-radius: 10px;
         border: 1px solid #b8d4c8;
         text-align: center;
+        height: 50px;
+     }
+
+     th {
+        background-color: #f2f5f4;
+        border-radius: 5px;
      }
 
      .btn {
         width: 20%;
      }
 
-     .page-section {
-        background: url("/assets/img/leaf.png") center/cover no-repeat fixed;
-     }
 
     .cta {
         background-color: white;
+        justify-content: center;
+    }
+
+    .newdiarysection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 1600px;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .diary_wrapper {
+      border: 3px solid #eaeaea;
+      border-radius: 30px;
+      padding: 50px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      width: 1500px;
+    }
+
+
+    .diaryinput {
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      padding:8px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .diaryinput:focus {
+      border-color: #4caf50;
+    }
+
+    .diaryinput.invalid {
+      border-color: #dc3545;
+    }
+
+    .diaryinput.valid {
+      border-color: #28a745;
+    }
+    .titleinput {
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      padding:8px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .titleinput:focus {
+      border-color: #4caf50;
+    }
+
+    .titleinput.invalid {
+      border-color: #dc3545;
+    }
+
+    .titleinput.valid {
+      border-color: #28a745;
+    }
+    input[type="checkbox"] {
+      font-size: 16px;
     }

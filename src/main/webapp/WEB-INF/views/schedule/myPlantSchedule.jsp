@@ -47,6 +47,27 @@
         #container {
             width: 1000px;
         }
+        .diagnosisbutton{
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 17px;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            background-color: #198754;
+            color: white;
+            cursor: pointer;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+
+        .gotoback{
+            text-align: center;
+            margin-right: 150px;
+            margin-left: auto;
+            margin-top: 60px;
+        }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -187,14 +208,15 @@
     </script>
     <title>Title</title>
 </head>
-<body style="margin-top: 200px;height: 1500px;">
+<body style="margin-top: 250px;height: 1500px;">
 <div id="bodyContainer">
+<br>
 <h1 style="font-family: 'Hahmlet', serif;">${myplant1.myplantNick}의 관리페이지</h1>
     <div id="linecontainer" style="height: 20px; width: 1300px; border-bottom : 1px solid rgba(128, 128, 128, 0.5);
 }"></div>
     <div id="buttondiv" style="margin-top: 50px;">
-<button class="btn btn-primary" stype="button" onclick="location.href='/myplants/${myplantId}/schedule/push'">물주기 알람 설정</button>
-<button class="btn btn-primary" onclick="showForm()">오늘기록 추가하기</button></div>
+<button class="diagnosisbutton" stype="button" onclick="location.href='/myplants/${myplantId}/schedule/push'">물주기 알람 설정</button>
+<button class="diagnosisbutton" onclick="showForm()">오늘기록 추가하기</button></div>
 <div id="schedule-form" style="display:none;">
     <form id="scheduleForm">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -306,7 +328,11 @@
             </table>
 </div>
 </div>
+<div class="gotoback">
+<button type="button" class="diagnosisbutton" onclick="window.location.href='/diagnosis'">질병/해충 진단</button>
+<button type="button" class="diagnosisbutton" onclick="window.location.href='/myplants'">목록</button>
 
+</div>
 <i class="fi fi-rr-Search"></i>
 </div>
 <footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;  margin-top: auto;">

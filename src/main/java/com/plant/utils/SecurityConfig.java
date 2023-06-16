@@ -34,7 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/home/**", "/login/**", "/loginPage/**", "/community/**", "/css/**", "/js/**", "/assets/**", "/uploads/**","/images/**","/diagnosis/**").permitAll()
                 .antMatchers("/registPage", "/idCheckForm", "/idCheckProc", "/nickCheckForm", "/nickCheckProc","/firebase-messaging-sw.js").permitAll()
                 .antMatchers("/manager/**").hasRole("ADMIN")
-                .antMatchers("/diaries/**", "/suggestions/**", "/mypage/**", "/myplants/**").hasRole("USER")
+                .antMatchers("/diaries/**", "/suggestions/**", "/mypage/**", "/myplants/**", "/diagnosis/**").hasRole("USER")
                 .anyRequest().authenticated()
                     .and()
                 .formLogin()

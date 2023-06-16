@@ -101,11 +101,37 @@
 }
 
 .report-container{
-    margin-left: 500px;
+    margin-left: 700px;
 }
+.postupdate{
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  padding: 5px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.postdelete{
+  background-color: #4CAF50;
+  color: #ffffff;
+  border: none;
+  padding: 5px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.contentimg{
+    width: 50%;
+}
+.postcontent{
+    max-width: 800px; /* 원하는 너비로 조정 */
+    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+    word-wrap: break-word;
+}
+
 </style>
 
-<br>
 <div class="about-section" style="margin-top: 300px">
 <table style="margin-left:auto;margin-right:auto;" width="1500" length="150">
     <tr class="overall">
@@ -119,16 +145,16 @@
     </tr>
 </table>
 <div style="display: flex; justify-content: center;">
-  <hr style="width: 70%;">
+    <hr style="width: 70%;">
 </div>
-<div class= "myplant-container" style="locatin">
+<div class= "myplant-container">
 <c:if test="${not empty myPlantList}">
     <h2 class="commentitle">${post.nickname}님의 반려식물</h2> <br>
     <table style="margin-left:auto;margin-right:auto;" width="1000" length="100">
         <c:forEach var="myPlant" items="${myPlantList}">
             <tr>
                 <c:if test="${not empty myPlant.myplantImage}">
-                    <td>
+                    <td class="tdimage">
                         <div class="box" style="background: #BDBDBD;">
                             <a href="/uploads/${myPlant.myplantImage}">
                                 <img class="plantImg" src="/uploads/${myPlant.myplantImage}">
@@ -148,20 +174,28 @@
         </c:forEach>
     </table>
 </c:if>
-
+<c:if test="${empty myPlantList}">
+    <h2 class="commentitle">${post.nickname}님의 반려식물</h2> <br>
+    <td>선택된 반려식물이 없습니다</td>
+</c:if>
 </div>
 <br>
 <br>
-${post.postContent}
 <br>
 <c:if test="${not empty post.postImage}">
     <td>
         <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
-            <p><a href="/uploads/${image}"><img src="/uploads/${image}"></a></p>
+            <p><a href="/uploads/${image}"><img class="contentimg"  src="/uploads/${image}"></a></p>
             <br>
         </c:forEach>
     </td>
 </c:if>
+<br>
+<div class="postcontent">
+${post.postContent}
+</div>
+<br>
+<br>
 <br>
 <c:if test="${not empty post.postFile}">
 [첨부파일]
@@ -188,20 +222,18 @@ ${post.postContent}
         </div>
         <div class="report-container">
         <button class="post-report" type="button" onclick="declare(0, ${post.postId}, 0)">신고</button>
-        <c:if test="${post.userId eq user.userId}">
-            <button type="button" onclick="location.href='/community/form/${post.postId}'" style="float: right;">수정</button>
-            <button type="button" onclick="del(0, ${post.postId}, 0)" style="float: right;">삭제</button>
-        </c:if>
+                <c:if test="${post.userId eq user.userId}">
+                    <button class="postupdate" type="button" onclick="location.href='/community/form/${post.postId}'">수정</button>
+                    <button class="postdelete" type="button" onclick="del(0, ${post.postId}, 0)">삭제</button>
+                </c:if>
         </div>
        </div>
     </c:if>
 </div>
-
 <div style="display: flex; justify-content: center;">
     <hr style="width: 70%;">
 </div><br>
     <h2 class="commentitle">댓글</h2>
-    <br>
 <table style="margin-left:auto;margin-right:auto;width:1500px;height:100px;">
     <!-- 댓글 작성 -->
     <c:if test="${not empty user.userId}">
