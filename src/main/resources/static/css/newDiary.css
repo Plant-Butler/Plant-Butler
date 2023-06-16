@@ -1,7 +1,6 @@
   div, h1, h4, textarea {
         font-family: 'Hahmlet', serif;
     }
-
     .newdiarytitle{
         font-family: 'Hahmlet', serif;
         font-size: 3em;
@@ -56,7 +55,6 @@
      .btn {
         width: 20%;
      }
-
 
     .cta {
         background-color: white;

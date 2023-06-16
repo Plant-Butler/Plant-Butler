@@ -56,7 +56,7 @@
                             </c:if>
                         </c:forEach>
                         <c:if test="${not hasSchedule}">
-                            <br><br>
+                           <div class="diary-tbl-wrapper"> <br><br>
                             <td class="postschedule" colspan="5">관리기록이 비어있어요</td>
                         </c:if>
                 </table>
@@ -82,7 +82,7 @@
                 <td class="diary-td">${diary.diaryPraiseRegret}</td>
                 <td class="diary-td">${diary.diaryEmotion}</td>
             </tr>
-            <tr>
+ <tr>
                 <th class="diarymini">당신의 식물은 오늘 얼마나 성장했나요?</th>
                 <th class="diarymini">자유</th>
             </tr>
@@ -121,7 +121,6 @@
             </div>
         </c:if>
 
-
 <br>
 <br>
 <div class="buttons">
@@ -131,6 +130,7 @@
 </div>
 </section>
 </div>
+
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 

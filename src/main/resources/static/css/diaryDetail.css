@@ -21,10 +21,12 @@
      #diary-ttl {
         font-size: 55px;
      }
+
     .postschedule{
         margin-right: 100px;
 
     }
+
      .diary-tbl {
         width: 90%;
         border-collapse: separate;
@@ -91,3 +93,5 @@
     .plantImg{
         margin-bottom: 20px;
     }
+     }
+
