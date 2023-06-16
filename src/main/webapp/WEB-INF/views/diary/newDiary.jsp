@@ -14,72 +14,72 @@
 <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/newDiary.css">
 </head>
-<body>
 <body style="text-align: center"><br>
-<h1>일기 작성하기</h1>
-<section class="page-section cta">
-    <div class="container diary-box">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
+<div style="margin-top: 230px">
+<h1 class="newdiarytitle">새로운 이야기</h1>
+<br><br><br>
+<section class="newdiarysection">
         <form action="./form" method="post" enctype="multipart/form-data">
+            <div class="diary_wrapper">
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div>
-                <h4>제목</h4><br>
-                <input type="text" name="diaryTitle" id="diaryTitle" required>
+                <h4 class="minititle">제목</h4><br>
+                <input class="titleinput" type="text" name="diaryTitle" id="diaryTitle" required>
             </div>
-<br>
-<br>
+            <br>
+            <br>
             <div>
-                <h4>내 식물</h4><br>
+                <h4 class="minititle">내 식물</h4><br>
                 <c:forEach var="myplant" items="${myplantList}">
-                    <input type='checkbox' name='selectedMyplant' id='id_${myplant.myplantId}' value='${myplant.myplantId}'> ${myplant.myplantNick}
+                    <input class="myplantoption" type='checkbox' name='selectedMyplant' id='id_${myplant.myplantId}' value='${myplant.myplantId}'> ${myplant.myplantNick}
                     <input type="hidden" name="myplantNick" id="nick_${myplant.myplantId}" value="${myplant.myplantNick}">
                 </c:forEach>
             </div>
             <div id="scheduleContainer"></div>
-<br>
-<br>
+            <br>
+            <br>
             <div>
-                <h4>오늘 식물관리의 칭찬 혹은 반성</h4><br>
-                <textarea cols="140" rows="5" name="diaryPraiseRegret" id="diaryPraiseRegret" required>스스로 잘한 점이나 부족했던 점을 기록해보세요</textarea>
+                <h4 class="minititle">오늘 식물관리의 칭찬 혹은 반성</h4><br>
+                <textarea  class="diaryinput" cols="140" rows="5" name="diaryPraiseRegret" id="diaryPraiseRegret" placeholder="스스로 잘한 점이나 부족했던 점을 기록해보세요" required></textarea>
             </div>
-<br>
-<br>
+            <br>
+            <br>
             <div>
-                <h4>식물을 보며 느낀 나의 감정</h4><br>
-                <textarea cols="140" rows="5" name="diaryEmotion" id="diaryEmotion" required>반려식물과의 교감을 기록해보세요</textarea>
+                <h4 class="minititle">식물을 보며 느낀 나의 감정</h4><br>
+                <textarea  class="diaryinput" cols="140" rows="5" name="diaryEmotion" id="diaryEmotion" placeholder="반려식물과의 교감을 기록해보세요" required></textarea>
             </div>
-<br>
-<br>
+            <br>
+            <br>
             <div>
-                <h4>당신의 식물은 오늘 얼마나 성장했나요?</h4><br>
-                <textarea cols="140" rows="5" name="diaryGrowth" id="diaryGrowth" required>내일은 오늘보다 더 자라있을거예요</textarea>
+                <h4 class="minititle">당신의 식물은 오늘 얼마나 성장했나요?</h4><br>
+                <textarea  class="diaryinput" cols="140" rows="5" name="diaryGrowth" id="diaryGrowth" placeholder="내일은 오늘보다 더 자라있을거예요" required></textarea>
             </div>
-<br>
-<br>
+            <br>
+            <br>
             <div>
-                <h4>자유</h4><br>
-                <textarea cols="140" rows="5" name="diaryContent" id="diaryContent" required>기록하고 싶은 말을 자유롭게 적어보세요</textarea>
+                <h4 class="minititle">자유</h4><br>
+                <textarea  class="diaryinput" cols="140" rows="5" name="diaryContent" id="diaryContent" placeholder="기록하고 싶은 말을 자유롭게 적어보세요" required></textarea>
             </div>
-<br>
-<br>
-            <h4>사진 첨부</h4><br>
+            <br>
+            <br>
+            <h4 class="minititle">사진 첨부</h4><br>
             <div class="mb-3" style="margin-left:auto; margin-right:auto;">
                 <input class="upload_img form-control" type="file"  name="diaryMultiImage" id="formFileMultiple" multiple>
             </div>
-<br>
-<br>
-    </div>
-<br>
-<br>
+            <br>
+            <br>
             <input type="hidden" name="userId" id="userId" value="${userId}">
-            <input type="submit" value="작성" class="btn btn-success">
+            </div>
+            <br>
+            <br>
+        <input type="submit" value="작성" class="newdiarysubmit">
     </form>
 </section>
-
-<!-- Footer -->
-<footer class="footer text-faded text-center py-5">
-    <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
-</footer>
-
+<br><br><br>
+<br><br><br><br><br><br>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 
@@ -141,5 +141,11 @@
     });
 
 </script>
+
+<!-- Footer -->
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
+    <div class="container"><p class="m-0 small">
+                             Copyright &copy; Plantery 2023</p></div>
+</footer>
 </body>
 </html>

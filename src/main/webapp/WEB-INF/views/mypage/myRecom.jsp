@@ -24,12 +24,17 @@
     td {
         width: 90%;
     }
+    .myrecom{
+        margin-top: 200px;
+
+    }
 </style>
 </head>
 <body>
 <body style="text-align: center">
 <br>
-<h2>나에게 맞는 반려식물 결과</h2>
+
+<h2 class="myrecom">나에게 맞는 반려식물 결과</h2>
 <br><br>
 <c:forEach var="plant" items="${recomPlantList}">
     <table class="result-tbl">
@@ -70,7 +75,7 @@
     </table>
     <br><br>
 </c:forEach>
-
+<br><br>
 <!-- Footer -->
 <footer class="footer text-faded text-center py-5">
     <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>

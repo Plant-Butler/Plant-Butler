@@ -17,10 +17,11 @@
  <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/diaryDetail.css">
 </head>
-<body>
 <body style="text-align: center"><br>
+<div class="overall" style="margin-top: 110px">
+<br><br>
 
-<section class="page-section cta">
+<section class="cta">
         <!-- 첨부된 내 식물 -->
         <c:if test="${not empty myPlantList}">
             <c:forEach var="myPlant" items="${myPlantList}">
@@ -34,11 +35,10 @@
                         <c:if test="${empty myPlant.myplantImage}">
                             <td>사진이 없어요</td>
                         </c:if>
-                        <td>${myPlant.myplantNick}</td>
-                        <td>${myPlant.distbNm}</td>
-                        <td><fmt:formatDate value="${myPlant.firstDate}" type="date"/></td>
+                        <td class="myplant">${myPlant.myplantNick}</td>
+                        <td class="myplant">${myPlant.distbNm}</td>
+                        <td class="myplant"><fmt:formatDate value="${myPlant.firstDate}" type="date"/></td>
                     </tr>
-
                         <!-- 첨부된 내 식물 내 식물의 오늘 관리기록 -->
                         <c:set var="hasSchedule" value="false" />
                         <c:forEach var="schedule" items="${scheduleList}">
@@ -55,11 +55,9 @@
                                 </tr>
                             </c:if>
                         </c:forEach>
-
                         <c:if test="${not hasSchedule}">
-                            <tr>
-                                <td colspan="5">관리기록이 비어있어요</td>
-                            </tr>
+                            <br><br>
+                            <td class="postschedule" colspan="5">관리기록이 비어있어요</td>
                         </c:if>
                 </table>
             </c:forEach>
@@ -68,6 +66,7 @@
 <br>
 <br>
 <br>
+<div class="diary-tbl-wrapper">
         <table class="diary-tbl">
             <tr>
                 <td colspan="2" id="diary-ttl">${diary.diaryTitle}</td>
@@ -76,22 +75,23 @@
                 <td colspan="2"><fmt:formatDate value="${diary.diaryDate}" type="date"/></td>
             </tr>
             <tr>
-                <th>오늘 식물관리의 칭찬 혹은 반성</th>
-                <th>식물을 보며 느낀 나의 감정</th>
+                <th class="diarymini">오늘 식물관리의 칭찬 혹은 반성</th>
+                <th class="diarymini">식물을 보며 느낀 나의 감정</th>
              </tr>
              <tr>
                 <td class="diary-td">${diary.diaryPraiseRegret}</td>
                 <td class="diary-td">${diary.diaryEmotion}</td>
             </tr>
             <tr>
-                <th>당신의 식물은 오늘 얼마나 성장했나요?</th>
-                <th>자유</th>
+                <th class="diarymini">당신의 식물은 오늘 얼마나 성장했나요?</th>
+                <th class="diarymini">자유</th>
             </tr>
             <tr>
                 <td class="diary-td">${diary.diaryGrowth}</td>
                 <td class="diary-td">${diary.diaryContent}</td>
             </tr>
         </table>
+        </div>
 <br>
 <br>
 <br>
@@ -124,17 +124,13 @@
 
 <br>
 <br>
+<div class="buttons">
         <button class="btn btn-success" onclick='location.href="/diaries/form/${diary.diaryId}"'>수정</button>
         <button class="btn btn-success" onclick="deleteCheck(${diary.diaryId})">삭제</button>
         <button class="btn btn-success" onclick='location.href="/diaries"'>목록</button>
-
+</div>
 </section>
-
-<!-- Footer -->
-<footer class="footer text-faded text-center py-5">
-    <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
-</footer>
-
+</div>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script>
 
@@ -184,6 +180,10 @@
     }
 
 </script>
+<!-- Footer -->
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
+    <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
 
 </body>
 </html>

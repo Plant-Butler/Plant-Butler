@@ -2,14 +2,14 @@
          font-family: 'Hahmlet', serif;
      }
 
-     .table td {
-        vertical-align: bottom;
-        width: 25%;
-     }
+    .td{
+        text-align: center;
 
-     .table {
-        margin-bottom: 50px;
-     }
+    }
+    .overall{
+        margin-right: 100px;
+        margin-left: 100px;
+    }
 
      .box{
         text-align: center;
@@ -21,7 +21,10 @@
      #diary-ttl {
         font-size: 55px;
      }
+    .postschedule{
+        margin-right: 100px;
 
+    }
      .diary-tbl {
         width: 90%;
         border-collapse: separate;
@@ -29,11 +32,13 @@
         border: 1px solid #b8d4c8;
         border-radius: 50px;
         box-shadow: 0 10px 11px rgba(0, 0, 0, 0.1);
+        margin-left: 70px;
      }
 
      .diary-td {
         border-radius: 10px;
         padding: 10px;
+        margin-right: 100px;
      }
 
      th {
@@ -60,4 +65,29 @@
 
      .cta {
         background-color: white;
+        min-height: 150vh;
+        width: 100%;
+        text-align: center;
+        margin-right: 90px;
      }
+
+     .table{
+        width: 80%;
+        text-align: center;
+        margin-left: 110px;
+        margin-bottom: 50px;
+     }
+
+     .buttons{
+        margin-right: 50px !important;
+
+     }
+
+    .myplant{
+        margin-top: 20px;
+        font-size: 25px;
+    }
+
+    .plantImg{
+        margin-bottom: 20px;
+    }
