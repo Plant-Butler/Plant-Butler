@@ -223,21 +223,6 @@
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     String formattedNow = now.format(formatter);
 %>
-<form action="./form" method="post" enctype="multipart/form-data" class = "newform">
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    <br>
-    <div class="form_wrapper">
-        <div class = "form_table" style="margin-top: 10px">
-            <input type="hidden" name="userId" id="userId" value="${userVo.userId}">
-            <div class="col-25">
-                <label class= "newpostlayer" for="fname">태그</label>
-            </div>
-            <div>
-                <input type="radio" name="postTag" value="information" class="ajaxClick" id="information" required>
-                <label for="information">
-                    <span class="custom-radio"></span>
-                    <span class="radio-label">정보 공유</span>
-                </label>
    <form action="./form" method="post" enctype="multipart/form-data" class = "newform">
        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
        <input type="hidden" name="userId" id="userId" value="${userVo.userId}">
