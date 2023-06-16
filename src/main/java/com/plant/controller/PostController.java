@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.plant.service.CommentService;
 import com.plant.service.MainService;
 import com.plant.service.PostService;
+//import com.plant.service.TokenRepository;
 import com.plant.vo.CommentVo;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PostVo;
@@ -45,6 +46,7 @@ public class PostController {
 	private CommentService commentService;
 	@Autowired
 	private MainService mainService;
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/* 게시물 상세보기 */

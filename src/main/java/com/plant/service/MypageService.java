@@ -18,9 +18,13 @@ import java.util.ArrayList;
 @Service
 public class MypageService {
 
-    @Autowired
-    private MypageMapper mypageMapper;
+
+    private final MypageMapper mypageMapper;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public MypageService(MypageMapper mypageMapper){
+        this.mypageMapper = mypageMapper;
+    }
 
     /* 회원정보 수정 */
     public boolean updateMypage(UserVo user) {

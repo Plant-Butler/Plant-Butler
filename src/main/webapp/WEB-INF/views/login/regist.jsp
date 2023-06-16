@@ -82,8 +82,9 @@
                               <tr style="height:100px">
                                   <th class = "title">웹푸시 동의 약관</th>
                                   <td><p class = "title" style="font-size: 12px; display:inline-block;">이 사이트에서는 웹 푸시 알림을 제공합니다.<br>이용 약관 및 개인정보 취급 방침에 따라 웹 푸시 알림 사용에 동의하십니까?</p></td>
-                                 <td><input type="checkbox" name="webpush" value="webpush" id="webpush" style="display:inline-block; margin-left: 10px;" required></td>
+                                 <td><input type="checkbox" name="webpush" value="webpush" id="webpush" style="display:inline-block; margin-left: 10px;" required><input type="hidden" name="tokenValue" id="tokenValueInput"><!-- 토큰 값을 전송하기 위한 숨겨진 입력 필드 --></td>
                               </tr>
+
                               <tr style="height:100px">
                                  <th class = "title">위치 정보 수집 동의 약관</th>
                                  <td><p class = "title" style="font-size: 12px; display:inline-block;">이 사이트는 사용자의 위치 정보를 사용합니다.<br>이용 약관 및 개인정보 취급 방침에 따라 위치 정보 사용에 동의하십니까?</p></td>
@@ -99,7 +100,9 @@
              </section>
              </table>
          </form>
+   <script type="module" src="/js/registToken.js"></script>
       <script src="./js/regist.js"></script>
+
 </body>
 
 </html>

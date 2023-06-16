@@ -15,7 +15,7 @@ import java.util.ArrayList;
 @Service
 public class MyPlantService {
 
-    private MyPlantMapper myPlantMapper;
+    private final MyPlantMapper myPlantMapper;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
     public MyPlantService(MyPlantMapper myPlantMapper) {
         this.myPlantMapper = myPlantMapper;

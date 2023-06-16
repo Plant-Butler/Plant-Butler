@@ -138,55 +138,59 @@
                 </div>
             </div>
             <div id="content3" class="content">
-                <p name="plant"><span class="seasonTitle">병충해 관리 정보</span><br>${plant.dlthtsManageInfo}</p>
-                <p name="plant"><span class="seasonTitle">특별 관리 정보</span><br>${plant.speclmanageInfo}</p>
-                <p name="plant"><span class="seasonTitle">병해충</span><br>${plant.dlthtsCodeNm}</p>
+                <div id="management"><h2>관리 정보</h2></div>
+                <div style="display: flex; flex-wrap: wrap;">
+                    <img id="ManagementImage" src="/images/management.jpg" style="width: 45%; height: auto;"></p>
+                    <div style="width: 55%;">
+                        <p name="plant"><span class="seasonTitle">병충해 관리 정보</span><br>${plant.dlthtsManageInfo}</p>
+                        <p name="plant"><span class="seasonTitle">특별 관리 정보</span><br>${plant.speclmanageInfo}</p>
+                        <p name="plant"><span class="seasonTitle">병해충</span><br>${plant.dlthtsCodeNm}</p>
+                    </div>
+                </div>
             </div>
+            <script>
+                $("#editBtn").on("click", function () {
+                    $("tr.nonedit").hide();
+                    $(".editable").hide();
+                    $(".input-editable").show();
+                    $("#editBtn").hide();
+                    $("#saveBtn").show();
+                });
+            </script>
+            <script>
+                $("#saveBtn").on("click", function () {
+                    var csrfToken = '${_csrf.token}';
+                    var csrfHeader = '${_csrf.headerName}';
+                    var myplantVo = {
+                        myplantId:${myPlant.myplantId},
+                        plantId:${myPlant.plantId},
+                        userId: "${myPlant.userId}",
+                        myplantNick: $("input[name='myplantNick']").val(),
+                        myplantImage: $("input[name='myplantImage']").val(),
+                        myplantPot: $("input[name='myplantPot']:checked").val(),
+                        myplantLength: $("input[name='myplantLength']").val(),
+                        myplantRadius1: $("input[name='myplantRadius1']").val(),
+                        myplantRadius2: $("input[name='myplantRadius2']").val(),
+                    };
+                    $.ajax({
+                        url: "/myplants/" +${myPlant.myplantId},
+                        method: "POST",
+                        headers: {
+                            [csrfHeader]: csrfToken // CSRF 토큰을 요청 헤더에 추가
+                        },
+                        contentType: "application/json",
+                        data: JSON.stringify(myplantVo),
+                        success: function () {
+                            alert("성공적으로 수정되었습니다.");
+                            location.reload();
+                        },
+                        error: function () {
+                            alert("수정에 실패했습니다. 다시 시도해주세요.");
+                        },
+                    });
+                });
+            </script>
         </div>
-    </div>
-    <script>
-        $("#editBtn").on("click", function () {
-            $("tr.nonedit").hide();
-            $(".editable").hide();
-            $(".input-editable").show();
-            $("#editBtn").hide();
-            $("#saveBtn").show();
-        });
-    </script>
-    <script>
-        $("#saveBtn").on("click", function () {
-            var csrfToken = '${_csrf.token}';
-            var csrfHeader = '${_csrf.headerName}';
-            var myplantVo = {
-                myplantId:${myPlant.myplantId},
-                plantId:${myPlant.plantId},
-                userId: "${myPlant.userId}",
-                myplantNick: $("input[name='myplantNick']").val(),
-                myplantImage: $("input[name='myplantImage']").val(),
-                myplantPot: $("input[name='myplantPot']:checked").val(),
-                myplantLength: $("input[name='myplantLength']").val(),
-                myplantRadius1: $("input[name='myplantRadius1']").val(),
-                myplantRadius2: $("input[name='myplantRadius2']").val(),
-            };
-            $.ajax({
-                url: "/myplants/" +${myPlant.myplantId},
-                method: "POST",
-                headers: {
-                    [csrfHeader]: csrfToken // CSRF 토큰을 요청 헤더에 추가
-                },
-                contentType: "application/json",
-                data: JSON.stringify(myplantVo),
-                success: function () {
-                    alert("성공적으로 수정되었습니다.");
-                    location.reload();
-                },
-                error: function () {
-                    alert("수정에 실패했습니다. 다시 시도해주세요.");
-                },
-            });
-        });
-    </script>
-</div>
 </body>
 <footer class="footer text-faded text-center py-5"
         style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">

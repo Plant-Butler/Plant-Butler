@@ -4,14 +4,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%-- <%@ include file="../main/header.jsp" %> --%>
+         pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Show Result</title>
+   <meta charset="UTF-8">
+   <title>식물병 진단</title>
+   <%@ include file="../main/header.jsp" %>
 </head>
 
 <style type="text/css">
@@ -41,27 +41,29 @@
    }
 </style>
 <body>
-   <div class="about-section">
+<section class="page-section cta">
+   <div class="container" style="margin-top: 150px">
       <h1>Show Result</h1>
-   </div>
-   <br>
-   <br>
-   <p>${pclass}</p>
-   <p>${confidence}</p>
-   <br>
-   <div class="button-container">
-      <button type="button" class="button" onclick="window.location.href='/home'">메인화면</button>
-      <button type="button" class="button" onclick="window.location.href='/diagnosis'">다시하기</button>
-   </div>
-   <br>
-   <div style="text-align: center;">
-        <img src="${pageContext.request.contextPath}/diseases/bacterial_spot.jpg" alt="Image">
-   </div>
-   <br>
-   <p>${disease.detail}</p>
-   <br>
-   <p>${disease.solution}</p>
 
+      <br>
+      <br>
+      <p>${pclass}</p>
+      <p>${confidence}</p>
+      <br>
+      <div class="button-container">
+         <button type="button" class="button" onclick="window.location.href='/home'">메인화면</button>
+         <button type="button" class="button" onclick="window.location.href='/diagnosis'">다시하기</button>
+      </div>
+      <br>
+      <div style="text-align: center;">
+         <img src="${pageContext.request.contextPath}/diseases/bacterial_spot.jpg" alt="Image">
+      </div>
+      <br>
+      <p>${disease.detail}</p>
+      <br>
+      <p>${disease.solution}</p>
+   </div>
+</section>
 </body>
 
 </html>

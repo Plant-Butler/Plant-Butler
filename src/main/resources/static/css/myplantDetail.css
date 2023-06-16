@@ -85,8 +85,25 @@ font-size: 30px;
     font-family: 'Hahmlet', serif;
     font-size: 25px;
 }
+#content3{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    font-family: 'Hahmlet', serif;
+    font-size: 25px;
+}
 .footer{
     margin-top: 150px;
+}
+#management{
+    width: 100%;
+    display: block;
+    text-align: center;
+    font-family: 'LINESeedKR-Bd', sans-serif;
+    font-size: 40px;
+    margin-bottom: 60px;
+    color : #157347;
 }
 @font-face {
     font-family: 'LINESeedKR-Bd';

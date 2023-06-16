@@ -26,15 +26,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/diagnosis")
 public class DiagnosisController {
 
-    @Autowired
-    private DiagnosisService diagnosisService;
+
+    private final DiagnosisService diagnosisService;
+
+    public DiagnosisController(DiagnosisService diagnosisService){
+        this.diagnosisService=diagnosisService;
+    }
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 사진 업로드 */
-    @GetMapping("/diagnosis")
+    @GetMapping("")
     public ModelAndView showDiagnosisPage() {
         ModelAndView mv = new ModelAndView("/diagnosis/upload");
         logger.info("진단 페이지 호출");
@@ -42,11 +46,11 @@ public class DiagnosisController {
     }
 
     /* 이미지 전송 & 결과 디스플레이 */
-    @PostMapping(value = "/transferImage")
+    @PostMapping(value = "/result")
     public ModelAndView uploadImage(@RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("/diagnosis/result");
         try {
-            final String UPLOAD_DIR = "D:/final/Plant-Butler/uploads/";
+            final String UPLOAD_DIR = "D:/uploads/";
 
             // 저장할 폴더가 존재하지 않는다면 새로 생성
             File uploadDir = new File(UPLOAD_DIR);
@@ -115,11 +119,4 @@ public class DiagnosisController {
     }
 
 
-    /* 결과 디스플레이 */
-    @PostMapping(value = "/result")
-    public ModelAndView checkResult(@RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView("/diagnosis/result");
-
-        return mv;
-    }
 }

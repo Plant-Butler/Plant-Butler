@@ -15,9 +15,13 @@ import java.util.Map;
 @Service
 public class RecomService {
 
-    @Autowired
-    private RecomMapper recomMapper;
+
+    private final RecomMapper recomMapper;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public RecomService(RecomMapper recomMapper){
+        this.recomMapper = recomMapper;
+    }
 
     /* 추천 결과 보기 */
     public ArrayList<PlantVo> getResultList (PlantVo plantVo) {
