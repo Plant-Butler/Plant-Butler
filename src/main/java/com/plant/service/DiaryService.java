@@ -17,8 +17,12 @@ import java.util.ArrayList;
 @Service
 public class DiaryService {
 
-    @Autowired
-    private DiaryMapper diaryMapper;
+
+    private final DiaryMapper diaryMapper;
+
+    public DiaryService(DiaryMapper diaryMapper){
+        this.diaryMapper = diaryMapper;
+    }
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 전체 식물일기 조회 */

@@ -48,23 +48,23 @@
 
 <style>
     input {
-        width:250px;
+        width: 250px;
         text-align: center;
     }
 </style>
 
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function login() {
-            let userId = document.getElementById("userId").value;
-            let password = document.getElementById("password").value;
-            let data = {
-                userId: userId,
-                password: password
-            };
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function login() {
+        let userId = document.getElementById("userId").value;
+        let password = document.getElementById("password").value;
+        let data = {
+            userId: userId,
+            password: password
+        };
 
-            console.log(userId);
-            console.log(data);
+        console.log(userId);
+        console.log(data);
 
             $.ajax({
                 type: "POST",

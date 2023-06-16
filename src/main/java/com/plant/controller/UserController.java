@@ -1,7 +1,9 @@
 package com.plant.controller;
 
 import com.plant.service.CustomUserDetailsService;
+import com.plant.service.TokenRepository;
 import com.plant.service.UserService;
+import com.plant.vo.TokenVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,14 +27,24 @@ import java.net.URI;
 @RestController
 @RequestMapping("")
 public class UserController {
-	
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private CustomUserDetailsService detailService;
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+
+
+	private final TokenRepository tokenRepository;
+
+	private final UserService userService;
+
+	private final CustomUserDetailsService detailService;
+
+	private final PasswordEncoder passwordEncoder;
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	public  UserController(TokenRepository tokenRepository, UserService userService,CustomUserDetailsService detailService,PasswordEncoder passwordEncoder){
+		this.tokenRepository = tokenRepository;
+		this.userService = userService;
+		this.detailService = detailService;
+		this.passwordEncoder = passwordEncoder;
+	}
 
 	/* 회원가입 폼 */
 	@GetMapping("/registPage")
@@ -47,8 +59,13 @@ public class UserController {
 	public ResponseEntity<?> regist(@ModelAttribute("user") UserVo user, @RequestParam(value = "tokenValue", required = false) String token,HttpServletResponse response) throws IOException {
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+		TokenVo tokenvo = new TokenVo();
 		boolean flag = userService.regist(user);
-		boolean flag2 = userService.saveToken(token,user.getUserId());
+		String userId = user.getUserId();
+		tokenvo.setUserId(userId);
+		tokenvo.setTokenNum(token);
+		tokenRepository.save(tokenvo);
+		boolean flag2 = userService.saveToken(token,userId);
 		logger.info("회원가입");
 		if (flag) {
 			URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/loginPage").build().toUri();
@@ -141,8 +158,13 @@ public class UserController {
 	@PostMapping("/token")
 	public ResponseEntity<Void> getToken(@RequestParam String userId,@RequestParam String token){
 		boolean search = userService.findToken(token);
+		TokenVo tokenvo = new TokenVo();
+		System.out.println(search);
 		if(search==false) {
 			boolean flag = userService.saveToken(token, userId);
+			tokenvo.setTokenNum(token);
+			tokenvo.setUserId(userId);
+			tokenRepository.save(tokenvo);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

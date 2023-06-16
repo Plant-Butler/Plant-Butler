@@ -21,8 +21,11 @@ import java.net.URI;
 @RequestMapping("/community/comment")
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentService commentService;
+
+    public CommentController(CommentService commentService){
+        this.commentService = commentService;
+    }
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 댓글 작성 */

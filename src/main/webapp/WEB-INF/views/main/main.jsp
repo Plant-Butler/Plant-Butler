@@ -69,31 +69,31 @@
         <p id="app"></p>
     </div>
 
-    <div class="video-container">
-        <video autoplay muted loop id="video">
-            <source src="images/plant2.mp4" type="video/mp4">
-            Your browser does not support HTML5 video.
-        </video>
-        <div class="overlay-text" data-aos="zoom-out-right" data-aos-once="false"><span id="introText"></span></div>
-    </div>
-    <div class="container" data-aos="zoom-out-right" data-aos-once="false">
-        <div class="col-xl-9 mx-auto">
-            <div class="intro">
+        <div class="video-container content">
+            <video autoplay muted loop id="video">
+                <source src="images/plant2.mp4" type="video/mp4">
+                Your browser does not support HTML5 video.
+            </video>
+            <div class="overlay-text" data-aos="zoom-out-right" data-aos-once="false"><span id="introText"></span></div>
+        </div>
+        <div class="container content" data-aos="zoom-out-right" data-aos-once="false">
+            <div class="col-xl-9 mx-auto">
+                <div class="intro">
                     <h2 class="section-heading mb-4">
                         <span class="section-heading-upper"></span>
                     </h2>
                     <p class="mb-3" style="margin-top: 500px;">나의 성향 & 취향 & 환경을 모두 고려한 최적의<br>반려 식물은 무엇일까요?</p>
 
-                <i class="bi bi-arrow-up-right-square" onclick="location.href='/suggestions'"></i>
+                    <i class="bi bi-arrow-up-right-square" onclick="location.href='/suggestions'"></i>
 
                 </div>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
 
     <section class="page-section">
-        <div class="container" style="margin-bottom:200px">
+        <div class="container content" style="margin-bottom:200px">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
                     <div class="best-users">
@@ -107,33 +107,31 @@
         </div>
     </section>
 
+    <script>
+        var app = document.getElementById('app');
+        var introText = document.getElementById('introText');
 
-<script>
-    var app = document.getElementById('app');
-    var introText = document.getElementById('introText');
+        var typewriter = new Typewriter(app, {
+            loop: false,
+            delay: 75,
+        });
 
-    var typewriter = new Typewriter(app, {
-        loop: false,
-        delay: 75,
-    });
+        typewriter
+            .typeString('당신의 취향과 환경을 반영한')
+            .pauseFor(500)
+            .typeString('<br/>')
+            .typeString('완벽한 <span style="color:#4BA888;">식물</span>을 찾아드립니다')
+            .pauseFor(1000)
+            .start();
 
-    typewriter
-        .typeString('당신의 취향과 환경을 반영한')
-        .pauseFor(500)
-        .typeString('<br/>')
-        .typeString('완벽한 <span style="color:#4BA888;">식물</span>을 찾아드립니다')
-        .pauseFor(1000)
-        .start();
+        function checkScroll() {
+            var introTextPosition = introText.getBoundingClientRect().top;
 
-    function checkScroll() {
-        var introTextPosition = introText.getBoundingClientRect().top;
-
-        if (introTextPosition < window.innerHeight) {
-            var typewriter2 = new Typewriter(introText, {
-                loop: false,
-                delay: 75,
-            });
-
+            if (introTextPosition < window.innerHeight) {
+                var typewriter2 = new Typewriter(introText, {
+                    loop: false,
+                    delay: 75,
+                });
 
             typewriter2
                 .pauseFor(500)
@@ -144,16 +142,16 @@
                 .typeString('식물을 발견하세요')
                 .start();
 
-            window.removeEventListener('scroll', checkScroll);
+                window.removeEventListener('scroll', checkScroll);
+            }
         }
-    }
 
-    window.addEventListener('scroll', checkScroll);
-</script>
+        window.addEventListener('scroll', checkScroll);
+    </script>
 
-<script>
-    AOS.init();
-</script>
+    <script>
+        AOS.init();
+    </script>
 </div>
 <footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
     <div class="container">

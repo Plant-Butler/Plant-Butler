@@ -26,11 +26,16 @@ import java.util.Map;
 @RequestMapping("/suggestions")
 public class RecomController {
 
-    @Autowired
-    private RecomService recomService;
-    @Autowired
-    private ApiKey apiKeys;
+
+    private final RecomService recomService;
+
+    private final ApiKey apiKeys;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public RecomController(RecomService recomService, ApiKey apiKeys){
+        this.recomService =recomService;
+        this.apiKeys = apiKeys;
+    }
 
 
     /* 추천 결과 보기 */

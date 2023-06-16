@@ -20,9 +20,12 @@ import java.util.ArrayList;
 @RequestMapping("/manager")
 public class ManagerController {
 
-    @Autowired
-    private ManagerService service;
+    private final ManagerService managerService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public ManagerController(ManagerService managerService){
+        this.managerService = managerService;
+    }
 
     /* 게시물 + 댓글 + 회원 */
     @GetMapping(value=" ")
@@ -31,9 +34,9 @@ public class ManagerController {
                                     @RequestParam(defaultValue = "1") int userPage) {
         ModelAndView mv = new ModelAndView("/mypage/manager");
 
-        PageInfo<PostVo> postList = service.mgmtPostList(postPage, 15);
-        PageInfo<CommentVo> commentList = service.mgmtCommentList(commentPage, 15);
-        PageInfo<UserVo> userList = service.getUserList(userPage, 15);
+        PageInfo<PostVo> postList = managerService.mgmtPostList(postPage, 15);
+        PageInfo<CommentVo> commentList = managerService.mgmtCommentList(commentPage, 15);
+        PageInfo<UserVo> userList = managerService.getUserList(userPage, 15);
         mv.addObject("postList", postList);
         mv.addObject("commentList", commentList);
         mv.addObject("userList", userList);
@@ -44,7 +47,7 @@ public class ManagerController {
     /* 우수회원 추가 */
     @PostMapping(value="/best-user/{userId}")
     public ResponseEntity<Void> insertBestUser(@RequestParam("userId") String userId) {
-        boolean flag = service.insertBestUser(userId);
+        boolean flag = managerService.insertBestUser(userId);
 
         logger.info("[Manager Controller] insertBestUser()");
 
@@ -58,7 +61,7 @@ public class ManagerController {
     /* 우수회원에서 삭제 */
     @DeleteMapping(value="/best-user/{userId}")
     public ResponseEntity<Void> deleteBestUser(@RequestParam("userId") String userId) {
-        boolean flag = service.deleteBestUser(userId);
+        boolean flag = managerService.deleteBestUser(userId);
 
         logger.info("[Manager Controller] deleteBestUser()");
         if(flag) {
@@ -71,7 +74,7 @@ public class ManagerController {
     /* 우수회원 초기화 */
     @DeleteMapping(value="/best-user/all")
     public ResponseEntity<Void> deleteAllBestUser() {
-        service.deleteAllBestUser();
+        managerService.deleteAllBestUser();
         logger.info("[Manager Controller] deleteAllBestUser()");
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -79,7 +82,7 @@ public class ManagerController {
     /* 우수회원 광고 */
     @GetMapping(value="/best-list")
     public ResponseEntity<ArrayList<BestUserVo>> selectBestUser() {
-        ArrayList<BestUserVo> bestList = service.getBestUser();
+        ArrayList<BestUserVo> bestList = managerService.getBestUser();
         logger.info(bestList.toString());
         logger.info("[Manager Controller] selectBestUser()");
         return new ResponseEntity<>(bestList, HttpStatus.OK);
@@ -88,7 +91,7 @@ public class ManagerController {
     /* 회원 삭제 */
     @DeleteMapping(value="/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable String userId) {
-        boolean flag = service.deleteUser(userId);
+        boolean flag = managerService.deleteUser(userId);
 
         logger.info("[Manager Controller] deleteUser(userId)");
         if(flag) {

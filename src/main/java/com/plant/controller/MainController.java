@@ -24,11 +24,16 @@ import java.util.Map;
 @RestController
 public class MainController {
 
-    @Autowired
-    private MainService mainService;
-    @Autowired
-    private ManagerService managerService;
+
+    private final MainService mainService;
+
+    private final ManagerService managerService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public MainController(MainService mainService,ManagerService managerService){
+        this.mainService = mainService;
+        this.managerService = managerService;
+    }
 
     /* 메인페이지 */
     @GetMapping(value="/home")

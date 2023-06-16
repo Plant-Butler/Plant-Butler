@@ -18,6 +18,9 @@
         <result column="schedule_date" property="scheduleDate"/>
         <result column="webpush_date" property="webPushDate"/>
         <result column="webpush_time" property="webPushTime"/>
+        <result column="webpush_date2" property="webPushDate2"/>
+        <result column="webpush_time2" property="webPushTime2"/>
+
     </resultMap>
 
     <select id="selectMyPlants" resultMap="MyplantResultMap">
@@ -89,6 +92,11 @@
 
     </update>
 
+    <update id="insertWebPushData2">
+        update myplant set webpush_date2 = #{dayInput} , webpush_time2 = #{timeInput} where myplant_id=#{myplantId};
+
+    </update>
+
     <update id="point">
         UPDATE user_table
         SET point = point - (
@@ -97,6 +105,18 @@
             WHERE (#{todayInDays} - myplant.schedule_date) >= 6
               AND myplant.user_id = user_table.user_id
         );
+    </update>
+    
+    <update id="deleleMyPlantSchedule">
+        UPDATE myplant
+        SET webpush_date = NULL, webpush_time = NULL
+        WHERE myplant_id = #{myplantId};
+    </update>
+
+    <update id="deleleMyPlantSchedule2">
+        UPDATE myplant
+        SET webpush_date2 = NULL, webpush_time2 = NULL
+        WHERE myplant_id = #{myplantId};
     </update>
 
 

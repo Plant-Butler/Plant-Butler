@@ -18,14 +18,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,23 +34,35 @@ import java.util.Objects;
 @RequestMapping("/myplants")
 public class PlantController {
 
-    @Autowired
-    private MyPlantService MyPlantService;
-    @Autowired
-    private ScheduleService scheduleService;
-    @Autowired
-    private ApiKey apiKey;
+
+    private final MyPlantService myPlantService;
+
+    private final ScheduleService scheduleService;
+
+    private final ApiKey apiKey;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    public PlantController(MyPlantService myPlantService,ScheduleService scheduleService,ApiKey apiKey){
+        this.myPlantService = myPlantService;
+        this.scheduleService = scheduleService;
+        this.apiKey = apiKey;
+    }
 //    test test test
 
     @GetMapping(value="")
     /* 메인페이지 이동 */
-    public ModelAndView main(HttpSession session) {
+    public ModelAndView main() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserVo user = (UserVo) authentication.getPrincipal();
         String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
-        ArrayList<MyplantVo> plantList = MyPlantService.MyPlantList(userId); //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
+        ArrayList<MyplantVo> plantList = null; //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
+        try {
+            plantList = myPlantService.myPlantList(userId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         ArrayList<ScheduleVo> scheduleVos = scheduleService.getScheduleListToUserId(userId);//세션에서 얻은 유저의 아이디를 통해 해당 유저의 스케쥴 작성 목록 불러오기
         /* 각 식물 리스트의 관리기록 작성일 계산 */
         long scheduleDate = 0;
@@ -127,22 +138,22 @@ public class PlantController {
         myplantVo.setMyplantImage(fileNames.toString());
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         long scheduleDate = timestamp.getTime()/ (1000 * 60 * 60 * 24);
-        myplantVo.setScheduleDate(scheduleDate);
-        MyPlantService.registMyPlant(myplantVo);
+        myplantVo.setScheduleDate(scheduleDate); //첫 식물 등록시 관리일정 계산을 위해서 작성일을 scheduleDate에 기록
+        myPlantService.registMyPlant(myplantVo);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/myplants"));
         return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
     }
     @DeleteMapping(value="/form/{myplantId}")
     public ResponseEntity<Void> deleteMyPlant(@PathVariable("myplantId") int myplantId) {
-        MyPlantService.deleteMyPlant(myplantId);
+        myPlantService.deleteMyPlant(myplantId);
         return ResponseEntity.noContent().build();
     }
     @GetMapping(value="/{myplantId}/{plantId}")
     public ModelAndView myPlantDetail(@PathVariable("myplantId") int myplantId , @PathVariable("plantId") int plantId){
         ModelAndView model = new ModelAndView();
-        MyplantVo myplantVo = MyPlantService.myPlantDetail(myplantId);
-        PlantVo plantVo = MyPlantService.searchPlantToNum(plantId);
+        MyplantVo myplantVo = myPlantService.myPlantDetail(myplantId);
+        PlantVo plantVo = myPlantService.searchPlantToNum(plantId);
         model.addObject("myPlant", myplantVo);
         model.addObject("plant",plantVo);
         model.setViewName("myplant/myPlantDetail");
@@ -151,21 +162,20 @@ public class PlantController {
     }
     @PostMapping(value="/{myplantId}")
     public ResponseEntity<Void>editMyPlantInfo(@RequestBody MyplantVo myplantVo){
-        MyPlantService.editMyPlantInfo(myplantVo);
+        myPlantService.editMyPlantInfo(myplantVo);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value="/search/{plantId}")
     public ResponseEntity <ArrayList<PlantVo>> searchPlantInfo(@PathVariable("plantId") String plantId){
-        ArrayList<PlantVo> plantVo = new ArrayList<>();
-        plantVo = MyPlantService.searchPlantInfo(plantId);
+        ArrayList<PlantVo> plantVo =  myPlantService.searchPlantInfo(plantId);
         return new ResponseEntity<>(plantVo,HttpStatus.OK);
 
     }
 
     @PostMapping("/{myplantId}/{userId}/represent")
     public ResponseEntity<Void> insertRepresent(@PathVariable int myplantId, @PathVariable String userId) {
-        MyPlantService.registRepresent(userId, myplantId);
+        myPlantService.registRepresent(userId, myplantId);
         return ResponseEntity.ok().build();
     }
 

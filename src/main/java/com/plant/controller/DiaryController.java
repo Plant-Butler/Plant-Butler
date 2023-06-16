@@ -34,11 +34,16 @@ import java.util.Objects;
 @RequestMapping("/diaries")
 public class DiaryController {
 
-    @Autowired
-    private DiaryService diaryService;
-    @Autowired
-    private PostService postService;
+
+    private final DiaryService diaryService;
+
+    private final PostService postService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public DiaryController(DiaryService diaryService,PostService postService){
+        this.diaryService = diaryService;
+        this.postService = postService;
+    }
 
 
     /* 전체 식물일기 조회 */
