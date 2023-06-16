@@ -15,7 +15,6 @@
     div, h1, h5 {
         font-family: 'Hahmlet', serif;
     }
-
     a {
         text-decoration: none;
     }
@@ -37,6 +36,38 @@
     .cta {
         background-color: white;
     }
+    .diarylisttitle{
+        margin-top: 15px;
+    }
+
+    .mydiarytitle{
+       font-family: 'Hahmlet', serif;
+       font-size: 3em;
+       color: #000000;
+       text-align: center;
+       margin-top: 100px;
+       font-weight: 700;
+       font-style: normal;
+    }
+    .newdiary{
+        display: inline-block;
+        padding: 8px 16px;
+        font-size: 17px;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        background-color: #198754;
+        color: white;
+        cursor: pointer;
+        margin-left: 1150px;
+        margin-bottom: 5px;
+    }
+    .page-link{
+        background-color: #4CAF50 !important;
+        border-color: #4CAF50 !important;
+
+
 </style>
 </head>
 <body>
@@ -44,7 +75,10 @@
 
 <section class="page-section cta">
     <div class="container">
-        <h1>식물일기</h1>
+        <h1 class="mydiarytitle">하루 일기</h1>
+        <hr>
+        <button onclick="location.href='/diaries/form'" class="newdiary">작성하기</button>
+        <br>
         <br>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             <c:forEach var="list" items="${diaryList.list}">
@@ -72,6 +106,9 @@
         </div>
     </div>
     <br>
+    <br>
+    <br><br>
+
         <!-- 이전 -->
         <ul class="pagination d-flex justify-content-center">
             <c:if test="${diaryList.navigateFirstPage > 1}">
@@ -104,14 +141,14 @@
         </ul>
 
         <br>
-        <button onclick="location.href='/diaries/form'" class="btn btn-success">오늘 일기 작성하기</button>
+
     </div>
 </section>
 
 <!-- Footer -->
-<footer class="footer text-faded text-center py-5">
-    <div class="container"><p class="m-0 small">brick-wall-painted-in-white 작가 kues1 출처 Freepik
-                            <br> Copyright &copy; Plantery 2023</p></div>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
+    <div class="container"><p class="m-0 small">
+                             Copyright &copy; Plantery 2023</p></div>
 </footer>
 </body>
 </html>

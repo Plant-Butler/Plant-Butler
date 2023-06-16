@@ -10,4 +10,6 @@ public interface DiagnosisMapper {
 
     /* 질병 조건 조회 */
     DiseaseVo diseaseDetail(String predictedClass) throws SQLException;
+    DiseaseVo pestDetail(String predictedClass) throws SQLException;
+
 }

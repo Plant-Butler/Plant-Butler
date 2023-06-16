@@ -46,9 +46,34 @@
     .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
     #centerAddr {display:block;margin-top:2px;font-weight: normal;}
     .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
+    .smallbutton{
+        display: inline-block;
+        padding: 8px 16px;
+        font-size: 17px;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        background-color: #198754;
+        color: white;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+
+    .inbox{
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .inbox2{
+        text-decoration: none;
+        margin-left: 150px;
+        font-size: 14px;
+    }
 </style>
 
-
+<br>
 <div id="bodyContainer">
     <div>
         <div id="cityName" style="font-family: 'LINESeedKR-Bd', sans-serif; font-size: 30px; font-weight: bold;"></div>
@@ -62,8 +87,8 @@
         <div id="dataContainer" ></div>
     </div>
 <div id="insertplant">
-    <a href="/diagnosis">질병진단</a>
-    <a href="/myplants/form">추가하기</a>
+    <button type="button" class="smallbutton" onclick="window.location.href='/diagnosis'">질병/해충 진단</button>
+    <button type="button" class="smallbutton" onclick="window.location.href='/myplants/form'">추가하기</button>
 </div>
 <div style="width: 1200px;">
     <c:forEach var="list" items="${plantList}">
@@ -86,14 +111,14 @@
                 </div>
 
                 <p class="card-body-description">
-                    <a href="/myplants/${list.myplantId}/${list.plantId}">상세페이지</a>
+                    <a class="inbox" href="/myplants/${list.myplantId}/${list.plantId}">상세페이지</a>
                 </p>
 
                 <div class="card-body-footer">
                     <hr style="margin-bottom: 8px; opacity: 0.5; border-color: #EF5A31">
                     <div>
-                        <a href="/myplants/${list.myplantId}/schedule">관리페이지</a>
-                        <a onclick="deleteMyPlant(${list.myplantId})" class="deleteLink">삭제하기</a>
+                        <a class="inbox" href="/myplants/${list.myplantId}/schedule">관리페이지</a>
+                        <a class="inbox2" onclick="deleteMyPlant(${list.myplantId})" class="deleteLink">삭제하기</a>
                     </div>
                 </div>
             </div>
@@ -470,9 +495,9 @@
 </script>
 </div>
 </div>
-</body>
-</div>
 <footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px; background-repeat: no-repeat; background-size: cover;">
     <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
 </footer>
+</body>
+</div>
 </html>

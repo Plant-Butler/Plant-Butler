@@ -9,18 +9,207 @@
 <html>
 <head>
     <style>
-        .max-small {
-            width: auto; height: auto;
-            max-width: 100px;
-            max-height: 100px;
-        }
+    .custom-input {
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      padding:8px;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
 
-          h1 {
-               text-align: center;
-         }
-         .form_table {
-           text-align: center;
-         }
+    .custom-input:focus {
+      border-color: #4caf50;
+    }
+
+    .custom-input.invalid {
+      border-color: #dc3545;
+    }
+
+    .custom-input.valid {
+      border-color: #28a745;
+    }
+
+    .newh1{
+        font-family: 'Hahmlet', serif;
+        font-size: 3em;
+        color: #000000;
+        text-align: center;
+        font-weight: 700;
+        font-style: normal;
+    }
+
+    .custom-textarea {
+      width: 60%;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+    .updateform {
+      width: 1100px;
+      margin: 0 auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .form_table {
+      padding: 70px;
+      border-radius: 5px;
+    }
+
+    .title {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .upload_writer,
+    .upload_date,
+    .upload_title,
+    .upload_img,
+    .upload_data {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    .update_img{
+    width: 80%;
+    }
+    .custom-textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+      font-size: 16px;
+    }
+
+    .submit {
+      text-align: center;
+    }
+
+    .submit input[type="submit"] {
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .submit input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    .radio-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .radio-group label {
+      margin-left: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .selected-plants {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .selected-plants-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .selected-plants-list li {
+      margin-bottom: 5px;
+    }
+    .col-25 {
+      float: left;
+      width: 25%;
+      margin-top: 6px;
+    }
+    .form_wrapper {
+      border: 3px solid #eaeaea;
+      border-radius: 30px;
+      padding: 10px;
+      margin-bottom: -20px; /* Adjust the value as needed */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .newpostlayer{
+        font-weight: bold;
+        font-size: 20px;
+        font-family: "Jeju Gothic";
+    }
+    /* Hide the default radio button */
+    input[type="radio"] {
+      display: none;
+    }
+
+    .custom-radio {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #ccc;
+      background-color: #fff;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+
+    .radio-label {
+      font-weight: bold;
+    }
+
+    /* Add spacing between radio buttons */
+    input[type="radio"] + label {
+      margin-right: 20px;
+    }
+
+    input[type="radio"]:checked + label .custom-radio {
+      background-color: #4caf50; /* Replace with your desired color for checked radio button */
+      border-color: #4caf50;
+    }
+
+    input[type="radio"]:checked + label .radio-label {
+      color: #4caf50; /* Replace with your desired color for checked label text */
+    }
+    .newsubmit{
+      padding: 10px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .selectbutton{
+      padding: 5px 10px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .nickname {
+      margin-right: 10px;
+    }
+    .existedfile{
+      color: #e5a756;
+      font-size: 18px;
+      text-decoration: none;
+    }
     </style>
     <meta charset="UTF-8">
     <title>Write Item</title>
@@ -50,55 +239,77 @@
     </script>
 </head>
 <body>
-<div class="about-section">
-<h1>Update Post</h1>
+<div class="about-section" style="margin-top: 300px">
+    <h1 class = "newh1">게시물 수정</h1>
 </div>
 <br>
 
-    <form id="myForm" onsubmit="submitForm(event)" enctype="multipart/form-data">
+    <form id="myForm" onsubmit="submitForm(event)" enctype="multipart/form-data" class = "updateform">
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-	<div class = "form_table">
-		 <div>
-		 <br>
-                <h4 class = "title">작성자</h4>
-             <input class="upload_writer" type="text" name="userId" id="userId" value="${userId}" readonly>
+        <input type="hidden" name="userId" id="userId" value="${userVo.userId}">
+        <br>
+        <div class="form_wrapper">
+	<div class = "form_table" style="margin-top: 10px margin-bottom: 10px">
+            <div class="col-25">
+                <label class= "newpostlayer" for="fname">제목</label>
             </div>
-            <br>
             <div>
-                <h4 class = "title">제목</h4>
-                <input class="upload_title" type="text" name="postTitle" id = "postTitle" value="${post.postTitle}">
+               <input class="custom-input" type="text" name="postTitle" id = "postTitle" value="${post.postTitle}">
             </div>
-            <br>
+            <br><br>
+
+            <div class="col-25">
+                <label class= "newpostlayer" for="fname">내용</label>
+            </div>
             <div>
-                <h4 class = "title">내용</h4>
-                <textarea cols="80" rows="5" name="postContent">${post.postContent}</textarea>
+              <textarea class="custom-input" cols="80" rows="10" name="postContent">${post.postContent}</textarea>
             </div>
-            <br>
-            <br>
-			<div>
-                <h4 class = "title">이미지첨부</h4>
-                <p >
-                <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
-                    <img class="max-small" src="/uploads/${image}">
-                </c:forEach>
+            <br><br>
+
+            <div>
+            <c:if test="${not empty post.postImage}">
+               <h4 class = "newpostlayer">기존 이미지</h4>
+               <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
+                   <img class="update_img" src="/uploads/${image}">
+               </c:forEach>
+            </c:if><br>
+
+                <br><br>
+                <h4 class = "newpostlayer">이미지첨부</h4>
                 </p>
                 <input class="upload_img" type="file" name="postMultiImage" id="postMultiImage" multiple>
             </div>
-            <br>
-        <div>
-            <c:if test="${not empty post.postFile}">
-                <h4 class = "title">첨부파일</h4>
-                <a class = "title">기존 : ${post.postFile}</a>
-            </c:if><br><br>
-            <input class="upload_data" type="file" name="postMultiFile">
+            <br><br>
+            <c:if test="${not empty post.postImage}">
+               <h4 class = "newpostlayer">기존 첨부파일</h4>
+              <c:if test="${not empty post.postFile}">
+                   <a class = "existedfile">${post.postFile}</a>
+               </c:if><br>
+            </c:if><br>
+            <div>
+                <h4 class = "newpostlayer">첨부파일</h4>
+                <input class="upload_data" type="file" name="postMultiFile">
+            </div>
+	        <br><br>
+
+    </div>
+    </div>
+    <br><br>
+    	<div class="submit">
+            <input type="submit" value="수정">
         </div>
-	<br>
-	<div class="submit">
-        <input type="submit" value="수정">
-    </div>
-    </div>
     </form>
+    <br>
+    <br>
 <br>
 <br>
+
+<br>
+<br>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px; flex-shrink: 0;">
+    <div class="container">
+        <p class="m-0 small">© Plantery 2023</p>
+    </div>
+</footer>
 </body>
 </html>
