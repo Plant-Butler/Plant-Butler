@@ -156,9 +156,7 @@
                 <c:if test="${not empty myPlant.myplantImage}">
                     <td class="tdimage">
                         <div class="box" style="background: #BDBDBD;">
-                            <a href="/uploads/${myPlant.myplantImage}">
-                                <img class="plantImg" src="/uploads/${myPlant.myplantImage}">
-                            </a>
+                            <img class="plantImg" src="${myPlant.myplantImage}">
                         </div>
                     </td>
                 </c:if>
@@ -184,8 +182,8 @@
 <br>
 <c:if test="${not empty post.postImage}">
     <td>
-        <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
-            <p><a href="/uploads/${image}"><img class="contentimg"  src="/uploads/${image}"></a></p>
+        <c:forEach var="image" items="${imageUrls}">
+            <p><img class="contentimg" src="${image}"></p>
             <br>
         </c:forEach>
     </td>
@@ -199,7 +197,7 @@ ${post.postContent}
 <br>
 <c:if test="${not empty post.postFile}">
 [첨부파일]
-    <a href="./download.do?fileName=${URLEncoder.encode(post.postFile, 'UTF-8')}">${post.postFile}</a>
+    <a href="./download/${post.postId}/${post.postFile}">${post.postFile}</a>
 </c:if>
 <br>
 <br>

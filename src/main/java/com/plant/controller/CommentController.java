@@ -1,6 +1,7 @@
 package com.plant.controller;
 
 import com.plant.service.CommentService;
+import com.plant.service.UserService;
 import com.plant.vo.CommentVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
@@ -9,11 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.URI;
 
 
@@ -21,23 +19,21 @@ import java.net.URI;
 @RequestMapping("/community/comment")
 public class CommentController {
 
-    private final CommentService commentService;
-
-    public CommentController(CommentService commentService){
-        this.commentService = commentService;
-    }
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private UserService userService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 댓글 작성 */
     @PostMapping("")
-    public ResponseEntity<Void> postComment(@ModelAttribute("CommentVo") CommentVo commentVo, HttpServletRequest request) {
+    public ResponseEntity<Void> postComment(@ModelAttribute("CommentVo") CommentVo commentVo) {
         boolean flag = commentService.postComment(commentVo);
         int point = commentService.getPoint(commentVo.getUserId());
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserVo userVo = (UserVo) authentication.getPrincipal();
-        userVo.setPoint(point);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        // 포인트 Authentication 반영
+        UserVo userVo = userService.getUserVo();
+        userService.getNewPoint(userVo, userVo.getUserId());
 
         logger.info("[Comment Controller] postComment()");
         HttpHeaders headers = new HttpHeaders();

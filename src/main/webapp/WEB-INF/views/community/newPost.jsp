@@ -280,7 +280,7 @@
              <label class= "newpostlayer" for="fname">이미지첨부</label>
             </div>
             <div>
-                <input class="custom-input" class="upload_img" type="file" name="postMultiImage" multiple>
+                <input class="custom-input upload_img" type="file" name="postMultiImage" multiple>
             </div>
 
             <br> <br> <br>
@@ -288,7 +288,7 @@
              <label class= "newpostlayer" for="fname">데이터첨부</label>
             </div>
              <div>
-                <input class="custom-input" class="upload_data" type="file" name="postMultiFile">
+                <input class="custom-input upload_data" type="file" name="postMultiFile">
             </div>
     <br>
     <br>

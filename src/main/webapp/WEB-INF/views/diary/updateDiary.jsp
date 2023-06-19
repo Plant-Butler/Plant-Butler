@@ -58,8 +58,8 @@
         <h4 class="minititle">첨부된 사진</h4><br>
         <div class="mb-3" style="margin-left:auto; margin-right:auto;">
                 <p>
-                    <c:forEach var="image" items="${fn:split(diary.diaryImage, ',')}">
-                        <img class="max-small" src="/uploads/${image}">
+                    <c:forEach var="image" items="${imageUrls}">
+                        <p><img class="max-small" src="${image}"></p>
                     </c:forEach>
                 </p>
         </div>

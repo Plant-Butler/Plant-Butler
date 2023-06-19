@@ -1,11 +1,13 @@
 package com.plant.service;
-import java.sql.SQLException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.plant.dao.UserMapper;
 import com.plant.vo.UserVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
+
+import java.sql.SQLException;
 
 @Service
 public class UserService {
@@ -61,6 +63,21 @@ public class UserService {
 	public boolean deleteToken(String token) {
 		boolean flag = userMapper.deleteToken(token);
 		return flag;
+	}
+
+	/* 현재 로그인한 사용자의 UserVo 가져오기 */
+	public UserVo getUserVo() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserVo userVo = (UserVo) authentication.getPrincipal();
+		return userVo;
+	}
+
+	/* 포인트 갱신 시 Authentication 반영 */
+	public void getNewPoint(UserVo userVo, String userId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		int newPoint = userMapper.selectPoint(userId);
+		userVo.setPoint(newPoint);
+		SecurityContextHolder.getContext().setAuthentication(authentication);
 	}
 }
 

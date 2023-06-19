@@ -47,6 +47,8 @@
         delete from token where tokenNum=#{token}
     </delete>
 
-
+    <select id="selectPoint" resultType="int" parameterType="java.lang.String">
+        select point from user_table where user_id = #{userId}
+    </select>
 
  </mapper>

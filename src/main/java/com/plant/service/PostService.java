@@ -30,6 +30,7 @@ public class PostService {
             // 조회수 상승
             postMapper.upReadCount(postId);
         } catch (SQLException e) {
+            throw new RuntimeException("커뮤니티 상세조회 실패", e);
         }
         logger.info("[Post Service] postDetail()");
         return postVo;
@@ -41,6 +42,7 @@ public class PostService {
         try {
             myPlantList = postMapper.postMyPlantDetail(postId);
         } catch (SQLException e) {
+            throw new RuntimeException("내 식물 상세정보 불러오기 실패", e);
         }
         logger.info("[Post Service] postMyPlantDetail(postId)");
         return myPlantList;
@@ -54,6 +56,7 @@ public class PostService {
         try {
             affectedCnt = postMapper.declarePost(postId);
         } catch (SQLException e) {
+            throw new RuntimeException("커뮤니티 게시물 신고 실패", e);
         }
         if(affectedCnt > 0) {
             flag = true;
@@ -66,26 +69,35 @@ public class PostService {
     /* 게시물 저장1 */
 	public boolean saveItem(PostVo post) {
 		boolean flag = false;
+
+        // 태그 영어 -> 한글
+        if(post.getPostTag().equals("information")) {
+            post.setPostTag("정보 공유");
+        } else if(post.getPostTag().equals("boast")) {
+            post.setPostTag("식물 자랑");
+        } else {
+            post.setPostTag("수다");
+        }
+
 		try {
 			flag = postMapper.insert(post);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return flag;
-	}
-    /* 게시물 저장2 */
-	public boolean saveItem2(PostVo post) {
-		boolean flag = false;
-		try {
-			flag = postMapper.insert2(post);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+            throw new RuntimeException("커뮤니티 게시물 등록 실패", e);
 		}
 		return flag;
 	}
 
+    /* 게시물 저장2 */
+	public boolean saveItem2(PostVo post) {
+		boolean flag = false;
+
+		try {
+			flag = postMapper.insert2(post);
+		} catch (SQLException e) {
+            throw new RuntimeException("커뮤니티 게시물 내 식물 첨부 실패", e);
+		}
+		return flag;
+	}
 
     public boolean updateItem(PostVo post) throws SQLException {
         boolean flag = false;
@@ -108,6 +120,7 @@ public class PostService {
         try {
             affectedCnt = postMapper.deleteItem(postId);
         } catch (SQLException e) {
+            throw new RuntimeException("커뮤니티 게시물 삭제 실패", e);
         }
         if(affectedCnt > 0) {
             flag = true;
@@ -174,5 +187,17 @@ public class PostService {
     public int countHeart(int postId) {
         int hearts = postMapper.countHeart(postId);
         return hearts;
+    }
+
+    /* 게시물 등록 시 이미지, 첨부파일 저장 */
+    public boolean saveFiles(PostVo post) {
+        boolean flag = false;
+
+        try {
+            flag = postMapper.insertFiles(post);
+        } catch (SQLException e) {
+            throw new RuntimeException("커뮤니티 이미지, 파일 등록 실패", e);
+        }
+        return flag;
     }
 }

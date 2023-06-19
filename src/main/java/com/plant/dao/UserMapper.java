@@ -1,11 +1,10 @@
 package com.plant.dao;
 
-import java.sql.SQLException;
-
-import org.apache.ibatis.annotations.Mapper;
-
 import com.plant.vo.UserVo;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.sql.SQLException;
 
 @Mapper
 public interface UserMapper {
@@ -20,4 +19,7 @@ public interface UserMapper {
     String findToken(String token);
 
 	boolean deleteToken(String token);
+
+	/* 갱신된 현재 포인트 */
+    int selectPoint(String userId);
 }

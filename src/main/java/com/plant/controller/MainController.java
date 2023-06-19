@@ -3,6 +3,7 @@ package com.plant.controller;
 import com.github.pagehelper.PageInfo;
 import com.plant.service.MainService;
 import com.plant.service.ManagerService;
+import com.plant.service.S3Service;
 import com.plant.vo.BestUserVo;
 import com.plant.vo.PostVo;
 import org.slf4j.Logger;
@@ -13,27 +14,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class MainController {
 
-
-    private final MainService mainService;
-
-    private final ManagerService managerService;
+    @Autowired
+    private MainService mainService;
+    @Autowired
+    private ManagerService managerService;
+    @Autowired
+    private S3Service s3Service;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public MainController(MainService mainService,ManagerService managerService){
-        this.mainService = mainService;
-        this.managerService = managerService;
-    }
 
     /* 메인페이지 */
     @GetMapping(value="/home")
@@ -74,7 +68,19 @@ public class MainController {
     @GetMapping(value="/home/best-list")
     public ResponseEntity<ArrayList<BestUserVo>> selectBestUser() {
         ArrayList<BestUserVo> bestList = managerService.getBestUser();
-        logger.info(bestList.toString());
+
+        for(BestUserVo vo : bestList) {
+            String imageList = vo.getMyplantImage();
+            if(imageList != null) {
+                StringTokenizer images = new StringTokenizer(imageList, ",");
+                String imageUrl = null;
+                while(images.hasMoreTokens()) {
+                    imageUrl = s3Service.getUrl(images.nextToken(), "myplant", vo.getMyplantId());
+                    vo.setMyplantImage(imageUrl);
+                }
+            }
+        }
+
         logger.info("[Manager Controller] selectBestUser()");
         return new ResponseEntity<>(bestList, HttpStatus.OK);
     }

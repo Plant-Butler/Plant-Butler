@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 
@@ -15,7 +14,7 @@ public interface MyPlantMapper {
 
 	ArrayList<MyplantVo> selectMyPlants(String UserId) throws SQLException;
 
-	void insertMyplant(MyplantVo myplantVo) throws SQLException;
+	boolean insertMyplant(MyplantVo myplantVo) throws SQLException;
 
 	void deleleMyplant(int myplantId);
 
@@ -40,6 +39,7 @@ public interface MyPlantMapper {
 
     void deleleMyPlantSchedule(@Param("myplantId") int myplantId);
 
-
 	void deleleMyPlantSchedule2(@Param("myplantId") int myplantId);
+
+	boolean insertFiles(MyplantVo myplantVo);
 }

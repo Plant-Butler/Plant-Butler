@@ -3,10 +3,9 @@ package com.plant.controller;
 import com.github.pagehelper.PageInfo;
 import com.plant.service.DiaryService;
 import com.plant.service.PostService;
-import com.plant.vo.DiaryVo;
-import com.plant.vo.MyplantVo;
-import com.plant.vo.ScheduleVo;
-import com.plant.vo.UserVo;
+import com.plant.service.S3Service;
+import com.plant.service.UserService;
+import com.plant.vo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,31 +18,26 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.StringTokenizer;
 
 @RestController
 @RequestMapping("/diaries")
 public class DiaryController {
 
-
-    private final DiaryService diaryService;
-
-    private final PostService postService;
+    @Autowired
+    private DiaryService diaryService;
+    @Autowired
+    private PostService postService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private S3Service s3Service;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public DiaryController(DiaryService diaryService,PostService postService){
-        this.diaryService = diaryService;
-        this.postService = postService;
-    }
 
 
     /* 전체 식물일기 조회 */
@@ -57,6 +51,20 @@ public class DiaryController {
         String userId = userVo.getUserId();
 
         PageInfo<DiaryVo> diaryList = diaryService.getDiaryList(userId, pageNum, pageSize);
+
+        // 이미지
+        for(DiaryVo vo : diaryList.getList()) {
+            String imageList = vo.getDiaryImage();
+            if(imageList != null) {
+                StringTokenizer images = new StringTokenizer(imageList, ",");
+                String imageUrl = null;
+                while(images.hasMoreTokens()) {
+                    imageUrl = s3Service.getUrl(images.nextToken(), "diary", vo.getDiaryId());
+                    vo.setDiaryImage(imageUrl);
+                }
+            }
+        }
+
         mv.addObject("diaryList", diaryList);
         logger.info("[Diary Controller] getDiaryList()");
         return mv;
@@ -79,11 +87,35 @@ public class DiaryController {
         // 식물 프로필(사진, 닉네임, 종, 분양일), 관리기록
         ArrayList<MyplantVo> myPlantList = diaryService.selectedMyplants(diaryId);
         ArrayList<ScheduleVo> scheduleList = diaryService.selectedSchedules(diaryId);
-        System.out.println("scheduleList = " + scheduleList);
+
+        for(MyplantVo vo : myPlantList) {
+            String imageList = vo.getMyplantImage();
+            if(imageList != null) {
+                StringTokenizer images = new StringTokenizer(imageList, ",");
+                String imageUrl = null;
+                while(images.hasMoreTokens()) {
+                    imageUrl = s3Service.getUrl(images.nextToken(), "myplant", vo.getMyplantId());
+                    vo.setMyplantImage(imageUrl);
+                }
+            }
+        }
 
         mv.addObject("diary", diary);
         mv.addObject("myPlantList", myPlantList);
         mv.addObject("scheduleList", scheduleList);
+
+        // 이미지
+        String imageList = diary.getDiaryImage();
+        if(imageList != null) {
+            StringTokenizer images = new StringTokenizer(imageList, ",");
+            ArrayList<String> imageUrls = new ArrayList<>();
+            while(images.hasMoreTokens()) {
+                String imageUrl = s3Service.getUrl(images.nextToken(), "diary", diaryId);
+                imageUrls.add(imageUrl);
+            }
+            mv.addObject("imageUrls", imageUrls);
+        }
+
         logger.info("[Diary Controller] getDiaryDetail()");
         return mv;
     }
@@ -112,42 +144,8 @@ public class DiaryController {
     */
     @PostMapping("/form")
     public ResponseEntity<HttpHeaders> postDiary(@ModelAttribute DiaryVo diary,
-                                             @RequestParam(value="diaryMultiImage", required=false) List<MultipartFile> image,
+                                             @RequestParam(value="diaryMultiImage", required=false) List<MultipartFile> images,
                                              @RequestParam(value="selectedMyplant", required=false) List<Integer> myplants) {
-
-        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
-        File dir2 = new File(uploadFile);
-        if (!dir2.exists()) {
-            dir2.mkdir();
-        }
-
-        // 이미지
-        List<MultipartFile> images = image;
-        StringBuilder fileNames = new StringBuilder();
-        if (images != null && !images.isEmpty()) {
-            int imageCount = 0;
-            for (MultipartFile image1 : images) {
-                if (!image1.isEmpty()) {
-                    String fileName = Objects.requireNonNull(image1.getOriginalFilename());
-                    if (imageCount > 0) {
-                        fileNames.append(",");
-                    }
-                    fileNames.append(fileName);
-                    String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
-                    File uploadDir = new File(uploadPath);
-                    if (!uploadDir.exists()) {
-                        uploadDir.mkdirs();
-                    }
-                    try (InputStream inputStream = image1.getInputStream()) {
-                        Files.copy(inputStream, Paths.get(uploadPath + fileName), StandardCopyOption.REPLACE_EXISTING);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    imageCount++;
-                }
-            }
-        }
-        diary.setDiaryImage(fileNames.toString());
 
         // 일기 내용 + 내 식물
         boolean flag1 = false;
@@ -159,11 +157,36 @@ public class DiaryController {
             }
         }
 
+        // 이미지 저장
+        StringBuilder fileNames = new StringBuilder();
+        if(images != null && images.stream().anyMatch(image -> ! image.isEmpty())) {
+            int imageCount = 0;
+            for (MultipartFile image : images) {
+                try {
+                    s3Service.upload(image, "diary", diary.getDiaryId());
+                    String fileName = Objects.requireNonNull(image.getOriginalFilename());
+                    if (imageCount > 0) {
+                        fileNames.append(",");
+                    }
+                    fileNames.append(fileName);
+                } catch (IOException e) {
+                    throw new RuntimeException("이미지 업로드 오류", e);
+                }
+                imageCount++;
+            }
+        }
+        diary.setDiaryImage(fileNames.toString());
+        boolean flag3 = diaryService.saveFiles(diary);
+
+        // 포인트 Authentication 반영
+        UserVo userVo = userService.getUserVo();
+        userService.getNewPoint(userVo, userVo.getUserId());
+
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create("/diaries"));
 
         logger.info("[Diary Controller] postDiary()");
-        if(flag1 || flag2) {
+        if(flag1 || flag2 || flag3) {
             return new ResponseEntity<>(headers, HttpStatus.SEE_OTHER);
         } else {
             return new ResponseEntity<>(headers, HttpStatus.BAD_REQUEST);
@@ -190,6 +213,18 @@ public class DiaryController {
         ModelAndView mv = new ModelAndView("/diary/updateDiary");
         DiaryVo diary = diaryService.getDiaryDetail(diaryId);
         mv.addObject("diary", diary);
+
+        // 이미지
+        String imageList = diary.getDiaryImage();
+        if(imageList != null) {
+            StringTokenizer images = new StringTokenizer(imageList, ",");
+            ArrayList<String> imageUrls = new ArrayList<>();
+            while(images.hasMoreTokens()) {
+                String imageUrl = s3Service.getUrl(images.nextToken(), "diary", diaryId);
+                imageUrls.add(imageUrl);
+            }
+            mv.addObject("imageUrls", imageUrls);
+        }
         logger.info("[Diary Controller] modifyDiaryForm()");
         return mv;
     }
@@ -198,38 +233,34 @@ public class DiaryController {
     @PutMapping(value="/{diaryId}")
     public ResponseEntity<Boolean> modifyDiary(@PathVariable int diaryId,
                                                @ModelAttribute DiaryVo diary,
-                                               @RequestParam(value="diaryMultiImage", required=false) List<MultipartFile> image) {
+                                               @RequestParam(value="diaryMultiImage", required=false) List<MultipartFile> images) {
 
-        String uploadFile = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
-        File dir2 = new File(uploadFile);
-        if (!dir2.exists()) {
-            dir2.mkdir();
+        // 기존 이미지 삭제
+        DiaryVo oriDiary = diaryService.getDiaryDetail(diaryId);
+        String imageList = oriDiary.getDiaryImage();
+        if(imageList != null) {
+            StringTokenizer oriImages = new StringTokenizer(imageList, ",");
+            while(oriImages.hasMoreTokens()) {
+                s3Service.delete(oriImages.nextToken(), "diary" , diaryId);
+            }
         }
 
-        // 이미지
-        List<MultipartFile> images = image;
+        // 이미지 저장
         StringBuilder fileNames = new StringBuilder();
-        if (images != null && !images.isEmpty()) {
+        if(images != null && images.stream().anyMatch(image -> ! image.isEmpty())) {
             int imageCount = 0;
-            for (MultipartFile image1 : images) {
-                if (!image1.isEmpty()) {
-                    String fileName = Objects.requireNonNull(image1.getOriginalFilename());
+            for (MultipartFile image : images) {
+                try {
+                    s3Service.upload(image, "diary", diary.getDiaryId());
+                    String fileName = Objects.requireNonNull(image.getOriginalFilename());
                     if (imageCount > 0) {
                         fileNames.append(",");
                     }
                     fileNames.append(fileName);
-                    String uploadPath = "D:/23-04-BIT-final-project-new/workspace/Plant-Butler/uploads/";
-                    File uploadDir = new File(uploadPath);
-                    if (!uploadDir.exists()) {
-                        uploadDir.mkdirs();
-                    }
-                    try (InputStream inputStream = image1.getInputStream()) {
-                        Files.copy(inputStream, Paths.get(uploadPath + fileName), StandardCopyOption.REPLACE_EXISTING);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    imageCount++;
+                } catch (IOException e) {
+                    throw new RuntimeException("이미지 업로드 오류", e);
                 }
+                imageCount++;
             }
         }
         diary.setDiaryImage(fileNames.toString());
