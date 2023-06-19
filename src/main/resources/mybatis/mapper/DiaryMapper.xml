@@ -77,13 +77,18 @@
     <!-- 식물일기 작성 -->
     <insert id="insertDiary" parameterType="com.plant.vo.DiaryVo">
         <![CDATA[
-            insert into diary (user_id, diary_title, diary_praise_regret, diary_emotion, diary_growth, diary_content, diary_image, diary_date)
-            values ( #{userId}, #{diaryTitle},  #{diaryPraiseRegret}, #{diaryEmotion}, #{diaryGrowth}, #{diaryContent}, #{diaryImage}, now())
+            insert into diary (user_id, diary_title, diary_praise_regret, diary_emotion, diary_growth, diary_content, diary_date)
+            values ( #{userId}, #{diaryTitle},  #{diaryPraiseRegret}, #{diaryEmotion}, #{diaryGrowth}, #{diaryContent}, now())
         ]]>
         <selectKey keyProperty="diaryId" resultType="int" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
     </insert>
+
+    <!-- 식물일기 작성 시 이미지 저장 -->
+    <update id="insertFiles" parameterType="com.plant.vo.DiaryVo">
+        update diary set diary_image = #{diaryImage} where diary_id = #{diaryId}
+    </update>
 
     <!-- 식물일기 작성 포인트 -->
     <insert id="diaryPoint" parameterType="String">

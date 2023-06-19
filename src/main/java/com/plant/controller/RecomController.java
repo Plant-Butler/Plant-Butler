@@ -1,6 +1,7 @@
 package com.plant.controller;
 
 import com.plant.service.RecomService;
+import com.plant.service.S3Service;
 import com.plant.utils.ApiKey;
 import com.plant.utils.ShopApi;
 import com.plant.vo.PlantVo;
@@ -26,10 +27,12 @@ import java.util.Map;
 @RequestMapping("/suggestions")
 public class RecomController {
 
-
-    private final RecomService recomService;
-
-    private final ApiKey apiKeys;
+    @Autowired
+    private RecomService recomService;
+    @Autowired
+    private S3Service s3Service;
+    @Autowired
+    private ApiKey apiKeys;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public RecomController(RecomService recomService, ApiKey apiKeys){
@@ -49,6 +52,11 @@ public class RecomController {
         String nickname = userVo.getNickname();
 
         String mapApiKey = apiKeys.getKakaomapKey();
+
+        for(PlantVo vo : resultList) {
+            String imageUrl = s3Service.getUrl("", "plant", vo.getPlant_id());
+            vo.setImage(imageUrl);
+        }
 
         mv.addObject("resultList", resultList);
         mv.addObject("nickname", nickname);

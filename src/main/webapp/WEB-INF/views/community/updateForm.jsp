@@ -279,9 +279,9 @@
             <div>
             <c:if test="${not empty post.postImage}">
                <h4 class = "newpostlayer">기존 이미지</h4>
-               <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
-                   <img class="update_img" src="/uploads/${image}">
-               </c:forEach>
+                    <c:forEach var="image" items="${imageUrls}">
+                        <p><img class="max-small" src="${image}"></p>
+                    </c:forEach>
             </c:if><br>
 
                 <br><br>

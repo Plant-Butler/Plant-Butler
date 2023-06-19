@@ -162,106 +162,104 @@
 </style>
 
 <div class="about-section" style="margin-top: 300px">
-    <table style="margin-left:auto;margin-right:auto;" width="1500" length="150">
-        <tr class="overall">
-            <td>[분류] ${post.postTag}</td>
-            <td>[제목] ${post.postTitle}</td>
-            <td>[닉네임] ${post.nickname}</td>
-            <td>[조회수] ${post.readCount}</td>
-            <td>[댓글] ${commentCount}</td>
-            <td>[신고] ${post.flag}</td>
-            <td>[날짜] <fmt:formatDate value="${post.postDate}" type="date"/></td>
-        </tr>
+<table style="margin-left:auto;margin-right:auto;" width="1500" length="150">
+    <tr class="overall">
+        <td>[분류] ${post.postTag}</td>
+        <td>[제목] ${post.postTitle}</td>
+        <td>[닉네임] ${post.nickname}</td>
+        <td>[조회수] ${post.readCount}</td>
+        <td>[댓글] ${commentCount}</td>
+        <td>[신고] ${post.flag}</td>
+        <td>[날짜] <fmt:formatDate value="${post.postDate}" type="date"/></td>
+    </tr>
+</table>
+<div style="display: flex; justify-content: center;">
+    <hr style="width: 70%;">
+</div>
+<div class= "myplant-container">
+<c:if test="${not empty myPlantList}">
+    <h2 class="commentitle">${post.nickname}님의 반려식물</h2> <br>
+    <table style="margin-left:auto;margin-right:auto;" width="1000" length="100">
+        <c:forEach var="myPlant" items="${myPlantList}">
+            <tr>
+                <c:if test="${not empty myPlant.myplantImage}">
+                    <td class="tdimage">
+                        <div class="box" style="background: #BDBDBD;">
+                            <img class="plantImg" src="${myPlant.myplantImage}">
+                        </div>
+                    </td>
+                </c:if>
+                <td>${myPlant.distbNm}</td>
+                <td>${myPlant.myplantNick}</td>
+                <td>
+                    <fmt:formatDate value="${myPlant.firstDate}" type="date"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4"><br></td>
+            </tr>
+        </c:forEach>
     </table>
-    <div style="display: flex; justify-content: center;">
-        <hr style="width: 70%;">
-    </div>
-    <div class= "myplant-container">
-        <c:if test="${not empty myPlantList}">
-            <h2 class="commentitle">${post.nickname}님의 반려식물</h2> <br>
-            <table style="margin-left:auto;margin-right:auto;" width="1000" length="100">
-                <c:forEach var="myPlant" items="${myPlantList}">
-                    <tr>
-                        <c:if test="${not empty myPlant.myplantImage}">
-                            <td class="tdimage">
-                                <div class="box" style="background: #BDBDBD;">
-                                    <a href="/uploads/${myPlant.myplantImage}">
-                                        <img class="plantImg" src="/uploads/${myPlant.myplantImage}">
-                                    </a>
-                                </div>
-                            </td>
-                        </c:if>
-                        <td>${myPlant.distbNm}</td>
-                        <td>${myPlant.myplantNick}</td>
-                        <td>
-                            <fmt:formatDate value="${myPlant.firstDate}" type="date"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="4"><br></td>
-                    </tr>
-                </c:forEach>
-            </table>
-        </c:if>
-        <c:if test="${empty myPlantList}">
-            <h2 class="commentitle">${post.nickname}님의 반려식물</h2> <br>
-            <td>선택된 반려식물이 없습니다</td>
-        </c:if>
-    </div>
-    <br>
-    <br>
-    <br>
-    <c:if test="${not empty post.postImage}">
-        <td>
-            <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
-                <p><a href="/uploads/${image}"><img class="contentimg"  src="/uploads/${image}"></a></p>
-                <br>
-            </c:forEach>
-        </td>
+</c:if>
+<c:if test="${empty myPlantList}">
+    <h2 class="commentitle">${post.nickname}님의 반려식물</h2> <br>
+    <td>선택된 반려식물이 없습니다</td>
+</c:if>
+</div>
+<br>
+<br>
+<br>
+<c:if test="${not empty post.postImage}">
+    <td>
+        <c:forEach var="image" items="${imageUrls}">
+            <p><img class="contentimg" src="${image}"></p>
+            <br>
+        </c:forEach>
+    </td>
+</c:if>
+<br>
+<div class="postcontent">
+${post.postContent}
+</div>
+<br>
+<br>
+<br>
+<c:if test="${not empty post.postFile}">
+[첨부파일]
+    <a href="./download/${post.postId}/${post.postFile}">${post.postFile}</a>
+</c:if>
+<br>
+<br>
+<br>
+<div class="heart">
+    <c:if test="${not empty user.userId}">
+      <div style="overflow: hidden;">
+        <div id="heart" style="float: left;">
+            <button id="heartBtn" onclick="heart(${post.postId}, '${user.userId}')">
+              <c:choose>
+                <c:when test="${alreadyHeart == 1}">
+                  <i class="fa fa-heart" style="color: red;"></i>
+                </c:when>
+                <c:otherwise>
+                  <i class="fa fa-heart-o" style="color: red;"></i>
+                </c:otherwise>
+              </c:choose>
+            </button>
+            ${countHeart}
+        </div>
+        <div class="report-container">
+        <button class="post-report" type="button" onclick="declare(0, ${post.postId}, 0)">신고</button>
+                <c:if test="${post.userId eq user.userId}">
+                    <button class="postupdate" type="button" onclick="location.href='/community/form/${post.postId}'">수정</button>
+                    <button class="postdelete" type="button" onclick="del(0, ${post.postId}, 0)">삭제</button>
+                </c:if>
+        </div>
+       </div>
     </c:if>
-    <br>
-    <div class="postcontent">
-        ${post.postContent}
-    </div>
-    <br>
-    <br>
-    <br>
-    <c:if test="${not empty post.postFile}">
-        [첨부파일]
-        <a href="./download.do?fileName=${URLEncoder.encode(post.postFile, 'UTF-8')}">${post.postFile}</a>
-    </c:if>
-    <br>
-    <br>
-    <br>
-    <div class="heart">
-        <c:if test="${not empty user.userId}">
-            <div style="overflow: hidden;">
-                <div id="heart" style="float: left;">
-                    <button id="heartBtn" onclick="heart(${post.postId}, '${user.userId}')">
-                        <c:choose>
-                            <c:when test="${alreadyHeart == 1}">
-                                <i class="fa fa-heart" style="color: red;"></i>
-                            </c:when>
-                            <c:otherwise>
-                                <i class="fa fa-heart-o" style="color: red;"></i>
-                            </c:otherwise>
-                        </c:choose>
-                    </button>
-                        ${countHeart}
-                </div>
-                <div class="report-container">
-                    <button class="post-report" type="button" onclick="declare(0, ${post.postId}, 0)">신고</button>
-                    <c:if test="${post.userId eq user.userId}">
-                        <button class="postupdate" type="button" onclick="location.href='/community/form/${post.postId}'">수정</button>
-                        <button class="postdelete" type="button" onclick="del(0, ${post.postId}, 0)">삭제</button>
-                    </c:if>
-                </div>
-            </div>
-        </c:if>
-    </div>
-    <div style="display: flex; justify-content: center;">
-        <hr style="width: 70%;">
-    </div><br>
+</div>
+<div style="display: flex; justify-content: center;">
+    <hr style="width: 70%;">
+</div><br>
     <h2 class="commentitle">댓글</h2>
     <table style="margin-left:auto;margin-right:auto;width:1500px;height:100px;">
         <!-- 댓글 작성 -->

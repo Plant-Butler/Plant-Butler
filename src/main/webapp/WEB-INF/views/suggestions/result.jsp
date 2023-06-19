@@ -35,7 +35,7 @@
                                 <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
                                     <table class="recommend-result">
                                         <tr>
-                                            <th class="recommend-result" colspan="2"><img class="plantImg img-thumbnail" src="/uploads/${plant.image}"></th>
+                                            <th class="recommend-result" colspan="2"><img class="plantImg img-thumbnail" src="${plant.image}"></th>
                                         </tr>
                                         <tr>
                                             <th class="recommend-result" style="font-size: 35px;">${plant.plntzrNm} ${plant.distbNm}</th>

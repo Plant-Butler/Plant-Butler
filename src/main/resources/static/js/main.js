@@ -9,7 +9,7 @@
                                 for(var i = 0; i < 3; i++) {
                                     var user = users[i];
                                     if((user.myplantImage != null) && (user.myplantImage != '') ) {
-                                        row += "<td><div class='box' style='background: #BDBDBD; width: 200px; height: 200px;'><img class='plantImg' src='/uploads/" + user.myplantImage + "'></div></td>";
+                                        row += "<td><div class='box' style='background: #BDBDBD; width: 200px; height: 200px;'><img class='plantImg' src='" + user.myplantImage + "'></div></td>";
                                     } else {
                                         row += "<td>사진이 없습니다.</td>";
                                     }

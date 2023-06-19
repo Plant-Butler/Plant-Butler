@@ -1,4 +1,5 @@
 package com.plant.controller;
+
 import com.plant.service.DiagnosisService;
 import com.plant.vo.DiseaseVo;
 import org.slf4j.Logger;
@@ -33,20 +34,23 @@ public class DiagnosisController {
         return mv;
     }
 
-    /* 질병 이미지 전송 & 결과 디스플레이 */
+    /* 이미지 전송 & 결과 디스플레이 */
     @PostMapping(value = "/result")
     public ModelAndView uploadImage(@RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("/diagnosis/result");
         try {
             final String UPLOAD_DIR = "D:/final/Plant-Butler (14)/uploads/";
 
+            // 저장할 폴더가 존재하지 않는다면 새로 생성
             File uploadDir = new File(UPLOAD_DIR);
             if (!uploadDir.exists()) {
                 uploadDir.mkdirs();
             }
 
+            // 저장 경로 설정
             Path img_path = Paths.get(UPLOAD_DIR + file.getOriginalFilename());
 
+            // 파일 저장
             Files.write(img_path, file.getInputStream().readAllBytes());
             System.gc();
 
