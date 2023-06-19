@@ -5,13 +5,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%-- <%@ include file="../main/header.jsp" %> --%>
 
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Show Result</title>
+    <title>식물병 진단</title>
+<%@ include file="../main/header.jsp" %>
 </head>
 
 <style type="text/css">
@@ -41,9 +41,10 @@
    }
 </style>
 <body>
-   <div class="about-section">
+<section class="page-section cta">
+    <div class="container" style="margin-top: 150px">
       <h1>Show Result</h1>
-   </div>
+
    <br>
    <br>
    <p>${pclass}</p>
@@ -61,7 +62,8 @@
    <p>${disease.detail}</p>
    <br>
    <p>${disease.solution}</p>
-
+    </div>
+</section>
 </body>
 
 </html>

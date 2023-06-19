@@ -214,6 +214,7 @@ input[type="radio"]:checked + label .radio-label {
 %>
    <form action="./form" method="post" enctype="multipart/form-data" class = "newform">
        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+       <input type="hidden" name="userId" id="userId" value="${userVo.userId}">
        <br>
        <div class="form_wrapper">
    <div class = "form_table" style="margin-top: 10px">
@@ -266,7 +267,7 @@ input[type="radio"]:checked + label .radio-label {
              <label class= "newpostlayer" for="fname">이미지첨부</label>
             </div>
             <div>
-                <input class="custom-input" class="upload_img" type="file" name="postMultiImage" multiple>
+                <input class="custom-input upload_img" type="file" name="postMultiImage" multiple>
             </div>
 
             <br> <br> <br>
@@ -274,7 +275,7 @@ input[type="radio"]:checked + label .radio-label {
              <label class= "newpostlayer" for="fname">데이터첨부</label>
             </div>
              <div>
-                <input class="custom-input" class="upload_data" type="file" name="postMultiFile">
+                <input class="custom-input upload_data" type="file" name="postMultiFile">
             </div>
     <br>
     <br>

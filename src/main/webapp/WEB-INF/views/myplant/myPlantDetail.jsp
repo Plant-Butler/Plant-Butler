@@ -18,6 +18,7 @@
     <%@ include file="../main/header.jsp" %>
 </head>
 <body>
+
 <div style=" padding-left: 200px; padding-right: 200px;">
 <div id="representContainer">
     <button class="btn btn-primary" onclick="registRepresent()">대표식물로 지정</button>
@@ -29,9 +30,10 @@
 <div>
 <div class="swiper">
     <!-- Additional required wrapper -->
+    <input class="upload_img input-editable" type="file" id="myplantImagesInput" name="myplantImages" style="display:none;" multiple>
     <div class="swiper-wrapper" >
-        <c:forEach var="image" items="${fn:split(myPlant.myplantImage, ',')}">
-            <div class="swiper-slide"><p><img id="slide-image" src="/uploads/${image}"></p></div>
+        <c:forEach var="image" items="${imageUrls}">
+            <div class="swiper-slide"><p><img id="slide-image" src="${image}" ></p></div>
         </c:forEach>
     </div>
     <!-- If we need pagination -->
@@ -94,7 +96,6 @@
             </div>
 </div>
 
-
     <h1 id="detailTitle">자세히 알아보기</h1>
     <div>
         <div id="buttonNav">
@@ -152,25 +153,39 @@
     $("#saveBtn").on("click", function () {
         var csrfToken = '${_csrf.token}';
         var csrfHeader = '${_csrf.headerName}';
+
+        var fileInput = document.getElementById("myplantImagesInput");
+        var files = fileInput.files;
+
+        var formData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+          formData.append("myplantImages", files[i]);
+        }
+
         var myplantVo = {
             myplantId:${myPlant.myplantId},
             plantId:${myPlant.plantId},
             userId:"${myPlant.userId}",
             myplantNick: $("input[name='myplantNick']").val(),
-            myplantImage: $("input[name='myplantImage']").val(),
             myplantPot: $("input[name='myplantPot']:checked").val(),
             myplantLength: $("input[name='myplantLength']").val(),
             myplantRadius1: $("input[name='myplantRadius1']").val(),
             myplantRadius2: $("input[name='myplantRadius2']").val(),
         };
+        formData.append("myplantVo", JSON.stringify(myplantVo));
+
         $.ajax({
             url: "/myplants/"+${myPlant.myplantId},
             method: "POST",
             headers: {
                 [csrfHeader]: csrfToken // CSRF 토큰을 요청 헤더에 추가
             },
-            contentType: "application/json",
-            data: JSON.stringify(myplantVo),
+            data: formData,
+            processData: false,
+            contentType: false,
+            xhrFields: {
+                withCredentials: true
+            },
             success: function () {
                 alert("성공적으로 수정되었습니다.");
                 location.reload();

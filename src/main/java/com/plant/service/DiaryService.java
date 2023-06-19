@@ -86,20 +86,21 @@ public class DiaryService {
 
     /* 식물일기 작성 + 포인트 */
     public boolean postDiary(DiaryVo diary) {
-        boolean flag = false;
+        boolean flag1 = false;
+        boolean flag2 = false;
         int affectedCnt = 0;
 
         try {
             affectedCnt = diaryMapper.insertDiary(diary);
-            diaryMapper.diaryPoint(diary.getUserId());
+            flag2 = diaryMapper.diaryPoint(diary.getUserId());
         } catch (SQLException e) {
             throw new RuntimeException("일기 데이터 등록 실패", e);
         }
 
-        if(affectedCnt > 0) {
-            flag = true;
+        if(affectedCnt > 0 && flag2) {
+            flag1 = true;
         }
-        return flag;
+        return flag1;
     }
 
     /* 식물일기 작성 시 내 식물 첨부 */
@@ -128,6 +129,18 @@ public class DiaryService {
             throw new RuntimeException("일기 내 관리기록 데이터 로드 실패", e);
         }
         return vo;
+    }
+
+    /* 식물일기 작성 시 이미지 저장 */
+    public boolean saveFiles(DiaryVo diary) {
+        boolean flag = false;
+
+        try {
+            flag = diaryMapper.insertFiles(diary);
+        } catch (SQLException e) {
+            throw new RuntimeException("식물일기 이미지 등록 실패", e);
+        }
+        return flag;
     }
 
     /* 식물일기 수정 */

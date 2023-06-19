@@ -78,9 +78,14 @@
 			<div>
                 <h4 class = "title">이미지첨부</h4>
                 <p >
-                <c:forEach var="image" items="${fn:split(post.postImage, ',')}">
-                    <img class="max-small" src="/uploads/${image}">
-                </c:forEach>
+                <c:if test="${not empty post.postImage}">
+                    <td>
+                        <c:forEach var="image" items="${imageUrls}">
+                            <p><img class="max-small" src="${image}"></p>
+                            <br>
+                        </c:forEach>
+                    </td>
+                </c:if>
                 </p>
                 <input class="upload_img" type="file" name="postMultiImage" id="postMultiImage" multiple>
             </div>

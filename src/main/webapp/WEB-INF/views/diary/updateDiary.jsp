@@ -52,14 +52,15 @@
             </div>
 <br>
 <br>
-            <h4>첨부된 사진</h4><br>
+            <h4>첨부된 사진</h4><br><br>
             <div class="mb-3" style="margin-left:auto; margin-right:auto;">
                 <c:if test="${not empty diary.diaryImage}">
-                    <p>
-                        <c:forEach var="image" items="${fn:split(diary.diaryImage, ',')}">
-                            <img class="max-small" src="/uploads/${image}">
+                    <td>
+                        <c:forEach var="image" items="${imageUrls}">
+                            <p><img class="max-small" src="${image}"></p>
+                            <br>
                         </c:forEach>
-                    </p>
+                    </td>
                 </c:if>
             </div>
             <input class="upload_img form-control" type="file" name="diaryMultiImage" multiple>

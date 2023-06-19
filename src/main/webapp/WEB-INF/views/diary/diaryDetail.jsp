@@ -28,7 +28,7 @@
                     <tr>
                         <c:if test="${not empty myPlant.myplantImage}">
                             <td><div class="box" style="background: #BDBDBD;">
-                                <img class="plantImg" src="/uploads/${myPlant.myplantImage}">
+                                <img class="plantImg" src="${myPlant.myplantImage}">
                             </div></td>
                         </c:if>
                         <c:if test="${empty myPlant.myplantImage}">
@@ -104,9 +104,9 @@
                     </c:forEach>
                 </ol>
                 <div class="carousel-inner">
-                    <c:forEach var="image" items="${fn:split(diary.diaryImage, ',')}" varStatus="status">
+                    <c:forEach var="image" items="${imageUrls}" varStatus="status">
                         <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
-                            <p><img class="img-thumbnail" src="/uploads/${image}"></p>
+                            <p><img class="img-thumbnail" src="${image}"></p>
                         </div>
                     </c:forEach>
                 </div>

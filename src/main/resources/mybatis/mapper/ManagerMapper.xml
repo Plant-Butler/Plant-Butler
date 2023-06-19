@@ -15,6 +15,7 @@
     <resultMap id="BestUserMap" type="com.plant.vo.BestUserVo">
         <result column="user_id" property="userId"/>
         <result column="nickname" property="nickname"/>
+        <result column="myplant_id" property="myplantId"/>
         <result column="myplant_image" property="myplantImage"/>
         <result column="distbNm" property="distbNm"/>
         <result column="myplant_nick" property="myplantNick"/>
@@ -51,7 +52,7 @@
     <!-- 우수회원 광고 -->
     <select id="getBestUser" resultMap="BestUserMap">
         <![CDATA[
-            SELECT b.user_id, nickname, myplant_image as myplant_image, distbNm as distbNm, myplant_nick as myplant_nick
+            SELECT b.user_id, nickname, myplant_id as myplant_id, myplant_image as myplant_image, distbNm as distbNm, myplant_nick as myplant_nick
             FROM bestuser b
             JOIN user_table u ON b.user_id = u.user_id
             JOIN myplant mp ON mp.user_id = b.user_id AND mp.represent = 1

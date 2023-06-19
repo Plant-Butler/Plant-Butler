@@ -53,7 +53,7 @@
                             <div class="card">
                                 <c:choose>
                                     <c:when test="${not empty list.diaryImage}">
-                                        <img src="/uploads/${list.diaryImage}" class="card-img-top">
+                                        <img src="${list.diaryImage}" class="card-img-top">
                                     </c:when>
                                     <c:otherwise>
                                         <img src="/assets/img/brick-wall-painted-in-white.jpg" class="card-img-top">

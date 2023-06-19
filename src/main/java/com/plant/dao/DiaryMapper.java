@@ -28,7 +28,7 @@ public interface DiaryMapper {
     int insertDiary(DiaryVo diary) throws SQLException;
 
     /* 식물일기 작성 포인트 */
-    void diaryPoint(String userId) throws SQLException;
+    boolean diaryPoint(String userId) throws SQLException;
 
     /* 식물일기 작성 시 내 식물 첨부 */
     int insertMyplant(@Param("diaryId") int diaryId, @Param("myplantId") int myplantId) throws SQLException;
@@ -42,4 +42,6 @@ public interface DiaryMapper {
     /* 식물일기 삭제 */
     int deleteDiary(int diaryId) throws SQLException;
 
+    /* 식물일기 작성 시 이미지 저장 */
+    boolean insertFiles(DiaryVo diary) throws SQLException;
 }

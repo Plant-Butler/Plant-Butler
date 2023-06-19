@@ -99,6 +99,7 @@
              </section>
              </table>
          </form>
+         <script type="module" src="./js/registToken.js"></script>
       <script src="./js/regist.js"></script>
 </body>
 

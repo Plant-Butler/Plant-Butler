@@ -58,4 +58,7 @@ public interface PostMapper {
 
     /* 게시물 좋아요 개수 카운트 */
     int countHeart(int postId);
+
+    /* 게시물 등록 시 이미지, 첨부파일 저장 */
+    boolean insertFiles(PostVo post) throws SQLException;
 }

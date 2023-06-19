@@ -68,8 +68,8 @@
 <div style="width: 1200px;">
     <c:forEach var="list" items="${plantList}">
         <div class="card" style="width: 30%;">
-            <c:set var="images" value="${fn:split(list.myplantImage, ',')}" />
-            <div class="card-header" style="background-image: url('/uploads/${images[0]}');">
+            <c:set var="images" value="${list.myplantImage}" />
+            <div class="card-header" style="background-image: url(${images});">
                 <c:if test="${list.represent==1}">
                     <div class = "card-header-is_closed">
 

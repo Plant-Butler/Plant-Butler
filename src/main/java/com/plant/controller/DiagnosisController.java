@@ -1,15 +1,10 @@
 package com.plant.controller;
 
-import com.plant.service.CommentService;
 import com.plant.service.DiagnosisService;
-import com.plant.vo.MyplantVo;
 import com.plant.vo.DiseaseVo;
-import net.sf.jsqlparser.Model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,10 +18,9 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 
 @RestController
-@RequestMapping("")
+@RequestMapping("/diagnosis")
 public class DiagnosisController {
 
     @Autowired
@@ -34,7 +28,7 @@ public class DiagnosisController {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 사진 업로드 */
-    @GetMapping("/diagnosis")
+    @GetMapping("")
     public ModelAndView showDiagnosisPage() {
         ModelAndView mv = new ModelAndView("/diagnosis/upload");
         logger.info("진단 페이지 호출");
@@ -42,11 +36,11 @@ public class DiagnosisController {
     }
 
     /* 이미지 전송 & 결과 디스플레이 */
-    @PostMapping(value = "/transferImage")
+    @PostMapping(value = "/result")
     public ModelAndView uploadImage(@RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("/diagnosis/result");
         try {
-            final String UPLOAD_DIR = "D:/final/Plant-Butler/uploads/";
+            final String UPLOAD_DIR = "";
 
             // 저장할 폴더가 존재하지 않는다면 새로 생성
             File uploadDir = new File(UPLOAD_DIR);
@@ -115,11 +109,4 @@ public class DiagnosisController {
     }
 
 
-    /* 결과 디스플레이 */
-    @PostMapping(value = "/result")
-    public ModelAndView checkResult(@RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
-        ModelAndView mv = new ModelAndView("/diagnosis/result");
-
-        return mv;
-    }
 }

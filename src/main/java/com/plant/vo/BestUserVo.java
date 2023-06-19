@@ -4,15 +4,17 @@ public class BestUserVo {
 
     private String userId;
     private String nickname;
+    private int myplantId;
     private String myplantImage;
     private String distbNm;
     private String myplantNick;
 
     public BestUserVo() {}
 
-    public BestUserVo(String userId, String nickname, String myplantImage, String distbNm, String myplantNick) {
+    public BestUserVo(String userId, String nickname, int myplantId, String myplantImage, String distbNm, String myplantNick) {
         this.userId = userId;
         this.nickname = nickname;
+        this.myplantId = myplantId;
         this.myplantImage = myplantImage;
         this.distbNm = distbNm;
         this.myplantNick = myplantNick;
@@ -32,6 +34,14 @@ public class BestUserVo {
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public int getMyplantId() {
+        return myplantId;
+    }
+
+    public void setMyplantId(int myplantId) {
+        this.myplantId = myplantId;
     }
 
     public String getMyplantImage() {

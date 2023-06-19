@@ -1,15 +1,14 @@
 package com.plant.service;
+
 import com.plant.dao.MyPlantMapper;
-import com.plant.dao.ScheduleMapper;
 import com.plant.vo.MyplantVo;
 import com.plant.vo.PlantVo;
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 @Service
@@ -34,12 +33,16 @@ public class MyPlantService {
     }
 
 
-    public void registMyPlant(MyplantVo myplantVo) {
+    public boolean registMyPlant(MyplantVo myplantVo) {
+        boolean flag = false;
+
         try {
-            myPlantMapper.insertMyplant(myplantVo);
+            flag = myPlantMapper.insertMyplant(myplantVo);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        return flag;
     }
 
     public void deleteMyPlant(int myplantId) {
@@ -81,6 +84,12 @@ public class MyPlantService {
 
     public boolean point(long todayInDays) {
         boolean flag = myPlantMapper.point(todayInDays);
+        return flag;
+    }
+
+    public boolean saveFiles(MyplantVo myplantVo) {
+        boolean flag = false;
+        flag = myPlantMapper.insertFiles(myplantVo);
         return flag;
     }
 }
