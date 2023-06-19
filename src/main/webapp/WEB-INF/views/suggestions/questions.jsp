@@ -12,11 +12,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/questions.css">
 </head>
-<body>
 <body style="text-align: center">
 <section class="page-section cta">
     <div class="container" style="margin-top: 150px">
-        <h1> 나에게 맞는 식물 찾기 <h1>
+        <h1 class="findtitle"> 나에게 맞는 식물 찾기 <h1>
         <p>아홉가지 질문을 통해 당신의 성향 & 취향 & 환경을 고려하여 당신만을 위한 식물을 알려드릴게요.<p>
 
         <br>
@@ -86,6 +85,7 @@
                                 </div>
                                 <div class="carousel-item">
                                     <label><input type="submit" value="결과 보기"  onclick="return validateForm()"  class="btn btn-light"></label>
+                                    <br>
                                 </div>
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -104,7 +104,7 @@
 </section>
 
 <!-- Footer -->
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px;">
   <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
 </footer>
 

@@ -77,6 +77,11 @@ public class MyPlantService {
 
     }
 
+    public boolean insertWebPushData3(int myplantId, int dayInput, String timeInput) {
+        boolean flag = myPlantMapper.insertWebPushData3(myplantId,dayInput,timeInput);
+        return flag;
+    }
+
 
     public boolean point(long todayInDays) {
         boolean flag = myPlantMapper.point(todayInDays);
@@ -91,4 +96,7 @@ public class MyPlantService {
     public void deleteSchedule2(int myplantId) {
         myPlantMapper.deleleMyPlantSchedule2(myplantId);
     }
+
+    public void deleteSchedule3(int myplantId) {myPlantMapper.deleleMyPlantSchedule3(myplantId);}
+
 }

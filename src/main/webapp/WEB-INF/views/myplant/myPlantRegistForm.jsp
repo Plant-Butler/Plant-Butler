@@ -98,7 +98,8 @@
   </script>
   <title>Title</title>
 </head>
-<body style="margin-top: 200px; display: flex; justify-content: center; align-items: center;">
+<body>
+<div style="margin-top: 200px; display: flex; justify-content: center; align-items: center; margin-bottom: 150px;">
 <style>
   .custom-input {
     border: 2px solid #ccc;
@@ -304,27 +305,30 @@
     </tr>
   </table>
 
-
-  <script>
-    const radioButtons = document.querySelectorAll('.flowerpot');
-    const diameter1Unit = document.getElementById('diameter1-unit');
-    const diameter2Unit = document.getElementById('diameter2-unit');
-
-    radioButtons.forEach(function(radioButton) {
-      radioButton.addEventListener('change', function() {
-        if (this.value === '1') {
-          diameter1Unit.textContent = '내 화분 밑 지름:';
-          diameter2Unit.textContent = '내 화분 윗 지름:';
-        } else if (this.value === '2') {
-          diameter1Unit.textContent = '가로:';
-          diameter2Unit.textContent = '세로:';
-        }
-      });
-    });
-  </script>
     <button type="submit" class="custom-input" style="margin-top: 20px; margin-left: 300px;">제출하기</button>
   </form>
 </div>
-
+</div>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px;">
+  <div class="container1"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
 </body>
+<script>
+  const radioButtons = document.querySelectorAll('.flowerpot');
+  const diameter1Unit = document.getElementById('diameter1-unit');
+  const diameter2Unit = document.getElementById('diameter2-unit');
+
+  radioButtons.forEach(function(radioButton) {
+    radioButton.addEventListener('change', function() {
+      if (this.value === '1') {
+        diameter1Unit.textContent = '내 화분 밑 지름:';
+        diameter2Unit.textContent = '내 화분 윗 지름:';
+      } else if (this.value === '2') {
+        diameter1Unit.textContent = '가로:';
+        diameter2Unit.textContent = '세로:';
+      }
+    });
+  });
+</script>
+
 </html>

@@ -1,13 +1,11 @@
 package com.plant.controller;
 
 import com.plant.service.CustomUserDetailsService;
-import com.plant.service.TokenRepository;
 import com.plant.service.UserService;
 import com.plant.vo.TokenVo;
 import com.plant.vo.UserVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,8 +27,6 @@ import java.net.URI;
 public class UserController {
 
 
-	private final TokenRepository tokenRepository;
-
 	private final UserService userService;
 
 	private final CustomUserDetailsService detailService;
@@ -39,8 +35,7 @@ public class UserController {
 
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public  UserController(TokenRepository tokenRepository, UserService userService,CustomUserDetailsService detailService,PasswordEncoder passwordEncoder){
-		this.tokenRepository = tokenRepository;
+	public  UserController(UserService userService,CustomUserDetailsService detailService,PasswordEncoder passwordEncoder){
 		this.userService = userService;
 		this.detailService = detailService;
 		this.passwordEncoder = passwordEncoder;
@@ -62,9 +57,6 @@ public class UserController {
 		TokenVo tokenvo = new TokenVo();
 		boolean flag = userService.regist(user);
 		String userId = user.getUserId();
-		tokenvo.setUserId(userId);
-		tokenvo.setTokenNum(token);
-		tokenRepository.save(tokenvo);
 		boolean flag2 = userService.saveToken(token,userId);
 		logger.info("회원가입");
 		if (flag) {
@@ -162,9 +154,6 @@ public class UserController {
 		System.out.println(search);
 		if(search==false) {
 			boolean flag = userService.saveToken(token, userId);
-			tokenvo.setTokenNum(token);
-			tokenvo.setUserId(userId);
-			tokenRepository.save(tokenvo);
 		}
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

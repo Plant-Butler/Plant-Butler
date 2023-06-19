@@ -38,7 +38,7 @@ public class DiagnosisController {
     public ModelAndView uploadImage(@RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("/diagnosis/result");
         try {
-            final String UPLOAD_DIR = "D:/final/Plant-Butler/uploads/";
+            final String UPLOAD_DIR = "D:/final/Plant-Butler (14)/uploads/";
 
             File uploadDir = new File(UPLOAD_DIR);
             if (!uploadDir.exists()) {
@@ -51,7 +51,7 @@ public class DiagnosisController {
             System.gc();
 
             String imagePath = img_path.toString();
-            ProcessBuilder processBuilder = new ProcessBuilder("python", "D:/ml/training/checking.py", imagePath);
+            ProcessBuilder processBuilder = new ProcessBuilder("python", "D:/ml/checking.py", imagePath);
             Process process = processBuilder.start();
             int exitCode = process.waitFor();
             if (exitCode != 0) {
@@ -159,7 +159,7 @@ public class DiagnosisController {
             System.gc();
 
             String imagePath = img_path.toString();
-            ProcessBuilder processBuilder = new ProcessBuilder("python", "D:/ml/training/pest.py", imagePath);
+            ProcessBuilder processBuilder = new ProcessBuilder("python", "D:/ml/pest.py", imagePath);
             Process process = processBuilder.start();
             int exitCode = process.waitFor();
             if (exitCode != 0) {

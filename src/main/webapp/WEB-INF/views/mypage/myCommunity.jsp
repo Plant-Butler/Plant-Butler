@@ -11,8 +11,40 @@
 <title>마이페이지</title>
 <%@ include file="../main/header.jsp" %>
 <style>
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
     th {
         border: 1px solid;
+    }
+    .mytitle{
+        font-family: 'KimjungchulGothic-Bold';
+    }
+    .manage-button{
+        font-family: 'KimjungchulGothic-Bold';
+        display: inline-block;
+        padding: 8px 16px;
+        font-size: 14px;
+        text-align: center;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        background-color: #198754;
+        color: white;
+        cursor: pointer;
+        margin-right: 10px;
+        margin-bottom: 10px;
+
+    }
+    .manage-button {
+        background-color: #e6a756;
+    }
+
+    .manage-button:hover {
+        background-color: #e6a756;
     }
 </style>
 
@@ -24,7 +56,7 @@
     <div class="container" style="margin-top: 150px">
         <div style="display:flex; justify-content:space-between; width:1200px;">
         <div style="width:49%;">
-        <h1>내 게시물</h1>
+        <h1 class="mytitle">내 게시물</h1>
         <br>
         <table style="margin-left:30px;" width="100%">
             <th><input type="checkbox" name="checkAll1" id="checkAll1"></th><th>분류</th><th>제목</th><th>작성날짜</th><th>신고</th>
@@ -57,14 +89,14 @@
                     <c:if test="${postList.navigateLastPage < postList.pages}">
                         <a href="?postPage=${boardList.navigateLastPage + 1}">▶</a>
                     </c:if>
-                    <br><br>
-        <button type="button" onclick="deleteSeveral(0)">게시물 삭제</button>
+                    <br><br> <br><br>
+        <button class="manage-button" type="button" onclick="deleteSeveral(0)">게시물 삭제</button>
         </div>
 
         <br>
 
         <div style="width:49%;">
-        <h1>내 댓글</h1>
+        <h1 class="mytitle">내 댓글</h1>
         <br>
         <table style="margin-left:70px;"  width="100%" >
             <th><input type="checkbox" name="checkAll2" id="checkAll2"><th>내용</th><th>작성날짜</th><th>신고</th>
@@ -96,15 +128,15 @@
                     <c:if test="${commentList.navigateLastPage < commentList.pages}">
                         <a href="?commentPage=${commentList.navigateLastPage + 1}">▶</a>
                     </c:if>
-                    <br><br>
-        <button type="button" onclick="deleteSeveral(1)">댓글 삭제</button>
+                    <br><br> <br><br>
+        <button class="manage-button" type="button" onclick="deleteSeveral(1)">댓글 삭제</button>
         </div>
         </div>
     </div>
 </section>
 
 <!-- Footer -->
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px;">
   <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
 </footer>
 

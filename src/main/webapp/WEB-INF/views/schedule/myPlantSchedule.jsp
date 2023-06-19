@@ -17,6 +17,12 @@
 <html>
 <head>
     <style>
+        @font-face {
+            font-family: 'KimjungchulGothic-Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
         .bi-tree {
             font-size: 25px;
             color: darkgreen;
@@ -48,6 +54,7 @@
             width: 1000px;
         }
         .diagnosisbutton{
+            font-family: 'KimjungchulGothic-Bold';
             display: inline-block;
             padding: 8px 16px;
             font-size: 17px;
@@ -211,7 +218,7 @@
 <body style="margin-top: 250px;height: 1500px;">
 <div id="bodyContainer">
 <br>
-<h1 style="font-family: 'Hahmlet', serif;">${myplant1.myplantNick}의 관리페이지</h1>
+<h1 style="font-family: 'KimjungchulGothic-Bold', serif;">${myplant1.myplantNick}의 관리페이지</h1>
     <div id="linecontainer" style="height: 20px; width: 1300px; border-bottom : 1px solid rgba(128, 128, 128, 0.5);
 }"></div>
     <div id="buttondiv" style="margin-top: 50px;">
@@ -252,11 +259,11 @@
         <div id='calendar' style="width: 50%;"></div>
         <div id="waterAmount" style="display: grid; justify-items: end; width: 50%; text-align: center;">
             <table style="">
-                <tr><td style="height: 50px; font-size: 65px; font-family: 'Hahmlet', serif; text-align: right; vertical-align: top;">관리 정보</td></tr>
-                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'Hahmlet', serif; color:  #198754; ">적당한 물의 양</td></tr>
-                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);">${myplant1.myplantNick}의 화분에 맞는 물의 양은 ${water}L 입니다</td></tr>
-                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'Hahmlet', serif; color:  #198754; ">최근에 물을 준 날짜</td></tr>
-                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);"><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"></fmt:formatDate></td></tr>
+                <tr><td style="height: 50px; font-size: 65px;font-family: 'KimjungchulGothic-Bold', serif; text-align: right; vertical-align: top;">관리 정보</td></tr>
+                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'KimjungchulGothic-Bold', serif; color:  #198754; ">적당한 물의 양</td></tr>
+                <tr><td style="height: 20px; font-family: 'KimjungchulGothic-Bold', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);">${myplant1.myplantNick}의 화분에 맞는 물의 양은 ${water}L 입니다</td></tr>
+                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'KimjungchulGothic-Bold', serif; color:  #198754; ">최근에 물을 준 날짜</td></tr>
+                <tr><td style="height: 20px; font-family: 'KimjungchulGothic-Bold', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);"><fmt:formatDate pattern="yyyy-MM-dd" value="${date}"></fmt:formatDate></td></tr>
     <%
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH);
@@ -288,8 +295,8 @@
         }
     %>
 
-                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'Hahmlet', serif; color:  #198754; ">물 주는 시기</td></tr>
-                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);"><%=text%></td></tr>
+                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'KimjungchulGothic-Bold', serif; color:  #198754; ">물 주는 시기</td></tr>
+                <tr><td style="height: 20px; font-family: 'KimjungchulGothic-Bold', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);"><%=text%></td></tr>
 
     <%
         long diffInDays = 0;
@@ -321,9 +328,9 @@
             diffInDays2 = diffInMillies / (24 * 60 * 60 * 1000);
         }
     %>
-                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'Hahmlet', serif; color:  #198754; ">최근 관리기록 작성일</td></tr>
-                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; "><%=diffInDays2%> 일 전</td></tr>
-                <tr><td style="height: 20px; font-family: 'Hahmlet', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);">오늘로부터 물을 <%=diffInDays%> 일 동안 주지 않았습니다!</td></tr>
+                <tr><td style="height: 60px; font-size: 30px;  text-align: right; font-family: 'KimjungchulGothic-Bold', serif; color:  #198754; ">최근 관리기록 작성일</td></tr>
+                <tr><td style="height: 20px; font-family: 'KimjungchulGothic-Bold', serif;  text-align: right; font-size: 20px; "><%=diffInDays2%> 일 전</td></tr>
+                <tr><td style="height: 20px; font-family: 'KimjungchulGothic-Bold', serif;  text-align: right; font-size: 20px; border-bottom: 1px solid rgba(128, 128, 128, 0.5);">오늘로부터 물을 <%=diffInDays%> 일 동안 주지 않았습니다!</td></tr>
 
             </table>
 </div>
@@ -335,7 +342,7 @@
 </div>
 <i class="fi fi-rr-Search"></i>
 </div>
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;  margin-top: auto;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px;  margin-top: auto;">
     <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
 </footer>
 <script>

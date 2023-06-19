@@ -11,6 +11,13 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <style>
+
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
     table {
         margin-left:auto;
         margin-right:auto;
@@ -18,18 +25,22 @@
     th {
         border: 1px solid;
     }
+    .managertitle{
+        font-family: 'KimjungchulGothic-Bold';
+
+    }
 </style>
 </head>
-<body>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/manager.js"></script>
 <body style="text-align: center">
 <section class="page-section cta">
-<div style="margin-top: 150px">
+<div style="margin-top: 110px">
         <br><br>
-        <div style="display:flex; justify-content:space-between; width:100%;" class="cta">
+        <div style="display:flex; justify-content:space-between; width:80%;margin: auto; " class="cta">
         <div style="width:33%;">
-        <h2>게시물 관리</h2>
+        <h2 class="managertitle">게시물 관리</h2>
+            <br><br><br><br><br>
         <table class="table table-striped">
             <th>제목</th><th>아이디</th><th>신고</th><th>삭제</th>
                <c:forEach var="post" items="${postList.list}">
@@ -43,7 +54,7 @@
         </table>
         <%-- 이전 페이지 버튼 --%>
                     <c:if test="${postList.navigateFirstPage > 1}">
-                        <a href="?postPage=${postList.navigateFirstPage - 1}&commentPage=${commentList.pageNum}&userPage=${userList.pageNum}" aria-label="Previous"">◀</a>
+                        <a href="?postPage=${postList.navigateFirstPage - 1}&commentPage=${commentList.pageNum}&userPage=${userList.pageNum}" aria-label="Previous">◀</a>
                     </c:if>
                     <%-- 페이지 번호 출력 --%>
                     <c:forEach var="pageNum" begin="${postList.navigateFirstPage}" end="${postList.navigateLastPage}">
@@ -62,7 +73,8 @@
                     </c:if>
         </div>
         <div style="width:33%;">
-        <h2>댓글 관리</h2>
+        <h2 class="managertitle">댓글 관리</h2>
+            <br><br><br><br><br>
         <table class="table table-striped">
             <th>내용</th><th>아이디</th><th>신고</th><th>삭제</th>
             <c:forEach var="comment" items="${commentList.list}">
@@ -96,9 +108,9 @@
 
         </div>
         <div style="width:33%;">
-        <h2> 회원관리 </h2> (3인 선택)
+            <h2 class="managertitle"> 회원관리 </h2> <h7 class="managertitle">(3인 선택)</h7>
         <br>
-        <p>현재 우수회원</p>
+        <p class="managertitle">현재 우수회원</p>
         <table id="best-user-table">
             <tbody></tbody>
         </table>
@@ -136,10 +148,11 @@
                     </c:if>
         </div>
     </div>
+</div>
 </section>
 
 <!-- Footer -->
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px;">
   <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
 </footer>
 

@@ -14,6 +14,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <style>
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
   .buttonlist {
       margin-left: 90px;
   }
@@ -22,6 +28,7 @@
        margin-left: 1250px;
   }
   .btn {
+    font-family: 'KimjungchulGothic-Bold';
     display: inline-block;
     padding: 8px 16px;
     font-size: 14px;
@@ -54,7 +61,7 @@
    text-decoration: none;
    }
  .posth1{
-    font-family: 'Hahmlet', serif;
+    font-family: 'KimjungchulGothic-Bold' !important;
     font-size: 3em;
     color: #000000;
     text-align: center;
@@ -189,5 +196,12 @@
         </nav>
     </div>
 </div>
+<footer class="footer text-faded text-center py-5"
+        style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
+    <div class="container">
+        <p class="m-0 small">© Plantery 2023</p>
+    </div>
+</footer>
 </body>
+
 </html>

@@ -77,14 +77,21 @@
         }
     </script>
 </head>
-<body>
+<body style="margin-top: 150px;">
 <style>
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
     .map_wrap {position:relative;width:30%;height:350px; border-radius: 50px; margin-top: 30px; visibility: hidden;}
     .title {font-weight:bold;display:block;}
     .hAddr {position:absolute;left:10px;top:10px;border-radius: 2px;background:#fff;background:rgba(255,255,255,0.8);z-index:1;padding:5px;}
     #centerAddr {display:block;margin-top:2px;font-weight: normal;}
     .bAddr {padding:5px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;}
     .smallbutton{
+        font-family: 'KimjungchulGothic-Bold';
         display: inline-block;
         padding: 8px 16px;
         font-size: 17px;
@@ -97,8 +104,11 @@
         cursor: pointer;
         margin-right: 10px;
         margin-bottom: 10px;
+        background-color: #198754 !important;
     }
-
+    .smallbutton:hover {
+        background-color: #45a049 !important;
+    }
     .inbox{
         text-decoration: none;
         font-size: 14px;
@@ -263,7 +273,7 @@
 </script>
 </div>
 </div>
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px; background-repeat: no-repeat; background-size: cover;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px; background-repeat: no-repeat; background-size: cover;">
     <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
 </footer>
 </body>

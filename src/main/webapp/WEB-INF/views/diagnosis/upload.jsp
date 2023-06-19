@@ -28,7 +28,7 @@
             var loadingOverlay = document.getElementById('loadingOverlay');
             loadingOverlay.classList.add('visible');
         }
-        function showLoadingMessage() {
+        function showLoadingMessage2() {
             var loadingOverlay = document.getElementById('loadingOverlay2');
             loadingOverlay.classList.add('visible');
         }
@@ -101,6 +101,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <style type="text/css">
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
     .uploadbody {
         justify-content: center;
         align-items: center;
@@ -151,7 +157,7 @@
         text-align: center;
         margin-top: 250px;
         margin-left: 70px;
-        font-family: 'Hahmlet', serif;
+        font-family: 'KimjungchulGothic-Bold';
     }
     .message2 {
         font-size: 3em;
@@ -159,7 +165,7 @@
         text-align: center;
         margin-top: 250px;
         margin-right: 70px;
-        font-family: 'Hahmlet', serif;
+        font-family: 'KimjungchulGothic-Bold';
     }
     .picture {
         display: block;
@@ -186,7 +192,7 @@
         height: 40px;
         border: none;
         border-radius: 10px;
-        font-family: 'Hahmlet', serif;
+        font-family: 'KimjungchulGothic-Bold';
     }
     .btnUpload2 {
         margin: 0 auto;
@@ -197,7 +203,7 @@
         height: 40px;
         border: none;
         border-radius: 10px;
-        font-family: 'Hahmlet', serif;
+        font-family: 'KimjungchulGothic-Bold';
     }
     .image-container {
         position: relative;
@@ -251,7 +257,7 @@
         cursor: pointer;
         border-radius: 10px;
         transition: background-color 0.3s;
-        font-family: 'Hahmlet', serif;
+         font-family: 'KimjungchulGothic-Bold';
     }
 
     .backbutton:hover {
@@ -266,7 +272,7 @@
       text-align: center;
       font-size: 14px;
       margin-top: 10px;
-      font-family: 'Hahmlet', serif;
+        font-family: 'KimjungchulGothic-Bold';
     }
 
 </style>
@@ -324,7 +330,7 @@
                 <input type="file" id="fileInput2" name="image2" onchange="previewImagep();" style="display: none;">
                 <br>
                 <br>
-                <button onclick="showLoadingMessage()" class="btnUpload2">진단하기</button>
+                <button onclick="showLoadingMessage2()" class="btnUpload2">진단하기</button>
                     <div id="loadingMessage" class="loading-message" style="display: none;">
                         Loading...
                     </div>
@@ -340,7 +346,7 @@
         <br>
       </div>
     </div>
-    <footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
+    <footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
         <div class="container">
             <p class="m-0 small">Copyright &copy; Plantery 2023</p>
         </div>

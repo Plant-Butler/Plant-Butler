@@ -7,6 +7,12 @@
     <title>마이페이지</title>
     <%@ include file="../main/header.jsp" %>
     <style>
+        @font-face {
+            font-family: 'KimjungchulGothic-Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+            font-weight: 700;
+            font-style: normal;
+        }
         table, td {
             text-align: center;
             margin-left: auto;
@@ -21,7 +27,7 @@
         .container {
             display: grid;
             grid-template-columns: 50% 50%;
-            font-family: 'Hahmlet', serif;
+            font-family: 'KimjungchulGothic-Bold';
             font-size: 20px;
             grid-column-gap: 120px;
             grid-template-areas:
@@ -125,9 +131,9 @@
 
 <body style="text-align: center; margin-top: 200px;">
 <br>
-<h2 style="font-family: 'Hahmlet', serif; font-size: 60px;">나에게 맞는 반려식물 결과</h2>
+<h2 style="font-family: 'KimjungchulGothic-Bold', serif; font-size: 60px;">나에게 맞는 반려식물 결과</h2>
 <br><br>
-<div class="swiper">
+<div class="swiper" style="margin-bottom: 100px;">
     <!-- If we need pagination -->
     <div class="swiper-pagination"></div>
     <!-- Additional required wrapper -->
@@ -172,5 +178,8 @@
         });
     });
 </script>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px;">
+    <div class="container1"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
+</footer>
 </body>
 </html>

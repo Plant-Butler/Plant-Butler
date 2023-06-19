@@ -1,16 +1,12 @@
 package com.plant.vo;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Collection;
 
-@Document(collection = "tokens")
+
 public class TokenVo {
 
     private String userId;
 
-    @Id
+
     private String tokenNum;
 
     public TokenVo() {

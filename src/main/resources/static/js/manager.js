@@ -169,24 +169,25 @@ var csrfToken = $("meta[name='_csrf']").attr("content");
         });
     }
 
-    $(document).ready(function() {
-        $.ajax({
-            url: "/home/best-list",
-            type: "GET",
-            success: function(response) {
-                var users = response;
-                var tableBody = $("#best-user-table tbody");
-                var row = "<tr>";
-                for(var i = 0; i < users.length; i++) {
-                    var user = users[i];
-                    row += "<td>" + user.userId + " &ensp; </td>";
-                }
-                row += "</tr>";
-                tableBody.append(row);
-            },
-            error: function(xhr, status, error) {
-                alert('오류가 발생했습니다.');
+$(document).ready(function() {
+    $.ajax({
+        url: "/home/best-list",
+        type: "GET",
+        success: function(response) {
+            var users = response;
+            var tableBody = $("#best-user-table tbody");
+            var row = "<tr>";
+            for(var i = 0; i < users.length; i++) {
+                var user = users[i];
+                row += "<td><button class='btn btn-primary' style='margin-bottom: 9px'>" + user.userId + "</button></td>";
             }
-        });
+            row += "</tr>";
+            tableBody.append(row);
+        },
+        error: function(xhr, status, error) {
+            alert('오류가 발생했습니다.');
+        }
     });
+});
+
 

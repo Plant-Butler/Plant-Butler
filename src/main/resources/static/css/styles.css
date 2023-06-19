@@ -272,14 +272,6 @@ h1,h2,h3,h4,h5,h6 {
 	margin: 0px;
 }
 
-p {
-	font-family: Poppins-Regular;
-	font-size: 14px;
-	line-height: 1.7;
-	color: #666666;
-	margin: 0px;
-}
-
 ul, li {
 	margin: 0px;
 	list-style-type: none;
@@ -3264,6 +3256,9 @@ textarea.form-control-lg {
   .btn {
     transition: none;
   }
+}
+#best-user-table button {
+  margin: 5px;  /* 상하좌우에 5px의 margin을 적용합니다 */
 }
 .btn:hover {
   color: var(--bs-btn-hover-color);

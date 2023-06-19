@@ -120,7 +120,7 @@
     }
 </script>
 <!-- Footer -->
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
     <div class="container"><p class="m-0 small">
                              Copyright &copy; Plantery 2023</p></div>
 </footer>

@@ -25,6 +25,7 @@
 </head>
 <body>
 <div style=" padding-left: 200px; padding-right: 200px;">
+    <br>
     <div id="representContainer">
         <button class="btn btn-primary" onclick="registRepresent()">대표식물로 지정</button>
         <button id="editBtn" class="btn btn-primary">수정하기</button>
@@ -191,11 +192,13 @@
                 });
             </script>
         </div>
-</body>
-<footer class="footer text-faded text-center py-5"
-        style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
-    <div class="container">
-        <p class="m-0 small">© Plantery 2023</p>
     </div>
-</footer>
+</div>
+        <footer class="footer text-faded text-center py-5"
+                style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
+            <div class="container">
+                <p class="m-0 small">© Plantery 2023</p>
+            </div>
+        </footer>
+</body>
 </html>

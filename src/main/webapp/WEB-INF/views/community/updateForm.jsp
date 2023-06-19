@@ -9,6 +9,12 @@
 <html>
 <head>
     <style>
+        @font-face {
+            font-family: 'KimjungchulGothic-Bold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
     .custom-input {
       border: 2px solid #ccc;
       border-radius: 4px;
@@ -31,12 +37,12 @@
     }
 
     .newh1{
-        font-family: 'Hahmlet', serif;
+        font-family: 'KimjungchulGothic-Bold';
         font-size: 3em;
         color: #000000;
         text-align: center;
-        font-weight: 700;
         font-style: normal;
+        font-weight: 700;
     }
 
     .custom-textarea {
@@ -239,6 +245,10 @@
     </script>
 </head>
 <body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
 <div class="about-section" style="margin-top: 300px">
     <h1 class = "newh1">게시물 수정</h1>
 </div>
@@ -306,7 +316,7 @@
 
 <br>
 <br>
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px; flex-shrink: 0;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
     <div class="container">
         <p class="m-0 small">© Plantery 2023</p>
     </div>

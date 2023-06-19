@@ -57,7 +57,7 @@
 <div class="content" style=" flex: 1;">
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 <link rel="stylesheet" href="../css/mainStyle.css">
-<link rel="stylesheet" href="../css/styles2.css">
+<link rel="stylesheet" href="../css/styles.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
@@ -66,7 +66,7 @@
 
 <section class="page-section clearfix" style="margin-top: 500px;">
     <div id="maintextdiv">
-        <p id="app"></p>
+        <p class ="app" id="app"></p>
     </div>
 
         <div class="video-container content">
@@ -82,7 +82,7 @@
                     <h2 class="section-heading mb-4">
                         <span class="section-heading-upper"></span>
                     </h2>
-                    <p class="mb-3" style="margin-top: 500px;">나의 성향 & 취향 & 환경을 모두 고려한 최적의<br>반려 식물은 무엇일까요?</p>
+                    <p class="mb-3" style="font-size: 60px; margin-top: 500px;">나의 성향 & 취향 & 환경을<br>모두 고려한 최적의<br>반려 식물은 무엇일까요?</p>
 
                     <i class="bi bi-arrow-up-right-square" onclick="location.href='/suggestions'"></i>
 
@@ -98,7 +98,7 @@
                 <div class="col-xl-9 mx-auto">
                     <div class="best-users">
                         <h2 class="bestusers"> 이달의 우수회원 </h2>
-                        <table id="best-user-table" style="font-family: 'Hahmlet', serif; font-size: 25px">
+                        <table id="best-user-table" style="font-family: 'KimjungchulGothic-Bold'; font-size: 25px;">
                             <tbody></tbody>
                         </table>
                     </div>
@@ -153,13 +153,13 @@
         AOS.init();
     </script>
 </div>
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
-    <div class="container">
-        <p class="m-0 small">© Plantery 2023</p>
-    </div>
-</footer>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/main.js"></script>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
+    <div class="container">
+        <p class="m-0 small">Copyright &copy; Plantery 2023</p>
+    </div>
+</footer>
 </body>
 </html>

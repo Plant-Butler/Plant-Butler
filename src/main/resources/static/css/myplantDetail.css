@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'KimjungchulGothic-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 #slide-image{
  object-fit: contain; width: 100%; height: 100%;
 }
@@ -7,22 +13,21 @@
 #representContainer{
     margin-top: 200px;
    margin-bottom: 30px;
-    font-family: 'Hahmlet', serif;
+    font-family: 'KimjungchulGothic-Bold';
 }
 #myplantContainer{
-    font-family: 'Hahmlet', serif;
+    font-family: 'KimjungchulGothic-Bold';
     font-size: 25px;
 
 }
 #detailTitle{
     margin-top: 140px;
-    font-family: 'LINESeedKR-Bd', sans-serif;
+    font-family: 'KimjungchulGothic-Bold';
     text-align: center;
 }
 #myplantFirstDate{
     font-size: 42px;
     color : #157347;
-    font-style: italic;
 }
 #plantdetail2{
     margin-top: 50px;
@@ -55,7 +60,7 @@ font-size: 30px;
     margin-bottom: 30px;
 }
 .seasonTitle{
-    font-family: 'LINESeedKR-Bd', sans-serif;
+    font-family: 'KimjungchulGothic-Bold';
     font-size: 35px;
     display: inline;
     justify-content: center;
@@ -65,14 +70,14 @@ font-size: 30px;
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    font-family: 'Hahmlet', serif;
+    font-family: 'KimjungchulGothic-Bold';
     font-size: 25px;
 }
 #season{
     width: 100%;
     display: block;
     text-align: center;
-    font-family: 'LINESeedKR-Bd', sans-serif;
+    font-family: 'KimjungchulGothic-Bold';
     font-size: 40px;
     margin-bottom: 60px;
     color : #157347;
@@ -82,7 +87,7 @@ font-size: 30px;
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    font-family: 'Hahmlet', serif;
+    font-family: 'KimjungchulGothic-Bold';
     font-size: 25px;
 }
 #content3{
@@ -90,7 +95,7 @@ font-size: 30px;
     justify-content: center;
     flex-direction: column;
     text-align: center;
-    font-family: 'Hahmlet', serif;
+    font-family: 'KimjungchulGothic-Bold';
     font-size: 25px;
 }
 .footer{
@@ -100,7 +105,7 @@ font-size: 30px;
     width: 100%;
     display: block;
     text-align: center;
-    font-family: 'LINESeedKR-Bd', sans-serif;
+    font-family: 'KimjungchulGothic-Bold';
     font-size: 40px;
     margin-bottom: 60px;
     color : #157347;

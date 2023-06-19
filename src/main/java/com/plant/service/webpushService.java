@@ -6,7 +6,6 @@ import com.google.firebase.messaging.Message;
 import com.plant.vo.TokenVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.stereotype.Service;
@@ -21,7 +20,6 @@ public class webpushService {
 
     private final MyPlantService myPlantService;
 
-    private final TokenRepository tokenRepository;
     private final UserService userService;
     private final TaskScheduler taskScheduler;
 
@@ -30,9 +28,8 @@ public class webpushService {
     private Map<String, ScheduledFuture<?>> scheduledTasks = new HashMap<>();
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public webpushService(TaskScheduler taskScheduler , TokenRepository tokenRepository, UserService userService, MyPlantService myPlantService, ScheduleService scheduleService) {
+    public webpushService(TaskScheduler taskScheduler , UserService userService, MyPlantService myPlantService, ScheduleService scheduleService) {
         this.taskScheduler = taskScheduler;
-        this.tokenRepository = tokenRepository;
         this.userService = userService;
         this.myPlantService = myPlantService;
         this.scheduleService = scheduleService;
@@ -59,6 +56,16 @@ public class webpushService {
 
 
     }
+    public void scheduleTask3(int myplantId,String cut, String cronExpression,String[] token) {
+        CronTrigger cronTrigger = new CronTrigger(cronExpression);
+        ScheduledFuture<?> scheduledTask = this.taskScheduler.schedule(() -> doScheduledTask3(token), cronTrigger);
+
+        String key = myplantId + "_" + cut;
+
+        this.scheduledTasks.put(key, scheduledTask);
+
+
+    }
 
     private void doScheduledTask1(String[] tokens) {
 
@@ -69,15 +76,13 @@ public class webpushService {
                     .setToken(token)
                     .build();
             try {
-                logger.info("message:" + message.toString());
                 String response = FirebaseMessaging.getInstance().send(message);
-                logger.info("Successfully sent message: " + response);
+                System.out.println("Successfully sent message: " + response);
             } catch (FirebaseMessagingException e) {
-                logger.info("Failed to send message to token: " + token);
-                logger.error(e.getMessage(), e);
+                System.err.println("Failed to send message to token: " + token);
+                e.printStackTrace();
                 try {
-                    TokenVo tokenVo = tokenRepository.findByTokenNum(token);
-                    tokenRepository.delete(tokenVo);
+                    userService.deleteToken(token);
                     System.out.println("Deleted invalid token: " + token);
                 } catch (Exception ex) {
                     System.err.println("Failed to delete token: " + token);
@@ -92,6 +97,29 @@ public class webpushService {
             Message message = Message.builder()
                     .putData("score", " 영양제 주기 알림이 도착")
                     .putData("time", "설정해두신 영양제 주기 시간이 경과했습니다!")
+                    .setToken(token)
+                    .build();
+            try {
+                String response = FirebaseMessaging.getInstance().send(message);
+                System.out.println("Successfully sent message: " + response);
+            } catch (FirebaseMessagingException e) {
+                System.err.println("Failed to send message to token: " + token);
+                e.printStackTrace();
+                try {
+                    userService.deleteToken(token);
+                    System.out.println("Deleted invalid token: " + token);
+                } catch (Exception ex) {
+                    System.err.println("Failed to delete token: " + token);
+                    ex.printStackTrace();
+                }
+            }
+        }
+    }
+    private void doScheduledTask3(String[] tokens) {
+        for(String token : tokens) {
+            Message message = Message.builder()
+                    .putData("score", " 가지치기 알림이 도착")
+                    .putData("time", "설정해두신 가지치기 시간이 경과했습니다!")
                     .setToken(token)
                     .build();
             try {
@@ -129,6 +157,15 @@ public class webpushService {
             scheduledTask.cancel(false);
             this.scheduledTasks.remove(key);
             myPlantService.deleteSchedule2(myplantId);
+
+        }
+    }
+    public void cancelTask3(int myplantId, String key) {
+        ScheduledFuture<?> scheduledTask = this.scheduledTasks.get(key);
+        if (scheduledTask != null) {
+            scheduledTask.cancel(false);
+            this.scheduledTasks.remove(key);
+            myPlantService.deleteSchedule3(myplantId);
 
         }
     }

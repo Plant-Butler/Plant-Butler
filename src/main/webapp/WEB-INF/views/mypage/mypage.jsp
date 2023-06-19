@@ -14,59 +14,69 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <style>
- h1, h2, div, button{
-    font-family: 'Hahmlet', serif;
- }
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
 
- #mypage-ttl {
+    h1, h2, div, button{
+    font-family: 'Hahmlet', serif;
+    }
+
+    #mypage-ttl {
     background-color: #b8d4c8;
     display: inline-block;
     padding: 10px;
     border-radius: 5px;
- }
-  #point{
+    }
+    #point{
     color: #b8d4c8;
-  }
-  button {
+    }
+    button {
     width: 300px;
     height: 50px;
     border-radius: 5px;
     background-color:#b8d4c8;
-  }
-  button:hover {
+    }
+    button:hover {
     background-color:white;
     transition: 0.7s;
-  }
+    }
     .spacing {
         margin-right: 80px;
     }
 
-   .cta {
+    .cta {
       background-color: white;
-   }
+    }
 
-   .options{
-    border: none;
-   }
+    .options{
+        font-family: 'KimjungchulGothic-Bold';
+        border: none;
+    }
 
     .mypagetitle{
-       font-family: 'Hahmlet', serif;
-       font-size: 3em;
-       color: #000000;
-       text-align: center;
-       font-weight: 700;
-       font-style: normal;
+        font-family: 'KimjungchulGothic-Bold';
+        font-size: 3em;
+        color: #000000;
+        text-align: center;
+        font-weight: 700;
+        font-style: normal;
+    }
+    .pointmessage{
+        font-family: 'KimjungchulGothic-Bold';
     }
 </style>
 </head>
-<body>
 <body style="text-align: center;">
 
 <section class="page-section cta">
 <div class="container" style="margin-top: 150px">
     <h1 class="mypagetitle">마이페이지</h1>
     <br><br>
-    <h2><span id="nick">${nickname}</span> 님의 현재 포인트는 <span id="point">${point}</span> 점 입니다.</h2>
+    <h2 class="pointmessage"><span id="nick">${nickname}</span> 님의 현재 포인트는 <span id="point">${point}</span> 점 입니다.</h2>
     <br>
     <hr style="width: 70%; margin:auto;">
     <br><br><br>
@@ -81,7 +91,7 @@
 </section>
 
 <!-- Footer -->
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px;">
   <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
 </footer>
 

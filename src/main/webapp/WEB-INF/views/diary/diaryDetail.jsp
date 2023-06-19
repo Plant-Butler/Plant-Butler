@@ -17,7 +17,7 @@
  <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/diaryDetail.css">
 </head>
-<body style="text-align: center"><br>
+<body style="text-align: center; margin-top: 100px;"><br>
 <div class="overall" style="margin-top: 110px">
 <br><br>
 
@@ -181,7 +181,7 @@
 
 </script>
 <!-- Footer -->
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
     <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
 </footer>
 

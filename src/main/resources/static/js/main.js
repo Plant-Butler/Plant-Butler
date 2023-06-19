@@ -17,7 +17,7 @@
                                 row += "</tr><tr>";
                                 for(var i = 0; i < 3; i++) {
                                     var user = users[i];
-                                    row += "<td>" + user.nickname + "</td>";
+                                    row += "<td class='nickname_main'>" + user.nickname + "</td>";
                                 }
                                 row += "</tr><tr>";
                                 for(var i = 0; i < 3; i++) {
