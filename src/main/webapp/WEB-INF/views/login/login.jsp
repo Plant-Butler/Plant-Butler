@@ -16,6 +16,10 @@
         var csrfHeader = '${_csrf.headerName}';
     </script>
 </head>
+<div class="header-background">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <body style="text-align: center">
     <section class="loginsection">
         <div class="form-box">
@@ -32,7 +36,7 @@
                         <label for="">Password</label>
                     </div>
                     <div class="signin">
-                        <a href="./registPage">Sign In</a>
+                        <a href="./registPage">회원가입</a>
                     </div>
                    <button class="loginbutton" type="button" onclick="login()">로그인</button
                 </form>
@@ -44,23 +48,23 @@
 
 <style>
     input {
-        width:250px;
+        width: 250px;
         text-align: center;
     }
 </style>
 
-   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        function login() {
-            let userId = document.getElementById("userId").value;
-            let password = document.getElementById("password").value;
-            let data = {
-                userId: userId,
-                password: password
-            };
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function login() {
+        let userId = document.getElementById("userId").value;
+        let password = document.getElementById("password").value;
+        let data = {
+            userId: userId,
+            password: password
+        };
 
-            console.log(userId);
-            console.log(data);
+        console.log(userId);
+        console.log(data);
 
             $.ajax({
                 type: "POST",
@@ -71,7 +75,7 @@
                 },
                 success: function(data) {
                     if (data === 'success') {
-                        alert("환영합니다!");
+
                         location.href = '/home';
                     }
                 },
@@ -82,10 +86,6 @@
             });
         }
     </script>
-        <br>
-        <br>
-        <footer class="footer text-faded text-center py-5">
-            <div class="container"><p class="m-0 small">Copyright &copy; Plantery 2023</p></div>
-        </footer>
 </body>
+</div>
 </html>

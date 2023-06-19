@@ -15,9 +15,13 @@ import java.util.ArrayList;
 @Service
 public class CommentService {
 
-    @Autowired
-    private CommentMapper commentMapper;
+
+    private final CommentMapper commentMapper;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public CommentService(CommentMapper commentMapper){
+        this.commentMapper = commentMapper;
+    }
 
     /* 댓글 전체조회 */
     public PageInfo<CommentVo>  getCommentList(int postId, Integer pageNum, Integer pageSize) {

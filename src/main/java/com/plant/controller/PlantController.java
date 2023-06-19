@@ -22,6 +22,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.net.URI;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,12 @@ public class PlantController {
         String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
         ArrayList<MyplantVo> plantList = myPlantService.MyPlantList(userId); //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
+        ArrayList<MyplantVo> plantList = null; //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
+        try {
+            plantList = myPlantService.myPlantList(userId);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         ArrayList<ScheduleVo> scheduleVos = scheduleService.getScheduleListToUserId(userId);//세션에서 얻은 유저의 아이디를 통해 해당 유저의 스케쥴 작성 목록 불러오기
         /* 각 식물 리스트의 관리기록 작성일 계산 */
         long scheduleDate = 0;
@@ -230,8 +240,7 @@ public class PlantController {
 
     @GetMapping(value="/search/{plantId}")
     public ResponseEntity <ArrayList<PlantVo>> searchPlantInfo(@PathVariable("plantId") String plantId){
-        ArrayList<PlantVo> plantVo = new ArrayList<>();
-        plantVo = myPlantService.searchPlantInfo(plantId);
+        ArrayList<PlantVo> plantVo =  myPlantService.searchPlantInfo(plantId);
         return new ResponseEntity<>(plantVo,HttpStatus.OK);
 
     }

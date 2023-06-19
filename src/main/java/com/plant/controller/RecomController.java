@@ -35,6 +35,11 @@ public class RecomController {
     private ApiKey apiKeys;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public RecomController(RecomService recomService, ApiKey apiKeys){
+        this.recomService =recomService;
+        this.apiKeys = apiKeys;
+    }
+
 
     /* 추천 결과 보기 */
     @GetMapping(value="/result")

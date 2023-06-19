@@ -16,14 +16,17 @@ import java.util.Map;
 @Service
 public class MainService {
 
-    @Autowired
-    private PostMapper mapper;
+    private final PostMapper postMapper;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public MainService(PostMapper postMapper){
+        this.postMapper = postMapper;
+    }
 
 
     public PageInfo<PostVo> getCommunityList(int pageNum, int pageSize, Map<String, Object> params) {
         PageHelper.startPage(pageNum, pageSize);
-        List<PostVo> list = mapper.getCommunityList(params);
+        List<PostVo> list = postMapper.getCommunityList(params);
         PageInfo<PostVo> pageInfo = new PageInfo<>(list,10);
         return pageInfo;
     }
@@ -31,7 +34,7 @@ public class MainService {
     public int getCommentCount(int postId) {
         int postid = 0;
         try {
-            postid = mapper.getCommentCount(postId);
+            postid = postMapper.getCommentCount(postId);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

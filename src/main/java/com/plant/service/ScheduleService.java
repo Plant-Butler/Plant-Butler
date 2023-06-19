@@ -19,8 +19,10 @@ import java.util.concurrent.ScheduledFuture;
 @Service
 public class ScheduleService {
 
-    @Autowired
-    private ScheduleMapper scheduleMapper;
+    private final ScheduleMapper scheduleMapper;
+    public ScheduleService(ScheduleMapper scheduleMapper){
+        this.scheduleMapper = scheduleMapper;
+    }
 
     public ArrayList<ScheduleVo> getScheduleList(Long myplantId) {
         ArrayList<ScheduleVo> scheduleVos = scheduleMapper.selectScheduleList(myplantId);

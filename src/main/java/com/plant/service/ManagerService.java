@@ -18,16 +18,20 @@ import java.util.ArrayList;
 @Service
 public class ManagerService {
 
-    @Autowired
-    private ManagerMapper mapper;
+    private final ManagerMapper managerMapper;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public ManagerService(ManagerMapper managerMapper){
+        this.managerMapper = managerMapper;
+    }
+
 
     /* 전체 회원 조회 */
     public PageInfo<UserVo> getUserList(Integer pageNum, Integer pageSize) {
         ArrayList<UserVo> userList = null;
         PageHelper.startPage(pageNum, pageSize);
         try {
-            userList = (ArrayList<UserVo>) mapper.getUserList();
+            userList = (ArrayList<UserVo>) managerMapper.getUserList();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -41,7 +45,7 @@ public class ManagerService {
         ArrayList<PostVo> postList = null;
         PageHelper.startPage(pageNum, pageSize);
         try {
-            postList = (ArrayList<PostVo>) mapper.mgmtPostList();
+            postList = (ArrayList<PostVo>) managerMapper.mgmtPostList();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -55,7 +59,7 @@ public class ManagerService {
         ArrayList<CommentVo> commentList = null;
         PageHelper.startPage(pageNum, pageSize);
         try {
-            commentList = (ArrayList<CommentVo>) mapper.mgmtCommentList();
+            commentList = (ArrayList<CommentVo>) managerMapper.mgmtCommentList();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -70,7 +74,7 @@ public class ManagerService {
 
         int affectedCnt = 0;
         try {
-            affectedCnt = mapper.insertBestUser(userId);
+            affectedCnt = managerMapper.insertBestUser(userId);
         } catch (SQLException e) {
         }
         if(affectedCnt > 0) {
@@ -84,7 +88,7 @@ public class ManagerService {
         ArrayList<BestUserVo> bestList = null;
 
         try {
-            bestList = mapper.getBestUser();
+            bestList = managerMapper.getBestUser();
         } catch (SQLException e) {
         }
         logger.info(bestList.toString());
@@ -98,7 +102,7 @@ public class ManagerService {
 
         int affectedCnt = 0;
         try {
-            affectedCnt = mapper.deleteBestUser(userId);
+            affectedCnt = managerMapper.deleteBestUser(userId);
         } catch (SQLException e) {
         }
         if(affectedCnt > 0) {
@@ -112,7 +116,7 @@ public class ManagerService {
     /* 우수회원 초기화 */
     public void deleteAllBestUser() {
         try {
-            mapper.deleteAllBestUser();
+            managerMapper.deleteAllBestUser();
         } catch (SQLException e) {}
         logger.info("[Manager Service] deleteAllBestUser()");
     }
@@ -124,7 +128,7 @@ public class ManagerService {
         int affectedCnt = 0;
         this.deleteBestUser(userId);
         try {
-            affectedCnt = mapper.deleteUser(userId);
+            affectedCnt = managerMapper.deleteUser(userId);
         } catch (SQLException e) {
         }
         if(affectedCnt > 0) {

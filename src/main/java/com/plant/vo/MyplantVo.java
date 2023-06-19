@@ -25,6 +25,9 @@ public class MyplantVo {
     private int webPushDate;
     private String webPushTime;
 
+    private int webPushDate2;
+    private String webPushTime2;
+
 
 
 
@@ -33,7 +36,7 @@ public class MyplantVo {
 
     }
 
-    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantPot, int myplantLength, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate,int webPushDate,String webPushTime) {
+    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantPot, int myplantLength, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate,int webPushDate,String webPushTime,int webPushDate2,String webPushTime2) {
         this.myplantId = myplantId;
         this.plantId = plantId;
         this.userId = userId;
@@ -48,6 +51,8 @@ public class MyplantVo {
         this.scheduleDate = scheduleDate;
         this.webPushDate =  webPushDate;
         this.webPushTime = webPushTime;
+        this.webPushDate2 =  webPushDate2;
+        this.webPushTime2 = webPushTime2;
     }
 
     public int getMyplantId() {
@@ -179,6 +184,22 @@ public class MyplantVo {
         this.webPushTime = webPushTime;
     }
 
+    public int getWebPushDate2() {
+        return webPushDate2;
+    }
+
+    public void setWebPushDate2(int webPushDate2) {
+        this.webPushDate2 = webPushDate2;
+    }
+
+    public String getWebPushTime2() {
+        return webPushTime2;
+    }
+
+    public void setWebPushTime2(String webPushTime2) {
+        this.webPushTime2 = webPushTime2;
+    }
+
     @Override
     public String toString() {
         return "MyplantVo{" +
@@ -198,6 +219,8 @@ public class MyplantVo {
                 ", scheduleDate=" + scheduleDate +
                 ", webPushDate=" + webPushDate +
                 ", webPushTime='" + webPushTime + '\'' +
+                ", webPushDate2=" + webPushDate2 +
+                ", webPushTime2='" + webPushTime2 + '\'' +
                 '}';
     }
 }

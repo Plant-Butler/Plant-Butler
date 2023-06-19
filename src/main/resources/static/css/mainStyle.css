@@ -1,9 +1,17 @@
+
 @font-face {
     font-family: 'KimjungchulGothic-Bold';
     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
 }
+
+
+html, body {width: 100%; height: 100%;}
+.content{
+    height: 100vh;
+}
+
 
 #maintextdiv{
     height: 1000px;
@@ -47,7 +55,7 @@
 
 .overlay-text {
     position: absolute;
-    top: 40%;
+    top: 30%;
     left: 60%;
     transform: translate(-60%, -40%);
     color: white;

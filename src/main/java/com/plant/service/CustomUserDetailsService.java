@@ -14,7 +14,6 @@ import java.util.Set;
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Autowired
     private final UserMapper userMapper;
 
     public CustomUserDetailsService(UserMapper userMapper) {

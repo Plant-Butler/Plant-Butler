@@ -2,11 +2,9 @@ package com.plant.controller;
 
 import com.plant.service.MyPlantService;
 import com.plant.service.ScheduleService;
+import com.plant.service.TokenRepository;
 import com.plant.service.webpushService;
-import com.plant.vo.MyplantVo;
-import com.plant.vo.PlantVo;
-import com.plant.vo.ScheduleVo;
-import com.plant.vo.UserVo;
+import com.plant.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,17 +21,28 @@ import java.net.http.HttpResponse;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/myplants/{myplantId}/schedule")
 public class ScheduleController {
-    @Autowired
-    private ScheduleService scheduleService;
-    @Autowired
-    private MyPlantService myPlantService;
+
+    private final TokenRepository tokenRepository;
+
+    private final ScheduleService scheduleService;
+
+    private final MyPlantService myPlantService;
+
+    private final webpushService webpush;
+
 
     @Autowired
-    private webpushService webpush;
+    public ScheduleController(TokenRepository tokenRepository,ScheduleService scheduleService,MyPlantService myPlantService,webpushService webpush){
+        this.tokenRepository = tokenRepository;
+        this.scheduleService = scheduleService;
+        this.myPlantService = myPlantService;
+        this.webpush = webpush;
+    }
 
     @GetMapping("")
     public ModelAndView myPlantSchedule(@PathVariable Long myplantId){
@@ -111,19 +120,44 @@ public class ScheduleController {
     }
 
     @PostMapping("/push")
-    public ModelAndView setpush(@PathVariable int myplantId, @RequestParam("dayInput")int dayInput ,@RequestParam("timeInput") String timeInput,@RequestParam("userId")String userId){
+    public ModelAndView setpush(@PathVariable int myplantId, @RequestParam(value = "dayInput")int dayInput ,@RequestParam(value = "timeInput") String timeInput,@RequestParam("userId")String userId,@RequestParam("water")String water){
         String[] parts = timeInput.split(":");
         String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
-        String[] token = scheduleService.getToken(userId);
-        webpush.scheduleTask(myplantId,cronExpression,token);
+        List<TokenVo> tokenObjects = tokenRepository.findByUserId(userId);
+        String[] tokens = tokenObjects.stream()
+                .map(TokenVo::getTokenNum)  // 이 메서드는 TokenVo 객체에서 token 문자열을 가져오는 메서드입니다.
+                .toArray(String[]::new);
+        for(int i = 0; i<tokens.length; i++){
+            System.out.println(tokens[i]);
+        }
+        webpush.scheduleTask(myplantId,water,cronExpression,tokens);
         boolean flag = myPlantService.insertWebPushData(myplantId,dayInput,timeInput);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("redirect:/myplants/"+myplantId+"/schedule/push");
         return mav;
     }
-    @DeleteMapping ("/push/delete")
-    public ResponseEntity deletepush(@PathVariable int myplantId){
-        webpush.cancelTask(myplantId);
+    @PostMapping("/push2")
+    public ModelAndView setpush2(@PathVariable int myplantId, @RequestParam(value = "dayInput")int dayInput ,@RequestParam(value = "timeInput") String timeInput,@RequestParam("userId")String userId,@RequestParam("drug")String drug){
+        String[] parts = timeInput.split(":");
+        String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
+        String[] token = scheduleService.getToken(userId);
+        webpush.scheduleTask2(myplantId,drug,cronExpression,token);
+        boolean flag = myPlantService.insertWebPushData2(myplantId,dayInput,timeInput);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/myplants/"+myplantId+"/schedule/push");
+        return mav;
+    }
+
+
+    @DeleteMapping ("/push/delete/{alarmType}")
+    public ResponseEntity deletepush(@PathVariable("myplantId") int myplantId, @PathVariable("alarmType") String alarmType){
+        String key = myplantId + "_" + alarmType;
+        System.out.println(alarmType);
+        if(alarmType.equals("water")){
+        webpush.cancelTask(myplantId,key);}
+        else {
+            webpush.cancelTask2(myplantId,key);
+        }
         return ResponseEntity.ok().build();
     }
 

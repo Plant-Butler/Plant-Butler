@@ -10,13 +10,16 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <style>
   .buttonlist {
       margin-left: 90px;
   }
 
   .newpost{
-       margin-left: 1200px;
+       margin-left: 1250px;
   }
   .btn {
     display: inline-block;
@@ -26,7 +29,7 @@
     text-decoration: none;
     border: none;
     border-radius: 4px;
-    background-color: #4CAF50;
+    background-color: #198754;
     color: white;
     cursor: pointer;
     margin-right: 10px;
@@ -34,7 +37,7 @@
   }
 
   .btn-primary {
-    background-color: #4CAF50;
+    background-color: #4198754;
   }
 
   .btn-primary:hover {
@@ -51,7 +54,7 @@
    text-decoration: none;
    }
  .posth1{
-    font-family: 'KimjungchulGothic-Bold';
+    font-family: 'Hahmlet', serif;
     font-size: 3em;
     color: #000000;
     text-align: center;
@@ -63,6 +66,28 @@
     .custom-table td.col-1 {
         width: 10%;
     }
+
+    .active>.page-link, .page-link.active {
+        z-index: 3;
+        color: white;
+        background-color: #4CAF50;
+        border-color: #4CAF50;
+    }
+    .page-link {
+        position: relative;
+        display: block;
+        padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+        font-size: var(--bs-pagination-font-size);
+        color: black;
+        text-decoration: none;
+        background-color: var(--bs-pagination-bg);
+        border: var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);
+        transition: #4CAF50 .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    select option:hover {
+      background-color: #4CAF50;
+    }
+
 
 </style>
 <div style="margin-top: 300px">
@@ -104,17 +129,20 @@
         </tbody>
     </table>
 
-    <div class="d-flex justify-content-center my-3">
-        <form action="/community" method="get" class="d-flex">
-            <select name="searchField" id="searchField">
+<div class="d-flex justify-content-center my-3">
+    <form action="/community" method="get" class="d-flex">
+        <div class="form-group mr-2">
+            <select name="searchField" id="searchField" class="form-control">
                 <option value="post_title">제목</option>
                 <option value="user_id">작성자</option>
             </select>
-            <input type="text" id="searchText" name="keyword">
-            <button class="btn btn-outline-success" type="submit">검색 </button> <p style="text-align:right;">
-        </form>
-    </div>
-
+        </div>
+        <div class="form-group mr-2">
+            <input type="text" id="searchText" name="keyword" class="form-control">
+        </div>
+        <button class="btn btn-outline-success" type="submit">검색</button>
+    </form>
+</div>
 
 
 

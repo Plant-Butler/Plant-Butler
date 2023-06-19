@@ -17,8 +17,12 @@ import java.util.ArrayList;
 @Service
 public class DiagnosisService {
 
-    @Autowired
-    private DiagnosisMapper diagnosisMapper;
+
+    private final DiagnosisMapper diagnosisMapper;
+
+    public DiagnosisService(DiagnosisMapper diagnosisMapper){
+        this.diagnosisMapper = diagnosisMapper;
+    }
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /* 질병 상세조회 */
@@ -32,5 +36,15 @@ public class DiagnosisService {
         return diseaseVo;
     }
 
+    /* 해충 상세조회 */
+    public DiseaseVo pestInfo(String predictedClass) {
+        DiseaseVo diseaseVo = null;
+        try {
+            diseaseVo = diagnosisMapper.pestDetail(predictedClass);
+        } catch (SQLException e) {
+
+        }
+        return diseaseVo;
+    }
 
 }

@@ -147,27 +147,27 @@
 <body>
 
 <section class="page-section cta">
-    <div class="result-container">
+    <div class="container">
         <h1 class="result-title">진단 결과</h1>
         <p class="result-subtitle">${pclass}</p>
         <br>
         <hr>
         <div class="result-content">
             <div class="result-image">
-                <img src=${disease.image} alt="Image" class="diseaseimage">
+                <img src="${pageContext.request.contextPath}/diseases/bacterial_spot.jpg" alt="Image">
                 <p class="imagecaption">${pclass} 예시 이미지</p>
             </div>
             <div class="detail">
-            <br>
-            <p class="detailtitle">상세 설명</p>
-                <p class="result-detail">${disease.detail}</p>
+                <br>
+                <p class="detailtitle">상세 설명</p>
+                    <p class="result-detail">${disease.detail}</p>
+                </div>
+                <div class="detail">
+                 <br>
+                <p class="detailtitle">해결책/예방법</p>
+                    <p class="result-solution">${disease.solution}</p>
+                </div>
             </div>
-            <div class="detail">
-             <br>
-            <p class="detailtitle">해결책/예방법</p>
-                <p class="result-solution">${disease.solution}</p>
-            </div>
-        </div>
 
         <div class="button-container">
             <button type="button" class="result-button" onclick="window.location.href='/home'">메인화면</button>
