@@ -1,8 +1,11 @@
 package com.plant.vo;
 
+import io.swagger.annotations.ApiModel;
+
 import java.sql.Timestamp;
 import java.util.List;
 
+@ApiModel(value="게시물", description = "커뮤니티에 작성한 게시물 VO")
 public class PostVo {
 
     private int postId;

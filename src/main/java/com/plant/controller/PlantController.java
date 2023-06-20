@@ -6,10 +6,13 @@ import com.plant.service.MyPlantService;
 import com.plant.service.S3Service;
 import com.plant.service.ScheduleService;
 import com.plant.utils.ApiKey;
-import com.plant.vo.*;
+import com.plant.vo.MyplantVo;
+import com.plant.vo.PlantVo;
+import com.plant.vo.ScheduleVo;
+import com.plant.vo.UserVo;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,9 +25,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -34,17 +34,21 @@ import java.util.StringTokenizer;
 
 @RestController
 @RequestMapping("/myplants")
+@Api(tags = "내 식물 API")
 public class PlantController {
 
-    @Autowired
-    private MyPlantService myPlantService;
-    @Autowired
-    private ScheduleService scheduleService;
-    @Autowired
-    private S3Service s3Service;
-    @Autowired
-    private ApiKey apiKey;
+    private final MyPlantService myPlantService;
+    private final ScheduleService scheduleService;
+    private final S3Service s3Service;
+    private final ApiKey apiKey;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public PlantController(MyPlantService myPlantService, ScheduleService scheduleService, S3Service s3Service, ApiKey apiKey) {
+        this.myPlantService = myPlantService;
+        this.scheduleService = scheduleService;
+        this.s3Service = s3Service;
+        this.apiKey = apiKey;
+    }
 
     @GetMapping(value = "")
     /* 메인페이지 이동 */
@@ -53,7 +57,6 @@ public class PlantController {
         UserVo user = (UserVo) authentication.getPrincipal();
         String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
-        ArrayList<MyplantVo> plantList = myPlantService.MyPlantList(userId); //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
         ArrayList<MyplantVo> plantList = null; //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
         try {
             plantList = myPlantService.myPlantList(userId);

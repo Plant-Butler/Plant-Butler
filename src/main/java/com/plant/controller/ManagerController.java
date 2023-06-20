@@ -6,9 +6,9 @@ import com.plant.vo.BestUserVo;
 import com.plant.vo.CommentVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/manager")
+@Api(tags = "관리자페이지 API")
 public class ManagerController {
 
     private final ManagerService managerService;

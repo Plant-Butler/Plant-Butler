@@ -2,6 +2,7 @@ package com.plant.controller;
 
 import com.plant.service.DiagnosisService;
 import com.plant.vo.DiseaseVo;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/diagnosis")
+@Api(tags = "내 식물 식물병/병해충 진단 API")
 public class DiagnosisController {
 
     @Autowired

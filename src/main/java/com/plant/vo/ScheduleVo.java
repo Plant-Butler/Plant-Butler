@@ -1,7 +1,10 @@
 package com.plant.vo;
 
+import io.swagger.annotations.ApiModel;
+
 import java.sql.Timestamp;
 
+@ApiModel(value="내 식물 관리기록", description = "내 식물 관리기록 (물, 영양제, 가지치기, 분갈이, 환기) VO")
 public class ScheduleVo {
     private int scheduleId;
     private int myplantId;

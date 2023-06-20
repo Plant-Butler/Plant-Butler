@@ -5,19 +5,16 @@ import com.plant.service.ScheduleService;
 import com.plant.service.TokenRepository;
 import com.plant.service.webpushService;
 import com.plant.vo.*;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.TaskScheduler;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
-import java.net.URI;
-import java.net.http.HttpResponse;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,6 +22,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/myplants/{myplantId}/schedule")
+@Api(tags = "내 식물 관리기록 API")
 public class ScheduleController {
 
     private final TokenRepository tokenRepository;

@@ -1,5 +1,8 @@
 package com.plant.vo;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(value="우수회원", description = "회원의 닉네임, 대표식물 종과 닉네임, 사진을 출력하는 VO")
 public class BestUserVo {
 
     private String userId;

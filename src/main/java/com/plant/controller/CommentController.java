@@ -4,9 +4,9 @@ import com.plant.service.CommentService;
 import com.plant.service.UserService;
 import com.plant.vo.CommentVo;
 import com.plant.vo.UserVo;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +17,17 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/community/comment")
+@Api(tags = "커뮤니티 댓글 API")
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
-    @Autowired
-    private UserService userService;
+    private final CommentService commentService;
+    private final UserService userService;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public CommentController(CommentService commentService, UserService userService) {
+        this.commentService = commentService;
+        this.userService = userService;
+    }
 
     /* 댓글 작성 */
     @PostMapping("")
