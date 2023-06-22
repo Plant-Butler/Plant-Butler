@@ -6,6 +6,9 @@ import com.plant.service.TokenRepository;
 import com.plant.service.webpushService;
 import com.plant.vo.*;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +46,8 @@ public class ScheduleController {
     }
 
     @GetMapping("")
+    @Operation(summary = "내 식물 관리페이지 이동", description = "내 반려식물의 관리 페이지로 이동하여 과거 기록까지 조회")
+    @ApiImplicitParam(name="myplantId", value="내 식물 id값")
     public ModelAndView myPlantSchedule(@PathVariable Long myplantId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserVo userVo = (UserVo) authentication.getPrincipal();
@@ -82,6 +87,8 @@ public class ScheduleController {
         return model;
     }
     @DeleteMapping("/{scheduleId}")
+    @Operation(summary = "관리기록 삭제", description = "과거에 등록된 관리기록 삭제")
+    @ApiImplicitParam(name="scheduleId", value="내 식물 관리기록 id값")
     public ResponseEntity deleteSchedule(@PathVariable int scheduleId){
         boolean flag = false;
         flag = scheduleService.deleteSchedule(scheduleId);
@@ -89,6 +96,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/form")
+    @Operation(summary = "관리기록 추가 폼 열기", description = "관리기록(물, 영양제, 분갈이, 가치지기, 환기)을 등록하기 위한 폼 열기")
+    @ApiImplicitParam(name="myplantId", value="내 식물 id값")
     public ModelAndView getScheduleRegistForm(@PathVariable Long myplantId){
         ModelAndView model = new ModelAndView();
         model.setViewName("schedule/registSchedule");
@@ -96,6 +105,8 @@ public class ScheduleController {
 
     }
     @PostMapping("/form")
+    @Operation(summary = "관리기록 추가 ", description = "오늘의 관리기록(물, 영양제, 분갈이, 가치지기, 환기)을 추가")
+    @ApiImplicitParam(name="ScheduleVo", value="내 식물 관리기록 VO")
     public RedirectView registSchedule(@ModelAttribute ScheduleVo scheduleVo){
         boolean flag = false;
         flag = scheduleService.registSchedule(scheduleVo);
@@ -103,6 +114,8 @@ public class ScheduleController {
     }
 
     @GetMapping("/push")
+    @Operation(summary = "웹푸시 설정 페이지 이동", description = "웹푸시를 설정하는 페이지로 이동")
+    @ApiImplicitParam(name="myplantId", value="내 식물 id값")
     public ModelAndView pushPage(@PathVariable int myplantId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserVo userVo = (UserVo) authentication.getPrincipal();
@@ -118,6 +131,13 @@ public class ScheduleController {
     }
 
     @PostMapping("/push")
+    @Operation(summary = "물주기 웹푸시 설정", description = "물주기 웹푸시를 수신하기 위한 일정간격, 시간 설정")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"),
+            @ApiImplicitParam(name="dayInput", value="물 주기 웹푸시 간격"),
+            @ApiImplicitParam(name="timeInput", value="물 주기 웹푸시 시간"),
+            @ApiImplicitParam(name="userId", value="로그인 유저 id"),
+            @ApiImplicitParam(name="water", value="물")
+    })
     public ModelAndView setpush(@PathVariable int myplantId, @RequestParam(value = "dayInput")int dayInput ,@RequestParam(value = "timeInput") String timeInput,@RequestParam("userId")String userId,@RequestParam("water")String water){
         String[] parts = timeInput.split(":");
         String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
@@ -135,6 +155,13 @@ public class ScheduleController {
         return mav;
     }
     @PostMapping("/push2")
+    @Operation(summary = "영양제 웹푸시 설정", description = "영양제 웹푸시를 수신하기 위한 일정간격, 시간 설정")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"),
+            @ApiImplicitParam(name="dayInput", value="물 주기 웹푸시 간격"),
+            @ApiImplicitParam(name="timeInput", value="물 주기 웹푸시 시간"),
+            @ApiImplicitParam(name="userId", value="로그인 유저 id"),
+            @ApiImplicitParam(name="drug", value="영양제")
+    })
     public ModelAndView setpush2(@PathVariable int myplantId, @RequestParam(value = "dayInput")int dayInput ,@RequestParam(value = "timeInput") String timeInput,@RequestParam("userId")String userId,@RequestParam("drug")String drug){
         String[] parts = timeInput.split(":");
         String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
@@ -148,6 +175,10 @@ public class ScheduleController {
 
 
     @DeleteMapping ("/push/delete/{alarmType}")
+    @Operation(summary = "웹푸시 삭제", description = "과거에 설정해놓은 웹푸시 설정을 삭제하여 더는 수신하지 않음")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"),
+            @ApiImplicitParam(name="alarmType", value="웹푸시 타입")
+    })
     public ResponseEntity deletepush(@PathVariable("myplantId") int myplantId, @PathVariable("alarmType") String alarmType){
         String key = myplantId + "_" + alarmType;
         System.out.println(alarmType);

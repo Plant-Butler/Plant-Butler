@@ -141,7 +141,7 @@
             <div class="swiper-slide">
                 <div class="container">
                     <div class="a">
-                        <img class="plantImg" src="/uploads/${plant.image}">
+                        <img class="plantImg" src="${plant.image}">
                     </div>
                         <div class="b1">${plant.distbNm}</div>
                         <div class="b2">${plant.clCodeNm}</div>

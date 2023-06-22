@@ -7,6 +7,8 @@ import com.plant.utils.ShopApi;
 import com.plant.vo.PlantVo;
 import com.plant.vo.UserVo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +45,7 @@ public class RecomController {
     /* 추천 결과 보기 */
     @GetMapping(value="/result")
     @Operation(summary = "반려식물 추천 결과 보기", description = "반려식물 추천 서비스의 결과로 나온 반려식물 및 주변의 꽃집 정보 등을 출력합니다.")
+    @ApiImplicitParam(name="plantVo", value="식물데이터 VO")
     public ModelAndView getResultList(@ModelAttribute PlantVo plantVo) {
         ModelAndView mv = new ModelAndView("/suggestions/result");
         ArrayList<PlantVo> resultList = recomService.getResultList(plantVo);
@@ -54,7 +57,7 @@ public class RecomController {
         String mapApiKey = apiKeys.getKakaomapKey();
 
         for(PlantVo vo : resultList) {
-            String imageUrl = s3Service.getUrl("", "plant", vo.getPlant_id());
+            String imageUrl = s3Service.getUrlwithFolder("plant-image", vo.getDistbNm());
             vo.setImage(imageUrl);
         }
 
@@ -68,6 +71,7 @@ public class RecomController {
     /* 추천 결과 저장 */
     @PostMapping(value="/result")
     @Operation(summary = "반려식물 추천 결과 저장", description = "반려식물 추천 서비스의 결과를 마이페이지에 저장합니다.")
+    @ApiImplicitParam(name="idxList", value="추천 식물들의 id값")
     public ResponseEntity<Boolean> saveResultList(@ModelAttribute("idxList") String plantIds) {
         boolean flag = false;
         boolean cntFlag = false;
@@ -112,6 +116,10 @@ public class RecomController {
     */
     @GetMapping(value="/result/detail")
     @Operation(summary = "반려식물 추천 결과 식물 상세정보", description = "반려식물 추천 결과 식물의 상세정보 및 상품정보를 출력합니다.")
+    @ApiImplicitParams({@ApiImplicitParam(name="plant_id", value="식물 id값"),
+            @ApiImplicitParam(name="distbNm", value="식물명"),
+            @ApiImplicitParam(name="soilInfo", value="토양정보")
+    })
     public ResponseEntity<Map> getDetailInfo(@RequestParam("plant_id") int plantId, @RequestParam("distbNm") String distbNm,
                                        @RequestParam("soilInfo") String soilInfo) {
         Map<String, Object> resultMap = new HashMap<>();

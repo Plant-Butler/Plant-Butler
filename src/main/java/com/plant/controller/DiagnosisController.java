@@ -1,15 +1,19 @@
 package com.plant.controller;
 
 import com.plant.service.DiagnosisService;
+import com.plant.service.S3Service;
 import com.plant.vo.DiseaseVo;
+import com.plant.vo.PestVo;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -24,12 +28,18 @@ import java.nio.file.Paths;
 @Api(tags = "내 식물 식물병/병해충 진단 API")
 public class DiagnosisController {
 
-    @Autowired
-    private DiagnosisService diagnosisService;
+    private final DiagnosisService diagnosisService;
+    private final S3Service s3Service;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public DiagnosisController(DiagnosisService diagnosisService, S3Service s3Service) {
+        this.diagnosisService = diagnosisService;
+        this.s3Service = s3Service;
+    }
 
     /* 질병 사진 업로드 */
     @GetMapping("")
+    @Operation(summary = "식물병 이미지 업로드", description = "로그인 유저가 식물병 이미지 업로드")
     public ModelAndView showDiagnosisPage() {
         ModelAndView mv = new ModelAndView("/diagnosis/upload");
         logger.info("진단 페이지 호출");
@@ -38,6 +48,8 @@ public class DiagnosisController {
 
     /* 이미지 전송 & 결과 디스플레이 */
     @PostMapping(value = "/result")
+    @Operation(summary = "식물병 진단AI 실행 및 진단결과 출력", description = "식물병 진단 모델 실행 및 진단결과와 해결법 확인")
+    @ApiImplicitParam(name="image", value="식물병 이미지")
     public ModelAndView uploadImage(@RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("/diagnosis/result");
         try {
@@ -131,6 +143,11 @@ public class DiagnosisController {
             mv.addObject("confidence", confidence);
 
             DiseaseVo diseaseVo = diagnosisService.diseaseInfo(predictedClass);
+
+            // 예시 이미지
+            String imageUrl = s3Service.getUrlwithFolder("diagnosis", predictedClass);
+            diseaseVo.setImage(imageUrl);
+
             mv.addObject("disease", diseaseVo);
             return mv;
 
@@ -141,6 +158,7 @@ public class DiagnosisController {
     }
     /* 해충 사진 업로드 */
     @GetMapping("/pest")
+    @Operation(summary = "병해충 이미지 업로드", description = "로그인 유저가 병해충 이미지 업로드")
     public ModelAndView showpestpage() {
         ModelAndView mv = new ModelAndView("/diagnosis/pestupload");
         logger.info("해충 진단 페이지 호출");
@@ -149,6 +167,8 @@ public class DiagnosisController {
 
     /* 해충 이미지 전송 & 결과 디스플레이 */
     @PostMapping(value = "/pest/result")
+    @Operation(summary = "병해충 진단AI 실행 및 진단결과 출력", description = "병해충 진단 모델 실행 및 진단결과와 해결법 확인")
+    @ApiImplicitParam(name="image2", value="병해충 이미지")
     public ModelAndView uploadpestimage(@RequestParam("image2") MultipartFile file, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("/diagnosis/pestresult");
         try {
@@ -222,9 +242,13 @@ public class DiagnosisController {
             mv.addObject("pclass", predictedClass);
             mv.addObject("confidence", confidence);
 
-            DiseaseVo diseaseVo = diagnosisService.pestInfo(predictedClass);
+            PestVo pestVo = diagnosisService.pestInfo(predictedClass);
 
-            mv.addObject("disease", diseaseVo);
+            // 예시 이미지
+            String imageUrl = s3Service.getUrlwithFolder("diagnosis", predictedClass);
+            pestVo.setImage(imageUrl);
+
+            mv.addObject("pest", pestVo);
             return mv;
 
         } catch (IOException | InterruptedException e) {

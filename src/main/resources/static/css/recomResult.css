@@ -2,6 +2,11 @@
         font-family: 'Hahmlet', serif;
     }
 
+    .plantDataImg {
+        width: 300px;
+        height: 400px;
+    }
+
     #mainheader {
         display: block;
     }

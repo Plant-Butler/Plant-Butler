@@ -15,11 +15,11 @@
         ]]>
     </select>
 
-    <select id="pestDetail" resultType="com.plant.vo.DiseaseVo">
+    <select id="pestDetail" resultType="com.plant.vo.PestVo">
         <![CDATA[
             SELECT detail, solution, image
-            FROM disease
-            WHERE INSTR(#{predictedClass}, disease_id) > 0;
+            FROM pest
+            WHERE INSTR(#{predictedClass}, pest_id) > 0;
 
         ]]>
     </select>

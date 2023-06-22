@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,10 +36,10 @@
                                 <div class="carousel-item ${status.index == 0 ? 'active' : ''}">
                                     <table class="recommend-result">
                                         <tr>
-                                            <th class="recommend-result" colspan="2"><img class="plantImg img-thumbnail" src="${plant.image}"></th>
+                                            <th class="recommend-result" colspan="2"><img class="plantDataImg img-thumbnail" src="${plant.image}"></th>
                                         </tr>
                                         <tr>
-                                            <th class="recommend-result" style="font-size: 35px;">${plant.plntzrNm} ${plant.distbNm}</th>
+                                            <th class="recommend-result" style="font-size: 35px;">${plant.distbNm}</th>
                                         </tr>
                                         <tr>
                                             <td>

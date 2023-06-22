@@ -47,3 +47,6 @@ out/
 /src/main/resources/firebase/plant-butler-97f48-firebase-adminsdk-zj3ua-50d19b0665.json
 /src/main/resources/static/js/tokenscript.js
 /src/main/resources/static/js/registToken.js
+/src/main/resources/static/js/obfuscate/mainscriptObfus.js
+/src/main/resources/static/js/obfuscate/registTokenObfus.js
+/src/main/resources/static/js/obfuscate/tokenscriptObfus.js
