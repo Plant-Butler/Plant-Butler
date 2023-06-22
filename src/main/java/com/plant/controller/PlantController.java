@@ -6,10 +6,16 @@ import com.plant.service.MyPlantService;
 import com.plant.service.S3Service;
 import com.plant.service.ScheduleService;
 import com.plant.utils.ApiKey;
-import com.plant.vo.*;
+import com.plant.vo.MyplantVo;
+import com.plant.vo.PlantVo;
+import com.plant.vo.ScheduleVo;
+import com.plant.vo.UserVo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,9 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -34,26 +37,30 @@ import java.util.StringTokenizer;
 
 @RestController
 @RequestMapping("/myplants")
+@Api(tags = "내 식물 API")
 public class PlantController {
 
-    @Autowired
-    private MyPlantService myPlantService;
-    @Autowired
-    private ScheduleService scheduleService;
-    @Autowired
-    private S3Service s3Service;
-    @Autowired
-    private ApiKey apiKey;
+    private final MyPlantService myPlantService;
+    private final ScheduleService scheduleService;
+    private final S3Service s3Service;
+    private final ApiKey apiKey;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public PlantController(MyPlantService myPlantService, ScheduleService scheduleService, S3Service s3Service, ApiKey apiKey) {
+        this.myPlantService = myPlantService;
+        this.scheduleService = scheduleService;
+        this.s3Service = s3Service;
+        this.apiKey = apiKey;
+    }
+
     @GetMapping(value = "")
+    @Operation(summary = "내 식물 메인페이지", description = "내 식물 리스트와 현재 날씨, 미세먼지 농도 조회")
     /* 메인페이지 이동 */
     public ModelAndView main() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserVo user = (UserVo) authentication.getPrincipal();
         String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
-        ArrayList<MyplantVo> plantList = myPlantService.MyPlantList(userId); //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
         ArrayList<MyplantVo> plantList = null; //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
         try {
             plantList = myPlantService.myPlantList(userId);
@@ -110,6 +117,7 @@ public class PlantController {
     }
 
     @GetMapping(value = "/form")
+    @Operation(summary = "내 식물 등록 폼 열기", description = "내 반려식물을 추가 등록하기 위한 페이지 이동")
     /* 등록페이지 이동 */
     public ModelAndView myPlantRegistForm() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -122,6 +130,8 @@ public class PlantController {
     }
 
     @PostMapping(value = "/form")
+    @Operation(summary = "내 식물 등록", description = "내 반려식물을 추가 등록")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantVo", value="내 식물 VO"), @ApiImplicitParam(name="uploadedImages", value="내 식물 사진", required = false)})
     /* 내 식물 등록하기 */
     public ResponseEntity<MyplantVo> registMyPlant(@ModelAttribute MyplantVo myplantVo,
                                                    @RequestParam(value = "uploadedImages", required = false) List<MultipartFile> images) {
@@ -163,6 +173,8 @@ public class PlantController {
 
 
     @DeleteMapping(value="/form/{myplantId}")
+    @Operation(summary = "내 식물 삭제", description = "내 식물 메인페이지에서 내 식물 삭제")
+    @ApiImplicitParam(name="myplantId", value="내 식물 id값")
     public ResponseEntity<Void> deleteMyPlant(@PathVariable("myplantId") int myplantId) {
         myPlantService.deleteMyPlant(myplantId);
         return ResponseEntity.noContent().build();
@@ -170,6 +182,8 @@ public class PlantController {
 
     /* 내 식물 상세조회 */
     @GetMapping(value="/{myplantId}/{plantId}")
+    @Operation(summary = "내 식물 상세조회", description = "내 반려식물의 관리 정보 및 생장 정보 조회")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"), @ApiImplicitParam(name="plantId", value="식물데이터 id값")})
     public ModelAndView myPlantDetail(@PathVariable("myplantId") int myplantId , @PathVariable("plantId") int plantId){
         ModelAndView model = new ModelAndView();
         MyplantVo myplantVo = myPlantService.myPlantDetail(myplantId);
@@ -193,6 +207,11 @@ public class PlantController {
 
     }
     @PostMapping(value="/{myplantId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(summary = "내 식물 정보 수정", description = "내 반려식물의 사진, 화분크기, 닉네임 수정")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"),
+            @ApiImplicitParam(name="myplantVo", value="내 식물 VO (JSON)"),
+            @ApiImplicitParam(name="myplantImages", value="내 식물 사진")
+    })
     public ResponseEntity<Void>editMyPlantInfo(@PathVariable int myplantId,
                                                @RequestParam("myplantVo") String myplantVoJson,
                                                @RequestParam(value = "myplantImages", required = false) List<MultipartFile> images){
@@ -239,6 +258,8 @@ public class PlantController {
     }
 
     @GetMapping(value="/search/{plantId}")
+    @Operation(summary = "내 식물 검색", description = "DB에서 내 식물의 종 검색")
+    @ApiImplicitParam(name="plantId", value="식물데이터 id값")
     public ResponseEntity <ArrayList<PlantVo>> searchPlantInfo(@PathVariable("plantId") String plantId){
         ArrayList<PlantVo> plantVo =  myPlantService.searchPlantInfo(plantId);
         return new ResponseEntity<>(plantVo,HttpStatus.OK);
@@ -246,6 +267,8 @@ public class PlantController {
     }
 
     @PostMapping("/{myplantId}/{userId}/represent")
+    @Operation(summary = "대표식물 등록", description = "내 식물 중 하나를 대표식물로 등록")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"), @ApiImplicitParam(name="userId", value="로그인 유저 id")})
     public ResponseEntity<Void> insertRepresent(@PathVariable int myplantId, @PathVariable String userId) {
         myPlantService.registRepresent(userId, myplantId);
         return ResponseEntity.ok().build();

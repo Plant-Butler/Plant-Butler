@@ -20,6 +20,9 @@ public class S3Service {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    @Value("${s3.folderNames}")
+    private String s3FolderNames;
+
     private final AmazonS3 amazonS3;
     private final AmazonS3Client s3Client;
 
@@ -28,33 +31,103 @@ public class S3Service {
         this.s3Client = s3Client;
     }
 
+    public String[] getS3FolderNames() {
+        return s3FolderNames.split(",");
+    }
+
     /* 업로드 */
     public String upload(MultipartFile multipartFile, String type, int seq) throws IOException {
         String s3FileName =  type + "-" + seq + "-" + multipartFile.getOriginalFilename();
+        String folder = null;
 
         ObjectMetadata objectMeta = new ObjectMetadata();
         objectMeta.setContentLength(multipartFile.getInputStream().available());
 
-        amazonS3.putObject(bucket, s3FileName, multipartFile.getInputStream(), objectMeta);
+        String[] folderNames = this.getS3FolderNames();
+        // 커뮤니티
+        if(type.equals("post")) {
+            folder = folderNames[2];
+        // 식물일기
+        } else if(type.equals("diary")) {
+            folder = folderNames[3];
+        // 내 식물
+        } else if(type.equals("myplant")) {
+            folder = folderNames[4];
+        // 식물병 & 병해충 판별
+        } else if(type.equals("diagnosis")) {
+            folder = folderNames[5];
+        }
+
+        amazonS3.putObject(bucket, folder + "/" + s3FileName, multipartFile.getInputStream(), objectMeta);
         return s3FileName;
     }
 
     /* 삭제 */
     public void delete(String oriFileName, String type, int seq){
         String s3FileName =  type + "-" + seq + "-" + oriFileName;
-        DeleteObjectRequest request = new DeleteObjectRequest(bucket, s3FileName);
+        String folder = null;
+
+        String[] folderNames = this.getS3FolderNames();
+        // 커뮤니티
+        if(type.equals("post")) {
+            folder = folderNames[2];
+        // 식물일기
+        } else if(type.equals("diary")) {
+            folder = folderNames[3];
+        // 내 식물
+        } else if(type.equals("myplant")) {
+            folder = folderNames[4];
+        // 식물병 & 병해충 판별
+        } else if(type.equals("diagnosis")) {
+            folder = folderNames[5];
+        }
+
+        DeleteObjectRequest request = new DeleteObjectRequest(bucket, folder + "/" + s3FileName);
         amazonS3.deleteObject(request);
     }
 
     /* URL 조회 */
     public String getUrl(String oriFileName, String type, int seq) {
         String fileName = type + "-" + seq + "-" + oriFileName;
-        return s3Client.getUrl(bucket, fileName).toString();
+        String folder = null;
+
+        String[] folderNames = this.getS3FolderNames();
+        // 커뮤니티
+        if(type.equals("post")) {
+            folder = folderNames[2];
+        // 식물일기
+        } else if(type.equals("diary")) {
+            folder = folderNames[3];
+        // 내 식물
+        } else if(type.equals("myplant")) {
+            folder = folderNames[4];
+        // 식물병 & 병해충 판별
+        } else if(type.equals("diagnosis")) {
+            folder = folderNames[5];
+        }
+
+        return s3Client.getUrl(bucket, folder + "/" +fileName).toString();
+    }
+
+    /* 파일명으로만 URL 조회 */
+    public String getUrlwithFolder(String folder, String oriFileName) {
+
+        String[] folderNames = this.getS3FolderNames();
+        if(folder.equals("diagnosis")) {
+            folder = folderNames[1];
+        } else {
+            folder = folderNames[0];
+        }
+
+        return s3Client.getUrl(bucket, folder + "/" + oriFileName + ".jpg").toString();
     }
 
     /* 첨부파일 다운로드 */
     public ResponseEntity<byte[]> getObject(String oriFileName, String type, int seq) throws IOException {
-        S3Object o = amazonS3.getObject(new GetObjectRequest(bucket, type + "-" + seq + "-" + oriFileName));
+        String[] folderNames = this.getS3FolderNames();
+        String s3FileName = folderNames[3] + "/" + type + "-" + seq + "-" + oriFileName;
+
+        S3Object o = amazonS3.getObject(new GetObjectRequest(bucket, s3FileName));
         S3ObjectInputStream objectInputStream = ((S3Object) o).getObjectContent();
         byte[] bytes = IOUtils.toByteArray(objectInputStream);
 

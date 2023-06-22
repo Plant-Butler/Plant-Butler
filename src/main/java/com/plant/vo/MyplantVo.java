@@ -1,7 +1,10 @@
 package com.plant.vo;
 
+import io.swagger.annotations.ApiModel;
+
 import java.sql.Date;
 
+@ApiModel(value="내 식물", description = "사용자의 반려식물 정보 VO")
 public class MyplantVo {
 
     private int myplantId;

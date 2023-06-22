@@ -1,5 +1,6 @@
 package com.plant.vo;
 
+import io.swagger.annotations.ApiModel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Set;
 
+@ApiModel(value="사용자", description = "사용자 아이디, 닉네임, 비밀번호, 이메일, 포인트, 관리자여부, 웹푸시 토큰 VO")
 public class UserVo implements UserDetails {
 
     private String userId;

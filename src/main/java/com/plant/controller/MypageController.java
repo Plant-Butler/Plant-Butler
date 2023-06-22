@@ -2,17 +2,14 @@ package com.plant.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.google.firebase.messaging.FirebaseMessagingException;
-import com.plant.service.CommentService;
-import com.plant.service.ManagerService;
-import com.plant.service.MypageService;
-import com.plant.service.PostService;
+import com.plant.service.*;
 import com.plant.vo.CommentVo;
 import com.plant.vo.PlantVo;
 import com.plant.vo.PostVo;
 import com.plant.vo.UserVo;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,6 +25,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/mypage")
+@Api(tags = "마이페이지 API")
 public class MypageController {
 
 
@@ -39,14 +37,17 @@ public class MypageController {
 
     private final CommentService commentService;
 
+    private final S3Service s3Service;
+
     private final PasswordEncoder passwordEncoder;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public MypageController(MypageService mypageService,ManagerService managerService,PostService postService, CommentService commentService,PasswordEncoder passwordEncoder){
+    public MypageController(MypageService mypageService,ManagerService managerService,PostService postService, CommentService commentService,S3Service s3Service, PasswordEncoder passwordEncoder){
         this.mypageService = mypageService;
         this.managerService = managerService;
         this.postService = postService;
         this.commentService = commentService;
+        this.s3Service = s3Service;
         this.passwordEncoder = passwordEncoder;
     }
 
@@ -159,6 +160,12 @@ public class MypageController {
         ModelAndView mv = new ModelAndView("/mypage/myRecom");
 
         ArrayList<PlantVo> recomPlantList = mypageService.myRecomList(userId);
+
+        for(PlantVo vo : recomPlantList) {
+            String imageUrl = s3Service.getUrlwithFolder("plant-image", vo.getDistbNm());
+            vo.setImage(imageUrl);
+        }
+
         mv.addObject("recomPlantList", recomPlantList);
 
         return mv;

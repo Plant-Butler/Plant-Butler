@@ -6,9 +6,9 @@ import com.plant.service.ManagerService;
 import com.plant.service.S3Service;
 import com.plant.vo.BestUserVo;
 import com.plant.vo.PostVo;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,15 +19,19 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.*;
 
 @RestController
+@Api(tags = "메인페이지 API")
 public class MainController {
 
-    @Autowired
-    private MainService mainService;
-    @Autowired
-    private ManagerService managerService;
-    @Autowired
-    private S3Service s3Service;
+    private final MainService mainService;
+    private final ManagerService managerService;
+    private final S3Service s3Service;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public MainController(MainService mainService, ManagerService managerService, S3Service s3Service) {
+        this.mainService = mainService;
+        this.managerService = managerService;
+        this.s3Service = s3Service;
+    }
 
     /* 메인페이지 */
     @GetMapping(value="/home")
