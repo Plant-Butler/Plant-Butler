@@ -154,7 +154,7 @@
         <hr>
         <div class="result-content">
             <div class="result-image">
-                <img src="${pageContext.request.contextPath}/diseases/bacterial_spot.jpg" alt="Image">
+                <img src="${pest.image}" alt="Image">
                 <p class="imagecaption">${pclass} 예시 이미지</p>
             </div>
             <div class="detail">

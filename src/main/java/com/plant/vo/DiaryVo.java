@@ -1,7 +1,10 @@
 package com.plant.vo;
 
+import io.swagger.annotations.ApiModel;
+
 import java.sql.Timestamp;
 
+@ApiModel(value="식물일기", description = "식물일기 id, 제목, 카테고리별 내용, 사진, 날짜 VO")
 public class DiaryVo {
 
     private int diaryId;

@@ -2,10 +2,14 @@ package com.plant.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.plant.service.*;
-import com.plant.vo.*;
+import com.plant.vo.CommentVo;
+import com.plant.vo.MyplantVo;
+import com.plant.vo.PostVo;
+import com.plant.vo.UserVo;
+import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,25 +26,29 @@ import java.net.URI;
 import java.sql.SQLException;
 import java.util.*;
 
-
 @RestController
 @RequestMapping("/community")
+@Api(tags = "커뮤니티 게시물 API")
 public class PostController {
 
-	@Autowired
-	private PostService postService;
-	@Autowired
-	private CommentService commentService;
-	@Autowired
-	private MainService mainService;
-	@Autowired
-	private UserService userService;
-	@Autowired
-	private S3Service s3Service;
+	private final PostService postService;
+	private final CommentService commentService;
+	private final MainService mainService;
+	private final UserService userService;
+	private final S3Service s3Service;
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+	public PostController(PostService postService, CommentService commentService, MainService mainService, UserService userService, S3Service s3Service) {
+		this.postService = postService;
+		this.commentService = commentService;
+		this.mainService = mainService;
+		this.userService = userService;
+		this.s3Service = s3Service;
+	}
 
 	/* 게시물 상세보기 */
 	@GetMapping("/{postId}")
+	@Operation(summary = "게시물 상세보기", description = "커뮤니티에 작성된 게시물을 상세 조회합니다.")
 	public ModelAndView postDetail(@PathVariable int postId,
 								   @RequestParam(defaultValue = "1")Integer pageNum, @RequestParam(defaultValue = "15") Integer pageSize) {
 		ModelAndView mv = new ModelAndView("/community/postDetail");
@@ -104,12 +112,14 @@ public class PostController {
 
     /* 첨부파일 다운로드 */
 	@GetMapping("/download/{postId}/{oriFileName}")
+	@Operation(summary = "첨부파일 다운로드", description = "게시물 상세조회 시 첨부된 파일을 다운로드합니다.")
 	public ResponseEntity<byte[]> download(@PathVariable int postId, @PathVariable String oriFileName) throws IOException {
 		return s3Service.getObject(oriFileName, "post", postId);
 	}
 
 	/* 게시물 신고 */
 	@PatchMapping("/{postId}")
+	@Operation(summary = "게시물 신고", description = "로그인 유저가 커뮤니티에 작성된 게시물을 신고합니다.")
 	public ResponseEntity declarePost(@PathVariable int postId) {
 		boolean flag = postService.declarePost(postId);
 
@@ -123,6 +133,7 @@ public class PostController {
 
 	/* 새로운 게시물 등록 폼 */
 	@GetMapping("/form")
+	@Operation(summary = "게시물 작성 폼 오픈", description = "로그인 유저가 게시물 작성을 위해 작성폼을 엽니다.")
 	public ModelAndView newform() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVo user = (UserVo) authentication.getPrincipal();
@@ -134,6 +145,7 @@ public class PostController {
 
 	/* 새로운 게시물 등록 */
 	@PostMapping("/form")
+	@Operation(summary = "게시물 작성", description = "로그인 유저가 이미지, 첨부파일 등을 포함한 게시물을 작성합니다.")
 	public ResponseEntity<String> upload(
 			@ModelAttribute("post") PostVo post,
 			@RequestParam(value="postMultiImage", required=false) List<MultipartFile> images,
@@ -207,6 +219,7 @@ public class PostController {
 
 	/* 게시물 수정 폼 */
 	@GetMapping("/form/{postId}")
+	@Operation(summary = "게시물 수정 폼 오픈", description = "로그인 유저가 게시물 수정을 위해 수정폼을 엽니다.")
 	public ModelAndView updateForm(@PathVariable int postId) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVo user = (UserVo) authentication.getPrincipal();
@@ -234,6 +247,7 @@ public class PostController {
 
 	/* 게시물 수정 */
 	@PutMapping("/{postId}")
+	@Operation(summary = "게시물 수정", description = "로그인 유저가 제목, 내용, 이미지, 첨부파일을 포함한 게시물을 수정합니다.")
 	public ResponseEntity<String> update(
 			@PathVariable int postId,
 			@ModelAttribute PostVo post,
@@ -295,6 +309,7 @@ public class PostController {
 
 	/* 게시물 삭제 */
 	@DeleteMapping(value="/{postId}")
+	@Operation(summary = "게시물 삭제", description = "로그인 유저가 자신의 게시물을 삭제합니다.")
 	public ResponseEntity<Void> remove(@RequestParam("postId") int postId) {
 		logger.info("게시글 삭제 postId = " +  postId);
 		boolean flag1 = postService.removeItemMP(postId);
@@ -308,6 +323,7 @@ public class PostController {
 
 	/* 내 식물 리스트 보여주기 */
 	@GetMapping(value="/plantall")
+	@Operation(summary = "게시물 작성 시 내 식물 리스트", description = "로그인 유저가 게시물 작성 시 첨부할 내 식물 리스트를 가져옵니다.")
 	public ResponseEntity<List<MyplantVo>> plantall(@RequestParam("userId") String userId) {
 		List<MyplantVo> plantList = postService.plantall(userId);
 		List<MyplantVo> resultList = new ArrayList<>();
@@ -323,6 +339,7 @@ public class PostController {
 
 	/* 게시물 좋아요 */
 	@PostMapping(value="/{postId}/heart")
+	@Operation(summary = "게시물 좋아요", description = "로그인 유저가 게시물에 좋아요를 추가합니다.")
 	public ResponseEntity<String> addHeart(@PathVariable int postId, HttpSession session) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserVo user = (UserVo) authentication.getPrincipal();

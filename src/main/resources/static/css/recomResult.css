@@ -8,6 +8,11 @@
         font-family: 'KimjungchulGothic-Bold';
     }
 
+    .plantDataImg {
+        width: 300px;
+        height: 400px;
+    }
+
     #mainheader {
         display: block;
     }

@@ -5,10 +5,13 @@ import com.plant.service.DiaryService;
 import com.plant.service.PostService;
 import com.plant.service.S3Service;
 import com.plant.service.UserService;
-import com.plant.vo.*;
+import com.plant.vo.DiaryVo;
+import com.plant.vo.MyplantVo;
+import com.plant.vo.ScheduleVo;
+import com.plant.vo.UserVo;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,18 +30,21 @@ import java.util.StringTokenizer;
 
 @RestController
 @RequestMapping("/diaries")
+@Api(tags = "식물일기 API")
 public class DiaryController {
 
-    @Autowired
-    private DiaryService diaryService;
-    @Autowired
-    private PostService postService;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private S3Service s3Service;
+    private final DiaryService diaryService;
+    private final PostService postService;
+    private final UserService userService;
+    private final S3Service s3Service;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    public DiaryController(DiaryService diaryService, PostService postService, UserService userService, S3Service s3Service) {
+        this.diaryService = diaryService;
+        this.postService = postService;
+        this.userService = userService;
+        this.s3Service = s3Service;
+    }
 
     /* 전체 식물일기 조회 */
     @GetMapping(value="")

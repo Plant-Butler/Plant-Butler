@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="/css/login.css">
     <meta charset="UTF-8">
     <title>로그인</title>
-    <script type="module" src="/js/mainscript.js"></script>
+    <script type="module" src="/js/obfuscate/mainscriptObfus.js"></script>
     <%@ include file="../main/header.jsp" %>
     <script>
         var csrfToken = '${_csrf.token}';

@@ -1,10 +1,10 @@
 package com.plant.vo;
+
+import io.swagger.annotations.ApiModel;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Collection;
-
+@ApiModel(value="웹푸시 토큰", description = "관리기록 웹푸시 토큰 VO")
 @Document(collection = "tokens")
 public class TokenVo {
 

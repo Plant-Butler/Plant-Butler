@@ -4,6 +4,7 @@ import com.plant.service.CustomUserDetailsService;
 import com.plant.service.UserService;
 import com.plant.vo.TokenVo;
 import com.plant.vo.UserVo;
+import io.swagger.annotations.Api;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("")
+@Api(tags = "사용자 서비스 API")
 public class UserController {
 
 

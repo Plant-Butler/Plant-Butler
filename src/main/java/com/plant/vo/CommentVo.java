@@ -1,7 +1,10 @@
 package com.plant.vo;
 
+import io.swagger.annotations.ApiModel;
+
 import java.sql.Timestamp;
 
+@ApiModel(value="댓글", description = "커뮤니티 게시물에 작성한 댓글 VO")
 public class CommentVo {
 
     private int commentId;

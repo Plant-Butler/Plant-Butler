@@ -1,4 +1,8 @@
 package com.plant.vo;
+
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(value="식물데이터", description = "공공 식물데이터 상세정보 VO")
 public class PlantVo {
     private int plant_id;
     private String plntbneNm;

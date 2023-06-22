@@ -1,19 +1,15 @@
 package com.plant.service;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-import com.plant.dao.CommentMapper;
 import com.plant.dao.DiagnosisMapper;
 import com.plant.vo.DiseaseVo;
 import com.plant.vo.PestVo;
 import com.plant.vo.PostVo;
+import com.plant.vo.PestVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 @Service
 public class DiagnosisService {

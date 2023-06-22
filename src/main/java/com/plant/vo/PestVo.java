@@ -1,5 +1,8 @@
 package com.plant.vo;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(value="병해충", description = "병해충 진단페이지에서 출력할 병해충 id, 사진, 상세정보, 해결법 VO")
 public class PestVo {
 
     private int pestId;
