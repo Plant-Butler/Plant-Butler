@@ -53,7 +53,6 @@ public class PlantController {
         UserVo user = (UserVo) authentication.getPrincipal();
         String userId = user.getUserId();
         ModelAndView model = new ModelAndView();
-        ArrayList<MyplantVo> plantList = myPlantService.MyPlantList(userId); //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
         ArrayList<MyplantVo> plantList = null; //세션에서 얻은 유저의 아이디를 통해 해당 유저의 식물 목록 불러오기
         try {
             plantList = myPlantService.myPlantList(userId);

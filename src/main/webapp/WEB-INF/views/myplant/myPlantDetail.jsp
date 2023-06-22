@@ -36,9 +36,10 @@
     <div>
         <div class="swiper">
             <!-- Additional required wrapper -->
+            <input class="upload_img input-editable" type="file" id="myplantImagesInput" name="myplantImages" style="display:none;" multiple>
             <div class="swiper-wrapper">
-                <c:forEach var="image" items="${fn:split(myPlant.myplantImage, ',')}">
-                    <div class="swiper-slide"><p><img id="slide-image" src="/uploads/${image}"></p></div>
+                <c:forEach var="image" items="${imageUrls}">
+                    <div class="swiper-slide"><p><img id="slide-image" src="${image}" ></p></div>
                 </c:forEach>
             </div>
             <!-- If we need pagination -->
@@ -97,73 +98,6 @@
             <div id="plantdetail2"
                  style="display: flex; flex-wrap: wrap; border: 1px solid #000; border-top: 1px solid rgba(0, 0, 0, 0.1); border-left: 1px solid rgba(0, 0, 0, 0); border-right: 1px solid rgba(0, 0, 0, 0); border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
 </div>
-<div>
-<div class="swiper">
-    <!-- Additional required wrapper -->
-    <input class="upload_img input-editable" type="file" id="myplantImagesInput" name="myplantImages" style="display:none;" multiple>
-    <div class="swiper-wrapper" >
-        <c:forEach var="image" items="${imageUrls}">
-            <div class="swiper-slide"><p><img id="slide-image" src="${image}" ></p></div>
-        </c:forEach>
-    </div>
-    <!-- If we need pagination -->
-    <div class="swiper-pagination"></div>
-    <!-- If we need navigation buttons -->
-    <div class="swiper-button-prev"></div>
-    <div class="swiper-button-next"></div>
-    <!-- If we need scrollbar -->
-    <div class="swiper-scrollbar"></div>
-</div>
-<div id="myplantContainer" style=" margin-left: 500px;">
-    <p name="myplantFirstDate" id="myplantFirstDate">${plant.distbNm} ${plant.plntbneNm}</p>
-    <p>${myPlant.firstDate}</p>
-        <p class="editable" name="myplantNick">${myPlant.myplantNick}</p>
-        <p><input type="text" class="input-editable" name="myplantNick" value="${myPlant.myplantNick}" style="display:none;"></p>
-        <p name="plant">${plant.fncltyInfo}</p>
-        <div style="display: flex; flex-wrap: wrap; border: 1px solid #000; border-top: 1px solid rgba(0, 0, 0, 0.1); border-left: 1px solid rgba(0, 0, 0, 0); border-right: 1px solid rgba(0, 0, 0, 0); border-bottom: 1px solid rgba(0, 0, 0, 0.2); margin-top: 50px; margin-bottom: 50px">
-            <div style="width: 50%;">
-                <c:choose>
-                    <c:when test="${myPlant.myplantPot==1}">
-                        <p class="editable" name="myplantPot">원통형 화분</p>
-                    </c:when>
-                    <c:otherwise>
-                        <p class="editable" name="myplantPot">사각형 화분</p>
-                    </c:otherwise>
-                </c:choose>
-                <input type="radio" class="input-editable" id="cylinder" name="myplantPot" value="1" style="display:none;">
-                <label class="input-editable" for="cylinder" style="display:none;">원통형 화분</label>
-                <input type="radio" class="input-editable" id="rectangle" name="myplantPot" value="2" style="display:none;">
-                <label class="input-editable" for="rectangle" style="display:none;">사각형 화분</label>
-            </div>
-            <div style="width: 50%;">
-                <p class="editable" name="myplantLength">화분 높이 : ${myPlant.myplantLength}cm</p>
-                <div class="input-editable" style="display:none;">
-                    <p>화분 높이 :<input type="text" name="myplantLength" value="${myPlant.myplantLength}"></p>
-                </div>
-            </div>
-            <div style="width: 50%;">
-                <p><span id="radius1Label">화분 밑 지름 : </span><span class="editable" name="myplantRadius1">${myPlant.myplantRadius1}cm</span></p>
-                <input type="text" class="input-editable" name="myplantRadius1" value="${myPlant.myplantRadius1}" style="display:none;">
-            </div>
-            <div style="width: 50%;">
-                <p><span id="radius2Label">화분 윗 지름 : </span><span class="editable" name="myplantRadius2">${myPlant.myplantRadius2}cm</span></p>
-                <input type="text" class="input-editable" name="myplantRadius2" value="${myPlant.myplantRadius2}" style="display:none;">
-            </div>
-        </div>
-            <div id ="plantdetail2" style="display: flex; flex-wrap: wrap; border: 1px solid #000; border-top: 1px solid rgba(0, 0, 0, 0.1); border-left: 1px solid rgba(0, 0, 0, 0); border-right: 1px solid rgba(0, 0, 0, 0); border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
-                <div style="width: 50%;">
-                    <p name="plant"><span class="highlight">생육온도</span><br>${plant.grwhTpCodeNm}가 적당해요</p>
-                </div>
-                <div style="width: 50%;">
-                    <p name="plant"><span class="highlight">키우기 난이도</span><br>${plant.managedemanddoCodeNm}</p>
-                </div>
-                <div style="width: 50%;">
-                    <p name="plant"><span class="highlight">적정습도</span><br>${plant.hdCodeNm}</p>
-                </div>
-                <div style="width: 50%;">
-                    <p name="plant"><span class="highlight">비료요구도</span><br>${plant.frtlzrInfo}</p>
-                </div>
-            </div>
         </div>
         <h1 id="detailTitle">자세히 알아보기</h1>
         <div>

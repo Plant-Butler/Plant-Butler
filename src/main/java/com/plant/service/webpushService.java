@@ -24,15 +24,17 @@ public class webpushService {
     private final TaskScheduler taskScheduler;
 
     private final ScheduleService scheduleService;
+    private final TokenRepository tokenRepository;
 
     private Map<String, ScheduledFuture<?>> scheduledTasks = new HashMap<>();
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public webpushService(TaskScheduler taskScheduler , UserService userService, MyPlantService myPlantService, ScheduleService scheduleService) {
+    public webpushService(TaskScheduler taskScheduler , TokenRepository tokenRepository, UserService userService, MyPlantService myPlantService, ScheduleService scheduleService) {
         this.taskScheduler = taskScheduler;
         this.userService = userService;
         this.myPlantService = myPlantService;
         this.scheduleService = scheduleService;
+        this.tokenRepository = tokenRepository;
     }
 
     public void scheduleTask(int myplantId,String water, String cronExpression,String[] token) {
@@ -76,13 +78,15 @@ public class webpushService {
                     .setToken(token)
                     .build();
             try {
+                logger.info("message:" + message.toString());
                 String response = FirebaseMessaging.getInstance().send(message);
-                System.out.println("Successfully sent message: " + response);
+                logger.info("Successfully sent message: " + response);
             } catch (FirebaseMessagingException e) {
-                System.err.println("Failed to send message to token: " + token);
-                e.printStackTrace();
+                logger.info("Failed to send message to token: " + token);
+                logger.error(e.getMessage(), e);
                 try {
-                    userService.deleteToken(token);
+                    TokenVo tokenVo = tokenRepository.findByTokenNum(token);
+                    tokenRepository.delete(tokenVo);
                     System.out.println("Deleted invalid token: " + token);
                 } catch (Exception ex) {
                     System.err.println("Failed to delete token: " + token);
@@ -91,7 +95,6 @@ public class webpushService {
             }
         }
     }
-
     private void doScheduledTask2(String[] tokens) {
         for(String token : tokens) {
             Message message = Message.builder()

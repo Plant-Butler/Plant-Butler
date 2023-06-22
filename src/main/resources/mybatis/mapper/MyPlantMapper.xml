@@ -20,6 +20,8 @@
         <result column="webpush_time" property="webPushTime"/>
         <result column="webpush_date2" property="webPushDate2"/>
         <result column="webpush_time2" property="webPushTime2"/>
+        <result column="webpush_date3" property="webPushDate3"/>
+        <result column="webpush_time3" property="webPushTime3"/>
 
     </resultMap>
 

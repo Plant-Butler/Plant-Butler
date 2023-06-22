@@ -151,10 +151,10 @@
                     </div>
                         <div class="b1">${plant.distbNm}</div>
                         <div class="b2">${plant.clCodeNm}</div>
-                        <div class="b3"><c:if test="${empty plant.frtlzrInfo}"> - </c:if> ${plant.frtlzrInfo}</div>
-                        <div class="b4"><c:if test="${empty plant.soilInfo}"> - </c:if> ${plant.soilInfo}</div>
+                        <div class="b3">비료 주기 : ${plant.frtlzrInfo}</div>
+                        <div class="b4"><c:if test="${empty plant.soilInfo}"> - </c:if>적합한 토양 : ${plant.soilInfo}</div>
                         <div class="b5">${plant.adviseInfo}</div>
-                        <div class="b6">${plant.managelevelCodeNm}</div>
+                        <div class="b6">키우기 난이도 : ${plant.managelevelCodeNm}</div>
                         <div class="b7"><c:if test="${empty plant.speclmanageInfo}"> - </c:if> ${plant.speclmanageInfo}</div>
                         <div class="b8">${plant.fncltyInfo}</div>
                 </div>

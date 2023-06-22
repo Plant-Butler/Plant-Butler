@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.plant.dao.CommentMapper;
 import com.plant.dao.DiagnosisMapper;
 import com.plant.vo.DiseaseVo;
+import com.plant.vo.PestVo;
 import com.plant.vo.PostVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,14 +38,14 @@ public class DiagnosisService {
     }
 
     /* 해충 상세조회 */
-    public DiseaseVo pestInfo(String predictedClass) {
-        DiseaseVo diseaseVo = null;
+    public PestVo pestInfo(String predictedClass) {
+        PestVo pestVo = null;
         try {
-            diseaseVo = diagnosisMapper.pestDetail(predictedClass);
+            pestVo = diagnosisMapper.pestDetail(predictedClass);
         } catch (SQLException e) {
 
         }
-        return diseaseVo;
+        return pestVo;
     }
 
 }

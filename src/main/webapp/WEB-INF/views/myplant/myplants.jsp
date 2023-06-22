@@ -154,7 +154,7 @@
             <div class="card-body">
                 <div class="card-body-header" style="display: flex;">
                     <div style="width: 150px">
-                    <h1 style="width:150px">${list.myplantNick}</h1>
+                    <h1 style="width:250px">${list.myplantNick}</h1>
                     <p class = "card-body-nickname" style="width: 150px">분양일 : ${list.firstDate}</p>
                     </div>
                     <div style="width: 150px; display: flex; justify-content: flex-end;">

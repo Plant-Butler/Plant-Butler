@@ -78,7 +78,7 @@
               resultHtml += "<td>" + plantName + "</td>";
               resultHtml += "<td>" + fmlCodeNm + "</td>";
               resultHtml += "<td>" + adviseInfo + "</td>";
-              resultHtml += "<td><button type='button' value='" + plantId + "' onclick='window.opener.insertValue(this.value)'>선택하기</button></td>";
+              resultHtml += "<td><button type='button' value='" + plantId + "'onclick='window.opener.insertValue(this.value)'>선택하기</button></td>";
               resultHtml += "</tr>";
             }
             resultHtml += "</table>";
@@ -246,7 +246,7 @@
     <table style="margin-bottom: 20px; width: 100%;">
       <tr>
         <td style="padding: 10px;">내식물 검색하기 : </td>
-        <td style="padding: 10px; padding-left: 90px;"><input type="text" class ="custom-input" name="name" id="searchInput" required></td>
+        <td style="padding: 10px; padding-left: 90px;"><input type="text" class ="custom-input" name="name" id="searchInput" required ></td>
         <td style="padding: 10px; margin-left: 50px;"><button type="button" class="detailBtn custom-input" onclick="printDetail()">검색</button></td>
       </tr>
     </table>
@@ -262,7 +262,7 @@
       </tr>
     <tr>
       <td style="padding: 10px;">식물닉네임 :</td>
-      <td style="padding: 10px;"><input class ="custom-input" type="text" name="myplantNick" required></td>
+      <td style="padding: 10px;"><input class ="custom-input" type="text" name="myplantNick" required maxlength="10"></td>
       <td></td>
     </tr>
     <tr>
@@ -315,7 +315,8 @@
 </body>
 <script>
   const radioButtons = document.querySelectorAll('.flowerpot');
-  const diameter1Unit = document.getElementById('diameter1-unit');
+  const diameter1Unit = document.getElementById('d' +
+          'iameter1-unit');
   const diameter2Unit = document.getElementById('diameter2-unit');
 
   radioButtons.forEach(function(radioButton) {

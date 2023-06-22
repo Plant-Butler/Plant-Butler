@@ -180,6 +180,7 @@
         <br>
         <br>
         <p class="watertitle" style="text-align: center">가지치기</p>
+        <p class="information" style="text-align: center;">이 식물의 가지치기 알람 설정 주기는 ${myplantvo.webPushDate3}일 간격으로 ${myplantvo.webPushTime3}시에 울립니다</p>
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/><br>
         <h4 class="information" style="font-family: 'LINESeedKR-Bd', sans-serif; text-align: center;"><fmt:formatDate value="${now}"
           type="both"
@@ -193,7 +194,7 @@
             <button style="border: none;width: 120px; margin-left: 10px;  font-size : 15px; "class="options btn btn-primary" type="submit">알림 설정하기</button>
             <input hidden="hidden" name="cut" value="cut">
             <button style="border: none;width: 120px; margin-left: 10px;  font-size : 15px; "class="options btn btn-primary"
-                    onclick="deletePush(${myplantId})">알람 초기화
+                    onclick="deletePush(${myplantId},'cut')">알람 초기화
             </button>
             <input type="hidden" name="userId" value="${userId}">
             <br>

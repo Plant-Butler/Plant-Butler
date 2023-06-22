@@ -160,12 +160,12 @@
             <div class="detail">
                 <br>
                 <p class="detailtitle">상세 설명</p>
-                    <p class="result-detail">${disease.detail}</p>
+                    <p class="result-detail">${pest.detail}</p>
                 </div>
                 <div class="detail">
                  <br>
                 <p class="detailtitle">해결책/예방법</p>
-                    <p class="result-solution">${disease.solution}</p>
+                    <p class="result-solution">${pest.solution}</p>
                 </div>
             </div>
 

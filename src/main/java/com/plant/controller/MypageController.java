@@ -161,6 +161,8 @@ public class MypageController {
         ArrayList<PlantVo> recomPlantList = mypageService.myRecomList(userId);
         mv.addObject("recomPlantList", recomPlantList);
 
+
+
         return mv;
     }
 
