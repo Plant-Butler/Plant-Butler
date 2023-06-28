@@ -16,8 +16,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hahmlet&display=swap" rel="stylesheet">
 <style type="text/css">
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
     body {
-    font-family: 'Hahmlet', serif;
+    font-family: 'KimjungchulGothic-Bold';
     margin: 0;
     padding: 0;
     }
@@ -35,7 +41,7 @@
         color: #000000;
         text-align: center;
         margin-top: 100px; /* 수정된 부분 */
-        font-family: 'Hahmlet', serif;
+        font-family: 'KimjungchulGothic-Bold';
         margin-right: -20px;
     }
 
@@ -72,6 +78,7 @@
         height: auto;
         display: block;
         margin-left: auto;
+        border-radius: 10px;
         margin-right: auto;
     }
 
@@ -141,7 +148,7 @@
         border-radius: 4px;
      }
      .imagecaption{
-        font-family: 'Hahmlet', serif;
+         font-family: 'KimjungchulGothic-Bold';
      }
 </style>
 <body>
@@ -176,7 +183,7 @@
     </div>
 </section>
 
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
     <div class="container">
         <p class="m-0 small">Copyright &copy; Plantery 2023</p>
     </div>

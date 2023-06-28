@@ -30,6 +30,8 @@ public class MyplantVo {
 
     private int webPushDate2;
     private String webPushTime2;
+    private int webPushDate3;
+    private String webPushTime3;
 
 
 
@@ -39,7 +41,7 @@ public class MyplantVo {
 
     }
 
-    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantPot, int myplantLength, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate,int webPushDate,String webPushTime,int webPushDate2,String webPushTime2) {
+    public MyplantVo(int myplantId, int plantId, String userId, String myplantNick, String myplantImage, int myplantPot, int myplantLength, int myplantRadius1, int myplantRadius2, Date firstDate, int represent, long scheduleDate,int webPushDate,String webPushTime,int webPushDate2,String webPushTime2,int webPushDate3,String webPushTime3) {
         this.myplantId = myplantId;
         this.plantId = plantId;
         this.userId = userId;
@@ -56,6 +58,8 @@ public class MyplantVo {
         this.webPushTime = webPushTime;
         this.webPushDate2 =  webPushDate2;
         this.webPushTime2 = webPushTime2;
+        this.webPushDate3 =  webPushDate3;
+        this.webPushTime3 = webPushTime3;
     }
 
     public int getMyplantId() {
@@ -201,6 +205,21 @@ public class MyplantVo {
 
     public void setWebPushTime2(String webPushTime2) {
         this.webPushTime2 = webPushTime2;
+    }
+    public int getWebPushDate3() {
+        return webPushDate3;
+    }
+
+    public void setWebPushDate3(int webPushDate3) {
+        this.webPushDate3 = webPushDate3;
+    }
+
+    public String getWebPushTime3() {
+        return webPushTime3;
+    }
+
+    public void setWebPushTime3(String webPushTime3) {
+        this.webPushTime3 = webPushTime3;
     }
 
     @Override

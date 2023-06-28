@@ -22,11 +22,13 @@
         }
 
         table, tbody, td {
-            width:800px;
+            width:1000px;
             margin-left:auto;
             margin-right:auto;
         }
         .best-users {
+            margin-right: auto;
+            margin-left: auto;
           background-color: #f8f8f8; /* 배경색 지정 */
           text-align: center; /* 텍스트 가운데 정렬 */
           border-radius: 10px; /* 테두리 둥글게 처리 */
@@ -35,8 +37,11 @@
 
         /* 예시 스타일링 */
         .best-users {
+            width: 1200px;
           background-color: #f8f8f8;
           text-align: center;
+            margin-left: auto;
+            margin-right: auto;
           border-radius: 10px;
           padding: 20px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
@@ -44,6 +49,9 @@
           font-family: Arial, sans-serif; /* 폰트 지정 */
           font-size: 18px; /* 폰트 크기 지정 */
           color: #333; /* 텍스트 색상 지정 */
+        }
+        .best-user-table td{
+            width: 550px;
         }
         .bestusers{
         margin-top: 10px;
@@ -57,7 +65,7 @@
 <div class="content" style=" flex: 1;">
 <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
 <link rel="stylesheet" href="../css/mainStyle.css">
-<link rel="stylesheet" href="../css/styles2.css">
+<link rel="stylesheet" href="../css/styles.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script src="https://unpkg.com/typewriter-effect@latest/dist/core.js"></script>
@@ -66,7 +74,7 @@
 
 <section class="page-section clearfix" style="margin-top: 500px;">
     <div id="maintextdiv">
-        <p id="app"></p>
+        <p class ="app" id="app"></p>
     </div>
 
         <div class="video-container content">
@@ -82,7 +90,7 @@
                     <h2 class="section-heading mb-4">
                         <span class="section-heading-upper"></span>
                     </h2>
-                    <p class="mb-3" style="margin-top: 500px;">나의 성향 & 취향 & 환경을 모두 고려한 최적의<br>반려 식물은 무엇일까요?</p>
+                    <p class="mb-3" style="font-size: 60px; margin-top: 500px;">나의 성향 & 취향 & 환경을<br>모두 고려한 최적의<br>반려 식물은 무엇일까요?</p>
 
                     <i class="bi bi-arrow-up-right-square" onclick="location.href='/suggestions'"></i>
 
@@ -93,12 +101,12 @@
 
 
     <section class="page-section">
-        <div class="container content" style="margin-bottom:200px">
+        <div class="container content" style="margin-bottom:200px; margin-right: 400px;">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
                     <div class="best-users">
                         <h2 class="bestusers"> 이달의 우수회원 </h2>
-                        <table id="best-user-table" style="font-family: 'Hahmlet', serif; font-size: 25px">
+                        <table id="best-user-table" style="font-family: 'KimjungchulGothic-Bold'; font-size: 25px;">
                             <tbody></tbody>
                         </table>
                     </div>
@@ -153,13 +161,13 @@
         AOS.init();
     </script>
 </div>
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 100px; flex-shrink: 0;">
-    <div class="container">
-        <p class="m-0 small">© Plantery 2023</p>
-    </div>
-</footer>
 
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/main.js"></script>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px;">
+    <div class="container">
+        <p class="m-0 small">Copyright &copy; Plantery 2023</p>
+    </div>
+</footer>
 </body>
 </html>

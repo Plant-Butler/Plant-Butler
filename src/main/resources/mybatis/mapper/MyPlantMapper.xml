@@ -20,6 +20,8 @@
         <result column="webpush_time" property="webPushTime"/>
         <result column="webpush_date2" property="webPushDate2"/>
         <result column="webpush_time2" property="webPushTime2"/>
+        <result column="webpush_date3" property="webPushDate3"/>
+        <result column="webpush_time3" property="webPushTime3"/>
 
     </resultMap>
 
@@ -105,6 +107,10 @@
         update myplant set webpush_date2 = #{dayInput} , webpush_time2 = #{timeInput} where myplant_id=#{myplantId};
 
     </update>
+    <update id="insertWebPushData3">
+        update myplant set webpush_date3 = #{dayInput} , webpush_time3 = #{timeInput} where myplant_id=#{myplantId};
+
+    </update>
 
     <update id="point">
         UPDATE user_table
@@ -125,6 +131,11 @@
     <update id="deleleMyPlantSchedule2">
         UPDATE myplant
         SET webpush_date2 = NULL, webpush_time2 = NULL
+        WHERE myplant_id = #{myplantId};
+    </update>
+    <update id="deleleMyPlantSchedule3">
+        UPDATE myplant
+        SET webpush_date3 = NULL, webpush_time3 = NULL
         WHERE myplant_id = #{myplantId};
     </update>
 

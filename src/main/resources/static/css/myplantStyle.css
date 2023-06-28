@@ -1,10 +1,16 @@
+@font-face {
+    font-family: 'KimjungchulGothic-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+}
 body {
     margin-left: 5%;
     margin-right: 5%;
 }
 
 .ptyValueContainer{
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'KimjungchulGothic-Bold';
 }
 
 #insertplant {
@@ -19,7 +25,7 @@ table {
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
     float: right;
-    font-family: 'Nanum Gothic', sans-serif;
+    font-family: 'KimjungchulGothic-Bold';
     height: 800px;
 }
 
@@ -29,8 +35,7 @@ tr {
 }
 
 #dataContainer{
-    font-family: 'Nanum Gothic', sans-serif;
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'KimjungchulGothic-Bold';
     font-size: 30px;
     font-weight: bold;
     width: 800px;

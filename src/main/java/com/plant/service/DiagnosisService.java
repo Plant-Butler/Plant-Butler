@@ -3,6 +3,8 @@ package com.plant.service;
 import com.plant.dao.DiagnosisMapper;
 import com.plant.vo.DiseaseVo;
 import com.plant.vo.PestVo;
+import com.plant.vo.PostVo;
+import com.plant.vo.PestVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

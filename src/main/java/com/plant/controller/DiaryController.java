@@ -288,6 +288,17 @@ public class DiaryController {
     @DeleteMapping(value="/{diaryId}")
     public ResponseEntity<Boolean> removeDiary(@PathVariable int diaryId) {
         boolean flag = false;
+
+        // 기존 이미지 삭제
+        DiaryVo oriDiary = diaryService.getDiaryDetail(diaryId);
+        String imageList = oriDiary.getDiaryImage();
+        if(imageList != null) {
+            StringTokenizer oriImages = new StringTokenizer(imageList, ",");
+            while(oriImages.hasMoreTokens()) {
+                s3Service.delete(oriImages.nextToken(), "diary" , diaryId);
+            }
+        }
+
         flag = diaryService.removeDiary(diaryId);
 
         logger.info("[Diary Controller] removeDiary()");

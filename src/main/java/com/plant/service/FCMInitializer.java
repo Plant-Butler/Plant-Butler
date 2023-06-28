@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.util.TimeZone;
 
 @Service
 public class FCMInitializer {
@@ -32,7 +33,8 @@ public class FCMInitializer {
         try {
             ClassPathResource resource = new ClassPathResource("firebase/plant-butler-97f48-firebase-adminsdk-zj3ua-50d19b0665.json");
             InputStream serviceAccount = resource.getInputStream();
-
+            TimeZone.setDefault(TimeZone.getTimeZone("Asia/Seoul"));
+            System.out.println(TimeZone.getDefault());
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .setProjectId("plant-butler-97f48")

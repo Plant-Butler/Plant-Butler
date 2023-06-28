@@ -1,5 +1,12 @@
-     div, table {
-         font-family: 'Hahmlet', serif;
+
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
+    div, table {
+         font-family: 'KimjungchulGothic-Bold';
      }
 
     .td{
@@ -93,5 +100,16 @@
     .plantImg{
         margin-bottom: 20px;
     }
-     }
+
+    .updatecomment{
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-family: 'KimjungchulGothic-Bold';
+        border: none;
+    }
 

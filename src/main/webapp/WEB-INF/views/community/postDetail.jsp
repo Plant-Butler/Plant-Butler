@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -7,136 +7,193 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>커뮤니티</title>
-<%@ include file="../main/header.jsp" %>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script>
-    var csrfToken = "${_csrf.token}";
-    var csrfHeader="${_csrf.headerName}";
-</script>
+    <meta charset="UTF-8">
+    <title>커뮤니티</title>
+    <%@ include file="../main/header.jsp" %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script>
+        var csrfToken = "${_csrf.token}";
+        var csrfHeader="${_csrf.headerName}";
+    </script>
 </head>
-<body style="margin-top: 300px">
 <body style="text-align: center">
 <style>
-.commentitle{
-    font-size: 25px;
-    font-weight: bold;
-    font-weight: bold;
-}
-.inputsize {
-  width: 1000px;
-  height: 35px;
-  border-radius: 8px;
-  border: none;
-  border-bottom: 2px solid #D3D3D3;
-  outline: none;
-  margin-right: 20px;
-}
-.comment-form {
-  margin-bottom: 10px;
-}
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
+    .commentitle{
+        font-family: 'KimjungchulGothic-Bold';
+        font-size: 25px;
+        font-weight: bold;
+        font-weight: bold;
+    }
+    .inputsize {
+        width: 1000px;
+        height: 35px;
+        border-radius: 8px;
+        border: none;
+        border-bottom: 2px solid #D3D3D3;
+        outline: none;
+        margin-right: 20px;
+    }
+    .comment-form {
+        font-family: 'KimjungchulGothic-Bold';
+        margin-bottom: 10px;
+    }
 
-.heart{
-    margin-left: 400px;
-}
-.report {
-  background-color: #4CAF50;
-  color: #ffffff;
-  border: none;
-  padding: 5px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-}
+    .heart{
+        margin-left: 400px;
+    }
+    .report {
+        font-family: 'KimjungchulGothic-Bold';
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
 
-.report:hover {
-  background-color: #8BC34A;
-}
-.post-report{
-    background-color: #4CAF50;
-    color: #ffffff;
-    border: none;
-    padding: 5px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    margin-left: 20px;
-}
-.post-report:hover{
-    background-color: #8BC34A;
-}
-.comment-edit{
-    border: none;
-}
-.new-comment{
-    color: #000000;
-    border: none;
-    padding: 5px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    width: 200px;
-}
-.myplant-container{
-  width: 1000px; /* Adjust the width as per your requirement */
-  margin-left: 450px;
-  margin-right: 450px;
-  background: #e9f8f1;
-  border-radius: 10px;
-  padding: 20px;
-}
-.overall{
-    font-size: 15x;
-}
-.comment-width{
-    width: 1000px;
-}
-.commentlist-width{
-    width: 1000px;
-}
-.nickname {
-   padding-right: 10px;
-   color: green;
-}
+    .report:hover {
+        background-color: #8BC34A;
+    }
+    .post-report{
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-left: 20px;
+        font-family: 'KimjungchulGothic-Bold';
+    }
+    .post-report:hover{
+        background-color: #8BC34A;
+    }
+    .comment-edit{
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-family: 'KimjungchulGothic-Bold';
+        border: none;
+    }
+    .new-comment{
+        color: #000000;
+        border: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 200px;
+    }
+    .myplant-container{
+        width: 1000px; /* Adjust the width as per your requirement */
+        margin-left: 450px;
+        margin-right: 450px;
+        background: #e9f8f1;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    .overall{
+        font-family: 'KimjungchulGothic-Bold' !important;
+        font-size: 15px;
+    }
+    .comment-width{
+        width: 1000px;
+    }
+    .commentlist-width{
+        width: 1000px;
+        text-align: left;
+    }
+    .nickname {
+        padding-right: 10px;
+        color: green;
+    }
 
-.report-container{
-    margin-left: 700px;
-}
-.postupdate{
-  background-color: #4CAF50;
-  color: #ffffff;
-  border: none;
-  padding: 5px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-.postdelete{
-  background-color: #4CAF50;
-  color: #ffffff;
-  border: none;
-  padding: 5px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-}
-.contentimg{
-    width: 50%;
-}
-.postcontent{
-    max-width: 800px; /* 원하는 너비로 조정 */
-    margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
-    word-wrap: break-word;
-}
+    .report-container{
+        margin-left: 700px;
+    }
+    .postupdate{
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    .postdelete{
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+    .contentimg{
+        width: 50%;
+    }
+    .postcontent{
+        max-width: 800px; /* 원하는 너비로 조정 */
+        margin: 0 auto; /* 가운데 정렬을 위한 마진 설정 */
+        word-wrap: break-word;
+    }
+    .reportbox{
+        margin-left: 200px;
+        text-align: left;
+    }
+    .reportbox2{
+        text-align: right;
+    }
+    .reportbox button {
+        margin-left: 10px; /* 우측 간격을 10px로 설정 */
+    }
+    .reportbox2 button{
+        margin-left: 4px;
+    }
+    .comment-tr td {
+        padding: 10px;
+    }
+    .updatecinput{
+        width: 900px;
 
+    }
+    .updatecomment{
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-family: 'KimjungchulGothic-Bold';
+        border: none;
+    }
+    .myinfo{
+        font-family: 'KimjungchulGothic-Bold';
+        font-size: 19px;
+    }
+    .exfileupload{
+        font-family: 'KimjungchulGothic-Bold';
+        font-size: 17px;
+    }
 </style>
 
 <div class="about-section" style="margin-top: 300px">
 <table style="margin-left:auto;margin-right:auto;" width="1500" length="150">
-    <tr class="overall">
+    <tr class="overall" style="">
         <td>[분류] ${post.postTag}</td>
-        <td>[제목] ${post.postTitle}</td>
+        <td style="font-size: 25px;">[제목] ${post.postTitle}</td>
         <td>[닉네임] ${post.nickname}</td>
         <td>[조회수] ${post.readCount}</td>
         <td>[댓글] ${commentCount}</td>
@@ -160,9 +217,9 @@
                         </div>
                     </td>
                 </c:if>
-                <td>${myPlant.distbNm}</td>
-                <td>${myPlant.myplantNick}</td>
-                <td>
+                <td class="myinfo">${myPlant.distbNm}</td>
+                <td class="myinfo">${myPlant.myplantNick}</td>
+                <td class="myinfo">
                     <fmt:formatDate value="${myPlant.firstDate}" type="date"/>
                 </td>
             </tr>
@@ -196,7 +253,7 @@ ${post.postContent}
 <br>
 <br>
 <c:if test="${not empty post.postFile}">
-[첨부파일]
+    <span class="exfileupload">[첨부파일]</span>
     <a href="./download/${post.postId}/${post.postFile}">${post.postFile}</a>
 </c:if>
 <br>
@@ -232,47 +289,47 @@ ${post.postContent}
     <hr style="width: 70%;">
 </div><br>
     <h2 class="commentitle">댓글</h2>
-<table style="margin-left:auto;margin-right:auto;width:1500px;height:100px;">
-    <!-- 댓글 작성 -->
-    <c:if test="${not empty user.userId}">
-        <form action="./comment" method="post" modelAttribute="commentVo" class="comment-form">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-            <tr class="comment-width">
-                <td class="nickname">${user.nickname}</td>
-                <td><input class="inputsize" type="text" name="commentContent" id="inputComment" placeholder="댓글 입력"></td>
-                <td><input class="new-comment" type="submit" value="작성"></td>
-                <td>
-                    <input type="hidden" name="userId" value="${user.userId}">
-                    <input type="hidden" name="postId" value="${post.postId}">
-                </td>
-            </tr>
-        </form>
-    </c:if>
+    <table style="margin-left:auto;margin-right:auto;width:1580px;height:100px;">
+        <!-- 댓글 작성 -->
+        <c:if test="${not empty user.userId}">
+            <form action="./comment" method="post" modelAttribute="commentVo" class="comment-form">
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                <tr class="comment-width">
+                    <td class="nickname">${user.nickname}</td>
+                    <td><input class="inputsize" type="text" name="commentContent" id="inputComment" placeholder="댓글 입력"></td>
+                    <td><input class="new-comment" type="submit" value="작성"></td>
+                    <td>
+                        <input type="hidden" name="userId" value="${user.userId}">
+                        <input type="hidden" name="postId" value="${post.postId}">
+                    </td>
+                </tr>
+            </form>
+        </c:if>
 
-    <!-- 빈칸 -->
-    <tr>
-        <td colspan="4">&nbsp;</td>
-    </tr>
-
-    <!-- 댓글 목록 -->
-    <c:forEach var="comment" items="${commentList.list}">
+        <!-- 빈칸 -->
         <tr>
+            <td colspan="4">&nbsp;</td>
+        </tr>
+
+        <!-- 댓글 목록 -->
+        <c:forEach var="comment" items="${commentList.list}">
+            <tr class="comment-tr">
             <td>${comment.nickname}</td>
             <td class="commentlist-width"><span id="commentContent_${comment.commentId}">${comment.commentContent}</span></td>
-            <td>신고 ${comment.flag} <fmt:formatDate value="${comment.commentDate}" type="date" />
-                <c:if test="${not empty user.userId}">
-                    <button class="report" type="button" onclick="declare(${comment.commentId}, ${post.postId}, 1)">신고</button></td>
+            <td class="reportbox2">신고 ${comment.flag} <fmt:formatDate value="${comment.commentDate}" type="date" />
+            <c:if test="${not empty user.userId}">
+                <button class="report" type="button" onclick="declare(${comment.commentId}, ${post.postId}, 1)">신고</button></td>
                 <c:if test="${comment.userId eq user.userId}">
-                    <br><br>
-                    <td>
+                    <br>
+                    <td class="reportbox">
                         <button class="comment-edit" type="button" onclick="updateBox('${comment.commentContent}', ${comment.commentId}, ${post.postId})">수정</button>
                         <button class="comment-edit" type="button" onclick="del(${comment.commentId}, ${post.postId}, 1)">삭제</button>
                     </td>
                 </c:if>
-            </tr>
-        </c:if>
-    </c:forEach>
-</table>
+                </tr>
+            </c:if>
+        </c:forEach>
+    </table>
 </div>
 <br><br>
 <div>
@@ -297,8 +354,8 @@ ${post.postContent}
         <a href="/community/${post.postId}?pageNum=${commentList.navigateLastPage + 1}">▶</a>
     </c:if>
 </div><br><br><br>
-              <br>
-<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 200px; flex-shrink: 0;">
+<br>
+<footer class="footer text-faded text-center py-5" style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
     <div class="container">
         <p class="m-0 small">© Plantery 2023</p>
     </div>

@@ -38,16 +38,16 @@ public class ScheduleController {
 
 
     @Autowired
-    public ScheduleController(TokenRepository tokenRepository,ScheduleService scheduleService,MyPlantService myPlantService,webpushService webpush){
-        this.tokenRepository = tokenRepository;
+    public ScheduleController(ScheduleService scheduleService,MyPlantService myPlantService,webpushService webpush,TokenRepository tokenRepository){
         this.scheduleService = scheduleService;
         this.myPlantService = myPlantService;
         this.webpush = webpush;
+        this.tokenRepository = tokenRepository;
     }
 
     @GetMapping("")
     @Operation(summary = "내 식물 관리페이지 이동", description = "내 반려식물의 관리 페이지로 이동하여 과거 기록까지 조회")
-    @ApiImplicitParam(name="myplantId", value="내 식물 id값")
+    @ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path")
     public ModelAndView myPlantSchedule(@PathVariable Long myplantId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserVo userVo = (UserVo) authentication.getPrincipal();
@@ -88,7 +88,7 @@ public class ScheduleController {
     }
     @DeleteMapping("/{scheduleId}")
     @Operation(summary = "관리기록 삭제", description = "과거에 등록된 관리기록 삭제")
-    @ApiImplicitParam(name="scheduleId", value="내 식물 관리기록 id값")
+    @ApiImplicitParam(name="scheduleId", value="내 식물 관리기록 id값", paramType="path")
     public ResponseEntity deleteSchedule(@PathVariable int scheduleId){
         boolean flag = false;
         flag = scheduleService.deleteSchedule(scheduleId);
@@ -97,7 +97,7 @@ public class ScheduleController {
 
     @GetMapping("/form")
     @Operation(summary = "관리기록 추가 폼 열기", description = "관리기록(물, 영양제, 분갈이, 가치지기, 환기)을 등록하기 위한 폼 열기")
-    @ApiImplicitParam(name="myplantId", value="내 식물 id값")
+    @ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path")
     public ModelAndView getScheduleRegistForm(@PathVariable Long myplantId){
         ModelAndView model = new ModelAndView();
         model.setViewName("schedule/registSchedule");
@@ -106,7 +106,7 @@ public class ScheduleController {
     }
     @PostMapping("/form")
     @Operation(summary = "관리기록 추가 ", description = "오늘의 관리기록(물, 영양제, 분갈이, 가치지기, 환기)을 추가")
-    @ApiImplicitParam(name="ScheduleVo", value="내 식물 관리기록 VO")
+    @ApiImplicitParam(name="ScheduleVo", value="내 식물 관리기록 VO", paramType="query")
     public RedirectView registSchedule(@ModelAttribute ScheduleVo scheduleVo){
         boolean flag = false;
         flag = scheduleService.registSchedule(scheduleVo);
@@ -115,7 +115,7 @@ public class ScheduleController {
 
     @GetMapping("/push")
     @Operation(summary = "웹푸시 설정 페이지 이동", description = "웹푸시를 설정하는 페이지로 이동")
-    @ApiImplicitParam(name="myplantId", value="내 식물 id값")
+    @ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path")
     public ModelAndView pushPage(@PathVariable int myplantId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserVo userVo = (UserVo) authentication.getPrincipal();
@@ -132,11 +132,11 @@ public class ScheduleController {
 
     @PostMapping("/push")
     @Operation(summary = "물주기 웹푸시 설정", description = "물주기 웹푸시를 수신하기 위한 일정간격, 시간 설정")
-    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"),
-            @ApiImplicitParam(name="dayInput", value="물 주기 웹푸시 간격"),
-            @ApiImplicitParam(name="timeInput", value="물 주기 웹푸시 시간"),
-            @ApiImplicitParam(name="userId", value="로그인 유저 id"),
-            @ApiImplicitParam(name="water", value="물")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path"),
+            @ApiImplicitParam(name="dayInput", value="물 주기 웹푸시 간격", paramType="query"),
+            @ApiImplicitParam(name="timeInput", value="물 주기 웹푸시 시간", paramType="query"),
+            @ApiImplicitParam(name="userId", value="로그인 유저 id", paramType="query"),
+            @ApiImplicitParam(name="water", value="물", paramType="query")
     })
     public ModelAndView setpush(@PathVariable int myplantId, @RequestParam(value = "dayInput")int dayInput ,@RequestParam(value = "timeInput") String timeInput,@RequestParam("userId")String userId,@RequestParam("water")String water){
         String[] parts = timeInput.split(":");
@@ -156,18 +156,41 @@ public class ScheduleController {
     }
     @PostMapping("/push2")
     @Operation(summary = "영양제 웹푸시 설정", description = "영양제 웹푸시를 수신하기 위한 일정간격, 시간 설정")
-    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"),
-            @ApiImplicitParam(name="dayInput", value="물 주기 웹푸시 간격"),
-            @ApiImplicitParam(name="timeInput", value="물 주기 웹푸시 시간"),
-            @ApiImplicitParam(name="userId", value="로그인 유저 id"),
-            @ApiImplicitParam(name="drug", value="영양제")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path"),
+            @ApiImplicitParam(name="dayInput", value="물 주기 웹푸시 간격", paramType="query"),
+            @ApiImplicitParam(name="timeInput", value="물 주기 웹푸시 시간", paramType="query"),
+            @ApiImplicitParam(name="userId", value="로그인 유저 id", paramType="query"),
+            @ApiImplicitParam(name="drug", value="영양제", paramType="query")
     })
     public ModelAndView setpush2(@PathVariable int myplantId, @RequestParam(value = "dayInput")int dayInput ,@RequestParam(value = "timeInput") String timeInput,@RequestParam("userId")String userId,@RequestParam("drug")String drug){
         String[] parts = timeInput.split(":");
         String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
-        String[] token = scheduleService.getToken(userId);
-        webpush.scheduleTask2(myplantId,drug,cronExpression,token);
+        List<TokenVo> tokenObjects = tokenRepository.findByUserId(userId);
+        String[] tokens = tokenObjects.stream()
+                .map(TokenVo::getTokenNum)  // 이 메서드는 TokenVo 객체에서 token 문자열을 가져오는 메서드입니다.
+                .toArray(String[]::new);
+        for(int i = 0; i<tokens.length; i++){
+            System.out.println(tokens[i]);
+        }
+        webpush.scheduleTask2(myplantId,drug,cronExpression,tokens);
         boolean flag = myPlantService.insertWebPushData2(myplantId,dayInput,timeInput);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/myplants/"+myplantId+"/schedule/push");
+        return mav;
+    }
+    @PostMapping("/push3")
+    public ModelAndView setpush3(@PathVariable int myplantId, @RequestParam(value = "dayInput")int dayInput ,@RequestParam(value = "timeInput") String timeInput,@RequestParam("userId")String userId,@RequestParam("cut")String cut){
+        String[] parts = timeInput.split(":");
+        String cronExpression = "0 " + parts[1] + " " + parts[0] + " */" + dayInput + " * ?";
+        List<TokenVo> tokenObjects = tokenRepository.findByUserId(userId);
+        String[] tokens = tokenObjects.stream()
+                .map(TokenVo::getTokenNum)  // 이 메서드는 TokenVo 객체에서 token 문자열을 가져오는 메서드입니다.
+                .toArray(String[]::new);
+        for(int i = 0; i<tokens.length; i++){
+            System.out.println(tokens[i]);
+        }
+        webpush.scheduleTask3(myplantId,cut,cronExpression,tokens);
+        boolean flag = myPlantService.insertWebPushData3(myplantId,dayInput,timeInput);
         ModelAndView mav = new ModelAndView();
         mav.setViewName("redirect:/myplants/"+myplantId+"/schedule/push");
         return mav;
@@ -176,16 +199,18 @@ public class ScheduleController {
 
     @DeleteMapping ("/push/delete/{alarmType}")
     @Operation(summary = "웹푸시 삭제", description = "과거에 설정해놓은 웹푸시 설정을 삭제하여 더는 수신하지 않음")
-    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"),
-            @ApiImplicitParam(name="alarmType", value="웹푸시 타입")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path"),
+            @ApiImplicitParam(name="alarmType", value="웹푸시 타입", paramType="path")
     })
     public ResponseEntity deletepush(@PathVariable("myplantId") int myplantId, @PathVariable("alarmType") String alarmType){
         String key = myplantId + "_" + alarmType;
         System.out.println(alarmType);
         if(alarmType.equals("water")){
         webpush.cancelTask(myplantId,key);}
-        else {
+        else if(alarmType.equals("drug")) {
             webpush.cancelTask2(myplantId,key);
+        } else {
+            webpush.cancelTask3(myplantId,key);
         }
         return ResponseEntity.ok().build();
     }

@@ -1,8 +1,14 @@
-  div, h1, h4, textarea {
-        font-family: 'Hahmlet', serif;
+    @font-face {
+        font-family: 'KimjungchulGothic-Bold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulGothic-Bold.woff2') format('woff2');
+        font-weight: 700;
+        font-style: normal;
+    }
+    div, h1, h4, textarea {
+      font-family: 'KimjungchulGothic-Bold';
     }
     .newdiarytitle{
-        font-family: 'Hahmlet', serif;
+        font-family: 'KimjungchulGothic-Bold';
         font-size: 3em;
         color: #000000;
         text-align: center;
@@ -67,7 +73,7 @@
       align-items: center;
       width: 1500px;
       margin: 0 auto;
-      font-family: Arial, sans-serif;
+        font-family: 'KimjungchulGothic-Bold';
     }
 
     .diary_wrapper {

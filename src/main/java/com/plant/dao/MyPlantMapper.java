@@ -34,12 +34,20 @@ public interface MyPlantMapper {
     boolean insertWebPushData(@Param("myplantId") int myplantId,@Param("dayInput") int dayInput, @Param("timeInput") String timeInput);
 
 	boolean insertWebPushData2(@Param("myplantId") int myplantId,@Param("dayInput") int dayInput, @Param("timeInput") String timeInput);
+	boolean insertWebPushData3(@Param("myplantId") int myplantId,@Param("dayInput") int dayInput, @Param("timeInput") String timeInput);
 
 	boolean point(long todayInDays);
 
     void deleleMyPlantSchedule(@Param("myplantId") int myplantId);
 
+
 	void deleleMyPlantSchedule2(@Param("myplantId") int myplantId);
 
+	void deleleMyPlantSchedule3(@Param("myplantId") int myplantId);
+
 	boolean insertFiles(MyplantVo myplantVo);
+
+
+
+
 }

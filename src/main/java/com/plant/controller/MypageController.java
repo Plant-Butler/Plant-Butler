@@ -168,6 +168,8 @@ public class MypageController {
 
         mv.addObject("recomPlantList", recomPlantList);
 
+
+
         return mv;
     }
 

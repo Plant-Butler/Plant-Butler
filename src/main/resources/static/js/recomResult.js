@@ -44,7 +44,7 @@
                         html1 += '<table class="item-table"><tr><td><img class="item-img card-img-top" src="' + data1.items[i].image + '"></td></tr>';
                         html1 += '<tr><td><ul class="list-group list-group-flush"><li class="list-group-item">' + data1.items[i].title + '</li>';
                         html1 += '<li class="list-group-item">' + data1.items[i].lprice + '원</li></ul></td></tr></table>';
-                        html1 += '<a class="btn btn-primary" href="' + data1.items[i].link + '">구매처로 이동</a>';
+                        html1 += '<a class="btn btn-primary" target="_blank" href="' + data1.items[i].link + '">구매처로 이동</a>';
                         html1 += '</div></div>';
                     }
                     plant_shop.innerHTML = html1;
@@ -61,7 +61,7 @@
                         html2 += '<table class="item-table"><tr><td><img class="item-img" src="' + data2.items[i].image + '"></td></tr>';
                         html2 += '<tr><td><ul class="list-group list-group-flush"><li class="list-group-item">' + data2.items[i].title + '</li>';
                         html2 += '<li class="list-group-item">' + data2.items[i].lprice + '원</li></ul></td></tr></table>';
-                        html2 += '<a class="btn btn-primary" href="' + data2.items[i].link + '">구매처로 이동</a>';
+                        html2 += '<a class="btn btn-primary" target="_blank" href="' + data2.items[i].link + '">구매처로 이동</a>';
                         html2 += '</div></div>';
                     }
                     soil_shop.innerHTML = html2;
@@ -78,7 +78,7 @@
                         html3 += '<table class="item-table"><tr><td><a href="' + data3.items[i].link + '"><img class="item-img" src="' + data3.items[i].image + '"></a></td></tr>';
                         html3 += '<tr><td><ul class="list-group list-group-flush"><li class="list-group-item">' + data3.items[i].title + '</li>';
                         html3 += '<li class="list-group-item">' + data3.items[i].lprice + '원</li></ul></td></tr></table>';
-                        html3 += '<a class="btn btn-primary" href="' + data3.items[i].link + '">구매처로 이동</a>';
+                        html3 += '<a class="btn btn-primary" target="_blank" href="' + data3.items[i].link + '">구매처로 이동</a>';
                         html3 += '</div></div>';
                     }
                     pot_shop.innerHTML = html3;
