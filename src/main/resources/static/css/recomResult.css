@@ -4,6 +4,11 @@
         font-weight: 700;
         font-style: normal;
     }
+
+    .table-success {
+        width: 150px;
+    }
+
     div, table, h1, h2 {
         font-family: 'KimjungchulGothic-Bold';
     }
@@ -99,8 +104,7 @@
     .table {
         background-color: white;
         border-radius: 20px;
-        width: 95%;
-        padding: 10px;
+
         font-size: 17px;
     }
 

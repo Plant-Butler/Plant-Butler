@@ -83,9 +83,14 @@ $(document).ready(function () {
         if ($(this).val() === "1") {
             $("#radius1Label").text("내 화분 밑 지름 : ");
             $("#radius2Label").text("내 화분 윗 지름 : ");
+            $(".test1").text("화분 윗 지름 : ")
+            $(".test2").text("화분 밑 지름 : ")
         } else {
             $("#radius1Label").text("내 화분 가로 : ");
             $("#radius2Label").text("내 화분 세로 : ");
+            $(".test1").text("화분 가로 : ")
+            $(".test2").text("화분 세로 : " +
+                "")
         }
     });
 });

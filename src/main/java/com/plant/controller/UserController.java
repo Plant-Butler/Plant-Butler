@@ -1,6 +1,7 @@
 package com.plant.controller;
 
 import com.plant.service.CustomUserDetailsService;
+import com.plant.service.TokenRepository;
 import com.plant.service.UserService;
 import com.plant.vo.TokenVo;
 import com.plant.vo.UserVo;
@@ -35,12 +36,15 @@ public class UserController {
 
 	private final PasswordEncoder passwordEncoder;
 
+	private final TokenRepository tokenRepository;
+
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-	public  UserController(UserService userService,CustomUserDetailsService detailService,PasswordEncoder passwordEncoder){
+	public  UserController(UserService userService,CustomUserDetailsService detailService,PasswordEncoder passwordEncoder,TokenRepository tokenRepository){
 		this.userService = userService;
 		this.detailService = detailService;
 		this.passwordEncoder = passwordEncoder;
+		this.tokenRepository = tokenRepository;
 	}
 
 	/* 회원가입 폼 */
@@ -59,7 +63,11 @@ public class UserController {
 		TokenVo tokenvo = new TokenVo();
 		boolean flag = userService.regist(user);
 		String userId = user.getUserId();
-		boolean flag2 = userService.saveToken(token,userId);
+		logger.info("유저 아이디: {}", userId);
+		logger.info("토큰: {}", token);
+		tokenvo.setUserId(userId);
+		tokenvo.setTokenNum(token);
+		tokenRepository.save(tokenvo);
 		logger.info("회원가입");
 		if (flag) {
 			URI location = ServletUriComponentsBuilder.fromCurrentContextPath().path("/loginPage").build().toUri();
@@ -151,12 +159,10 @@ public class UserController {
 
 	@PostMapping("/token")
 	public ResponseEntity<Void> getToken(@RequestParam String userId,@RequestParam String token){
-		boolean search = userService.findToken(token);
 		TokenVo tokenvo = new TokenVo();
-		System.out.println(search);
-		if(search==false) {
-			boolean flag = userService.saveToken(token, userId);
-		}
+			tokenvo.setTokenNum(token);
+			tokenvo.setUserId(userId);
+			tokenRepository.save(tokenvo);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

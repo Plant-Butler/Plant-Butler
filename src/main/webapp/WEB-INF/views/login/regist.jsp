@@ -5,6 +5,8 @@
    pageEncoding="UTF-8"%>
 <%@ page import="java.util.regex.Pattern" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,7 +104,7 @@
              </section>
              </table>
          </form>
-   <script type="module" src="/js/obfuscate/registTokenObfus.js"></script>
+   <script type="module" src="/js/registToken.js"></script>
       <script src="./js/regist.js"></script>
 
 </body>

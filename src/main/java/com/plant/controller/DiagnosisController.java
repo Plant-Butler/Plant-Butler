@@ -51,8 +51,8 @@ public class DiagnosisController {
     /* 이미지 전송 & 결과 디스플레이 */
     @PostMapping(value = "/result")
     @Operation(summary = "식물병 진단AI 실행 및 진단결과 출력", description = "식물병 진단 모델 실행 및 진단결과와 해결법 확인")
-    @ApiImplicitParam(name="image", value="식물병 이미지")
-    public ModelAndView uploadImage(@RequestParam("image") MultipartFile file, RedirectAttributes redirectAttributes) {
+    @ApiImplicitParam(name="image", value="식물병 이미지", paramType = "query")
+    public ModelAndView uploadImage(@RequestParam("image") MultipartFile image, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("/diagnosis/result");
 
         if (image != null && !image.isEmpty()) {
@@ -143,6 +143,8 @@ public class DiagnosisController {
 
             // 예시 이미지
             String imageUrl = s3Service.getUrlwithFolder("diagnosis", predictedClass);
+            System.out.println("predictedClass = " + predictedClass);
+            System.out.println("imageUrl = " + imageUrl);
             diseaseVo.setImage(imageUrl);
 
             mv.addObject("disease", diseaseVo);
@@ -166,8 +168,8 @@ public class DiagnosisController {
     /* 해충 이미지 전송 & 결과 디스플레이 */
     @PostMapping(value = "/pest/result")
     @Operation(summary = "병해충 진단AI 실행 및 진단결과 출력", description = "병해충 진단 모델 실행 및 진단결과와 해결법 확인")
-    @ApiImplicitParam(name="image2", value="병해충 이미지")
-    public ModelAndView uploadpestimage(@RequestParam("image2") MultipartFile file, RedirectAttributes redirectAttributes) {
+    @ApiImplicitParam(name="image2", value="병해충 이미지", paramType = "query")
+    public ModelAndView uploadpestimage(@RequestParam("image2") MultipartFile image, RedirectAttributes redirectAttributes) {
         ModelAndView mv = new ModelAndView("/diagnosis/pestresult");
         if (image != null && !image.isEmpty()) {
             try {

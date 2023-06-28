@@ -22,11 +22,13 @@
         }
 
         table, tbody, td {
-            width:800px;
+            width:1000px;
             margin-left:auto;
             margin-right:auto;
         }
         .best-users {
+            margin-right: auto;
+            margin-left: auto;
           background-color: #f8f8f8; /* 배경색 지정 */
           text-align: center; /* 텍스트 가운데 정렬 */
           border-radius: 10px; /* 테두리 둥글게 처리 */
@@ -35,8 +37,11 @@
 
         /* 예시 스타일링 */
         .best-users {
+            width: 1200px;
           background-color: #f8f8f8;
           text-align: center;
+            margin-left: auto;
+            margin-right: auto;
           border-radius: 10px;
           padding: 20px;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
@@ -44,6 +49,9 @@
           font-family: Arial, sans-serif; /* 폰트 지정 */
           font-size: 18px; /* 폰트 크기 지정 */
           color: #333; /* 텍스트 색상 지정 */
+        }
+        .best-user-table td{
+            width: 550px;
         }
         .bestusers{
         margin-top: 10px;
@@ -93,7 +101,7 @@
 
 
     <section class="page-section">
-        <div class="container content" style="margin-bottom:200px">
+        <div class="container content" style="margin-bottom:200px; margin-right: 400px;">
             <div class="row">
                 <div class="col-xl-9 mx-auto">
                     <div class="best-users">

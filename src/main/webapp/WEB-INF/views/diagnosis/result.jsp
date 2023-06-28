@@ -78,6 +78,7 @@
         height: auto;
         display: block;
         margin-left: auto;
+        border-radius: 10px;
         margin-right: auto;
     }
 

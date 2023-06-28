@@ -222,7 +222,7 @@
     <div id="linecontainer" style="height: 20px; width: 1300px; border-bottom : 1px solid rgba(128, 128, 128, 0.5);
 }"></div>
     <div id="buttondiv" style="margin-top: 50px;">
-<button class="diagnosisbutton" stype="button" onclick="location.href='/myplants/${myplantId}/schedule/push'">물주기 알람 설정</button>
+<button class="diagnosisbutton" stype="button" onclick="location.href='/myplants/${myplantId}/schedule/push'">알람 설정</button>
 <button class="diagnosisbutton" onclick="showForm()">오늘기록 추가하기</button></div>
 <div id="schedule-form" style="display:none;">
     <form id="scheduleForm">
@@ -230,7 +230,6 @@
         <div>
             <input type="hidden" name = "myplantId" value="${myplantId}">
             <input type="hidden" name = "userId" value="${userId}">
-            <label for="watering">물주기</label>
         </div>
         <div>
             <input type="checkbox" id="watering" name="watering" value="1">

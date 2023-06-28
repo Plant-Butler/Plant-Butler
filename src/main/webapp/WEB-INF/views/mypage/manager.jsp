@@ -29,15 +29,55 @@
         font-family: 'KimjungchulGothic-Bold';
 
     }
+
+    .delete-best {
+        font-family: 'KimjungchulGothic-Bold';
+        -webkit-border-radius: 28px;
+        -moz-border-radius: 28px;
+        font-family: Arial;
+        color: black;
+        background: #d6e3eb;
+        padding: 5px 10px;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    .select-best{
+        font-family: 'KimjungchulGothic-Bold';
+        -webkit-border-radius: 28px;
+        -moz-border-radius: 28px;
+        font-family: Arial;
+        color: black;
+        background: #d6e3eb;
+        padding: 5px 10px;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+    .usu-button{
+        font-family: 'KimjungchulGothic-Bold';
+        -webkit-border-radius: 28px;
+        -moz-border-radius: 28px;
+        font-family: Arial;
+        color: black;
+        background: #829dad;
+        padding: 5px 10px;
+        font-size: 13px;
+        text-decoration: none;
+
+    }
+    #comment-box {
+        width: 45%;
+    }
 </style>
 </head>
 <script src="https://code.jquery.com/jquery-latest.min.js"></script>
 <script src="/js/manager.js"></script>
 <body style="text-align: center">
 <section class="page-section cta">
-<div style="margin-top: 110px">
+<div>
         <br><br>
-        <div style="display:flex; justify-content:space-between; width:80%;margin: auto; " class="cta">
+        <div style="display:flex; justify-content:space-between; width:90%;margin: auto; " class="cta">
         <div style="width:33%;">
         <h2 class="managertitle">게시물 관리</h2>
             <br><br><br><br><br>
@@ -48,7 +88,7 @@
                         <td><a href= '/community/${post.postId}'>${post.postTitle}</a></td>
                         <td>${post.userId}</td>
                         <td>신고 ${post.flag}회 </td>
-                        <td><button type='button' onclick='deleteM(0, ${post.postId}, 0)'>삭제</button></td>
+                        <td><button type='button' class="delete-best" onclick='deleteM(0, ${post.postId}, 0)'>삭제</button></td>
                      </tr>
                </c:forEach>
         </table>
@@ -69,20 +109,20 @@
                     </c:forEach>
                     <%-- 다음 페이지 버튼 --%>
                     <c:if test="${postList.navigateLastPage < postList.pages}">
-                        <a href="?postPage=${boardList.navigateLastPage + 1}&commentPage=${commentList.pageNum}&userPage=${userList.pageNum}">▶</a>
+                        <a href="?postPage=${postList.navigateLastPage + 1}&commentPage=${commentList.pageNum}&userPage=${userList.pageNum}">▶</a>
                     </c:if>
         </div>
         <div style="width:33%;">
         <h2 class="managertitle">댓글 관리</h2>
             <br><br><br><br><br>
         <table class="table table-striped">
-            <th>내용</th><th>아이디</th><th>신고</th><th>삭제</th>
+            <th id="comment-box">내용</th><th>아이디</th><th>신고</th><th>삭제</th>
             <c:forEach var="comment" items="${commentList.list}">
                 <tr>
                     <td><a href= '/community/${comment.postId}'>${comment.commentContent}</a></td>
                     <td>${comment.userId}</td>
                     <td> 신고 ${comment.flag}회 </td>
-                    <td><button type='button' onclick='deleteM(${comment.commentId}, ${comment.postId}, 1)'>삭제</button></td>
+                    <td><button type='button' class="delete-best" onclick='deleteM(${comment.commentId}, ${comment.postId}, 1)'>삭제</button></td>
                 </tr>
             </c:forEach>
         </table>
@@ -126,7 +166,8 @@
                 </tr>
             </c:forEach>
         </table>
-        <button type="button" onclick="deleteAllBest()">우수회원 초기화</button><br>
+            <br>
+        <button type="button" class="usu-button" onclick="deleteAllBest()">우수회원 초기화</button><br><br><br>
             <!-- 이전 페이지 -->
                     <c:if test="${userList.navigateFirstPage > 1}">
                         <a href="?postPage=${postList.pageNum}&commentPage=${commentList.pageNum}&userPage=${userList.navigateFirstPage - 1}">◀</a>

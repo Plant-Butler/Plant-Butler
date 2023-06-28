@@ -1,24 +1,24 @@
     // 댓글 수정창 열기
     function updateBox(commentContent, commentId, postId) {
-          let span = document.getElementById("commentContent_" + commentId);
+        let span = document.getElementById("commentContent_" + commentId);
 
-          let input = document.createElement("input");
-          input.type = "text";
-          input.name = "updatedComment";
-          input.id = "inputComment";
-          input.value = commentContent;
-
-          //let updatedComment = input.value;
-          let button = document.createElement("button");
-          button.type = "button";
-          button.onclick = function() {
+        let input = document.createElement("input");
+        input.type = "text";
+        input.name = "updatedComment";
+        input.id = "inputComment";
+        input.value = commentContent;
+        input.classList.add("updatecinput");
+        //let updatedComment = input.value;
+        let button = document.createElement("button");
+        button.type = "button";
+        button.onclick = function() {
             updateComment(input.value, commentId, postId);
-          };
-          button.innerHTML = "수정완료";
-
-          span.innerHTML = "";
-          span.appendChild(input);
-          span.appendChild(button);
+        };
+        button.innerHTML = "수정";
+        button.classList.add("updatecomment"); // 클래스 추가
+        span.innerHTML = "";
+        span.appendChild(input);
+        span.appendChild(button);
     }
 
     // 댓글 수정

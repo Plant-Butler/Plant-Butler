@@ -131,7 +131,9 @@ public class PlantController {
 
     @PostMapping(value = "/form")
     @Operation(summary = "내 식물 등록", description = "내 반려식물을 추가 등록")
-    @ApiImplicitParams({@ApiImplicitParam(name="myplantVo", value="내 식물 VO"), @ApiImplicitParam(name="uploadedImages", value="내 식물 사진", required = false)})
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantVo", value="내 식물 VO", paramType="query"),
+            @ApiImplicitParam(name="uploadedImages", value="내 식물 사진", required = false, paramType="query")
+    })
     /* 내 식물 등록하기 */
     public ResponseEntity<MyplantVo> registMyPlant(@ModelAttribute MyplantVo myplantVo,
                                                    @RequestParam(value = "uploadedImages", required = false) List<MultipartFile> images) {
@@ -174,7 +176,7 @@ public class PlantController {
 
     @DeleteMapping(value="/form/{myplantId}")
     @Operation(summary = "내 식물 삭제", description = "내 식물 메인페이지에서 내 식물 삭제")
-    @ApiImplicitParam(name="myplantId", value="내 식물 id값")
+    @ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path")
     public ResponseEntity<Void> deleteMyPlant(@PathVariable("myplantId") int myplantId) {
         myPlantService.deleteMyPlant(myplantId);
         return ResponseEntity.noContent().build();
@@ -183,7 +185,9 @@ public class PlantController {
     /* 내 식물 상세조회 */
     @GetMapping(value="/{myplantId}/{plantId}")
     @Operation(summary = "내 식물 상세조회", description = "내 반려식물의 관리 정보 및 생장 정보 조회")
-    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"), @ApiImplicitParam(name="plantId", value="식물데이터 id값")})
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path"),
+            @ApiImplicitParam(name="plantId", value="식물데이터 id값", paramType="path")
+    })
     public ModelAndView myPlantDetail(@PathVariable("myplantId") int myplantId , @PathVariable("plantId") int plantId){
         ModelAndView model = new ModelAndView();
         MyplantVo myplantVo = myPlantService.myPlantDetail(myplantId);
@@ -208,9 +212,9 @@ public class PlantController {
     }
     @PostMapping(value="/{myplantId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Operation(summary = "내 식물 정보 수정", description = "내 반려식물의 사진, 화분크기, 닉네임 수정")
-    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"),
-            @ApiImplicitParam(name="myplantVo", value="내 식물 VO (JSON)"),
-            @ApiImplicitParam(name="myplantImages", value="내 식물 사진")
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path"),
+            @ApiImplicitParam(name="myplantVo", value="내 식물 VO (JSON)", paramType="query"),
+            @ApiImplicitParam(name="myplantImages", value="내 식물 사진", paramType="query")
     })
     public ResponseEntity<Void>editMyPlantInfo(@PathVariable int myplantId,
                                                @RequestParam("myplantVo") String myplantVoJson,
@@ -259,7 +263,7 @@ public class PlantController {
 
     @GetMapping(value="/search/{plantId}")
     @Operation(summary = "내 식물 검색", description = "DB에서 내 식물의 종 검색")
-    @ApiImplicitParam(name="plantId", value="식물데이터 id값")
+    @ApiImplicitParam(name="plantId", value="식물데이터 id값", paramType="path")
     public ResponseEntity <ArrayList<PlantVo>> searchPlantInfo(@PathVariable("plantId") String plantId){
         ArrayList<PlantVo> plantVo =  myPlantService.searchPlantInfo(plantId);
         return new ResponseEntity<>(plantVo,HttpStatus.OK);
@@ -268,7 +272,8 @@ public class PlantController {
 
     @PostMapping("/{myplantId}/{userId}/represent")
     @Operation(summary = "대표식물 등록", description = "내 식물 중 하나를 대표식물로 등록")
-    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값"), @ApiImplicitParam(name="userId", value="로그인 유저 id")})
+    @ApiImplicitParams({@ApiImplicitParam(name="myplantId", value="내 식물 id값", paramType="path"),
+            @ApiImplicitParam(name="userId", value="로그인 유저 id", paramType="path")})
     public ResponseEntity<Void> insertRepresent(@PathVariable int myplantId, @PathVariable String userId) {
         myPlantService.registRepresent(userId, myplantId);
         return ResponseEntity.ok().build();

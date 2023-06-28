@@ -106,26 +106,27 @@ public class S3Service {
             folder = folderNames[5];
         }
 
-        return s3Client.getUrl(bucket, folder + "/" +fileName).toString();
+        return s3Client.getUrl(bucket,folder + "/" +fileName).toString();
     }
 
     /* 파일명으로만 URL 조회 */
-    public String getUrlwithFolder(String folder, String oriFileName) {
+    public String getUrlwithFolder(String type, String oriFileName) {
 
+        String folder = null;
         String[] folderNames = this.getS3FolderNames();
-        if(folder.equals("diagnosis")) {
-            folder = folderNames[1];
+        if(type.equals("diagnosis")) {
+            folder = folderNames[1].trim();
         } else {
             folder = folderNames[0];
         }
 
-        return s3Client.getUrl(bucket, folder + "/" + oriFileName + ".jpg").toString();
+        return s3Client.getUrl(bucket, folder.trim() + "/" + oriFileName + ".jpg").toString();
     }
 
     /* 첨부파일 다운로드 */
     public ResponseEntity<byte[]> getObject(String oriFileName, String type, int seq) throws IOException {
         String[] folderNames = this.getS3FolderNames();
-        String s3FileName = folderNames[3] + "/" + type + "-" + seq + "-" + oriFileName;
+        String s3FileName = folderNames[2] + "/" + type + "-" + seq + "-" + oriFileName;
 
         S3Object o = amazonS3.getObject(new GetObjectRequest(bucket, s3FileName));
         S3ObjectInputStream objectInputStream = ((S3Object) o).getObjectContent();

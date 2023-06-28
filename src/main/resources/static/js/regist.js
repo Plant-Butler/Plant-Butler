@@ -20,7 +20,7 @@ function IdCheck() {
                 document.getElementById('checkerPwd').style.color = "red";
                 document.getElementById('checkerPwd').innerHTML = "동일한 암호를 입력하세요.";
             } else {
-                document.getElementById('checkerPwd').style.color = "black";
+                document.getElementById('checkerPwd').style.color = "white";
                 document.getElementById('checkerPwd').innerHTML = "암호가 확인 되었습니다.";
             }
         }
@@ -38,7 +38,7 @@ function IdCheck() {
             passwordMessage.style.color = "red";
           } else {
             passwordMessage.innerHTML = "비밀번호가 유효합니다.";
-            passwordMessage.style.color = "green";
+            passwordMessage.style.color = "white";
           }
 
           // 비밀번호 유효성 체크 결과를 반환

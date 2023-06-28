@@ -70,6 +70,7 @@
         cursor: pointer;
         border-radius: 4px;
         margin-left: 20px;
+        font-family: 'KimjungchulGothic-Bold';
     }
     .post-report:hover{
         background-color: #8BC34A;
@@ -111,6 +112,7 @@
     }
     .commentlist-width{
         width: 1000px;
+        text-align: left;
     }
     .nickname {
         padding-right: 10px;
@@ -159,13 +161,39 @@
     .reportbox2 button{
         margin-left: 4px;
     }
+    .comment-tr td {
+        padding: 10px;
+    }
+    .updatecinput{
+        width: 900px;
+
+    }
+    .updatecomment{
+        background-color: #4CAF50;
+        color: #ffffff;
+        border: none;
+        padding: 5px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        font-family: 'KimjungchulGothic-Bold';
+        border: none;
+    }
+    .myinfo{
+        font-family: 'KimjungchulGothic-Bold';
+        font-size: 19px;
+    }
+    .exfileupload{
+        font-family: 'KimjungchulGothic-Bold';
+        font-size: 17px;
+    }
 </style>
 
 <div class="about-section" style="margin-top: 300px">
 <table style="margin-left:auto;margin-right:auto;" width="1500" length="150">
-    <tr class="overall">
+    <tr class="overall" style="">
         <td>[분류] ${post.postTag}</td>
-        <td>[제목] ${post.postTitle}</td>
+        <td style="font-size: 25px;">[제목] ${post.postTitle}</td>
         <td>[닉네임] ${post.nickname}</td>
         <td>[조회수] ${post.readCount}</td>
         <td>[댓글] ${commentCount}</td>
@@ -189,9 +217,9 @@
                         </div>
                     </td>
                 </c:if>
-                <td>${myPlant.distbNm}</td>
-                <td>${myPlant.myplantNick}</td>
-                <td>
+                <td class="myinfo">${myPlant.distbNm}</td>
+                <td class="myinfo">${myPlant.myplantNick}</td>
+                <td class="myinfo">
                     <fmt:formatDate value="${myPlant.firstDate}" type="date"/>
                 </td>
             </tr>
@@ -225,7 +253,7 @@ ${post.postContent}
 <br>
 <br>
 <c:if test="${not empty post.postFile}">
-[첨부파일]
+    <span class="exfileupload">[첨부파일]</span>
     <a href="./download/${post.postId}/${post.postFile}">${post.postFile}</a>
 </c:if>
 <br>
@@ -261,7 +289,7 @@ ${post.postContent}
     <hr style="width: 70%;">
 </div><br>
     <h2 class="commentitle">댓글</h2>
-    <table style="margin-left:auto;margin-right:auto;width:1500px;height:100px;">
+    <table style="margin-left:auto;margin-right:auto;width:1580px;height:100px;">
         <!-- 댓글 작성 -->
         <c:if test="${not empty user.userId}">
             <form action="./comment" method="post" modelAttribute="commentVo" class="comment-form">
@@ -285,7 +313,7 @@ ${post.postContent}
 
         <!-- 댓글 목록 -->
         <c:forEach var="comment" items="${commentList.list}">
-            <tr>
+            <tr class="comment-tr">
             <td>${comment.nickname}</td>
             <td class="commentlist-width"><span id="commentContent_${comment.commentId}">${comment.commentContent}</span></td>
             <td class="reportbox2">신고 ${comment.flag} <fmt:formatDate value="${comment.commentDate}" type="date" />

@@ -42,6 +42,9 @@
     margin-right: 10px;
     margin-bottom: 10px;
   }
+  #posttitle{
+      text-align: left;!important;
+  }
 
   .btn-primary {
     background-color: #4198754;
@@ -115,18 +118,18 @@
         <thead>
         <tr>
             <th scope="col" class="col-1">태그</th>
-            <th scope="col" class="col-4">제목</th>
-            <th scope="col" class="col-2">작성자</th>
+            <th scope="col" class="col-5" >제목</th>
+            <th scope="col" class="col-1">작성자</th>
             <th scope="col" class="col-1">조회수</th>
-            <th scope="col" class="col-2">작성일자</th>
-            <th scope="col" class="col-2">댓글수</th>
+            <th scope="col" class="col-1">작성일자</th>
+            <th scope="col" class="col-1">댓글수</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="post" items="${posts.list}">
             <tr>
                 <td>${post.postTag}</td>
-                <td><a href="/community/${post.postId}" class = "posttitle">${post.postTitle}</a></td>
+                <td id="posttitle"><a href="/community/${post.postId}" class = "posttitle">${post.postTitle}</a></td>
                 <td>${post.userId}</td>
                 <td>${post.readCount}</td>
                 <td><fmt:formatDate value="${post.postDate}" type="date"/></td>

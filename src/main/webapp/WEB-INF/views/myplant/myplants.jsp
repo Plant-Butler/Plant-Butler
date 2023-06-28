@@ -25,7 +25,7 @@
             console.log("encodedCityName:", encodedCityName);
 
             try {
-                var response = await fetch(`http://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${mise}&numOfRows=100&returnType=json&sidoName=`+encodedCityName);
+                var response = await fetch(`https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getCtprvnRltmMesureDnsty?serviceKey=${mise}&numOfRows=100&returnType=json&sidoName=`+encodedCityName);
                 var data = await response.json();
                 console.log("Fetched data:", data);
 
@@ -64,7 +64,7 @@
             console.log(rs.x, rs.y);
 
             try {
-                var response = await fetch('http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${gisang}&numOfRows=60&dataType=JSON&pageNo=1&base_date='+formattedDate+'&base_time='+time+'&nx='+rs.x+'&ny='+rs.y);
+                var response = await fetch('https://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${gisang}&numOfRows=60&dataType=JSON&pageNo=1&base_date='+formattedDate+'&base_time='+time+'&nx='+rs.x+'&ny='+rs.y);
                 console.log(response);
                 var data = await response.json();
                 console.log("Fetched data:", data);

@@ -36,10 +36,11 @@
     <div>
         <div class="swiper">
             <!-- Additional required wrapper -->
-            <input class="upload_img input-editable" type="file" id="myplantImagesInput" name="myplantImages" style="display:none;" multiple>
+            <input class="upload_img input-editable" type="file" id="myplantImagesInput" name="myplantImages"
+                   style="display:none;" multiple>
             <div class="swiper-wrapper">
                 <c:forEach var="image" items="${imageUrls}">
-                    <div class="swiper-slide"><p><img id="slide-image" src="${image}" ></p></div>
+                    <div class="swiper-slide"><p><img id="slide-image" src="${image}"></p></div>
                 </c:forEach>
             </div>
             <!-- If we need pagination -->
@@ -77,27 +78,47 @@
                 <div style="width: 50%;">
                     <p class="editable" name="myplantLength">화분 높이 : ${myPlant.myplantLength}cm</p>
                     <div class="input-editable" style="display:none;">
-                        <p>화분 높이 :<input type="text" name="myplantLength" value="${myPlant.myplantLength}"></p>
+                        <p>화분 높이 :<input style="width: 100px" type="text" name="myplantLength" value="${myPlant.myplantLength}">cm</p>
                     </div>
                 </div>
                 <div style="width: 50%;">
-                    <p><span id="radius1Label">화분 밑 지름 : </span><span class="editable"
-                                                                      name="myplantRadius1">${myPlant.myplantRadius1}cm</span>
+                    <p>
+                    <c:choose>
+                        <c:when test="${myPlant.myplantPot==1}">
+                            <span class="test1">화분 윗 지름 : </span><span class="editable"
+                                                                              name="myplantRadius1">${myPlant.myplantRadius1}cm</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="test1">화분 가로 : </span><span class="editable"
+                                                                              name="myplantRadius1">${myPlant.myplantRadius1}cm</span>
+                        </c:otherwise>
+                    </c:choose>
+                        <input type="text" class="input-editable" name="myplantRadius1"  value="${myPlant.myplantRadius1}"
+                               style="display:none; width: 110px">
+                        <span class="input-editable" style="display:none;">cm</span>
                     </p>
-                    <input type="text" class="input-editable" name="myplantRadius1" value="${myPlant.myplantRadius1}"
-                           style="display:none;">
+
                 </div>
                 <div style="width: 50%;">
-                    <p><span id="radius2Label">화분 윗 지름 : </span><span class="editable"
+                    <p>
+                    <c:choose>
+                    <c:when test="${myPlant.myplantPot==1}">
+                    <span class="test2">화분 밑 지름 : </span><span class="editable"
                                                                       name="myplantRadius2">${myPlant.myplantRadius2}cm</span>
-                    </p>
+                    </c:when>
+                        <c:otherwise>
+                        <span class="test2">화분 세로 : </span><span class="editable"
+                                                      name="myplantRadius2">${myPlant.myplantRadius2}cm</span>
+                        </c:otherwise>
+                    </c:choose>
                     <input type="text" class="input-editable" name="myplantRadius2" value="${myPlant.myplantRadius2}"
-                           style="display:none;">
+                           style="display:none; width: 110px"><span class="input-editable" style="display:none;">cm</span>
+                    </p>
                 </div>
             </div>
             <div id="plantdetail2"
                  style="display: flex; flex-wrap: wrap; border: 1px solid #000; border-top: 1px solid rgba(0, 0, 0, 0.1); border-left: 1px solid rgba(0, 0, 0, 0); border-right: 1px solid rgba(0, 0, 0, 0); border-bottom: 1px solid rgba(0, 0, 0, 0.2);">
-</div>
+            </div>
         </div>
         <h1 id="detailTitle">자세히 알아보기</h1>
         <div>
@@ -148,32 +169,43 @@
                 });
             </script>
             <script>
-                $("#saveBtn").on("click", function () {
+                $(document).ready(function () {
+                    var myPlantPot = ${myPlant.myplantPot};
+                    let radiobutton = document.getElementById('cylinder');
+                    let radiobutton2 = document.getElementById('rectangle');
+                    if(myPlantPot== 1) {
+                        radiobutton.checked = true;
+                    } else {
+                        radiobutton2.checked = true;
+                    }
+
+                    $("#saveBtn").on("click", function () {
                         var csrfToken = '${_csrf.token}';
                         var csrfHeader = '${_csrf.headerName}';
 
                         var fileInput = document.getElementById("myplantImagesInput");
                         var files = fileInput.files;
-
                         var formData = new FormData();
+
                         for (var i = 0; i < files.length; i++) {
-                          formData.append("myplantImages", files[i]);
+                            formData.append("myplantImages", files[i]);
                         }
 
                         var myplantVo = {
-                            myplantId:${myPlant.myplantId},
-                            plantId:${myPlant.plantId},
-                            userId:"${myPlant.userId}",
+                            myplantId: ${myPlant.myplantId},
+                            plantId: ${myPlant.plantId},
+                            userId: "${myPlant.userId}",
                             myplantNick: $("input[name='myplantNick']").val(),
                             myplantPot: $("input[name='myplantPot']:checked").val(),
                             myplantLength: $("input[name='myplantLength']").val(),
                             myplantRadius1: $("input[name='myplantRadius1']").val(),
                             myplantRadius2: $("input[name='myplantRadius2']").val(),
                         };
+
                         formData.append("myplantVo", JSON.stringify(myplantVo));
 
                         $.ajax({
-                            url: "/myplants/"+${myPlant.myplantId},
+                            url: "/myplants/" +${myPlant.myplantId},
                             method: "POST",
                             headers: {
                                 [csrfHeader]: csrfToken // CSRF 토큰을 요청 헤더에 추가
@@ -193,15 +225,17 @@
                             },
                         });
                     });
+                });
             </script>
+
         </div>
     </div>
 </div>
-        <footer class="footer text-faded text-center py-5"
-                style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
-            <div class="container">
-                <p class="m-0 small">© Plantery 2023</p>
-            </div>
-        </footer>
+<footer class="footer text-faded text-center py-5"
+        style="background-image: url('/images/footer.jpg'); height: 150px; flex-shrink: 0;">
+    <div class="container">
+        <p class="m-0 small">© Plantery 2023</p>
+    </div>
+</footer>
 </body>
 </html>
